@@ -1,0 +1,13 @@
+{{#anyNoneEmpty flight hotel freeTravel goldenguide goodbrand announcedGroup}}
+<dl class="special_info">
+	<dt>特色</dt>
+	<dd>
+		{{#if flight}}<span class="flt_ico">可选机票</span>{{/if}}
+		{{#if hotel}}<span class="htl_ico">可选酒店</span>{{/if}}
+		{{#if freeTravel}}<span class="free_ico">自由活动</span>{{/if}}
+		{{#if goldenguide}}<span class="gold_ico">金牌导游</span>{{/if}}
+		{{#if goodbrand}}<span class="sh_ico">上海名牌</span>{{/if}}
+		{{#if announcedGroup}}<span class="group_ico">铁定成团</span>{{/if}}
+	</dd>
+</dl>
+{{/anyNoneEmpty}}

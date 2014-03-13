@@ -1,0 +1,32 @@
+<div class="scroll_wrap">
+	{{#each data}}
+	<div class="mask_htl_wrap" data-hotel-id="{{Hotel}}">
+	    <div class="htl_img_wrap">
+	        <a class="htl_img" href="{{HotelUrl}}" target="_blank" title="{{HotelName}}"><img src="{{LogoUrl}}" alt="" width="100" height="75"></a>
+	        <p class="score"><span>{{HRatingOverall}}</span>/5分</p>
+	    </div>
+	    <div class="htl_detail">
+	        <h3>
+	            <a href="{{HotelUrl}}" target="_blank" title="{{HotelName}}">{{HotelName}}</a>
+	            {{#is StarLience 'T'}}
+	            <i title="国家旅游局评定为{{Star}}星级" class="hotel_star_{{Star}}"></i>
+	            {{else}}
+	            <i title="{{#EmptyStar Star}}{{/EmptyStar}}" class="hotel_hollow_{{Star}}"></i>
+	            {{/is}}
+	        </h3>
+	        <p class="gray">{{Address}}</p>
+	        {{> RoomList}}
+	        {{#is RoomInfos.length '>' 1}}
+	        <div class="flod_spread_btn">
+	            <a href="javascript:void(0);">
+	                更多房型<b class="down"></b>
+	            </a>
+	            <a href="javascript:void(0);" style="display:none">
+	                收起<b class="up"></b>
+	            </a>
+	        </div>
+	        {{/is}}
+	    </div>
+	</div>
+	{{/each}}
+</div>

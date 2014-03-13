@@ -1,0 +1,199 @@
+<!--设置同行订单弹窗-->
+<div class="order_masking order_together" style="display:none">
+	<div class="order_masking_hd">设置同行订单<a href="javascript:void(0);" class="js_pop_close">×</a></div>
+	<div class="order_masking_bd">
+		<p class="grey">为方便我们在分房时作出考虑，请认真设置您的同行订单。</p>
+		<p>请输入您要设置的同行订单号：</p>
+		<p><input type="text" class="input_text inputSel" name="along_order_num"></p>
+		<p class="grey">需要输入多个订单号时，中间请用逗号隔开</p>
+		<div class="btn_col"><input type="button" value="确定" class="btn_blue_middle"></div>
+	</div>
+</div>
+<!--打印订单弹窗-->
+<div class="order_masking order_print" style="display:none">
+	<div class="order_masking_hd">打印订单<a href="javascript:void(0);" class="js_pop_close">×</a></div>
+	<div class="order_masking_bd">
+		<p>请选择需要打印的信息：</p>
+		<ul class="basefix">
+			<li data-role="orderInfo"><label class="base_label"><input type="checkbox" name="print_order_list" value="1">订单信息</label></li>
+			<li data-role="orderTraffic"><label class="base_label"><input type="checkbox" name="print_order_list" value="2">交通</label></li>
+            <li data-role="orderMeal"><label class="base_label"><input type="checkbox" name="print_order_list" value="3">非航班</label></li>
+			<li data-role="orderHotel"><label class="base_label"><input type="checkbox" name="print_order_list" value="4">酒店</label></li>
+			<li data-role="addProduct"><label class="base_label"><input type="checkbox" name="print_order_list" value="5">附加产品</label></li>
+			<li data-role="orderContacts"><label class="base_label"><input type="checkbox" name="print_order_list" value="6">联系人</label></li>
+			<li data-role="orderTourist"><label class="base_label"><input type="checkbox" name="print_order_list" value="7">旅客信息</label></li>
+			<li data-role="orderVisa"><label class="base_label"><input type="checkbox" name="print_order_list" value="8">签证信息</label></li>
+			<li data-role="orderDeliver"><label class="base_label"><input type="checkbox" name="print_order_list" value="9">配送信息</label></li>
+            <li data-role="orderPay"><label class="base_label"><input type="checkbox" name="print_order_list" value="10">支付/优惠信息</label></li>
+			<li data-role="orderInvoice"><label class="base_label"><input type="checkbox" name="print_order_list" value="11">发票信息</label></li>
+			<li data-role="addInfo"><label class="base_label"><input type="checkbox" name="print_order_list" value="12">附加信息</label></li>
+		</ul>
+		<div class="btn_col"><input type="button" value="确定" class="btn_blue_middle"></div>
+	</div>
+</div>
+<!--取消订单弹窗-->
+<div class="order_masking" style="display:none" id="js_cancel_order_pop">
+	<div class="order_masking_hd">取消订单<a href="javascript:void(0);" class="js_pop_close">×</a></div>
+	<div class="order_masking_bd">
+		<table class="crosswise_tb">
+			<tbody><tr>
+				<th style="width:80px;"><strong class="required">*</strong><span id="js_cancel_order_pop_tip">取消原因</span></th>
+                <td>
+                    <select style="width:278px;" class="js_cancel_order_pop_select1 js_cancel_order_pop_select1_show">
+	                    <option value="行程不确定">行程不确定</option>
+	                    <option value="无法按时付款">无法按时付款</option>
+	                    <option value="价格原因">价格原因</option>
+	                    <option value="重复预订">重复预订</option>
+	                    <option value="材料无法按时提供">材料无法按时提供</option>
+	                    <option value="担心不成团">担心不成团</option>
+	                    <option value="突发事件">突发事件</option>
+	                    <option value="其他原因">其他原因</option>
+                    </select>
+                    <select style="width:278px;display:none" class="js_cancel_order_pop_select1">
+	                    <option value="价格原因">价格原因</option>
+	                    <option value="材料无法按时提供">材料无法按时提供</option>
+	                    <option value="突发事件">突发事件</option>
+	                    <option value="其他原因">其他原因</option>
+                    </select>
+                    <select style="width:195px;display:none" id="js_cancel_order_pop_select2">
+	                    <option value="担心灾害">担心灾害</option>
+	                    <option value="生病/意外">生病/意外</option>
+	                    <option value="临时有事">临时有事</option>
+	                    <option value="自理签无法如期出签">自理签无法如期出签</option>
+                    </select>
+                </td>
+			</tr>
+			<tr>
+				<th><strong class="required">*</strong>联系人</th>
+				<td><input type="text" class="input_text" name="cancel_order_name"></td>
+			</tr>
+			<tr>
+				<th><strong class="required">*</strong>手机号码</th>
+				<td><input type="text" class="input_text" name="cancel_order_phone"></td>
+			</tr>
+			<tr>
+				<th style="vertical-align:top;"><strong class="required" style="display:none" id="js_cancel_order_pop_star">*</strong>备注</th>
+				<td><textarea style="width:470px;height:100px;resize:none" id="js_cancel_order_remark"></textarea></td>
+			</tr>
+		    </tbody>
+        </table>
+        <div class="order_masking_content" style="display:none"><strong>订单<span class="js_pop_orderId"></span>，确认提交取消申请吗？</strong></div>
+		<div class="btn_col"><input type="button" value="确定" class="btn_blue_middle" id="js_cancel_order_confirm"><input type="button" value="确定" class="btn_blue_middle" id="js_cancel_order_submit" style="display:none"><input type="button" value="取消" class="btn_cancel js_pop_close"></div>
+	</div>
+</div>
+<!--联系携程弹窗-->
+<div class="order_masking" id="js_service_pop" style="display:none">
+	<div class="order_masking_hd">联系携程<a href="javascript:void(0);" class="js_pop_close">×</a></div>
+	<div class="order_masking_bd">
+		<table class="crosswise_tb">
+			<tbody><tr>
+				<th style="width:80px;"><strong class="required">*</strong>联系事宜</th>
+                <td>
+                    <select style="width:278px;" id="js_service_pop_select1">
+	                    <option value="咨询线路行程">咨询线路行程</option>
+	                    <option value="咨询签证材料">咨询签证材料</option>
+	                    <option value="订单事宜">订单事宜</option>
+	                    <option value="其他事宜">其他事宜</option>
+                    </select>
+                    <select style="width:195px;display:none" id="js_service_pop_select2">
+	                    <option value="确认付款">确认付款</option>
+	                    <option value="修改行程">修改行程</option>
+	                    <option value="修改资源">修改资源</option>
+	                    <option value="修改支付方式">修改支付方式</option>
+	                    <option value="预约配送时间">预约配送时间</option>
+                    </select>
+                </td>
+			</tr>
+			<tr>
+				<th><strong class="required">*</strong>联系人</th>
+				<td><input type="text" class="input_text" name="service_order_name"></td>
+			</tr>
+			<tr>
+				<th><strong class="required">*</strong>手机号码</th>
+				<td><input type="text" class="input_text" name="service_order_phone"></td>
+			</tr>
+			<tr>
+				<th style="vertical-align:top;"><strong class="required" style="display:none" id="js_service_pop_star">*</strong>备注</th>
+				<td><textarea style="width:470px;height:100px;resize:none" id="js_service_remark"></textarea></td>
+			</tr>
+		    </tbody>
+        </table>
+		<div class="btn_col"><input type="button" value="提交" class="btn_blue_middle"><input type="button" value="取消" class="btn_cancel js_pop_close"></div>
+	</div>
+</div>
+<!--请求错误提示-->
+<div class="order_masking" id="js_pop_error" style="display:none">
+	<div class="order_masking_hd">提示<a href="javascript:void(0);" class="js_pop_close">×</a></div>
+	<div class="order_masking_bd">
+		<div class="order_masking_content">
+			<i class="icon_warning"></i>
+			<p><strong id="js_pop_errormsg"></strong></p>
+		</div>
+		<div class="btn_col"><input type="button" value="确定" class="btn_blue_middle js_pop_close"></div>
+	</div>
+</div>
+<!--取消订单跳转到我的携程-->
+<div class="order_masking" id="js_cancel_order_success" style="display:none">
+	<div class="order_masking_hd">取消订单<a href="javascript:void(0);" class="js_pop_close">×</a></div>
+	<div class="order_masking_bd">
+        <div class="order_masking_content">
+			<i class="icon_yes"></i>
+			<p><strong>您好，订单<span class="js_pop_orderId"></span>修改请求已发送！请耐心等待携程确认，谢谢！</strong><br>点击这里返回&nbsp;&nbsp;<a href="###">我的携程</a></p>
+			<p><span class="js_order_pop_time">3</span>秒后页面将自动跳转到&nbsp;&nbsp;<a href="###">我的携程</a></p>
+		</div>
+	</div>
+</div>
+<!--保存成功页面弹窗-->
+<div class="order_masking" id="js_order_success" style="display:none">
+	<div class="order_masking_hd"><span class="js_order_success_title"></span><a href="javascript:void(0);" class="js_pop_close">×</a></div>
+	<div class="order_masking_bd">
+        <div class="order_masking_content">
+			<i class="icon_yes"></i>
+			<p><strong>您好，订单<span class="js_pop_orderId"></span><span class="js_order_success_txt"></span></strong></p>
+		</div>
+        <div class="btn_col js_pop_close" style="display:none"><input type="button" value="确定" class="btn_blue_middle"></div>
+	</div>
+</div>
+<!--jmp模板-->
+<div id="jmp_pkg_title" style="display:none;">
+    <div class="jmp_bd flt_jmp">
+        <strong>${txt0}</strong>
+        <p>${txt1}</p>
+    </div>
+</div>
+<div id="jmp_single_title" style="display:none;">
+  <div class="jmp_bd">
+    <p>${txt}</p>
+  </div>
+</div>
+<div id="jmp_craft" style="display:none;">
+	<table class="data_form">
+		<tbody>
+			<tr>
+				<th style="width:60px;">计划机型</th>
+				<th style="width:140px;">机型名称</th>
+				<th style="width:40px;">类型</th>
+				<th style="width:80px;">最少座位数</th>
+				<th style="width:80px;">最多座位数</th>
+			</tr>
+			<tr>
+				<td>
+                    ${txt0}
+                </td>
+                <td>
+                    ${txt1}
+                </td>
+                <td>
+                    ${txt2}
+                </td>
+                <td>
+                    ${txt3}
+                </td>
+                <td >
+                    ${txt4}
+                </td>
+
+			</tr>
+		</tbody>
+	</table>
+</div>

@@ -1,0 +1,44 @@
+<div class="scroll_wrap">
+	<table class="other_mask_table other_radio_table">
+	    <tbody>
+	        <tr>
+	            <th class="col_01">产品名称</th>
+	            {{#if IsTraffic}}
+	            <th class="col_02">出发日期</th>
+	            {{else}}
+	            <th class="col_02"></th>
+	            {{/if}}
+	            <th class="col_03">价差</th>
+	            <th></th>
+	        </tr>
+	        {{#each data}}
+	            <tr data-index-in-data="{{@index}}" data-segment-id="{{SegmentID}}" data-resource-id="{{ResourceID}}" class="js_single_tr">
+	                <td class="col_01"><div class="js-product-name product_name">{{Name}}</div></td>
+	                {{#if IsTraffic}}
+	                <td class="col_02">{{#dtdate DepartureDate}}{{/dtdate}}</td>
+	                {{else}}
+	                <td class="col_02"></td>
+	                {{/if}}
+	                <td class="col_03"><span class="ctrip_price">{{priceDiff}}</span></td>
+	                <td class="col_06">
+	                    <div class="{{#if Select}}selected{{else}}select_btn{{/if}}">
+	                        <a href="javascript:void(0);">选择</a>
+	                    </div>
+	                </td>
+	            </tr>
+	            {{#if Introduction}}
+	            <tr class="js-intro" style="display:none">
+	                <td colspan="4">
+	                    <div class="other_product_detail">
+	                        <b></b>
+	                        <i></i>
+	                        <div>{{{Introduction}}}</div>
+	                        <a class="flod_btn" href="javascript:void(0);">收起</a>
+	                    </div>
+	                </td>
+	            </tr>
+	            {{/if}}
+	        {{/each}}
+	    </tbody>
+	</table>
+</div>

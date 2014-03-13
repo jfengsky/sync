@@ -1,0 +1,30 @@
+<div id="price_box_wrap" class="price_box_wrap">
+        <ul class="price_box">
+            <li class="total_price2"><strong>总价</strong><span class="price2"><dfn>&yen;</dfn><span role="amountTotal">{{Amount}}</span></span></li>
+            <li>
+            {{#if IsGroupTravel}}
+                <div class="basefix"><span class="price_item">基本团费</span></div>
+            {{else}}
+                <div class="basefix"><span class="price_item">基本费用</span></div>
+            {{/if}}
+            {{#if AduNumber}}
+            <div class="basefix"><span class="price_item">成人</span><strong class="price_detail"><span>{{AduNumber}}&nbsp;×</span><dfn>&yen;</dfn>{{AduAmount}}</strong></div>
+            {{/if}}
+            {{#if ChildNumber}}
+            <div class="basefix"><span class="price_item">儿童{{#if IsNoBed}}(不占床){{/if}}</span><strong class="price_detail"><span>{{ChildNumber}}&nbsp;×</span><dfn>&yen;</dfn>{{ChildAmount}}</strong></div>
+            {{/if}}
+            </li>
+            {{#if Surcharge}}
+                <li><span class="price_item">附加费</span><strong class="price_detail"><dfn>&yen;</dfn>{{Surcharge}}</strong></li>
+            {{/if}}
+            {{#if TicketsTotalFree}}
+                <li><span class="price_item">出票费</span><strong class="price_detail"><dfn>&yen;</dfn>{{TicketsTotalFree}}</strong></li>
+            {{/if}}
+            <li role="fright" style="{{#unless Freight}}display:none{{/unless}}"><span class="price_item">配送费</span><strong class="price_detail"><dfn>&yen;</dfn><em role="amountPostage" style="font-style:normal">{{Freight}}</em></strong></li>
+            <li role="discount" style="{{#unless DiscountAmount}}display:none{{/unless}}"><span class="price_item">优惠<i>减</i></span><strong class="price_detail highlight">-<dfn>&yen;</dfn> <em style="font-style:normal" role="amountCoupon">{{DiscountAmount}}</em></strong></li>
+            {{#if isTempSave}}
+            <li class="border_none" style="position:static;"><a href="###" role="save" class="price_btn_order"><span><i></i></span>暂存订单</a></li>
+            {{/if}}
+        </ul>
+        <a class="online_service" href="{{ChatUrl}}" target="_blank">在线客服</a>
+</div>

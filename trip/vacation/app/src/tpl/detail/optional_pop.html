@@ -1,0 +1,95 @@
+<div class="resource_mask" id="J_optional_select_pop" style="display: none;">
+	<a href="javascript:void(0);" class="close J_optional_pop_close"><span>关闭</span></a>
+	<div class="scroll_wrap">
+	    <table class="other_mask_table">
+	        <tbody>
+	            <tr>
+	                <th class="col_01">产品名称</th>
+	                <th class="col_02">携程价</th>
+	                <th class="col_03">市场价</th>
+	                <th class="col_04">使用日期</th>
+	                <th class="col_05">份数</th>
+	                <th class="col_06">单项总价</th>
+	                <th></th>
+	            </tr>
+	            {{#each BaoxianData}}
+	            {{#if IsPopupShow}}
+	                <tr class="js_option_tr" data-index-in-data="{{@index}}"{{#is Inventory.length '<=' 1}} data-only-date="{{#each Inventory}}{{#dtdate Date}}{{/dtdate}}{{/each}}"{{/is}}>
+	                    <td class="col_01"><i class="free_gift" {{#listItem Inventory 0}}{{#is Price '>' 0}}style="display:none"{{/is}}{{/listItem}}></i><span class="js-product-name product_name">{{Name}}</span></td>
+	                    {{#listItem Inventory 0}}
+                        <td class="col_02"><span class="js-ctrip-price ctrip_price">{{#moneyHTML Price}}{{/moneyHTML}}</span></td>
+	                    <td class="col_03"><span class="js-original-price original_price">{{#if MarketPrice}}{{#moneyHTML MarketPrice}}{{/moneyHTML}}{{else}}--{{/if}}</span></td>
+	                    {{/listItem}}
+	                    <td class="col_04">
+	                        {{#is Inventory.length '>' 1}}
+	                            <div class="use_date">
+	                                <div class="date_input_wrap">
+	                                    <input type="text" value="{{changeDate}}"/>
+	                                    <p style="display:none">
+	                                        {{#each Inventory}}
+	                                        <a href="javascript:void(0);">{{#dtdate Date}}{{/dtdate}}</a>
+	                                        {{/each}}
+	                                    </p>
+	                                </div>
+	                            </div>
+	                        {{else}}
+	                        --
+	                        {{/is}}
+	                    </td>
+	                    <td class="col_05">
+	                        <div class="room_num">
+	                            <div class="num_input_wrap">
+	                            {{#listItem Inventory 0}}
+	                                {{#is MinQuantity MaxQuantity}}
+	                                {{#if IsChooseRequired}}
+	                                    <input type="text" value="{{../../../changeCount}}" /><b></b>
+	                                    <p style="display:none"><a href="javascript:void(0);">{{DefaultQuantity}}</a></p>
+	                                {{else}}
+	                                    {{DefaultQuantity}}
+	                                {{/if}}
+	                            {{else}}
+	                                <input type="text" value="{{../../../changeCount}}"/>
+	                                <b></b>
+	                                <p style="display:none">
+	                                    {{#eachx 'null' MinQuantity MaxQuantity StepQuantity}}
+	                                    <a href="javascript:void(0);">{{$index}}</a>
+	                                    {{/eachx}}
+	                                </p>
+	                            {{/is}}
+	                            {{/listItem}}
+	                            </div>
+	                        </div>{{Unit}}
+	                    </td>
+	                    <td class="col_06">
+	                        <span class="ctrip_price js-total-price">{{#if changeTotal}}{{#moneyHTML changeTotal}}{{/moneyHTML}}</span>{{else}}--{{/if}}
+	                    </td>
+	                    <td class="col_07">
+	                        {{#listItem Inventory 0}}
+	                        <div class="room_selected"{{#is ../../changeCount '<=' 0}} style="display:none;"{{/is}}>
+	                            <a href="javascript:void(0);">选择</a>
+	                        </div>
+	                        {{/listItem}}
+	                    </td>
+	                </tr>
+	                {{#if Introduction}}
+	                <tr class="js-intro" style="display:none">
+	                    <td colspan="7">
+	                        <div class="other_product_detail">
+	                            <b></b>
+	                            <i></i>
+	                            <div>{{{Introduction}}}</div>
+	                            <a class="flod_btn" href="javascript:void(0);">收起</a>
+	                        </div>
+	                    </td>
+	                </tr>
+	                {{/if}}
+	            {{/if}}
+	            {{/each}}
+	        </tbody>
+	    </table>
+	    <div class="btn_wrap">
+	        <a class="yes" id="J_optional_pop_confirm" href="javascript:void(0);">确定</a>
+	        <a class="no J_optional_pop_close" href="javascript:void(0);">取消</a>
+	    </div>
+	</div>
+</div> 

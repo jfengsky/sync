@@ -1,0 +1,32 @@
+{{#if Active}}
+<td class="on">
+	<a href="javascript:;" {{#if ClassNames}}class="{{ClassNames}}"{{/if}} {{#if IsShowFestival}}title="{{FestivalName}}"{{/if}}>
+		<span class="date basefix">{{#if IsShowFestival}}<i>节</i>{{/if}}{{DayStr}}</span>
+		<span class="team">
+			{{#if IsAnnouncedGroup}}成团{{/if}}
+			{{#if Over}}
+			售完
+			{{else}}
+			{{#is RemainingInventory '>=' 10}}
+			充足
+			{{else}}
+
+			{{#is RemainingInventory -99999}}
+			{{! -99999 表示 充足，但是不显示 }}
+			{{else}}
+			余{{RemainingInventory}}{{#unless IsAnnouncedGroup}}位{{/unless}}
+			{{/is}}
+
+			{{/is}}
+			{{/if}}
+	    </span>
+	    <span class="calendar_price01">{{#isRealtimePrice MinPrice}}实时计价{{else}}<dfn>&yen;</dfn>{{MinPrice}}<em>起</em>{{/isRealtimePrice}}</span>
+	</a>
+</td>
+{{else}}
+<td>
+	<a href="javascript:;" {{#if ClassNames}}class="{{ClassNames}}"{{/if}} {{#if IsShowFestival}}title="{{FestivalName}}"{{/if}}>
+		<span class="date basefix">{{#if IsShowFestival}}<i>节</i>{{/if}}{{DayStr}}</span>
+	</a>
+</td>
+{{/if}}

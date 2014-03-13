@@ -1,0 +1,13 @@
+<div class="mask_popup" style="width:590px;display:none;" id="mask_popup">
+    <h3>选择您的常用地址</h3>
+    <ul>
+    {{#each obj}}
+        <li><label for="alladr{{@index}}"><input index="{{InfoId}}" type="radio" value="radio" name="{{../radioName}}" id="alladr{{@index}}"> {{CityName}}  {{CantonName}} {{Address}} {{Post}} {{#if Recipient}}({{Recipient}} 收){{/if}} {{#if Mobile}}{{Mobile}}{{else}}{{#if Tel}}{{Tel}}{{/if}}{{/if}}</label></li>
+    {{/each}}
+    </ul>
+    <div class="btn">
+        <a href="###" role="confirm" class="btn_blue_small">确认</a>
+        <a href="###" role="close">取消</a>
+    </div>
+    <a href="###" role="close" class="btn_shut_popup">×</a>
+</div>
