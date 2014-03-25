@@ -7,17 +7,18 @@ define (require, exports, module) ->
   $ = require('jquery')
   Addfav = () ->
     self = this
-    @_main = (id, title, url) ->
+    @_add = (id, title, url) ->
       try
         window.external.addFavorite(url, title)
       catch e
         try
-          $(id).attr('title', title)
+          $(id).attr('title', title).attr('href', url)
           window.sidebar.addPanel(title, url, "")
         catch e
           if navigator.userAgent.indexOf("Firefox") > -1
             return
           else
+            $(id).attr('href', 'javascript:;')
             alert "加入收藏失败，请使用Ctrl+D手工添加"
 
       return
@@ -33,7 +34,11 @@ define (require, exports, module) ->
       if options
         title = options.title or title
         url = options.url or url
-      self._main(id, title, url)
+      $(document).delegate(id, 'click', ->
+        self._add(this, title, url)
+        return
+      )
+
       return
     return
 

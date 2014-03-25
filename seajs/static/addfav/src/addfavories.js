@@ -11,20 +11,21 @@ define(function(require, exports, module) {
   Addfav = function() {
     var self;
     self = this;
-    this._main = function(id, title, url) {
+    this._add = function(id, title, url) {
       var e;
       try {
         window.external.addFavorite(url, title);
       } catch (_error) {
         e = _error;
         try {
-          $(id).attr('title', title);
+          $(id).attr('title', title).attr('href', url);
           window.sidebar.addPanel(title, url, "");
         } catch (_error) {
           e = _error;
           if (navigator.userAgent.indexOf("Firefox") > -1) {
             return;
           } else {
+            $(id).attr('href', 'javascript:;');
             alert("加入收藏失败，请使用Ctrl+D手工添加");
           }
         }
@@ -45,7 +46,9 @@ define(function(require, exports, module) {
         title = options.title || title;
         url = options.url || url;
       }
-      self._main(id, title, url);
+      $(document).delegate(id, 'click', function() {
+        self._add(this, title, url);
+      });
     };
   };
   module.exports = Addfav;
