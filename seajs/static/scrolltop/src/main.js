@@ -7,9 +7,32 @@
  */
 define(function(require) {
   "use strict";
-  var srcTop;
-  srcTop = require('./scrolltop');
-  new srcTop('#J_scrolltop').init();
+  var scrolltop, toTop;
+  scrolltop = require('./scrolltop');
+  toTop = new scrolltop();
+
+  /*
+   * 默认直接回到顶部
+   */
+  toTop.init('#J_scrolltop', {
+    motion: false
+  });
+
+  /*
+   * 缓动回到顶部
+   */
+  toTop.init('#J_scrollmotion', {
+    motion: true
+  });
+
+  /*
+   * 缓动回到顶部
+   * 滚动条高度不满一屏自动隐藏
+   */
+  toTop.init('#J_scrollhide', {
+    motion: true,
+    autohide: true
+  });
 });
 
 //# sourceMappingURL=main.map
