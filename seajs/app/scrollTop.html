@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>回到顶部</title>
+  <style>
+    p{
+      height: 3000px
+    }
+    .btn_fav1, .btn_fav3, .btn_fav2{
+      position: fixed;
+      right:0;
+      top: 100px
+    }
+    .btn_fav2{
+      top: 120px
+    }
+    .btn_fav3{
+      top: 140px
+    }
+  </style>
+</head>
+<body>
+<p></p>
+
+<a href="javascript:;" class="btn_fav1" title="收藏" rel="sidebar" id="J_scrolltop">直接回到顶部</a>
+<br>
+<a href="javascript:;" class="btn_fav2" title="收藏" rel="sidebar" id="J_scrollmotion">缓慢回到顶部</a>
+<br>
+<a href="javascript:;" class="btn_fav3" title="收藏" rel="sidebar" id="J_scrollhide">超过一屏才显示</a>
+<script src="../sea-modules/seajs/seajs/2.2.0/sea.js"></script>
+<script>
+
+  // Set configuration
+  seajs.config({
+    base: "../sea-modules/",
+    alias: {
+      "jquery": "jquery/jquery/1.10.1/jquery.js"
+    }
+  });
+
+  // For development
+  if (location.href.indexOf("?dev") > 0) {
+    seajs.use("../static/scrolltop/src/main");
+  }
+  // For production
+  else {
+    seajs.use("examples/scrolltop/1.0.0/main");
+  }
+</script>
+
+</body>
+</html>
