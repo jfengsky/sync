@@ -35,12 +35,12 @@ function Gesture() {
             // TODO 判断hold
             console.log('tap');
             return 'tap';
-        } else if ((startPoint.x <= endPoint.x) && (startPoint.y < endPoint.y) && (endPoint.y - startPoint.y > endPoint.x - startPoint.x)) {
+        } else if ((startPoint.y < endPoint.y) && (Math.abs(endPoint.y - startPoint.y) > Math.abs(endPoint.x - startPoint.x))) {
             console.log('down');
             return 'down';
-        } else if ( (startPoint.x > endPoint.x) && (startPoint.y <= endPoint.y) && (endPoint.y - startPoint.y <= endPoint.x - startPoint.x)) {
-            console.log('right');
-            return 'right';
+        } else if ((startPoint.y >= endPoint.y) && (Math.abs(endPoint.y - startPoint.y) <= Math.abs(endPoint.x - startPoint.x))) {
+            console.log('up');
+            return 'up';
         }
     };
     this._handleTouchEvent = function(event) {
