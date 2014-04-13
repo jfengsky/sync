@@ -20,6 +20,8 @@
 // document.addEventListener("touchend", handleTouchEvent, false);
 // document.addEventListener("touchmove", handleTouchEvent, false);
 
+var club = document.getElementById('block');
+
 function Gesture() {
     var self = this,
         startPoint = {},
