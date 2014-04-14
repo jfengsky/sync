@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0">
+  <title>hammer demo</title>
+  <script src="http://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+  <!--<script src="http://cdn.staticfile.org/hammer.js/1.0.6/hammer.min.js"></script>-->
+  <script src="http://cdn.staticfile.org/hammer.js/1.0.6/jquery.hammer.min.js"></script>
+</head>
+<body id="element">
+
+<script>
+  $("#element")
+      .hammer({
+        // 对DOM进行一些初始化，这里可以加入一些参数
+      })
+      .bind("tap", function(ev) {
+        console.log(ev);
+      });
+</script>
+
+</body>
+</html>

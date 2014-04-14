@@ -25,62 +25,55 @@ var club = document.getElementById('block');
 function Gesture() {
   var self = this,
       startPoint = {},
-      endPoint = {};
-  this._start = function(data) {
-    startPoint = {};
-    startPoint = data;
-  };
-  this._move = function(data){
-    startPoint = {};
-    startPoint = data;
-    console.log(startPoint)
-  };
-  this._end = function(data) {
-    endPoint = {};
-    endPoint = data;
-    if ((startPoint.x === endPoint.x) && (startPoint.y === endPoint.y)) {
-      // TODO 判断hold
-      console.log('tap');
-      return 'tap';
-    } else if ((startPoint.y < endPoint.y) && (Math.abs(endPoint.y - startPoint.y) > Math.abs(endPoint.x - startPoint.x))) {
-      console.log('down');
-      return 'down';
-    } else if ((startPoint.y >= endPoint.y) && (Math.abs(endPoint.y - startPoint.y) <= Math.abs(endPoint.x - startPoint.x))) {
-      console.log('up');
-      return 'up';
+      movePoint = {},
+      endPoint = {},
+      startTime,
+      endTime,
+      distanceCheck = 60; // 移动多少距离才判断方向
+
+  this._touchStart = function(event){
+    event.preventDefault();
+    var touch = event.touches[0];
+    startPoint = {
+      x: touch.clientX,
+      y: touch.clientY
     }
   };
-  this._handleTouchEvent = function(event) {
-    var _x, _y;
-    if (event.type === 'touchstart') {
-      _x = event.touches[0].clientX;
-      _y = event.touches[0].clientY;
-      self._start({
-        x: _x,
-        y: _y
-      })
-    } else if (event.type === 'touchend') {
-      _x = event.changedTouches[0].clientX;
-      _y = event.changedTouches[0].clientY;
-      self._end({
-        x: _x,
-        y: _y
-      })
-    } else if(event.type === 'touchmove') {
-      _x = event.changedTouches[0].clientX;
-      _y = event.changedTouches[0].clientY;
-      self._move({
-        x: _x,
-        y: _y
-      })
+  this._touchMove = function(event){
+
+  };
+  this._touchEnd = function(event){
+    var touch = event.changedTouches[0],
+        xDistance,
+        yDistance;
+    endPoint = {
+      x: touch.clientX,
+      y: touch.clientY
+    };
+    xDistance = Math.abs(endPoint.x) - Math.abs(startPoint.x);
+    yDistance = Math.abs(endPoint.y) - Math.abs(startPoint.y);
+
+//    console.log('left: ' + leftDistance);
+//    console.log('right: ' + rightDistance);
+//    console.log('up: ' + upDistance);
+//    console.log('down: ' + downDistance);
+    // left
+    if(startPoint.x > endPoint.x && (startPoint.x - endPoint.x > 60) ) {
+      console.log('swipeleft');
+    };
+    if(startPoint.y < endPoint.y && (startPoint.y - endPoint.y < -60) ){
+      console.log('swipedown');
     }
   };
+
 
 
   this.init = function() {
-    document.addEventListener("touchstart", self._handleTouchEvent, false);
-    document.addEventListener("touchmove", self._handleTouchEvent, false);
-    document.addEventListener("touchend", self._handleTouchEvent, false);
+    document.addEventListener("touchstart", self._touchStart, false);
+    document.addEventListener("touchmove", self._touchMove, false);
+    document.addEventListener("touchend", self._touchEnd, false);
+
+
   }
 
 }
