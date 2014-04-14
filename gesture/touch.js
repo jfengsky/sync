@@ -1,27 +1,3 @@
-// function handleTouchEvent(event) {
-//     //只跟踪一次触摸
-//     if (event.touches.length == 1) {
-//         var output = document.getElementById("output");
-//         switch (event.type) {
-//             case "touchstart":
-//                 output.innerHTML = "Touch started (" + event.touches[0].clientX + "," + event.touches[0].clientY + ")";
-//                 break;
-//             case "touchend":
-//                 output.innerHTML += "&lt;br&gt;Touch ended (" + event.changedTouches[0].clientX + "," + event.changeTouches[0].clientY + ")";
-//                 break;
-//             case "touchmove":
-//                 event.preventDefault(); //阻止滚动
-//                 output.innerHTML += "&lt;br&gt;Touch moved (" + event.changedTouches[0].clientX + "," + event.changedTouches[0].clientY + ")";
-//                 break;
-//         }
-//     }
-// }
-// document.addEventListener("touchstart", handleTouchEvent, false);
-// document.addEventListener("touchend", handleTouchEvent, false);
-// document.addEventListener("touchmove", handleTouchEvent, false);
-
-var club = document.getElementById('block');
-
 function Gesture() {
   var self = this,
       startPoint = {},
@@ -60,9 +36,9 @@ function Gesture() {
 
       if(xDistance >= distanceCheck) {
         if( startPoint.x > endPoint.x ) {
-          console.log('swipeleft');
+          return 'swipeleft';
         } else {
-          console.log('swiperight');
+          return 'swiperight';
         }
 
       };
@@ -71,9 +47,9 @@ function Gesture() {
 
       if (yDistance >= distanceCheck) {
         if( startPoint.y < endPoint.y ) {
-          console.log('swipedown');
+          return 'swipedown';
         } else {
-          console.log('swipeup');
+          return 'swipeup';
         }
       };
 
@@ -86,12 +62,9 @@ function Gesture() {
     document.addEventListener("touchstart", self._touchStart, false);
     document.addEventListener("touchmove", self._touchMove, false);
     document.addEventListener("touchend", self._touchEnd, false);
-
-
   }
 
 }
 
-var gest = new Gesture();
+new Gesture().init();
 
-gest.init();
