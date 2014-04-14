@@ -21,10 +21,11 @@ function Gesture() {
   this._touchMove = function(event){
 
   };
-  this._touchEnd = function(event){
+  this._touchEnd = function(event, fn){
     var touch = event.changedTouches[0],
         xDistance,
-        yDistance;
+        yDistance,
+        directory;
     endPoint = {
       x: touch.clientX,
       y: touch.clientY
@@ -36,9 +37,9 @@ function Gesture() {
 
       if(xDistance >= distanceCheck) {
         if( startPoint.x > endPoint.x ) {
-          return 'swipeleft';
+          directory = 'swipeleft';
         } else {
-          return 'swiperight';
+          directory = 'swiperight';
         }
 
       };
@@ -47,24 +48,27 @@ function Gesture() {
 
       if (yDistance >= distanceCheck) {
         if( startPoint.y < endPoint.y ) {
-          return 'swipedown';
+          directory = 'swipedown';
         } else {
-          return 'swipeup';
+          directory = 'swipeup';
         }
       };
 
+    };
+    if(typeof fn === 'function'){
+      fn(directory);
     }
   };
 
 
 
-  this.init = function() {
+  this.init = function(fn) {
     document.addEventListener("touchstart", self._touchStart, false);
     document.addEventListener("touchmove", self._touchMove, false);
-    document.addEventListener("touchend", self._touchEnd, false);
+    document.addEventListener("touchend", function(event){
+      self._touchEnd(event, fn);
+    }, false);
   }
 
 }
-
-new Gesture().init();
 
