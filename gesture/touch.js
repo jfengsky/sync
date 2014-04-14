@@ -33,10 +33,13 @@ function Gesture() {
 
   this._touchStart = function(event){
     event.preventDefault();
-    var touch = event.touches[0];
-    startPoint = {
-      x: touch.clientX,
-      y: touch.clientY
+    //只跟踪一次触摸
+    if (event.touches.length == 1){
+      var touch = event.touches[0];
+      startPoint = {
+        x: touch.clientX,
+        y: touch.clientY
+      }
     }
   };
   this._touchMove = function(event){
@@ -50,19 +53,30 @@ function Gesture() {
       x: touch.clientX,
       y: touch.clientY
     };
-    xDistance = Math.abs(endPoint.x) - Math.abs(startPoint.x);
-    yDistance = Math.abs(endPoint.y) - Math.abs(startPoint.y);
+    xDistance = Math.abs(Math.abs(endPoint.x) - Math.abs(startPoint.x));
+    yDistance = Math.abs(Math.abs(endPoint.y) - Math.abs(startPoint.y));
 
-//    console.log('left: ' + leftDistance);
-//    console.log('right: ' + rightDistance);
-//    console.log('up: ' + upDistance);
-//    console.log('down: ' + downDistance);
-    // left
-    if(startPoint.x > endPoint.x && (startPoint.x - endPoint.x > 60) ) {
-      console.log('swipeleft');
-    };
-    if(startPoint.y < endPoint.y && (startPoint.y - endPoint.y < -60) ){
-      console.log('swipedown');
+    if( xDistance > yDistance ) {   // 横向移动
+
+      if(xDistance >= distanceCheck) {
+        if( startPoint.x > endPoint.x ) {
+          console.log('swipeleft');
+        } else {
+          console.log('swiperight');
+        }
+
+      };
+
+    } else { // 纵向移动
+
+      if (yDistance >= distanceCheck) {
+        if( startPoint.y < endPoint.y ) {
+          console.log('swipedown');
+        } else {
+          console.log('swipeup');
+        }
+      };
+
     }
   };
 
