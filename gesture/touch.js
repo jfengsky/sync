@@ -23,52 +23,65 @@
 var club = document.getElementById('block');
 
 function Gesture() {
-    var self = this,
-        startPoint = {},
-        endPoint = {};
-    this._start = function(data) {
-        startPoint = {};
-        startPoint = data;
-    };
-    this._end = function(data) {
-        endPoint = {};
-        endPoint = data;
-        if ((startPoint.x === endPoint.x) && (startPoint.y === endPoint.y)) {
-            // TODO 判断hold
-            console.log('tap');
-            return 'tap';
-        } else if ((startPoint.y < endPoint.y) && (Math.abs(endPoint.y - startPoint.y) > Math.abs(endPoint.x - startPoint.x))) {
-            console.log('down');
-            return 'down';
-        } else if ((startPoint.y >= endPoint.y) && (Math.abs(endPoint.y - startPoint.y) <= Math.abs(endPoint.x - startPoint.x))) {
-            console.log('up');
-            return 'up';
-        }
-    };
-    this._handleTouchEvent = function(event) {
-        var _x, _y;
-        if (event.type === 'touchstart') {
-            _x = event.touches[0].clientX;
-            _y = event.touches[0].clientY;
-            self._start({
-                x: _x,
-                y: _y
-            })
-        } else if (event.type === 'touchend') {
-            _x = event.changedTouches[0].clientX;
-            _y = event.changedTouches[0].clientY;
-            self._end({
-                x: _x,
-                y: _y
-            })
-        }
-    };
-
-
-    this.init = function() {
-        document.addEventListener("touchstart", self._handleTouchEvent, false);
-        document.addEventListener("touchend", self._handleTouchEvent, false);
+  var self = this,
+      startPoint = {},
+      endPoint = {};
+  this._start = function(data) {
+    startPoint = {};
+    startPoint = data;
+  };
+  this._move = function(data){
+    startPoint = {};
+    startPoint = data;
+    console.log(startPoint)
+  };
+  this._end = function(data) {
+    endPoint = {};
+    endPoint = data;
+    if ((startPoint.x === endPoint.x) && (startPoint.y === endPoint.y)) {
+      // TODO 判断hold
+      console.log('tap');
+      return 'tap';
+    } else if ((startPoint.y < endPoint.y) && (Math.abs(endPoint.y - startPoint.y) > Math.abs(endPoint.x - startPoint.x))) {
+      console.log('down');
+      return 'down';
+    } else if ((startPoint.y >= endPoint.y) && (Math.abs(endPoint.y - startPoint.y) <= Math.abs(endPoint.x - startPoint.x))) {
+      console.log('up');
+      return 'up';
     }
+  };
+  this._handleTouchEvent = function(event) {
+    var _x, _y;
+    if (event.type === 'touchstart') {
+      _x = event.touches[0].clientX;
+      _y = event.touches[0].clientY;
+      self._start({
+        x: _x,
+        y: _y
+      })
+    } else if (event.type === 'touchend') {
+      _x = event.changedTouches[0].clientX;
+      _y = event.changedTouches[0].clientY;
+      self._end({
+        x: _x,
+        y: _y
+      })
+    } else if(event.type === 'touchmove') {
+      _x = event.changedTouches[0].clientX;
+      _y = event.changedTouches[0].clientY;
+      self._move({
+        x: _x,
+        y: _y
+      })
+    }
+  };
+
+
+  this.init = function() {
+    document.addEventListener("touchstart", self._handleTouchEvent, false);
+    document.addEventListener("touchmove", self._handleTouchEvent, false);
+    document.addEventListener("touchend", self._handleTouchEvent, false);
+  }
 
 }
 
