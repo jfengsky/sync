@@ -9,6 +9,6 @@ define(function (require) {
 
   var slide = require('./slide');
 
-  new slide().init('#demoThumbnails');
+  new slide().init('#J_carousel');
 
 });
