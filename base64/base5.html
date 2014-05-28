@@ -1,0 +1,44 @@
+<!--
+-
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: logo.gif
+ 
+iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEUAAAD/
+ //+l2Z/dAAAAM0lEQVR4nGP4/5/h/1+G/58ZDrAz3D/McH8yw83NDDeNGe4U
+ g9C9zwz3gVLMDA/A6P9/AFGGFyjOXZtQAAAAAElFTkSuQmCC!
+--> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>16进制码转换为图片</title>
+
+</head>
+<body>
+<div style="display:none;">
+ 
+</div>
+<div>
+<img id="testimg" src="data:image/gif;base64,
+ 
+iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEUAAAD/
+ //+l2Z/dAAAAM0lEQVR4nGP4/5/h/1+G/58ZDrAz3D/McH8yw83NDDeNGe4U
+ g9C9zwz3gVLMDA/A6P9/AFGGFyjOXZtQAAAAAElFTkSuQmCC!
+ 
+" onerror="src='mhtml:' + document.location.href + '!logo.gif';"/>
+</div>
+ 
+<div id="testdiv" style="background-color:#99CCFF; width:150px; height:100px;">
+ 
+</div>
+</body>
+</html>
+<script type="text/javascript">
+setTimeout(function(){
+    var div = document.getElementById('testdiv');
+    var img = document.getElementById('testimg');
+    div.style.backgroundImage = 'url('+img.src+')';
+    div.style.backgroundRepeat = 'no-repeat';
+},1);
+</script>
