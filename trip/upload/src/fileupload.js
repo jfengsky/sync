@@ -8,7 +8,8 @@ define(function (require, exports, module) {
   if( window.File && window.FileReader && window.FileList && window.Blob ){
     // 浏览器支持fileAPI html5 fileupload
     new h5upload().init('#J_h5upload',{
-      maxsize: 10
+      maxsize: 10,
+      types:['jpeg', 'jpg', 'png', 'gif', 'pdf', 'doc']
     });
   } else {
     // 浏览器不支持fileAPI swfupload

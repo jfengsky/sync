@@ -18,33 +18,26 @@ define(function (require, exports, module) {
      * @param {Object}  _files        文件信息数组
      * @param {Number}  _maxsize      上传文件大小限制
      * @return {Object} maxsize = 1   超过大小, 0 未超过大小
+     *                  upType = 0    格式正确, 1 格式不正确
      */
-    _checkSize: function(_files, _maxsize){
+    _checkSizeType: function(_files, _maxsize, _fileType){
+      var boolSize = true,
+          boolType = false;
       $.each(_files, function(index, item){
-
-        
-        if( item.size / 1048576 > _maxsize){
+        if(item.size / 1048576 > _maxsize){
           item.maxsize = 1;
-        } else {
-          item.maxsize = 0;
+          console.log('文件大小超过限制');
+          boolSize = false;
         };
-        $.each(_fileType, function(idx, key){
 
+        $.each(_fileType, function(idx, key){
+          if( item.type.indexOf(key.toLowerCase()) > -1 && item.type ){
+            console.log('文件格式正确2');
+            boolType = true;
+          };
         });
       });
-      return _files;
-    },
-
-    /**
-     * 检查文件类型
-     * @param {Object}  _files      文件信息数组
-     * @param {Array}   _fileType   可上传的文件类型
-     * @return {Object} uptype = 1  不可上传的文件类型，0可上传的文件类型
-     */
-    _checkType: function(_files, _fileType){
-      $.$.each(_files, function(index, item){
-
-      });
+      return boolSize && boolType;
     },
 
     /**
@@ -56,12 +49,30 @@ define(function (require, exports, module) {
      *    @param
      */
     init: function(_id, _args){
-      var self = this,
-          upfiles = [];
+      var self = this;
       $(_id).change(function(ev){
-        var filelist = ev.target.files;
-        upfiles = self._checkSize(filelist, _args.maxsize);
-        console.log(upfiles);
+        var filelist = ev.target.files,
+        upfiles = self._checkSizeType(filelist, _args.maxsize, _args.types);
+        if( upfiles ){
+
+          // ajax 上传
+          var formData = new window.FormData();
+          for(var i = 0; i < filelist.length; i++){
+            formData.append("Filedata", filelist[i]);
+          };
+
+          $.ajax({
+            url: 'upload.php',
+            type: 'POST',
+            data: formData,
+            cache: false,
+            contentType:false,
+            processData:false,
+            success: function (data) {
+              console.log(data);
+            }
+          });
+        }
       });
     }
   };
