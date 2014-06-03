@@ -7,5 +7,17 @@
 <body>
 <div id="c1" class="J_count" data-time="1404372600000|1404372900000"></div>
 <div id="c2" class="J_count" data-time="1404372600000|1404373200000"></div>
+
+<script src="../vacation/lib/vacation_global.min.js"></script>
+<script>
+    seajs.config({
+        base: '../',
+        charset: 'utf-8',
+        alias: {
+            jquery: 'vacation/lib/jquery'
+        }
+    });
+    seajs.use('temai/main');
+</script>
 </body>
 </html>
