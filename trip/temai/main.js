@@ -3,16 +3,14 @@
  */
 define(function (require) {
   "use strict";
+  var countdown = require('./mod_timedown'),
+      getData = require('./mod_getdata');
 
   // 页面倒计时
-  var countdown = require('./mod_timedown');
   new countdown().init();
 
-  // TODO tab切换
-
-  // TODO 产品筛选
-
-  // TODO 产品排序
+  //
+//  new getData().init();
 
   // TODO 翻页
 
