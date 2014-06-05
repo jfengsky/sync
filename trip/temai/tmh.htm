@@ -149,7 +149,8 @@
 						<p class="clearfix"><span class="price_sum"><dfn>￥</dfn>1600</span><a href="./tmh_files/tmh.htm" class="btn_detail">查看详情</a></p>
 					</div>
 				</div>
-				<div class="count_down">疯抢倒计时&nbsp;<span>0<i>天</i></span>&nbsp;<span>17</span> : <span>22</span> : <span>10</span></div>
+				<div class="count_down J_count" data-time="1404372600000|1404372900000">疯抢倒计时&nbsp;<span>0<i>天</i></span>&nbsp;<span>17</span> : <span>22</span> : <span>10</span></div>
+				<!--<div class="count_down">疯抢倒计时&nbsp;<span>0<i>天</i></span>&nbsp;<span>17</span> : <span>22</span> : <span>10</span></div>-->
 				<div class="sale_tag"><span>C秒杀</span><br>限时精品特价</div>
 			</div>
 		</div>
@@ -861,5 +862,15 @@
 </div>
 
 
-
+<script src="../vacation/lib/vacation_global.min.js"></script>
+<script>
+  seajs.config({
+    base: '../',
+    charset: 'utf-8',
+    alias: {
+      jquery: 'vacation/lib/jquery'
+    }
+  });
+  seajs.use('temai/main');
+</script>
 </body></html>

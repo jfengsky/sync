@@ -50,7 +50,8 @@ define(function(require, exports, module) {
           if (countTime > 0) {
             countTime = countTime - 1000;
             tempTime = {
-              d: self._fullTime(Math.floor(countTime / 86400000)),
+//              d: self._fullTime(Math.floor(countTime / 86400000)),
+              d: Math.floor(countTime / 86400000),
               h: self._fullTime(Math.floor(countTime / 3600000 % 24)),
               m: self._fullTime(Math.floor(countTime / 60000 % 60)),
               s: self._fullTime(Math.floor(countTime / 1000 % 60)),
