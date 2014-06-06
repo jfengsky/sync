@@ -157,68 +157,74 @@
 	<div class="sale_main">
 		<div class="col_main">
 			<div class="sale_top_search">
-				<div class="tabs" id="J_tab"><span class="cur">全部特卖</span><span>限时抢购</span><span>超值预售</span></div>
+				<div class="tabs" id="J_tab">
+          <span class="cur" data-tag="0">全部特卖</span>
+          <span data-tag="1">限时秒杀</span>
+          <span data-tag="2">提前预售</span>
+          <span data-tag="3">专场</span>
+          <span data-tag="4">爆款</span>
+        </div>
 				<div class="">
-					<dl>
+					<dl id="J_type">
 						<dt>产品类型</dt>
 						<dd>
-							<span class="cur">全部</span>
-							<span>跟团游</span>
-							<span>自由行</span>
+							<span class="cur" data-tag="0">全部</span>
+							<span data-tag="grouptravel">跟团游</span>
+							<span data-tag="freetravel">自由行</span>
 						</dd>    
 					</dl>
-					<dl>
+					<dl id="J_send">
 						<dt>出发地</dt>                                        
 						<dd>
-							<span class="cur">全部</span>
-							<span>北京</span>
-							<span>上海</span>
-							<span>天津</span>
-							<span>青岛</span>
-							<span>南京</span>
-							<span>杭州</span>
-							<span>厦门</span>
-							<span>成都</span>
-							<span>深圳</span>
-							<span>广州</span>
-							<span>沈阳</span>
+							<span class="cur" data-tag="all">全部</span>
+							<span data-tag="1">北京</span>
+							<span data-tag="2">上海</span>
+							<span data-tag="3">天津</span>
+							<span data-tag="4">青岛</span>
+							<span data-tag="5">南京</span>
+							<span data-tag="6">杭州</span>
+							<span data-tag="7">厦门</span>
+							<span data-tag="8">成都</span>
+							<span data-tag="9">深圳</span>
+							<span data-tag="10">广州</span>
+							<span data-tag="11">沈阳</span>
 						</dd>    
 					</dl>
-					<dl>
+					<dl id="J_sendtime">
 						<dt>出发时间</dt>                                        
 						<dd>
-							<span class="cur">全部</span>
-							<span>1月</span>
-							<span>2月</span>
-							<span>3月</span>
-							<span>4月</span>
-							<span>5月</span>
-							<span>2015年1月</span>                       
+							<span class="cur" data-tag="all">全部</span>
+							<span data-tag="1">1月</span>
+							<span data-tag="2">2月</span>
+							<span data-tag="3">3月</span>
+							<span data-tag="4">4月</span>
+							<span data-tag="5">5月</span>
+							<span data-tag="6">2015年1月</span>
 						</dd>    
 					</dl>
-					<dl>
+					<dl id="J_arrived">
 						<dt>目的地</dt>
 						<dd>
-							<span class="cur">全部</span>
-							<span>国内</span>
-							<span>港澳台</span>
-							<span>日韩</span>
-							<span>东南亚</span>
-							<span>欧洲</span>
-							<span>美洲</span>
-							<span>澳中东非</span>
-							<span>国内</span>
+							<span class="cur" data-tag="all">全部</span>
+							<span data-tag="1">国内</span>
+							<span data-tag="2">港澳台</span>
+							<span data-tag="3">日韩</span>
+							<span data-tag="4">东南亚</span>
+							<span data-tag="5">欧洲</span>
+							<span data-tag="6">美洲</span>
+							<span data-tag="7">澳中东非</span>
+							<span data-tag="8">国内</span>
 						</dd>    
 					</dl>
 				</div>
 			</div>
 			
 			<div class="product_box">
-				<div class="tabs">
-					<a href="./tmh_files/tmh.htm">综合排序</a><a href="./tmh_files/tmh.htm" class="cur">价格<i class="price_up_ico"></i></a><a href="./tmh_files/tmh.htm">价格<i class="price_down_ico"></i></a>
+				<div class="tabs" id="J_rank">
+          <a href="javascript:void(0)" data-tag="0">综合排序</a><a class="cur" href="javascript:void(0)" data-tag="1">价格<i class="price_up_ico"></i></a><a href="javascript:void(0)" data-tag="2">价格<i class="price_down_ico"></i></a>
 				</div>
 				<div class="product_list">
-					<ul>
+					<ul id="J_cnt">
 						<li>
 							<div class="product_pic">
 								<a href="./tmh_files/tmh.htm"><img src="./tmh_files/zzz_index_pic_s.png" alt="马尔代夫丽世岛自由行(5钻)·6日4晚 直飞 4人立减"></a>

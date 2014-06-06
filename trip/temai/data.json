@@ -1,0 +1,37 @@
+{
+  "isSuccess": true,
+  "totalPage": 100,
+  "currentPage": 3,
+  "items":[
+    {
+      "prdid": 1002,
+      "prdname": "东京一日游1",
+      "imgUrl": "http://pkgpic.ctrip.com/images2/1/11/11_14_250x140.jpg",
+      "prdtype": "跟团游"
+    },
+    {
+      "prdid": 1003,
+      "prdname": "东京一日游2",
+      "imgUrl": "http://pkgpic.ctrip.com/images2/1/11/11_14_250x140.jpg",
+      "prdtype": "跟团游"
+    },
+    {
+      "prdid": 1004,
+      "prdname": "东京一日游3",
+      "imgUrl": "http://pkgpic.ctrip.com/images2/1/11/11_14_250x140.jpg",
+      "prdtype": "跟团游"
+    },
+    {
+      "prdid": 1005,
+      "prdname": "东京一日游4",
+      "imgUrl": "http://pkgpic.ctrip.com/images2/1/11/11_14_250x140.jpg",
+      "prdtype": "跟团游"
+    },
+    {
+      "prdid": 1060,
+      "prdname": "东京一日游5",
+      "imgUrl": "http://pkgpic.ctrip.com/images2/1/11/11_14_250x140.jpg",
+      "prdtype": "跟团游"
+    }
+  ]
+}
