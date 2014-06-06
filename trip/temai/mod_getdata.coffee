@@ -41,6 +41,17 @@ define (require, exports, module) ->
       "order": 0
       "pageCount": 10
       "page": 1
+
+    # 所有可切换标签
+    tabs = [
+      '#J_tab span'
+      '#J_type span'
+      '#J_send span'
+      '#J_sendtime span'
+      '#J_arrived span'
+      '#J_rank a'
+    ]
+    filters = tabs.slice(1, -1)
     ###
      * function check
     ###
@@ -52,7 +63,23 @@ define (require, exports, module) ->
      * 内容初步模板
     ###
     @_cntTpl = (_data) ->
-      '<li id="J_' + _data.prdid + '"><div class="product_pic"><a href="./tmh_files/tmh.htm?id="' + _data.prdid + '><img src="' + _data.imgUrl + '" alt="' + _data.prdname + '"></a><div class="tag"><p class="tag_zyx">' + _data.prdtype + '</p><p class="discount"></p></div></div><div class="product_detial"><h3><a href="./tmh_files/tmh.htm?id="' + _data.prdid + '>' + _data.prdname + '</a></h3><div class="pro_txt"></div></div></li>'
+      '<li id="J_' + _data.prdid + '"><div class="product_pic"><a href="' + _data.prdUrl + '"><img src="' + _data.imgUrl + '" alt="' + _data.prdname + '"></a><div class="tag"><p class="tag_zyx">' + _data.prdtype + '</p><p class="discount"></p></div></div><div class="product_detial"><h3><a href="' + _data.prdUrl + '">' + _data.prdname + '</a></h3><div class="pro_txt"></div></div></li>'
+    ###
+     * 详细信息内容模板
+    ###
+    @_infoTpl = (_data) ->
+      '<p>出行交通： 阿提哈德</p><p>入住酒店： 市区3星级、郊区4星级</p><p>出团日期： ' + _data.Desc + '</p><p class="date_txt" data-time="' + _data.endOrderDate + '"></p><div class="right_btn"><p>原价<del><dfn>￥</dfn>' + _data.marketPrice + '</del></p><a href="#" class="price_btn"><dfn>￥</dfn><span>' + _data.salePrice + '</span>起</a></div>'
+    @_infoRend = (_data) ->
+      data = _data
+      if data.isSuccess and data.items
+        $.each data.items, (_index, _item) ->
+          cnt = $('#J_' + _item.prdid)
+          ze = ((_item.salePrice / _item.marketPrice) * 10).toFixed(1) - 0
+          cnt.find('.discount').html('<span>'+ ze + '</span>折')
+          cnt.find('.pro_txt').html self._infoTpl(_item)
+          return
+        # TODO 执行倒计时方法
+      return
     ###
       渲染模板
     ###
@@ -66,15 +93,18 @@ define (require, exports, module) ->
           ids.push _item.prdid
           return
       $('#J_cnt').html html
-      # TODO 请求后续数据
-      #console.log ids
+      # 请求后续数据
+      infoData =
+        "type": 5
+        "prds": ids.join(',')
+      self._getData infoData, self._infoRend
       return
     ###
      * 请求数据
     ###
     @_getData = (_data, _callback)->
-#      console.log(_data);
-#      console.log('----');
+      console.log(_data);
+      console.log('----');
       $.ajax
 #        url: "../package-Booking-VacationsOnlineSiteUI/Handler2/DealsHandler.ashx"
         url: 'data.json'
@@ -92,21 +122,12 @@ define (require, exports, module) ->
     ###
     @_tabChange = (_callback) ->
       $('#J_tab span').bind 'click', () ->
-        console.log DEFAULTDATA
-        tabs = [
-          '#J_tab span'
-          '#J_type span'
-          '#J_sendtime span'
-          '#J_arrived span'
-          '#J_rank a'
-          ]
         if !$(this).hasClass 'cur'
           $.each tabs, (_index, _item) ->
             $(_item).removeClass 'cur'
             #$($(_item)[0]).addClass 'cur'
             return
-          tabs.splice(0,1)
-          $.each tabs, (_index, _item) ->
+          $.each filters, (_index, _item) ->
             $($(_item)[0]).addClass 'cur'
             return
           sendData =
@@ -129,7 +150,7 @@ define (require, exports, module) ->
      * 清除单个设置
     ###
     @_signalChange = (_id, _value, _callback) ->
-      $(_id).bind 'click', (ev) ->
+      $(_id).bind 'click', () ->
         if !$(this).hasClass 'cur'
           $(_id).removeClass 'cur'
           $(this).addClass 'cur'
@@ -147,9 +168,20 @@ define (require, exports, module) ->
       self._tabChange self._getData
 
       # 产品类型切换
-      self._signalChange '#J_type span', 'prdtype', ->
-        console.log(222)
-        return
+      self._signalChange '#J_type span', 'prdtype', self._getData
+
+      # 出发地切换
+      self._signalChange '#J_send span', 'startcity', self._getData
+
+      # 出发时间切换
+      self._signalChange '#J_sendtime span', 'mon', self._getData
+
+      # 目的地切换
+      self._signalChange '#J_arrived span', 'dest', self._getData
+
+      # 排序切换
+      self._signalChange '#J_rank a', 'order', self._getData
+
       return
     return
 
