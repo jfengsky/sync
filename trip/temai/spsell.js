@@ -14,6 +14,6 @@ define(function (require) {
   //
   new getData(CD).init();
 
-  // TODO 翻页
+
 
 });

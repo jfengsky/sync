@@ -73,6 +73,8 @@ define (require, exports, module) ->
           cnt.find('.discount').html('<span>'+ ze + '</span>折')
           cnt.find('.pro_txt').html self._infoTpl(_item)
           return
+
+        # TODO 清除之前商品的计时器
         # 执行倒计时方法
         if _CountDown
           _CountDown.itemInit()
@@ -83,6 +85,7 @@ define (require, exports, module) ->
       渲染模板
     ###
     @_rend = (_data) ->
+
       data = _data
       html = ''
       ids = []
