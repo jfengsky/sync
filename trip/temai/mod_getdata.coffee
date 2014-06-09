@@ -5,6 +5,8 @@
 define (require, exports, module) ->
   "use strict"
   $ = require 'jquery'
+  page = require './mod_page'
+  Page = new page()
   ###
    * type 0:    全部特卖      1:限时秒杀 2:提前预售 3:专场 4:爆款
    **** type等于4，5时下面不用传
@@ -75,6 +77,7 @@ define (require, exports, module) ->
         if _CountDown
           _CountDown.itemInit()
 
+#      Page.init _data
       return
     ###
       渲染模板
@@ -94,6 +97,12 @@ define (require, exports, module) ->
         "type": 5
         "prds": ids.join(',')
       self._getData infoData, self._infoRend
+
+      # 翻页
+      Page.init
+        currentPage: sendData.page
+        totalPage: sendData.pageCount
+
       return
     ###
      * 请求数据
@@ -142,11 +151,30 @@ define (require, exports, module) ->
           $(_id).removeClass 'cur'
           $(this).addClass 'cur'
           sendData[_value] = $(this).attr('data-tag')
+          sendData.page = 1
           self._funcCheck ->
             _callback sendData,self._rend
             return
         return
       return
+    ###
+     * 页码切换
+    ###
+    @_pageChange = (_this)->
+      tempSendData = sendData
+      # 不可点击的翻页
+#      if ($(_this).hasClass 'up_nocurrent') or ($(_this).hasClass 'down_nocurrent') or ($(_this).hasClass 'current')
+#        return false
+        # 点击上一页
+#      else if $(_this).hasClass 'up'
+      if $(_this).hasClass 'up'
+        tempSendData.page = sendData.page - 1
+        # 点击下一页
+      else if $(_this).hasClass 'down'
+        tempSendData.page = sendData.page + 1
+      else
+        tempSendData.page = $(_this).attr('data-tag') - 0
+      return tempSendData
     ###
      * 初始化
     ###
@@ -169,9 +197,15 @@ define (require, exports, module) ->
       # 排序切换
       self._signalChange '#J_rank a', 'order', self._getData
 
+      # 翻页
+      $('#J_page').delegate 'a', 'click', ->
+        if ($(this).hasClass 'up_nocurrent') or ($(this).hasClass 'down_nocurrent') or ($(this).hasClass 'current')
+          return false
+        else
+          sendData = self._pageChange(this)
+          self._getData sendData, self._rend
       return
     return
 
-#  new GetDatas().init()
   module.exports = GetDatas
   return
