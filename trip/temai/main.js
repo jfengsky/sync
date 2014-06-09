@@ -4,13 +4,15 @@
 define(function (require) {
   "use strict";
   var countdown = require('./mod_timedown'),
-      getData = require('./mod_getdata');
+      getData = require('./mod_getdata'),
+      CD = new countdown();
 
-  // 页面倒计时
-  new countdown().init();
+  // 顶部倒计时
+  CD.topInit();
+  CD.itemInit();
 
   //
-//  new getData().init();
+  new getData(CD).init();
 
   // TODO 翻页
 

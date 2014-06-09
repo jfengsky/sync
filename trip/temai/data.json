@@ -2,6 +2,7 @@
   "isSuccess": true,
   "totalPage": 100,
   "currentPage": 3,
+  "serverTime": 1404813600000,
   "items":[
     {
       "prdid": 1002,
@@ -10,7 +11,7 @@
       "prdUrl": "http://www.ctrip.com/",
       "prdtype": "跟团游",
       "Desc": "2014-06-06",
-      "endOrderDate": 1404373200000,
+      "endOrderDate": 1404885600000,
       "salePrice": 3000,
       "marketPrice": 6000
     },
@@ -21,7 +22,7 @@
       "prdUrl": "http://www.ctrip.com/",
       "prdtype": "跟团游",
       "Desc": "2014-05-06",
-      "endOrderDate": 1404373200000,
+      "endOrderDate": 1404885600000,
       "salePrice": 200,
       "marketPrice": 6880
     },
@@ -32,7 +33,7 @@
       "prdUrl": "http://www.ctrip.com/",
       "prdtype": "跟团游",
       "Desc": "2014-04-06",
-      "endOrderDate": 1404373200000,
+      "endOrderDate": 1404885600000,
       "salePrice": 3080,
       "marketPrice": 6990
     },
@@ -43,7 +44,7 @@
       "prdUrl": "http://www.ctrip.com/",
       "prdtype": "跟团游",
       "Desc": "2014-03-06",
-      "endOrderDate": 1404373200000,
+      "endOrderDate": 1404885600000,
       "salePrice": 3800,
       "marketPrice": 6080
     },
@@ -54,7 +55,7 @@
       "prdUrl": "http://www.ctrip.com/",
       "prdtype": "跟团游",
       "Desc": "2014-02-06",
-      "endOrderDate": 1404373200000,
+      "endOrderDate": 1404885600000,
       "salePrice": 3780,
       "marketPrice": 6870
     }

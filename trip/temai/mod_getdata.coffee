@@ -16,31 +16,24 @@ define (require, exports, module) ->
    * pageCount  每页条数    10  20
    * page       显示页数    1 2 3
   ###
-#  DEFAULTDATA =
-#    "type": 0
-#    "prdtype": "0"
-#    "startcity": null
-#    "dest": ""
-#    "mon": null
-#    "order": 0
-#    "pageCount": 10
-#    "page": 1
+
+  DEFAULTDATA = ->
+    "type": 0
+    "prdtype": "0"
+    "startcity": null
+    "dest": ""
+    "mon": null
+    "order": 0
+    "pageCount": 10
+    "page": 1
   ###
    * Tab切换
    * 重置筛选
    * 请求数据
   ###
-  GetDatas = ->
+  GetDatas = (_CountDown) ->
     self = this
-    sendData =
-      "type": 0
-      "prdtype": "0"
-      "startcity": null
-      "dest": ""
-      "mon": null
-      "order": 0
-      "pageCount": 10
-      "page": 1
+    sendData = new DEFAULTDATA()
 
     # 所有可切换标签
     tabs = [
@@ -78,7 +71,10 @@ define (require, exports, module) ->
           cnt.find('.discount').html('<span>'+ ze + '</span>折')
           cnt.find('.pro_txt').html self._infoTpl(_item)
           return
-        # TODO 执行倒计时方法
+        # 执行倒计时方法
+        if _CountDown
+          _CountDown.itemInit()
+
       return
     ###
       渲染模板
@@ -103,8 +99,7 @@ define (require, exports, module) ->
      * 请求数据
     ###
     @_getData = (_data, _callback)->
-      console.log(_data);
-      console.log('----');
+      console.log _data
       $.ajax
 #        url: "../package-Booking-VacationsOnlineSiteUI/Handler2/DealsHandler.ashx"
         url: 'data.json'
@@ -130,15 +125,7 @@ define (require, exports, module) ->
           $.each filters, (_index, _item) ->
             $($(_item)[0]).addClass 'cur'
             return
-          sendData =
-            "type": 0
-            "prdtype": "0"
-            "startcity": null
-            "dest": ""
-            "mon": null
-            "order": 0
-            "pageCount": 10
-            "page": 1
+          sendData = new DEFAULTDATA()
           $(this).addClass 'cur'
           sendData['type'] = $(this).attr('data-tag')
           self._funcCheck ->
@@ -185,6 +172,6 @@ define (require, exports, module) ->
       return
     return
 
-  new GetDatas().init()
-  #module.exports = fn
+#  new GetDatas().init()
+  module.exports = GetDatas
   return
