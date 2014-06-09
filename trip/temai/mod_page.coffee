@@ -46,6 +46,7 @@ define (require, exports, module) ->
             html += self._sigPage(i)
 #            html += '<a href="javascript:void(0)">' + i + '</a>'
       # 总页码 >6 并且当前页码 <=6 显示 1~6 ... 最后页
+      # TODO 总页码 > 6 并且当页码 < 4
       else if _data.totalPage > 6 && _data.currentPage <= 6
         for i in [1..i+5]
           if i is _data.currentPage
