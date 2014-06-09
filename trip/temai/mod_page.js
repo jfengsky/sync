@@ -29,7 +29,7 @@ define(function(require, exports, module) {
     /*
      * 页码直接跳转
      */
-    this._tplGoto = '<span class="pkg_pagevalue">到<input type="text" class="pkg_page_num" name="" value="">页<input type="button" class="pkg_page_submit" value="确定" name=""></span>';
+    this._tplGoto = '<span class="pkg_pagevalue">到<input type="text" class="pkg_page_num" name="" id="J_turnpage" value="">页<input type="button" class="pkg_page_submit" value="确定" id="J_pagebtn" name=""></span>';
 
     /*
      * 页面中间处理

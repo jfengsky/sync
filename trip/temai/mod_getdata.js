@@ -195,8 +195,13 @@ define(function(require, exports, module) {
           return false;
         } else {
           sendData = self._pageChange(this);
-          return self._getData(sendData, self._rend);
+          self._getData(sendData, self._rend);
         }
+      });
+      $(document).delegate('#J_pagebtn', 'click', function() {
+        page = $('#J_turnpage').val() - 0;
+        sendData.page = page;
+        self._getData(sendData, self._rend);
       });
     };
   };

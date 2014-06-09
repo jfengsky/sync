@@ -204,6 +204,14 @@ define (require, exports, module) ->
         else
           sendData = self._pageChange(this)
           self._getData sendData, self._rend
+        return
+
+      # 页码直接跳转
+      $(document).delegate '#J_pagebtn', 'click', ->
+        page = $('#J_turnpage').val() - 0
+        sendData.page = page
+        self._getData sendData, self._rend
+        return
       return
     return
 
