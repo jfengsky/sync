@@ -28,6 +28,7 @@ define (require, exports, module) ->
     "order": 0
     "pageCount": 10
     "page": 1
+
   ###
    * Tab切换
    * 重置筛选
@@ -46,7 +47,7 @@ define (require, exports, module) ->
       '#J_arrived span'
       '#J_rank a'
     ]
-    filters = tabs.slice(1, -1)
+    filters = tabs.slice(1)
     ###
      * function check
     ###
@@ -125,11 +126,16 @@ define (require, exports, module) ->
           return
       return
     ###
+     * 填充筛选
+    ###
+
+    ###
      * tab筛选
     ###
     @_tabChange = (_callback) ->
       $('#J_tab span').bind 'click', () ->
         if !$(this).hasClass 'cur'
+
           $.each tabs, (_index, _item) ->
             $(_item).removeClass 'cur'
             #$($(_item)[0]).addClass 'cur'

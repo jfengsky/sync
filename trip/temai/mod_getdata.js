@@ -40,7 +40,7 @@ define(function(require, exports, module) {
     self = this;
     sendData = new DEFAULTDATA();
     tabs = ['#J_tab span', '#J_type span', '#J_send span', '#J_sendtime span', '#J_arrived span', '#J_rank a'];
-    filters = tabs.slice(1, -1);
+    filters = tabs.slice(1);
 
     /*
      * function check
@@ -124,6 +124,10 @@ define(function(require, exports, module) {
         }
       });
     };
+
+    /*
+     * 填充筛选
+     */
 
     /*
      * tab筛选
