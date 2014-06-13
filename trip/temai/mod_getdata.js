@@ -82,9 +82,30 @@ define(function(require, exports, module) {
     };
 
     /*
+     * 筛选模板
+     */
+    this._filterTpl = function(_data) {
+      return '<span data-tag="' + _data.k + '">' + _data.v + '</span>';
+    };
+
+    /*
+     * 写入筛选模板
+     */
+    this._filterRend = function(_id, _data) {
+      var html;
+      if (_data) {
+        html = '<span class="cur" data-tag="all">全部</span>';
+        $.each(_data, function(_index, _item) {
+          html += self._filterTpl(_item);
+        });
+        $(_id).html(html);
+      }
+    };
+
+    /*
       渲染模板
      */
-    this._rend = function(_data) {
+    this._rend = function(_data, _bool) {
       var data, html, ids, infoData;
       data = _data;
       html = '';
@@ -94,23 +115,28 @@ define(function(require, exports, module) {
           html += self._cntTpl(_item);
           ids.push(_item.prdid);
         });
+        if (_bool) {
+          self._filterRend('#J_send dd', data.filter_startcity);
+          self._filterRend('#J_sendtime dd', data.filter_mon);
+          self._filterRend('#J_arrived dd', data.filter_dest);
+        }
+        $('#J_cnt').html(html);
+        infoData = {
+          "type": 5,
+          "prds": ids.join(',')
+        };
+        self._getData(infoData, self._infoRend);
+        Page.init({
+          currentPage: sendData.page,
+          totalPage: sendData.pageCount
+        });
       }
-      $('#J_cnt').html(html);
-      infoData = {
-        "type": 5,
-        "prds": ids.join(',')
-      };
-      self._getData(infoData, self._infoRend);
-      Page.init({
-        currentPage: sendData.page,
-        totalPage: sendData.pageCount
-      });
     };
 
     /*
      * 请求数据
      */
-    this._getData = function(_data, _callback) {
+    this._getData = function(_data, _callback, _bool) {
       console.log(_data);
       $.ajax({
         url: 'data.json',
@@ -119,15 +145,11 @@ define(function(require, exports, module) {
         dataType: "json",
         success: function(_backData) {
           self._funcCheck(function() {
-            _callback(_backData);
+            _callback(_backData, _bool);
           });
         }
       });
     };
-
-    /*
-     * 填充筛选
-     */
 
     /*
      * tab筛选
@@ -143,9 +165,9 @@ define(function(require, exports, module) {
           });
           sendData = new DEFAULTDATA();
           $(this).addClass('cur');
-          sendData['type'] = $(this).attr('data-tag');
+          sendData['type'] = $(this).attr('data-tag') - 0;
           self._funcCheck(function() {
-            _callback(sendData, self._rend);
+            _callback(sendData, self._rend, true);
           });
         }
       });
@@ -154,10 +176,10 @@ define(function(require, exports, module) {
     /*
      * 清除单个设置
      */
-    this._signalChange = function(_id, _value, _callback) {
-      $(_id).bind('click', function() {
+    this._signalChange = function(_id, _target, _value, _callback) {
+      $(_id).delegate(_target, 'click', function() {
         if (!$(this).hasClass('cur')) {
-          $(_id).removeClass('cur');
+          $(_id + ' ' + _target).removeClass('cur');
           $(this).addClass('cur');
           sendData[_value] = $(this).attr('data-tag');
           sendData.page = 1;
@@ -189,11 +211,11 @@ define(function(require, exports, module) {
      */
     this.init = function() {
       self._tabChange(self._getData);
-      self._signalChange('#J_type span', 'prdtype', self._getData);
-      self._signalChange('#J_send span', 'startcity', self._getData);
-      self._signalChange('#J_sendtime span', 'mon', self._getData);
-      self._signalChange('#J_arrived span', 'dest', self._getData);
-      self._signalChange('#J_rank a', 'order', self._getData);
+      self._signalChange('#J_type', 'span', 'prdtype', self._getData);
+      self._signalChange('#J_send', 'span', 'startcity', self._getData);
+      self._signalChange('#J_sendtime', 'span', 'mon', self._getData);
+      self._signalChange('#J_arrived', 'span', 'dest', self._getData);
+      self._signalChange('#J_rank', 'a', 'order', self._getData);
       $('#J_page').delegate('a', 'click', function() {
         if (($(this).hasClass('up_nocurrent')) || ($(this).hasClass('down_nocurrent')) || ($(this).hasClass('current'))) {
           return false;

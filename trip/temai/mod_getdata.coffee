@@ -82,36 +82,65 @@ define (require, exports, module) ->
 
 #      Page.init _data
       return
+
+    ###
+     * 筛选模板
+    ###
+    @_filterTpl = (_data) ->
+      '<span data-tag="' + _data.k + '">' + _data.v + '</span>'
+
+    ###
+     * 写入筛选模板
+    ###
+    @_filterRend = (_id, _data) ->
+      if _data
+        html = '<span class="cur" data-tag="all">全部</span>'
+        $.each _data, (_index, _item) ->
+          html += self._filterTpl _item
+          return
+        $(_id).html html
+      return
     ###
       渲染模板
     ###
-    @_rend = (_data) ->
-
+    @_rend = (_data, _bool) ->
       data = _data
       html = ''
       ids = []
       if data.isSuccess and data.items
+
         $.each data.items, (_index, _item) ->
           html += self._cntTpl _item
           ids.push _item.prdid
           return
-      $('#J_cnt').html html
-      # 请求后续数据
-      infoData =
-        "type": 5
-        "prds": ids.join(',')
-      self._getData infoData, self._infoRend
 
-      # 翻页
-      Page.init
-        currentPage: sendData.page
-        totalPage: sendData.pageCount
+        # 填充筛选条件
+        if _bool
+          # 更新出发地筛选
+          self._filterRend '#J_send dd', data.filter_startcity
 
+          # 更新出发出发时间筛选
+          self._filterRend '#J_sendtime dd', data.filter_mon
+
+          # 更新目的地筛选
+          self._filterRend '#J_arrived dd', data.filter_dest
+
+        $('#J_cnt').html html
+        # 请求后续数据
+        infoData =
+          "type": 5
+          "prds": ids.join(',')
+        self._getData infoData, self._infoRend
+
+        # 翻页
+        Page.init
+          currentPage: sendData.page
+          totalPage: sendData.pageCount
       return
     ###
      * 请求数据
     ###
-    @_getData = (_data, _callback)->
+    @_getData = (_data, _callback, _bool)->
       console.log _data
       $.ajax
 #        url: "../package-Booking-VacationsOnlineSiteUI/Handler2/DealsHandler.ashx"
@@ -121,13 +150,10 @@ define (require, exports, module) ->
         dataType: "json"
         success: (_backData)->
           self._funcCheck ->
-            _callback _backData
+            _callback _backData, _bool
             return
           return
       return
-    ###
-     * 填充筛选
-    ###
 
     ###
      * tab筛选
@@ -140,24 +166,26 @@ define (require, exports, module) ->
             $(_item).removeClass 'cur'
             #$($(_item)[0]).addClass 'cur'
             return
+
           $.each filters, (_index, _item) ->
             $($(_item)[0]).addClass 'cur'
             return
           sendData = new DEFAULTDATA()
           $(this).addClass 'cur'
-          sendData['type'] = $(this).attr('data-tag')
+          sendData['type'] = $(this).attr('data-tag') - 0
           self._funcCheck ->
-            _callback sendData,self._rend
+            _callback sendData,self._rend, true
             return
         return
       return
     ###
      * 清除单个设置
     ###
-    @_signalChange = (_id, _value, _callback) ->
-      $(_id).bind 'click', () ->
+    @_signalChange = (_id, _target, _value, _callback) ->
+      $(_id).delegate _target, 'click', () ->
+#      $(_id).bind 'click', () ->
         if !$(this).hasClass 'cur'
-          $(_id).removeClass 'cur'
+          $(_id + ' ' + _target).removeClass 'cur'
           $(this).addClass 'cur'
           sendData[_value] = $(this).attr('data-tag')
           sendData.page = 1
@@ -192,19 +220,19 @@ define (require, exports, module) ->
       self._tabChange self._getData
 
       # 产品类型切换
-      self._signalChange '#J_type span', 'prdtype', self._getData
+      self._signalChange '#J_type', 'span', 'prdtype', self._getData
 
       # 出发地切换
-      self._signalChange '#J_send span', 'startcity', self._getData
+      self._signalChange '#J_send', 'span', 'startcity', self._getData
 
       # 出发时间切换
-      self._signalChange '#J_sendtime span', 'mon', self._getData
+      self._signalChange '#J_sendtime', 'span', 'mon', self._getData
 
       # 目的地切换
-      self._signalChange '#J_arrived span', 'dest', self._getData
+      self._signalChange '#J_arrived', 'span', 'dest', self._getData
 
       # 排序切换
-      self._signalChange '#J_rank a', 'order', self._getData
+      self._signalChange '#J_rank', 'a', 'order', self._getData
 
       # 翻页
       $('#J_page').delegate 'a', 'click', ->
