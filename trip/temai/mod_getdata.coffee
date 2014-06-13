@@ -55,11 +55,13 @@ define (require, exports, module) ->
       if typeof _fn is "function"
         _fn()
       return
+
     ###
      * 内容初步模板
     ###
     @_cntTpl = (_data) ->
       '<li id="J_' + _data.prdid + '"><div class="product_pic"><a href="' + _data.prdUrl + '"><img src="' + _data.imgUrl + '" alt="' + _data.prdname + '"></a><div class="tag"><p class="tag_zyx">' + _data.prdtype + '</p><p class="discount"></p></div></div><div class="product_detial"><h3><a href="' + _data.prdUrl + '">' + _data.prdname + '</a></h3><div class="pro_txt"></div></div></li>'
+
     ###
      * 详细信息内容模板
     ###
@@ -100,6 +102,7 @@ define (require, exports, module) ->
           return
         $(_id).html html
       return
+
     ###
       渲染模板
     ###
