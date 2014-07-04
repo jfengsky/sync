@@ -1,0 +1,77 @@
+{{! 任何一个不为空 }}
+{{#anyNoneEmpty FeeInfos FlightContains}}
+{{#unless isInDetailInfoBox}}
+<div id="js-money-contain" class="flt_htl_resource basefix">
+{{else}}
+<a class="under_tab_anchor" id="expense">&nbsp;</a>
+{{/unless}}
+    {{#if isInDetailInfoBox}}
+	<h3 class="resource_title">
+		费&nbsp;&nbsp;用<i class="icon_b icon_b_03"></i>
+	</h3>
+    {{/if}}
+	{{#notEmpty FeeInfos}}
+		{{#if isInDetailInfoBox}}
+			<dl class="detail_date"{{#isEmpty FlightContains Activities}} style="border-bottom:0;margin-bottom:0;padding-bottom:0"{{/isEmpty}}>
+				{{#each FeeInfos}}
+					{{#notEmpty PkgDescEntitys}}
+					<dt>{{{TitleName}}}</dt>
+		            <dd>
+					    <ul class="num_list">
+						    {{#each PkgDescEntitys}}
+						    <li>{{{Detail}}}</li>
+						    {{/each}}
+					    </ul>
+		            </dd>
+					{{/notEmpty}}
+				{{/each}}
+			</dl>
+		{{else}}
+			<div class="cost_detail"{{#isEmpty FlightContains Activities}} style="border-bottom:0;margin-bottom:0;padding-bottom:0"{{/isEmpty}}>
+				{{#each FeeInfos}}
+					{{#notEmpty PkgDescEntitys}}
+					<h4 class="resource_detail_title2">{{{TitleName}}}</h4>
+					<ul class="resource_detail_list">
+					    {{#each PkgDescEntitys}}
+					    <li>{{{Detail}}}</li>
+					    {{/each}}
+				    </ul>
+					{{/notEmpty}}
+				{{/each}}
+			</div>
+		{{/if}}
+	{{/notEmpty}}
+
+	{{! 只有详细介绍框才有 }}
+    {{#notEmpty Activities}}
+    <dl class="detail_date border_none">
+		<dt>推荐活动参考 （需自费）</dt>
+		<dd>
+			<div class="transparent_group">
+				<table>
+					<tbody>
+						<tr>
+							<th style="width:210px">活动</th>
+							<th style="width:162px">参考价格</th>
+							<th>说明</th>
+						</tr>
+                        {{#each Activities}}
+						<tr>
+							<td>{{{ActivityName}}}</td>
+							<td>{{{ReferPrice}}}</td>
+							<td>{{{Description}}}</td>
+						</tr>
+                        {{/each}}
+						<tr>
+							<td colspan="3">以上所列项目均是建议性项目，客人本着“自愿自费”的原则选择参加，部分项目参加人数不足时，则可能无法成行或费用做相应调整。</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</dd>
+	</dl>
+    {{/notEmpty}}
+{{#unless isInDetailInfoBox}}
+</div>
+{{/unless}}
+{{/anyNoneEmpty}}

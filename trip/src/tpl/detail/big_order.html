@@ -1,0 +1,460 @@
+<ul class="resource_price_wrap basefix">
+	<li class="start_date">
+		<label for="">出发</label>
+		<div class="input_wrap">
+			{{#if isStartup}}
+			<input readonly="readonly" type="text" id="js-departure-date" value=" 请选择出发日期">
+			<input readonly="readonly" id="js-depature-date-real" type="text" style="position:absolute;left:0;top:0;z-index:1;filter:alpha(opacity=0);opacity:0;" value="请选择出发日期">
+			{{else}}
+            <input readonly="readonly" type="text" id="js-departure-date" value="{{#if BaseInfo.DepartureDate}} {{#dtdate BaseInfo.DepartureDate}}{{/dtdate}}（{{#week BaseInfo.DepartureDate}}{{/week}}）&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{#if StartPrice}}&yen;{{StartPrice}}起/{{#unless StudyTour}}成{{/unless}}人{{/if}}{{/if}}" />
+            <input readonly="readonly" type="text" style="position:absolute;left:0;top:0;z-index:1;filter:alpha(opacity=0);opacity:0;" value="{{#if BaseInfo.DepartureDate}}{{#dtdate BaseInfo.DepartureDate}}{{/dtdate}}{{/if}}" />
+			{{/if}}
+			<b></b>
+		</div>
+		<!--<span data-role="jmp" data-params="{options:{type:'jmp_table',classNames:{boxType:'jmp_table'},template:'#jmp_pkg_title', content:{txt0:'儿童价标准',txt1:'年龄2-12周岁，不占床，含往返交通、正餐、导游等服务。'},css:{maxWidth:'300',minWidth:'240'},alignTo:'cursor'}}" class="children_price"><i></i>儿童价</span>-->
+	</li>
+    {{#if IsTourGroupProduct}}
+    <li class="line_select">
+		<label for="">线路</label>
+		<div class="input_wrap">
+            <input readonly="readonly" type="text" value="{{#is BaseInfo.MultiLine '!==' undefined}}{{BaseInfo.MultiLine}}{{else}}{{/is}}">
+			<b></b>
+			<p style="display:none"></p>
+		</div>
+	</li>
+    {{/if}}
+    <!--
+        儿童可预订
+
+        成人下拉：1-10 儿童下拉：0-10
+        默认成人2和min取最小值 儿童0
+
+        儿童不可预订
+
+        成人下拉：2和min取最小值-“+9”
+        默认成人2和min取最小值
+
+    -->
+	<li class="tourist_num">
+		<label for="">成人</label>
+		<div class="input_wrap">
+            <input type="number" value="{{#is BaseInfo.AdultNum '!==' undefined}}{{BaseInfo.AdultNum}}{{else}}{{#Max MinPersonQuantity 2}}{{/Max}}{{/is}}" />
+			<b></b>
+			<p style="display:none">
+				{{#eachx "null" MinAdult MaxAdult}}
+				<a href="javascript:void(0);">{{$index}}</a>
+				{{/eachx}}
+			</p>
+		</div>
+	</li>
+	<li class="children_num">
+		{{#if ForChild}}
+		<label for="">儿童<span>(2-12岁)</span></label>
+		<div class="input_wrap">
+			<input type="number" value="{{#is BaseInfo.ChildNum '!==' undefined}}{{BaseInfo.ChildNum}}{{else}}0{{/is}}" />
+			<b></b>
+			<p style="display:none">
+				{{#eachx "null" MinChild MaxChild}}
+				<a href="javascript:void(0);">{{$index}}</a>
+				{{/eachx}}
+			</p>
+		</div>
+		{{else}}
+		<label for="">儿童<span>(不接受儿童预订)</span></label>
+		{{/if}}
+	</li>
+	<li class="total_price">
+		<span class="price_name">总价</span>
+		<span class="price">{{#if isFetchSuccess }}{{#moneyHTML BaseInfo.TotalPrice}}{{/moneyHTML}}{{else}}--{{/if}}</span>
+		<a id="js-submit" class="{{#anyNoneEmpty isFetchSuccess isStartup }}btn_red_big{{else}}btn_big_disabled{{/anyNoneEmpty}}" href="javascript:void(0);">
+			{{#if isStartup}}
+			开始预订
+			{{else}}
+			{{#if isFetching }}
+			{{#if isOrdering}}
+			预订中...
+			{{else}}
+			查询中...
+			{{/if}}
+			{{else}}
+			立即预订
+			{{/if}}
+			{{/if}}
+		</a>
+	</li>
+</ul>
+<div class="resource_wrap">
+{{#unless isStartup}}
+{{#if hasRiskRemark}}
+<div class="y_box">
+    <p>奖励金额：{{RiskReward}}<br/>备注：{{RiskRemark}}</p>
+</div>
+{{/if}}
+<div class="all_resource">
+	{{#if isFetchSuccess}}
+    {{#if IsShowResource}}
+	<div class="flt_htl_resource basefix">
+		{{#if FlightInfos.length}}
+		<div class="flt_resource_detail" id="js-flight-wrap">
+			<h4 class="resource_detail_title2">机票</h4>
+
+			<table class="flt_resource_table">
+				<tbody>
+					{{#each FlightInfosDealed}}
+					<tr{{#if CSSHasBorder}}{{#is CSSBorderWhere 'Flight'}} class="border"{{/is}}{{/if}} data-segment-number="{{TripSegmentNo}}">
+						<td class="col_01">
+							{{DepartDate}}{{#if DarkMorning}}<span data-role="jmp" data-params="{options:{type:'jmp_title',classNames:{boxType:'jmp_title'},template:'#jmp_pkg_title', content:{txt0:'{{DarkMorning}}'},css:{maxWidth:'300',minWidth:'240'},alignTo:'cursor',showArrow:false}}" class="special_flt">凌晨航班</span>{{/if}}
+						</td>
+						<td class="col_02">
+							<div>
+								<strong class="time">{{DepartTime}}</strong>{{DepartCityName}}（{{DepartAirportName}}）
+							</div>
+							<div>
+								<strong class="time">{{ArriveTime}}</strong>{{ArriveCityName}}（{{ArriveAirportName}}）
+								{{#is NextDay 0}}
+                                {{else}}
+								<span class="base_txtdiv" data-role="jmp" data-params="{options:{css:{maxWidth:'300',minWidth:'240'},type:'jmp_text',classNames:{boxType:'jmp_text'},template:'#jmp_NextDay_{{TripSegmentNo}}_{{FlightNo}}',alignTo:'cursor',showArrow:false}}">{{#is NextDay '>' 0}}+{{/is}}{{NextDay}}</span>
+								<div id="jmp_NextDay_{{TripSegmentNo}}_{{FlightNo}}" style="display:none">
+									<div class="jmp_bd">受时差和飞行时间影响，航班到达日期为起飞日期{{#is NextDay '>' 0}}+{{/is}}{{NextDay}}天。显示的到达时间为当地时间。</div>
+								</div>
+								{{/is}}
+							</div>
+						</td>
+						<td class="col_03">
+							<div class="pubFlights_{{AirlineCode}}">{{AirlineShortName}}</div>
+							<div class="flt_num">
+								{{FlightNo}}
+								<!-- 机型 -->
+								<span data-params="{options: {boundaryShow:false,css:{maxWidth:'490'},type:'jmp_table',classNames:{boxType:'jmp_table'},template:'#jmp_tab',content:online.getTableTips('fltDomestic_planeType.asp?CraftType={{PlaneType}}'),alignTo:'cursor'}}"
+								data-role="jmp" class="base_txtdiv">{{PlaneType}}</span>
+							</div>
+						</td>
+						<td class="col_04">{{ClassName}}</td>
+						<td class="col_05">{{JourneyTime}}</td>
+						<td class="col_06">
+							<!--经停-->
+							{{#FlightStops}}
+							<span class="base_txtdiv" data-role="jmp" data-params="{options: {css:{maxWidth:'300'},type:'jmp_text',classNames:{boxType:'jmp_text'},template:'#jmp_TransfersOrStops',content:{ txt:'{{#each Data}}<div class=jmp_bd><strong>{{Text}}</strong><p>{{Value}}</p></div>{{/each}}'},alignTo:'cursor',showArrow:false}}">{{Key}}</span>
+							{{/FlightStops}}
+							<!-- 预设限制 -->
+							{{#Remarks}}
+								{{! 仅剩几张 }}
+								{{#Votes}}
+										<span class="base_txtdiv">{{Value}}</span>
+								{{/Votes}}
+								{{! 退改签 }}
+								{{#ChangeBack}}
+									<span class="base_txtdiv" data-role="jmp" data-params="{options: {css:{maxWidth:'300',minWidth:'240'},type:'jmp_title',classNames:{boxType:'jmp_title'},template:'#jmp_ChangeBack','content':{ key:'{{Key}}',txt:'{{#Data}}<strong>{{Text}}</strong><p>{{Value}}</p>{{/Data}}'},alignTo:'cursor'}}">{{Key}}</span>
+								{{/ChangeBack}}
+								{{! 预设限制 }}
+								{{#Limit}}
+									<span class="base_txtdiv" data-role="jmp" data-params="{options: {css:{maxWidth:'300',minWidth:'240'},type:'jmp_title',classNames:{boxType:'jmp_title'},template:'#jmp_Limit','content':{ key:'{{Key}}',content:'{{Content}}',txt:'{{#Data}}<strong>{{Text}}</strong><p>{{Value}}</p>{{/Data}}'},alignTo:'cursor'}}">{{Key}}</span>
+								{{/Limit}}
+								{{! 共享航班 }}
+								{{#ShareFlight}}
+									<span class="base_txtdiv" data-role="jmp" data-params="{options: {css:{maxWidth:'300',minWidth:'240'},type:'jmp_title',classNames:{boxType:'jmp_text'},template: '#jmp_ShareFlight','content':{'txt':'<div class=jmp_bd>{{Value}}'},alignTo:'cursor'}}">{{Text}}</span>
+								{{/ShareFlight}}
+                                {{#PaymentLimit}}
+                                    <span class="base_txtdiv" data-role="jmp" data-params="{options: {css:{maxWidth:\'300\',minWidth:\'240\'},type:\'jmp_title\',classNames:{boxType:\'jmp_text\'},\template: \'#jmp_ShareFlight\',\'content\':{\'txt\':\'<div class=jmp_bd>{{Value}}\'},alignTo:\'cursor\'}}">{{Text}}</span>
+                                {{/PaymentLimit}}
+
+							{{/Remarks}}
+						</td>
+						{{#if HasMoreButton}}
+						<td class="col_btn" rowspan="{{MoreButtonRowSpan}}">
+							<a class="change_resource_btn" href="javascript:void(0);">选择其他航班</a>
+						</td>
+						{{/if}}
+					</tr>
+					{{#if HasTransfer}}
+					<tr{{#if CSSHasBorder}}{{#is CSSBorderWhere 'HasTransfer'}} class="border"{{/is}}{{/if}}>
+						<td colspan="6">
+							<div class="transfer_plane"><span><i></i>{{ArriveCityName}}（{{ArriveAirportName}}）中转&nbsp;停留时长：{{Duration}}</span></div>
+						</td>
+					</tr>
+					{{/if}}
+                    {{#if DirectFlightChannel}}
+                    <tr{{#if CSSHasBorder}}{{#is CSSBorderWhere 'DirectFlightChannel'}} class="border"{{/is}}{{/if}}>
+                        <td></td>
+                        <td colspan="5">
+                            <div class="luggage_limit_info"><i></i>请注意您购买机票的免费行李额度，该机票婴儿无法预定。</div>
+                        </td>
+                    </tr>
+                    {{/if}}
+					{{/each}}
+				</tbody>
+			</table>
+
+		</div>
+		{{/if}}
+		{{#if HotelInfos.length}}
+		<div class="htl_resource_detail" id="js-hotel-wrap">
+			<h4 class="resource_detail_title2">酒店</h4>
+			<table class="htl_resource_table">
+				<tbody>
+					{{#each HotelInfos}}
+					<tr data-index-in-data="{{@index}}" data-segment-number="{{SegmentNumber}}" data-hotel-id="{{Hotel}}">
+						<td class="col_01">
+							<p class="gray">{{CityName}}（{{LiveCount}}晚）</p>
+							<p class="gray">入住&nbsp;&nbsp;{{#dtdate LiveStartDay}}{{/dtdate}}</p>
+							<p class="gray">离店&nbsp;&nbsp;{{#dtdate LiveEndDay}}{{/dtdate}}</p>
+						</td>
+						<td class="col_02">
+							<a class="htl_img" href="{{HotelUrl}}" target="_blank" title="{{HotelName}}">
+								<img src="{{LogoUrl}}" alt="" width="100" height="75">
+							</a>
+							<div class="htl_detail">
+								<h3>
+									<a href="{{HotelUrl}}" target="_blank" title="{{HotelName}}">{{HotelName}}</a>
+									{{#is StarLience 'T'}}
+									{{! 实心的星星 }}
+                                    <i title="国家旅游局评定为{{Star}}星级" class="hotel_star_{{Star}}"></i>
+									{{else}}
+                                    <i title="{{#EmptyStar Star}}{{/EmptyStar}}" class="hotel_hollow_{{Star}}"></i>
+									{{/is}}
+								</h3>
+								<p class="gray">{{Address}}</p>
+								{{> RoomList}}
+								{{#is RoomTotalCount '>' 1}}
+								<div class="flod_spread_btn">
+									<a href="javascript:void(0);">
+										更多房型<b class="down"></b>
+									</a>
+									<a href="javascript:void(0);" style="display:none">
+										收起<b class="up"></b>
+									</a>
+								</div>
+								{{/is}}
+							</div>
+						</td>
+						<td class="col_btn">
+                            {{#is HotelTotalCount '>' 1}}
+							<a class="change_resource_btn" href="javascript:void(0);">选择其他酒店</a>
+							{{/is}}
+						</td>
+					</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
+		{{/if}}
+        {{#if IsShowSingleOptionalTable}}
+		<div class="other_resource_detail">
+            <h4 class="resource_detail_title2">可选资源</h4>
+			<table class="other_resource_table">
+				<tbody>
+					{{#each SingleResources}}
+					{{#if IsShow}}
+					<tr class="js-single" data-index-in-data="{{@index}}" data-segment-id="{{SegmentID}}" data-segment-number="{{SegmentNumber}}" data-resource-id="{{ResourceID}}" data-category-id="{{CategoryID}}">
+                        <td class="col_01" rowspan="{{Rowspan}}">
+                            {{#if IsTitleShow}}<h4 class="other_product">{{{TitlteName}}}</h4>{{/if}}
+                        </td>
+						<td class="col_02">
+                            <div class="other_name js-product-name">{{{Name}}}</div>
+						</td>
+						<td class="col_03">
+							{{!--直接显示杠杠<div><span class="other_price">{{#moneyHTML Price}}{{/moneyHTML}}</span>{{#if MarketPrice}}<span class="original_price">(<strong>{{#moneyHTML MarketPrice}}{{/moneyHTML}}</strong>)</span>{{/if}}</div>--}}
+							--
+						</td>
+						<!--出发日期-->
+						{{#if IsTraffic}}
+						<td class="col_04">{{#dtdate DepartureDate}}{{/dtdate}}</td>
+						{{else}}
+						<td class="col_04">--</td>
+						{{/if}}
+						<td class="col_05">
+                            {{!-- 单选项，份数压根不让显示了现在
+							<div class="room_num">
+							<!--单选项，都不会出现下拉框-->
+								<div class="num_input_wrap">
+									{{TotalCount}}
+								</div>
+								{{Unit}}
+							</div>
+                            --}}
+						</td>
+						<td class="col_06">
+							{{!--直接显示杠杠<div><span class="other_price">{{#moneyHTML TotalPrice}}{{/moneyHTML}}</span></div>--}}
+							--
+						</td>
+						<td class="col_07">
+							<div class="room_selected"{{#is Count '<=' 0}} style="display:none"{{/is}}>
+								<a href="javascript:void(0);">选择</a>
+							</div>
+						</td>
+						{{#is TotalCount '>' 1}}
+						<td class="col_btn">
+							<a class="change_resource_btn" href="javascript:void(0);">选择其他{{{CategoryName}}}</a>
+						</td>
+						{{/is}}
+					</tr>
+                    {{#if Introduction}}
+                    <tr class="js-intro" style="display:none">
+                        <td></td>
+                        <td colspan="6">
+                            <div class="other_product_detail">
+                                <b class="triangle"></b>
+                                <i></i>
+                                <div>{{{Introduction}}}</div>
+                                <a class="flod_btn" href="javascript:void(0);">收起</a>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                    {{/if}}
+					{{/if}}
+					{{/each}}
+					{{#each OptionResources}}
+					<tr{{#unless IsShow}} style="display:none"{{/unless}} class="js-optional{{#if IsBaoxian}} js-is-baoxian{{/if}}"
+					 {{#unless IsDropdownDateShow}}data-only-date="{{OnlyDate}}" {{/unless}}data-index-in-data="{{@index}}" data-resource-id="{{ResourceID}}" data-category-id="{{CategoryID}}">
+						<td class="col_01" rowspan="{{Rowspan}}">
+							{{#if IsShowTitle}}<h4 class="other_product">{{{CategoryName}}}</h4>{{/if}}
+						</td>
+						<td class="col_02">
+                            <i class="free_gift" {{#listItem Inventory 0}}{{#is Price '>' 0}}style="display:none"{{/is}}{{/listItem}}></i><div class="other_name js-product-name">{{{Name}}}</div>
+						</td>
+						<td class="col_03">
+						{{! 【价钱】【日期选择】【数量选择】 默认显示多个日期中的第一条的数据 }}
+						{{#listItem Inventory 0}}
+							<div><span class="js-ctrip-price other_price">{{#moneyHTML Price}}{{/moneyHTML}}{{!--#operator Price '*' DefaultQuantity}}{{/operator--}}</span>{{#if MarketPrice}}<span class="original_price">(<strong class="js-original-price">{{#moneyHTML MarketPrice}}{{/moneyHTML}}{{!--#operator MarketPrice '*' DefaultQuantity}}{{/operator--}}</strong>)</span>{{/if}}</div>
+						{{/listItem}}
+						</td>
+						<td class="col_04">
+							{{#if IsDropdownDateShow}}
+								<div class="use_date">
+									<div class="date_input_wrap">
+										{{#listItem Inventory useInventoryIndex}}
+										<input type="text" value="{{#dtdate Date}}{{/dtdate}}"/>
+										{{/listItem}}
+										<p style="display:none">
+											{{#each Inventory}}
+											<a href="javascript:void(0);">{{#dtdate Date}}{{/dtdate}}</a>
+											{{/each}}
+										</p>
+									</div>
+								</div>
+							{{else}}
+								{{!--显示杠杠 #each Inventory}}
+								{{#dtdate Date}}{{/dtdate}}
+								{{/each --}}
+								--
+							{{/if}}
+						</td>
+						<td class="col_05">
+							<div class="room_num">
+								<div class="num_input_wrap">
+								{{#listItem Inventory 0}}
+
+									{{#is MinQuantity MaxQuantity}}
+										{{!MinQuantity -- 理论上应该用 DefaultQuantity，只是目前这个字段的值有问题}}
+										{{!DefaultQuantity}}
+                                        {{! 现在改为：【小武】4.可选项非必选，份数可编辑 }}
+                                        {{#if IsChooseRequired}}
+                                            <input type="number" value="{{DefaultQuantity}}" /><b></b>
+                                            <p style="display:none"><a href="javascript:void(0);">{{DefaultQuantity}}</a></p>
+                                        {{else}}
+                                            {{DefaultQuantity}}
+                                        {{/if}}
+									{{else}}
+										<input type="number" value="{{DefaultQuantity}}"/>
+										<b></b>
+										<p style="display:none">
+                                            {{#is moreMinQuantity '!==' undefined}}<a href="javascript:void(0);">{{moreMinQuantity}}</a>{{/is}}
+											{{#eachx 'null' MinQuantity MaxQuantity StepQuantity}}
+											<a href="javascript:void(0);">{{$index}}</a>
+											{{/eachx}}
+										</p>
+									{{/is}}
+
+								{{/listItem}}
+
+								</div>{{Unit}}
+							</div>
+						</td>
+						<td class="col_06">
+							{{! 可选：总价为0，则杠杠}}
+							<div><span class="other_price js-total-price">{{#if TotalPrice}}{{#moneyHTML TotalPrice}}{{/moneyHTML}}{{else}}--{{/if}}</span></div>
+						</td>
+						<td class="col_07">
+							{{#listItem Inventory 0}}
+
+							<div class="room_selected"{{#is DefaultQuantity '<=' 0}} style="display:none;"{{/is}}>
+								<a href="javascript:void(0);">选择</a>
+							</div>
+
+							{{/listItem}}
+						</td>
+						{{! 按钮的合并规则跟 title 相同 }}
+						<td class="col_btn" rowspan="{{Rowspan}}">
+                            {{#if IsShowTitle}}
+							{{#if IsBaoxian}}
+							{{#is ThisCategory_TotalShownCount_in_popup '>' 1}}
+							<a class="change_resource_btn" href="javascript:void(0);">选择其他{{CategoryName}}</a>
+							{{/is}}
+							{{/if}}
+                            {{/if}}
+						</td>
+					</tr>
+					{{#if Introduction}}
+					<tr class="js-intro" style="display:none">
+						<td></td>
+						<td colspan="6">
+							<div class="other_product_detail">
+                                <b class="triangle"></b>
+								<i></i>
+								<div>{{{Introduction}}}</div>
+								<a class="flod_btn" href="javascript:void(0);">收起</a>
+							</div>
+						</td>
+						<td></td>
+					</tr>
+					{{/if}}
+					{{/each}}
+                    <tr class="js-baoxian-notice" {{#if needBaoxianNotice}}{{else}}style="display:none"{{/if}}>
+                        <td colspan="8">
+                            <div class="luggage_limit_info"><i></i>旅游保险能够给您的出行安全或行程预订带来保障，如您放弃购买，则行程中的风险和损失将由您自行承担。</div>
+                        </td>
+                    </tr>
+				</tbody>
+			</table>
+		</div>
+        {{/if}}
+	</div>
+    {{/if}}
+{{else}}{{#if isFetching}}
+	{{#if isOrdering}}
+	<div class="c_loading detail_loading"><img src="http://pic.c-ctrip.com/packages111012/loading_50-0816.gif" alt=""><strong>请稍候，正在为您预订</strong></div>
+	{{else}}
+	<div class="c_loading detail_loading"><img src="http://pic.c-ctrip.com/packages111012/loading_50-0816.gif" alt=""><strong>请稍候，正在为您查询</strong></div>
+	{{/if}}
+{{else}}{{#if isFetchFail}}
+	{{#if errmsg}}
+	<div class="no_resource_txt">{{errmsg}}</div>
+	{{else}}
+	    {{#if isServerError}}
+	    <div class="no_resource_txt">抱歉，查询数据出错了，请<a href="javascript:;" class="js-reload-resource">点击重试</a>或者重新选择出发日期。</div>
+	    {{else}}
+            {{#if isBookingError}}
+            <div class="no_resource_txt">抱歉，预定出错了，请<a href="javascript:;" class="js-reload-resource">点击重试</a>或者重新选择出发日期。</div>
+            {{else}}
+	        <div class="no_resource_txt">很抱歉，所有出发日期下均没有可预订的名额，请重新选择产品。</div>
+            {{/if}}
+	    {{/if}}
+	{{/if}}
+{{/if}}{{/if}}{{/if}}
+
+</div>
+{{/unless}}
+</div>
+<div class="seckill_pop" id="J_countdown" style="display:none">
+    <div class="left_txt">
+        <p>
+            <span id="J_countips"></span>
+        </p>
+    </div>
+    <div class="right_txt">
+        <div class="c_box_ico"><i></i></div>
+        <p id="J_countime"></p>
+    </div>
+    <b></b>
+</div>
