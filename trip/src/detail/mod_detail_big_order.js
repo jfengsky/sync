@@ -557,9 +557,9 @@ define(function (require, exports, module) {
 
         //offline风险班期，提示信息
         if(DataDetail.ClientSource == "Offline"){
-            data.RiskReward = dataManager.calendar.getRiskRewardData(date);
-            data.RiskRemark = dataManager.calendar.getRiskRemarkData(date);
-            data.hasRiskRemark = data.RiskReward===null ? false : true;
+            data.RiskRemarkNew = dataManager.calendar.getRiskRemarkDataNew(date,data.BaseInfo.ProductID); // liu
+            data.RiskMoney = dataManager.calendar.getRiskRewardMoney(date,data.BaseInfo.ProductID);
+            data.hasRiskRemark = data.RiskMoney===null ? false : true;
         }
 
 	    nodeOrderWrap && nodeOrderWrap.html(tplOrder(data));
@@ -916,6 +916,7 @@ define(function (require, exports, module) {
 	                var segmentNumber = hotel.getSegmentNumber();
 	                var chosedHotel = dataManager.getChosedHotel(segmentNumber);
 	                chosedHotel.RoomId = room.getId();
+	                chosedHotel.HotelId = room.node.data('hotel-id');
 	                //chosedHotel  dataManager.getChosedHotel(segmentNumber)    dataManager.getChosedResourceRequest()存在映射关系,动态改变房间数量
 	                chosedHotel.SelectedRoomNum = room.count;
                     // 如果需要在资源框房型变动的时候刷新资源框，就反注释这一段

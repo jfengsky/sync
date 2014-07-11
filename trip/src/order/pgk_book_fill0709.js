@@ -5,6 +5,7 @@ define(function(require, exports, module) {
     var $ = require('jquery');
     var cities = require('../public/address');
     var IDCheck = require('../public/IDCheck');
+    var BirthDay = require('./mod_book_calendar');
     var IsTmporaryOrder = false; // 是否暂存订单
 
 
@@ -437,7 +438,7 @@ define(function(require, exports, module) {
                         {{#with Birthday}}\
                             <li class="optional later" style={{#equal ../../IDCardType 1 "display:none" ""}}{{/equal}}>\
                               <label for="" class="product_label">{{Name}}</label>\
-                              <input type="number" value="{{../../birthdayY}}" class="all_field_width cq"  role="birthdayY" _cqnotice="yyyy" style="">&nbsp;-&nbsp;<input type="number" value="{{../../birthdayM}}" class="all_field_width cq" role="birthdayM"  _cqnotice="mm" style="">&nbsp;-&nbsp;<input type="number" value="{{../../birthdayD}}" role="birthdayD" class="all_field_width cq"  _cqnotice="dd">\
+                              <input type="number" value="{{../../birthdayY}}" class="all_field_width cq"  role="birthdayY" _cqnotice="yyyy" style="" readOnly />&nbsp;-&nbsp;<input type="number" value="{{../../birthdayM}}" class="all_field_width cq" role="birthdayM"  _cqnotice="mm" style="" readOnly />&nbsp;-&nbsp;<input type="number" value="{{../../birthdayD}}" role="birthdayD" class="all_field_width cq"  _cqnotice="dd" readOnly />\
                               <span class="hrs hrs2">(可稍后提供)</span>\
                             </li>\
                         {{/with}}\
@@ -481,7 +482,8 @@ define(function(require, exports, module) {
                             <a href="###" class="clear" role="clear">清空</a>\
                         </div>\
                    </div>\
-                   {{/each}}',
+                   {{/each}}\
+                   <div id="J_cardanCnt"></div>',
             linkmanBox: '<ul class="input_box linkman_info" role="contact">\
                         <li>\
                             <label class="product_label">姓名</label>\
@@ -843,7 +845,7 @@ define(function(require, exports, module) {
                             </div>\
                             <div id="content" class="delivery_content">\
                                 {{#if py}}\
-                                <div class="delivery"  type="4"  style="display:none">\
+                                <div class="delivery"  type="4" data-fee="{{ems.DeliveryAmount}}"  style="display:none">\
                                     <b></b>\
                                     <div class="tit">\
                                         {{#if ems.DeliveryAmount}}<div class="postage"><span>邮递费</span><dfn>¥</dfn>{{ems.DeliveryAmount}}</div>{{/if}}\
@@ -864,7 +866,7 @@ define(function(require, exports, module) {
                                         </li>\
                                         {{/each}}\
                                       </ul>\
-                                      <div class="handle_area">{{#unless hideEmsAddress}}<a href="###" role="other"><i class="ico_more"></i>更多地址</a>{{/unless}}<a href="###" role="addads"><i class="ico_add"></i>新增地址</a></div>\
+                                      <div class="handle_area">{{#unless hideEmsAddress}}<a href="###" role="other"><i class="ico_more"></i>更多地址</a>{{/unless}}<a href="###" role="addads" ><i class="ico_add"></i>新增地址</a></div>\
                                     </div>\
                                     {{/if}}\
                                     <div class="hide_options" role="hideOptions" style={{#if emsAddress}}"display:none"{{else}}"display:block"{{/if}}>\
@@ -901,7 +903,7 @@ define(function(require, exports, module) {
                                 </div>\
                                 {{/if}}\
                                 {{#if ps}}\
-                                <div class="delivery" style="display:none" type="1">\
+                                <div class="delivery" style="display:none" type="1" data-fee="{{ps.DeliveryAmount}}">\
                                     <b></b>\
                                     <div class="tit">\
                                         <a href="http://pages.ctrip.com/homepage/xuzhi.htm" target="_blank">送票范围说明</a>\
@@ -955,7 +957,7 @@ define(function(require, exports, module) {
                                 </div>\
                                 {{/if}}\
                                 {{#if ems}}\
-                                <div class="delivery"  type="3"  style="display:none">\
+                                <div class="delivery"  type="3"  style="display:none" data-fee="{{ems.DeliveryAmount}}">\
                                     <b></b>\
                                     <div class="tit">\
                                         <a href="###" onclick="window.open(\'http://www.ctrip.com/Supermarket/package/EMSNote.asp\',\'\',\'status=no,menubar=no,top=20,left=20,width=600,height=400,resizable=yes,scrollbars=no\')">EMS服务说明</a>\
@@ -1014,7 +1016,7 @@ define(function(require, exports, module) {
                                 </div>\
                                 {{/if}}\
                                 {{#if sf}}\
-                                <div class="delivery"  type="5"  style="display:none">\
+                                <div class="delivery"  type="5" data-fee="{{ems.DeliveryAmount}}"  style="display:none">\
                                     <b></b>\
                                     <div class="tit">\
                                         {{#if ems.DeliveryAmount}}<div class="postage"><span>邮递费</span><dfn>¥</dfn>{{ems.DeliveryAmount}}</div>{{/if}}\
@@ -1652,6 +1654,7 @@ define(function(require, exports, module) {
                                     $('#tempSaveMask').on('click', 'a[role="close"],a[role="confirm"]', function(event) {
                                         event.preventDefault();
                                         cQuery('#tempSaveMask').unmask();
+                                        // $('.book_jmpinfo').remove();
                                         $('#tempSaveMask').remove();
                                         $(el).bind('click', function(event) {
                                             submitFn(this, event);
@@ -1914,7 +1917,7 @@ define(function(require, exports, module) {
                 type: opts.method || 'GET',
                 url: opts.url || self.config.fetchUrl,
                 data: opts.data,
-                // cache: false,
+                cache: false,
                 dataType: 'html',
                 // timeout : 5000,
                 success: function(data) {
@@ -1958,7 +1961,7 @@ define(function(require, exports, module) {
                     /**位置*/
                     position: "rm_lm",
                     templs: {
-                        tipTempl: '<div id={{tipId}} class="{{tip}}"  style="min-width:{{minWidth}}px; width:{{maxWidth}}px;_width:{{minWidth}}px; width:auto !important;max-width:{{maxWidth}}px;overflow:hidden;display:block;z-index:99;margin:0;padding:0;left:0px;top:0px;overflow:hidden;position:absolute;padding-left:16px;"><div class="{{box}} {{boxType}} {{boxArrow}}" id={{boxId}}><b class="{{arrow}}" id={{arrowId}}></b><div class={{content}} id={{contentId}}></div></div>',
+                        tipTempl: '<div id={{tipId}} class="{{tip}}"  style="min-width:{{minWidth}}px; width:{{maxWidth}}px;_width:{{minWidth}}px; width:auto !important;max-width:{{maxWidth}}px;overflow:hidden;display:block;z-index:1999;margin:0;padding:0;left:0px;top:0px;overflow:hidden;position:absolute;padding-left:16px;"><div class="{{box}} {{boxType}} {{boxArrow}}" id={{boxId}}><b class="{{arrow}}" id={{arrowId}}></b><div class={{content}} id={{contentId}}></div></div>',
                         contentTpl: '<div class="jmp_bd">{{{txt}}}</div>'
                     },
                     css: {
@@ -3184,7 +3187,6 @@ define(function(require, exports, module) {
                 checkEnName: function(str) {
                     var strs = $.trim(str) === this.role.nameEN.attr('_cqnotice') ? '' : $.trim(str);
                     var bl = Reg.checkEnName(strs);
-                    console.log(this);
                     if (!bl[0]) {
                         this.showTip(this.role.nameEN[0], bl[1]);
                         return false;
@@ -3514,7 +3516,7 @@ define(function(require, exports, module) {
                     me.toIns();
                     me.bindEvent();
                     roles.bookInfoID.show();
-                    require('./mod_book_calendar'); // 载入证件有效期，出生日期日历选择交互模块
+                    new BirthDay().init(); // 载入证件有效期，出生日期日历选择交互模块
                 },
                 handleHadData: function(data) {
                     var handle = function(v, arg) {
@@ -4906,47 +4908,74 @@ define(function(require, exports, module) {
             }
         },
         _simpleAddressTpl: function(data) {
-            return '<p class="name">{{CityName}}</p>' +
-                '<p class="address">{{../../CityName}} {{CityName}} {{CantonName}} {{Address}}</p>' +
-                '<p class="code">{{Post}}</p>' +
+            return '<p class="name">' + data.CityName + '</p>' +
+                '<p class="address">' + data.CityName + ' ' + data.CantonName + ' ' + data.Address + '</p>' +
+                '<p class="code">' + data.PostCode + '</p>' +
                 '<i class="ico_checked"></i>' +
-                '<a href="###" role="adsedit" class="edit" cantonID="{{CantonID}}" infoId="{{InfoId}}" data-Recipient="{{Recipient}}" data-CityName="{{CityName}}" data-CantonName="{{CantonName}}" data-Address="{{Address}}" data-Post="{{Post}}"><i></i>编辑</a>' +
-                '<input cantonID="{{CantonID}}" checked="checked" index={{index}} type="radio" value="{{index}}" name="' + name + '" id="ps{{@index}}" style="display:none">';
+                '<a href="###" role="adsedit" class="edit" cantonID="' + data.Canton + '" infoId="' + data.InfoID + '" data-Recipient="{{Recipient}}" data-CityName="' + data.CityName + '" data-CantonName="' + data.CantonName + '" data-Address="' + data.Address + '" data-Post="' + data.PostCode + '"><i></i>编辑</a>' +
+                '<input cantonID="' + data.Canton + '" checked="checked" index="' + data.InfoID + '" type="radio" value="' + data.InfoID + '" name="' + data.type + '" id="ps' + data.type + '" style="display:none">';
         },
         _addressTpl: function(data) {
-            console.log(data);
-            console.log(GV);
             var mobile = data.ContactTel;
             if(data.MobilePhone){
                 mobile = data.MobilePhone;
-            }
-            return '<p class="name">('+ data.recipient +' 收)</p>' +
+            };
+            return '<p class="name">('+ data.Recipient +' 收)</p>' +
                 '<p class="tel">' + mobile + '</p>' +
-                '<p class="address">' + unescape(data.Address) + '</p>' +
-                '<p class="code">' + data.postcode + '</p>' +
+                '<p class="address">' + data.ProvinceName + ' ' + data.CityName + ' ' + data.CantonName + ' ' + unescape(data.Address) + '</p>' +
+                '<p class="code">' + data.PostCode + '</p>' +
                 '<i class="ico_checked"></i>' +
-                '<a href="###" role="adsedit" class="edit" cantonID="{{CantonID}}" infoId="' + data.infoid + '" data-Recipient="'+ data.recipient +'" data-tel="' + mobile + '" data-CityName="' + data.CityName + '" data-CantonName="{{CantonName}}" data-Address="' + unescape(data.Address) + '" data-Post="' + data.postcode + '"><i></i>编辑</a>' +
-                '<input cantonID="{{CantonID}}" checked="checked" index="' + data.infoid + '" type="radio" value="' + data.infoid + '" name="' + data.AddressType + '" id="ems' + data.infoid + '" style="display:none">';
+                '<a href="###" role="adsedit" class="edit" cantonID="' + data.CantonID + '" infoId="' + data.InfoID + '" data-Recipient="'+ data.Recipient +'" data-tel="' + mobile + '" data-CityName="' + data.CityName + '" data-CantonName="{{CantonName}}" data-Address="' + unescape(data.Address) + '" data-Post="' + data.PostCode + '"><i></i>编辑</a>' +
+                '<input cantonID="' + data.CantonID + '" checked="checked" index="' + data.InfoID + '" type="radio" value="' + data.InfoID + '" name="' + data.type + '" id="ems' + data.InfoID + '" style="display:none">';
         },
-        _addressEditCheck: function(){
-            cQname = cQuery('#mask_popup input[role="recipient"]');
-            cQnameVal = cQname.value();
-            cQphone = cQuery('#mask_popup input[role="contactTel"]').value();
-            cQaddress = cQuery('#mask_popup input[role="detail"]').value();
-            cQpostCode = cQuery('#mask_popup input[role="postage"]').value();
-            nickNameCheck = this.Contacter().checkName(cQnameVal);
-            nickMobileCheck = this.Contacter().checkMobile(cQphone);
-            console.log(nickNameCheck);
+        _areaTips: function(_dom){
+            new this.validate({
+                target: _dom,
+                data: msg.selectCity,
+                errorClass: 'f_error'
+            }).show();
+            
+        },
+        _areaEditCheck: function(_type){
+            var self = this,
+                proviceDom = cQuery('#provice'),
+                proviceVal = proviceDom.value(),
+                cityDom = cQuery('#city'),
+                cityVal = cityDom.value(),
+                areaDom,
+                areaVal,
+                addrDetailDom,
+                addrDetailVal;
+            if(_type == '1'){
+                addrDetailDom = cQuery('#mask_popup input[role="getAddrDetail"]');
+                addrDetailVal = addrDetailDom.value();
+                if(!addrDetailVal){
+                    new this.validate({
+                        target: addrDetailDom,
+                        data: msg.detail,
+                        errorClass: 'f_error'
+                    }).show();
+                    return false;
+                }
+            } else {
+                if(!proviceVal){
+                    self._areaTips(proviceDom[0]);
+                    return false;
+                } else if(!cityVal){
+                    self._areaTips(cityDom[0]);
+                    return false;
+                };
+                if( !$('#mask_popup #area').is(':hidden') ){
+                    areaDom = cQuery('#area');
+                    areaVal = areaDom.value();
+                    if(!areaVal){
+                        self._areaTips(areaDom[0]);
+                        return false;
+                    }
+                }
+            };
 
-            // 检查名字
-            // if (!nickNameCheck[0]) {
-            //     new self.validate({
-            //         target: cQname,
-            //         data: nickNameCheck[1],
-            //         errorClass: ''
-            //     }).show();
-            //     return false;
-            // };
+            return true;
 
         },
         Delivery: function() {
@@ -4956,7 +4985,7 @@ define(function(require, exports, module) {
             msg = {
                 recipient: '请填写收件人',
                 contactTel: '请填写联系电话',
-                selectCity: '请选择城市',
+                selectCity: '请选择省市区',
                 detail: '请填写正确的地址',
                 postage: '请填写邮编',
                 contactTelErr: '请填写正确的联系电话',
@@ -5060,42 +5089,59 @@ define(function(require, exports, module) {
                     });
 
 
+
                     $(document).delegate('a[role="saveaddress"]', 'click', function() {
                         event.preventDefault();
                         var _self = this,
                             type = $(_self).attr('type'),
                             cnt = $('#mask_popup'),
-                            postData;
+                            postData,
+                            isAdd = $(this).attr('data-add') - 0,
+                            formCheck = true,
+                            fee = $(this).attr('data-fee') || '';
 
                         //TODO 表单验证
-
-                        self._addressEditCheck();
-
-                        postData = {
-                            "AddressType": "F",
-                            "Address": $('#notice15').val(),
-                            "Canton": $('#J_popcanton').val(),
-                            "City": $('#J_popcanton').find('option:selected').text(),
-                            "InfoID": $(_self).attr('infoid')
-                        };
-
-                        if (type != 1) {
+                        $('#mask_popup input').blur();
+                        $.each($('#mask_popup input'), function(_index, _item){
+                            if($(_item).hasClass('f_error')){
+                                formCheck = false;
+                            }
+                        });
+                        if(formCheck && self._areaEditCheck(type) ){
+                            
+                        
                             postData = {
-                                "AddressType": "E",
                                 "type": $(_self).attr('type'),
-                                "Address": cnt.find('input[role="detail"]').val(),
-                                "CityName": cnt.find('#city').val(),
-                                "Fee": "10",
-                                "MobilePhone": cnt.find('input[role="contactTel"]').val(),
-                                "ContactTel": "",
-                                "Recipient": cnt.find('input[role="recipient"]').val(),
-                                "PostCode": cnt.find('input[role="postage"]').val(),
-                                "InfoID": $(_self).attr('infoid')
+                                "AddressType": "F",
+                                "Address": $('#notice15').val() || '',
+                                "Canton": $('#J_popcanton').val() || '',
+                                "CantonName": $('#J_popcanton').find('option:selected').text(),
+                                // "City": $('#J_popcanton').find('option:selected').text(),
+                                "CityName": $(this).attr('data-cityname') || '',
+                                "InfoID": $(_self).attr('infoid') || 0,
+                                "PostCode": $(this).attr('data-post') || ''
                             };
-                        };
-                        console.log(postData);
-                        $(_self).removeAttr('role').html('保存中...');
-                        return false;
+
+                            if (type != 1) {
+                                postData = {
+                                    "AddressType": "E",
+                                    "type": $(_self).attr('type'),
+                                    "Address": cnt.find('input[role="detail"]').val() || '',
+                                    "CityName": cnt.find('#city').val() || '',
+                                    "ProvinceName": cnt.find('#provice').val() || '',
+                                    "CantonName": cnt.find('#area').val() || '',
+                                    "Fee": fee,
+                                    "MobilePhone": cnt.find('input[role="contactTel"]').val() || '',
+                                    "ContactTel": "",
+                                    "Recipient": cnt.find('input[role="recipient"]').val() || '',
+                                    "PostCode": cnt.find('input[role="postage"]').val() || '',
+                                    "InfoID": $(_self).attr('infoid') || 0,
+                                    "CantonID": $(_self).attr("CantonID") || 0
+                                };
+                            };
+                            $(_self).removeAttr('role').html('保存中...');
+                            
+                        }
                         $.ajax({
                             type: 'post',
                             url: GV.app.order.vars.handles.saveAddressInfo,
@@ -5106,12 +5152,18 @@ define(function(require, exports, module) {
                             success: function(_data) {
                                 var html = '';
                                 if (_data.errno === 0) {
+                                    postData['InfoID'] = _data.data.InfoId;
                                     if (postData.AddressType == "F"){
                                         html = self._simpleAddressTpl(postData);
                                     } else {
                                         html = self._addressTpl(postData);
+                                    };
+                                    if(isAdd){
+                                        $($('#content').find('ul[type="' + postData.type + '"] li')[0]).html(html);
+                                    } else {
+                                        $('#content').find('ul[type="' + postData.type + '"]').find('.usual_address_item_selected').html(html);
                                     }
-                                    $('#content').find('ul[type="' + postData.AddressType + '"]').find('.usual_address_item_selected').html(html);
+                                    
                                     cQuery('#mask_popup').unmask();
                                     cQuery('#mask_popup').remove();
                                 }
@@ -5221,10 +5273,14 @@ define(function(require, exports, module) {
                         .on('click', 'a[role="adsedit"]', function(event) { // 编辑配送地址
                             event.preventDefault();
                             var index = +$(this).closest('.delivery').attr('type');
+                            var fee = $(this).closest('.delivery').attr('data-fee') || '';
                             var tpl = index == 1 ? self.tpl.editInCityAddress : self.tpl.editAllAddress;
                             var tempData = me.handleData(vdata.initData.DeliveryReult);
                             var CantonID = $(this).attr('cantonid');
                             var infoID = $(this).attr('infoid');
+                            var cityName = $(this).attr('data-cityname') || '';
+                            var proviceName = $(this).attr('data-provicename') || '';
+                            var postCode = $(this).attr('data-post') || '';
                             self.render(tpl, {
                                 CityCanton: tempData.CityCanton,
                                 address: $(this).attr('data-address'),
@@ -5240,19 +5296,31 @@ define(function(require, exports, module) {
                                     id: '#cities',
                                     type: 'select'
                                 });
-                                cities.init({
-                                    id: '#cities_p',
-                                    type: 'select'
-                                });
-                                $.each($('#J_popcanton option'), function(_index, _item) {
-                                    if ($(_item).val() == CantonID) {
-                                        $(_item).prop('selected', true)
+                                // cities.init({
+                                //     id: '#cities_p',
+                                //     type: 'select'
+                                // });
+                                if(index === 1){
+                                    $.each($('#J_popcanton option'), function(_index, _item) {
+                                        if ($(_item).val() == CantonID) {
+                                            $(_item).prop('selected', true)
+                                        }
+                                    });
+                                } 
+                                // else if(index === 3 || index === 4 || index === 5) {
+                                //     $($('#cities').find('#provice option')[5]).prop('selected', true);
+                                // }
+                                
+                                $('#mask_popup input[type="text"]').on('blur', function() {
+                                    if (reg = $(this).attr('regex')) {
+                                        me[reg]($.trim($(this).val()), this);
                                     }
                                 });
-                                $('#mask_popup').find('a[role="saveaddress"]').attr('type', index).attr('infoid', infoID);
+                                $('#mask_popup').find('a[role="saveaddress"]').attr('type', index).attr('infoid', infoID).attr('data-add',0).attr('data-cityname', cityName).attr('data-post', postCode).attr('data-fee', fee);
                                 _role.close.click(function(event) {
                                     event.preventDefault();
                                     cQuery('#mask_popup').unmask();
+                                    $('.book_jmpinfo').remove();
                                     $('#mask_popup').remove();
                                 });
                                 //me.editSampleAddress();
@@ -5263,10 +5331,10 @@ define(function(require, exports, module) {
                     .on('click', 'a[role="addads"]', function(event) {
                         event.preventDefault();
                         var index = +$(this).closest('.delivery').attr('type');
+                        var fee = $(this).closest('.delivery').attr('data-fee') || '';
                         var tpl = index == 1 ? self.tpl.editInCityAddress : self.tpl.editAllAddress;
                         var tempData = me.handleData(vdata.initData.DeliveryReult);
                         var Canton = $(this).attr('data-cantonname');
-                        console.log(tempData);
                         self.render(tpl, {
                             CityCanton: tempData.CityCanton,
                             address: $(this).attr('data-address')
@@ -5283,52 +5351,27 @@ define(function(require, exports, module) {
                                 id: '#cities_p',
                                 type: 'select'
                             });
+                            if( index == 1){
+                                $('#mask_popup').find('a[role="saveaddress"]').attr('type', index).attr('data-add',1).attr('data-cityname', '上海').attr('data-fee', fee);
+                            } else {
+                                $('#mask_popup').find('a[role="saveaddress"]').attr('type', index).attr('data-add',1).attr('data-fee', fee);;
+                            }
+                            
+                            $('#mask_popup input[type="text"]').on('blur', function() {
+                                if (reg = $(this).attr('regex')) {
+                                    me[reg]($.trim($(this).val()), this);
+                                }
+                            });
+
                             _role.close.click(function(event) {
                                 event.preventDefault();
                                 cQuery('#mask_popup').unmask();
+                                $('.book_jmpinfo').remove();
                                 $('#mask_popup').remove();
                             });
-                            // me.editSampleAddress();
                         });
                         me.hideTip();
                     })
-                    // .on('click', 'a[role="saveaddress"]', function(){
-                    //     event.preventDefault();
-                    //     var self = this,
-                    //         postData;
-                    //     postData = {
-                    //         "addresstype": $(self).attr('type'),
-                    //         "address": $('#notice15').val(),
-                    //         "canton": $('#J_popcanton').val(),
-                    //         "city": $('#J_popcanton').text(),
-                    //         "infoid": $(self).attr('infoid')
-                    //     };
-                    //     console.log(postData);
-                    //     if(type != 1){
-                    //         postData = {
-                    //             "addresstype": "",
-                    //             "address": "",
-                    //             "cityname": "",
-                    //             "fee":"",
-                    //             "mobilephone":"",
-                    //             "contacttel":"",
-                    //             "recipient":"",
-                    //             "postcode":"",
-                    //             "infoid":""
-                    //         };
-                    //     };
-                    //     $.ajax({
-                    //         type: 'post',
-                    //         url: GV.app.order.vars.handles.saveAddressInfo,
-                    //         dataType: 'json',
-                    //         data:{
-                    //             bookinginfo: cQuery.stringifyJSON(postData)
-                    //         },
-                    //         success: function(_data){
-
-                    //         }
-                    //     });
-                    // });
                 },
                 defaultData: function() {
                     var _initData = vdata.initData.OrderDelivery;
@@ -5360,7 +5403,7 @@ define(function(require, exports, module) {
                     var tpl1 = '<li class="usual_address_item usual_address_item_selected">' +
                         '<p class="name">{{#if Recipient}}({{Recipient}} 收){{/if}}</p>' +
                         '<p class="tel">{{#if Mobile}}{{Mobile}}{{else}}{{#if Tel}}{{Tel}}{{/if}}{{/if}}</p>' +
-                        '<p class="address">{{Address}}</p>' +
+                        '<p class="address">{{CityName}} {{Address}}</p>' +
                         '<p class="code">{{Post}}</p>' +
                         '<i class="ico_checked"></i>' +
                         '<a href="###" role="adsedit" class="edit" cantonID="{{CantonID}}" infoId="{{InfoId}}" data-Recipient="{{Recipient}}" data-tel="{{#if Mobile}}{{Mobile}}{{else}}{{#if Tel}}{{Tel}}{{/if}}{{/if}}" data-CityName="{{CityName}}" data-CantonName="{{CantonName}}" data-Address="{{Address}}" data-Post="{{Post}}"><i></i>编辑</a>' +
@@ -6038,33 +6081,6 @@ define(function(require, exports, module) {
                 self._defaultForm();
             }
 
-            // $.ajax({
-            //     url: '/Booking/Ajax/Order/NeedTrackOrder.aspx',
-            //     type: 'get',
-            //     data: {
-            //         ProductID: GV.app.order.vars.initData.productID,
-            //         IsQuickLogin: GV.app.order.vars.isQuickLogin,
-            //         Alternative: GV.app.order.vars.initData.Alternative
-            //     },
-            //     cache: false,
-            //     dataType: 'json',
-            //     success: function (data) {
-            //         $('#J_paysubmitid').text(GV.app.order.vars.initData.orderid);
-            //         if (data.errno === 0 && data.data) {
-            //             // 根据IsTemporaryOrder判断是否显示追单页面 true:暂存过了，显示老的页面
-            //             if (GV.app.order.vars.initData.IsTemporaryOrder) {
-            //                 self._defaultForm();
-
-            //                 // 显示已经预订的绿色框
-            //                 $('#J_paysubmitSucc').show();
-            //             } else {
-            //                 self._newForm();
-            //             }
-            //         } else {
-            //             self._defaultForm();
-            //         }
-            //     }
-            // });
 
             self.handlerHelp();
             return function() {

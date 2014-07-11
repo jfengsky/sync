@@ -70,8 +70,8 @@ var $ = require("jquery"),
                                 </div>\
                          </div>\
                   </div>',
-            min: '<div class="journey_map" id="JS_Map_MinContent" style="display:none">\
-                  <a id="route_Map" style="position: absolute;">&nbsp;</a>\
+            min: '<a id="route_Map" style="position: absolute">&nbsp;</a>\
+                  <div class="journey_map" id="JS_Map_MinContent" style="display:none">\
                   <div id="JS_Map_Min" style="height:150px;"></div>\
                   <a href="###" class="map_link" id="JS_Map_Min_Max">看大地图</a>\
                 </div>',

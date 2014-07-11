@@ -118,8 +118,8 @@ define(function(require, exports, module) {
           upParam.type = _file.type.split('.')[1];
           upParam.filefullname = escape(_file.name);
           var qbo = '';
-          if (DataOrder.data.qb_o) {
-              qbo = DataOrder.data.qb_o;
+          if (GV.app.detail.data.qb_o) {
+              qbo = GV.app.detail.data.qb_o;
           };
           upParam.qb_o = qbo;
           if ( !/(jpg|jpeg|png|gif)/ig.test(_file.type) ){

@@ -1,15 +1,16 @@
 //=====
 //create by hwmiao(hwmiao@ctrip.com)
 //=====
-define(function (require, exports, module) {
+define(function(require, exports, module) {
     var $ = require('jquery');
     var cities = require('../public/address');
     var IDCheck = require('../public/IDCheck');
     var IsTmporaryOrder = false; // 是否暂存订单
 
-    
+
 
     window.__bfi = window.__bfi || [];
+
     function ubt_userblock_post(el, msg) {
         if (!el) return false;
         var ct = 'validateCount',
@@ -25,7 +26,7 @@ define(function (require, exports, module) {
         }]);
     }
     GVdate = {
-        format: function (d, pad) {
+        format: function(d, pad) {
             var r;
             if (pad == null) pad = false;
             r = [d.getFullYear(), d.getMonth() + 1, d.getDate()].join('-');
@@ -35,7 +36,7 @@ define(function (require, exports, module) {
                 return r;
             }
         },
-        parse: function (str, isUtc) {
+        parse: function(str, isUtc) {
             var val;
             val = Date.parse(str.replace(/-/g, '/'));
             if (isNaN(val)) {
@@ -45,7 +46,7 @@ define(function (require, exports, module) {
             }
         }
     };
-    var Birth = function (str, date) {
+    var Birth = function(str, date) {
         var t = date ? GVdate.parse(date) : new Date();
         var y = t.getFullYear();
         var m = t.getMonth();
@@ -61,7 +62,7 @@ define(function (require, exports, module) {
         // this.str = str;
     };
     Birth.prototype = {
-        getAge: function (str, date) {
+        getAge: function(str, date) {
             var birth = GVdate.parse(str),
                 today = date ? new Date(date) : new Date(),
                 age = today.getFullYear() - birth.getFullYear();
@@ -70,25 +71,25 @@ define(function (require, exports, module) {
             }
             return age;
         },
-        isAdult: function (str) {
+        isAdult: function(str) {
             return GVdate.parse(str) < this.birth.adult;
         },
-        isChild: function (str) {
+        isChild: function(str) {
             return GVdate.parse(str) > this.birth.child;
         },
-        isBaby: function (str) {
+        isBaby: function(str) {
             return GVdate.parse(str) > this.birth.baby;
         },
-        underSixteen: function (str) {
+        underSixteen: function(str) {
             return GVdate.parse(str) > this.birth.sixteen;
         },
-        isEldor: function (str) {
+        isEldor: function(str) {
             return GVdate.parse(str) < this.birth.eldor;
         },
-        laterThenDepart: function (str) {
+        laterThenDepart: function(str) {
             return GVdate.parse(str) > this.birth.ref;
         },
-        laterThenToday: function (str) {
+        laterThenToday: function(str) {
             return GVdate.parse(str) > new Date();
         }
     };
@@ -97,23 +98,23 @@ define(function (require, exports, module) {
             fetchUrl: ''
         },
         Reg: {
-            hasCnChar: function (str) {
+            hasCnChar: function(str) {
                 return /[\u0100-\uffff]/.test(str);
             },
-            isCnChar: function (str) {
+            isCnChar: function(str) {
                 return /^[\u4e00-\u9fa5]+$/.test(str);
             },
-            isEnChar: function (str) {
+            isEnChar: function(str) {
                 return /^[A-Za-z][A-Za-z\s]*[A-Za-z]$/.test(str);
             },
-            isEnName: function (str) {
+            isEnName: function(str) {
                 return /^[^\/]+\/[^\/]+$/.test(str);
             },
-            hasEnChar: function (str) {
+            hasEnChar: function(str) {
                 return /[A-Za-z]/.test(str);
             },
-            checkCnName: function (str, req) {
-                if(req){
+            checkCnName: function(str, req) {
+                if (req) {
                     if ('' === str || str === "证件的中文姓名")
                         return [false, "请填写中文名"];
                     if (this.isCnChar(str) && str.length === 1)
@@ -129,8 +130,8 @@ define(function (require, exports, module) {
                 }
                 return [true, ];
             },
-            checkEnNameNew: function (str, req) {
-                if(req){
+            checkEnNameNew: function(str, req) {
+                if (req) {
                     if ('' === str)
                         return [false, "请输入英文/拼音，如姓名为张小明，则在“姓（拼音或英文）”栏中输入Zhang；在“名（拼音或英文）”栏中输入XiaoMing"];
                     if (/[^a-zA-Z. \/'-]/.test(str))
@@ -140,7 +141,7 @@ define(function (require, exports, module) {
                 }
                 return [true, ];
             },
-            checkEnName: function (str) {
+            checkEnName: function(str) {
                 if ('' === str)
                     return [false, "请填写英文姓名，姓名格式为姓/名，姓与名之间用 / 分隔，如Green/Jim King"];
                 if (str.length < 2)
@@ -156,7 +157,7 @@ define(function (require, exports, module) {
                     return [false, "英文的名必须以字母开头"];
                 return [true, ];
             },
-            checkName: function (str, type, val) {
+            checkName: function(str, type, val) {
                 if ('' === str)
                     return [false, '请填写姓名'];
                 if (this.hasCnChar(str)) {
@@ -167,7 +168,7 @@ define(function (require, exports, module) {
                 else
                     return this.checkEnName(str);
             },
-            checkPhone: function (str, type) {
+            checkPhone: function(str, type) {
                 switch (type) {
                     case 'zcode':
                         if ('' === str || '区号' === str)
@@ -196,24 +197,24 @@ define(function (require, exports, module) {
                             return [true, ];
                 }
             },
-            checkMobile: function (str) {
+            checkMobile: function(str) {
                 if ('' === str)
                     return [false, '请填写手机号码'];
                 if (!/^0?1[34578]\d{9}$/.test(str))
                     return [false, '您填写的手机号码有误，请重新填写'];
                 return [true, ]
             },
-            checkEmail: function (str) {
+            checkEmail: function(str) {
                 if ('' === str)
                     return [false, '请填写电子邮箱'];
                 if (!/^([a-zA-Z0-9]+[_|\_|\.|-]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.|-]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test(str))
                     return [false, '请输入正确的电子邮箱'];
                 return [true, ]
             },
-            checkIdCard: function (str, type) {
+            checkIdCard: function(str, type) {
                 var _name = '1@身份证|2@护照|3@学生证|4@军官证|6@驾驶证|7@回乡证|8@台胞证|10@港澳通行证|11@国际海员证|20@外国人永久居留证|21@旅行证|22@台湾通行证|23@士兵证|24@临时身份证|25@户口簿|26@警官证|99@其它';
                 var _ref = {};
-                $.map(_name.split('|'), function (v, k) {
+                $.map(_name.split('|'), function(v, k) {
                     var _ar = v.split('@');
                     _ref[+_ar[0]] = _ar[1];
                 })
@@ -248,7 +249,7 @@ define(function (require, exports, module) {
                 return [true, ];
             },
             //证件号码重复提示
-            checkIdRepeat: function (type, IdNum, Rtext) {
+            checkIdRepeat: function(type, IdNum, Rtext) {
                 var IdNumber_Card1 = [];
                 var repeatYes = false;
                 for (i = 0; i < $("select[role='idCardType']").length; i++) {
@@ -1172,24 +1173,24 @@ define(function (require, exports, module) {
                     </div>'
         },
         common: { //公用的函数
-            parseJSON: function (str) {
+            parseJSON: function(str) {
                 return (new Function("", "return " + str))()
-                // return eval('(' + str + ')');
+                    // return eval('(' + str + ')');
             },
-            getRoles: function (el, val, fld) { //获取dom
+            getRoles: function(el, val, fld) { //获取dom
                 var ret, val, fld;
                 el = el || 'body';
                 fld = fld || 'role';
                 val = val ? ('=' + val) : '';
                 ret = {};
-                (el.jquery ? el : $(el)).find("[" + fld + val + "]").each(function () {
+                (el.jquery ? el : $(el)).find("[" + fld + val + "]").each(function() {
                     var key = this.getAttribute(fld);
                     var obj = ret[key] || (ret[key] = $());
                     obj.push(this);
                 });
                 return ret;
             },
-            parseCNId: function (str) { //根据身份证返回出生日期
+            parseCNId: function(str) { //根据身份证返回出生日期
                 var sex, age;
                 if (str.length == 15) {
                     sex = parseInt(str.charAt(14), 10) % 2 ? 'M' : 'F';
@@ -1204,7 +1205,7 @@ define(function (require, exports, module) {
                     passengerNationality: '中国大陆'
                 };
             },
-            isDate: function (str) {
+            isDate: function(str) {
                 if (!str) return false;
                 var ret = str.match(/^(\d{4})-([01]?\d)-([0123]?\d)$/);
                 if (ret) {
@@ -1217,13 +1218,13 @@ define(function (require, exports, module) {
         },
 
         /**
-        * 根据参数返回input的jquery对象
-        * @param  {String} str     input上的参数值
-        * @return {cQuery Obj}     [description]
-        */
-        _getInput: function (str) {
+         * 根据参数返回input的jquery对象
+         * @param  {String} str     input上的参数值
+         * @return {cQuery Obj}     [description]
+         */
+        _getInput: function(str) {
             var obj;
-            $.each($('#linkManID input'), function (index, item) {
+            $.each($('#linkManID input'), function(index, item) {
                 if ($(item).attr('role') === str) {
                     obj = cQuery(item);
                 }
@@ -1232,10 +1233,10 @@ define(function (require, exports, module) {
         },
 
         /**
-        * 简单模式表单验证
-        * @return {Boolean} 表单验证是否通过
-        */
-        _simpleFormCheck: function () {
+         * 简单模式表单验证
+         * @return {Boolean} 表单验证是否通过
+         */
+        _simpleFormCheck: function() {
 
             var self = this,
                 nickName = self._getInput('ctname').value(),
@@ -1284,10 +1285,10 @@ define(function (require, exports, module) {
         },
 
         events: { //绑定事件
-            regNotice: function () {
+            regNotice: function() {
                 var cq = cQuery;
-                cq.mod.load('notice', '1.0', function () {
-                    ["#notice1", "#notice2", "#notice3", "#notice4"].each(function (o) {
+                cq.mod.load('notice', '1.0', function() {
+                    ["#notice1", "#notice2", "#notice3", "#notice4"].each(function(o) {
                         if (!cq(o).length) {
                             return true;
                         }
@@ -1297,7 +1298,7 @@ define(function (require, exports, module) {
                             selClass: 'inputSel'
                         }, true);
                     });
-                    cq('.cq').each(function (o) {
+                    cq('.cq').each(function(o) {
                         cq(o).regMod('notice', '1.0', {
                             name: o,
                             tips: o.attr('_cqnotice'),
@@ -1306,14 +1307,14 @@ define(function (require, exports, module) {
                     });
                 });
             },
-            regJmp: function () {
-                cQuery.mod.load('jmp', '1.0', function () {
+            regJmp: function() {
+                cQuery.mod.load('jmp', '1.0', function() {
                     var ins = cQuery(document).regMod('jmp', '1.0', {
                         cc: 2
                     });
                 })
             },
-            submit: function () { //提交
+            submit: function() { //提交
                 var self = this;
                 var vdata = self.data;
                 var mod = vdata.modules;
@@ -1347,20 +1348,20 @@ define(function (require, exports, module) {
                     bookingDataString = "",
                     bookingHandleData = [],
                     customerInfo = [],
-                   closeBooKMasking = function (pData, pMe) {
-                       $("body").append(Handlebars.compile(bookingTelement)(pData));
-                       cQuery("#js_book_masking").mask();
-                       $("#js_book_masking").css("top", ($(window).height() - $("#js_book_masking").height()) / 2 + $(window).scrollTop() + "px");
-                       /*关闭提示层*/
-                       $("#js_book_masking_close").bind("click", function () {
-                           clearData();
-                           cQuery("#js_book_masking").unmask();
-                           $("#js_book_masking").remove();
-                           $(pMe).bind('click', submitFn).html(text);
-                       })
-                   },
-                    closeBookSure = function (pType, pMe, pData, pAgain) {
-                        $("#js_book_masking_sure").bind("click", function () {
+                    closeBooKMasking = function(pData, pMe) {
+                        $("body").append(Handlebars.compile(bookingTelement)(pData));
+                        cQuery("#js_book_masking").mask();
+                        $("#js_book_masking").css("top", ($(window).height() - $("#js_book_masking").height()) / 2 + $(window).scrollTop() + "px");
+                        /*关闭提示层*/
+                        $("#js_book_masking_close").bind("click", function() {
+                            clearData();
+                            cQuery("#js_book_masking").unmask();
+                            $("#js_book_masking").remove();
+                            $(pMe).bind('click', submitFn).html(text);
+                        })
+                    },
+                    closeBookSure = function(pType, pMe, pData, pAgain) {
+                        $("#js_book_masking_sure").bind("click", function() {
                             clearData();
                             cQuery("#js_book_masking").unmask();
                             $("#js_book_masking").remove();
@@ -1369,51 +1370,48 @@ define(function (require, exports, module) {
                                 if (pAgain) {
                                     $(pMe).bind('click', submitFn).html(text);
                                     $(pMe).trigger("click", submitFn);
-                                }
-                                else {
+                                } else {
                                     $(pMe).bind('click', submitFn).html(text);
                                 }
-                            }
-                            else {
+                            } else {
                                 vdata.roles.submitID.unbind('click');
                                 window.location.href = $("#js_prev_stop").attr("href");
                             }
                         })
                     },
-                /*邮轮重试*/
-                    closeBookAgain = function (pData, pMe) {
-                        $("#js_book_masking_again").bind("click", function () {
+                    /*邮轮重试*/
+                    closeBookAgain = function(pData, pMe) {
+                        $("#js_book_masking_again").bind("click", function() {
                             clearData();
                             cQuery("#js_book_masking").unmask();
                             cQuery("#js_book_masking").remove();
                             bookAjax(pData, pMe);
                         });
                     },
-                     bookingError = function (pType, pMe, pData, pAgain) {
-                         bookingJsonData.data = "系统调整中，请重试。";
-                         bookingJsonData.type = "retry";
-                         closeBooKMasking(bookingJsonData, pMe);
-                         closeBookSure(!0, pMe, pData, pAgain);
-                     },
-                /*邮轮 游客性别*/
-                    showGender = function (pGender) {
-                        if (pGender == 0) return "M";  /*男*/
-                        if (pGender == 1) return "F";  /*女*/
+                    bookingError = function(pType, pMe, pData, pAgain) {
+                        bookingJsonData.data = "系统调整中，请重试。";
+                        bookingJsonData.type = "retry";
+                        closeBooKMasking(bookingJsonData, pMe);
+                        closeBookSure(!0, pMe, pData, pAgain);
+                    },
+                    /*邮轮 游客性别*/
+                    showGender = function(pGender) {
+                        if (pGender == 0) return "M"; /*男*/
+                        if (pGender == 1) return "F"; /*女*/
                         if (pGender == -1) return "N"; /*不确定*/
                     },
-                /*关闭层时清除数据*/
-                    clearData = function () {
+                    /*关闭层时清除数据*/
+                    clearData = function() {
                         for (var i in bookingJsonData) {
                             bookingJsonData[i] = "";
                         }
                     },
-                    bookAjax = function (pData, pMe) {
+                    bookAjax = function(pData, pMe) {
                         /*新增checkbox 如果勾选了 支付接口传人UseCorpPay=T,如果不勾选 支付接口传人 UseCorpPay=F 如果没有这个input则不传*/
                         if ($("#UseCorpPay").length) {
                             if ($("#UseCorpPay").is(":checked")) {
                                 pData += "&UseCorpPay=T";
-                            }
-                            else {
+                            } else {
                                 pData += "&UseCorpPay=F";
                             }
                         }
@@ -1423,7 +1421,7 @@ define(function (require, exports, module) {
                             /*新增加一个参数 isSkipFAVCheck = true 这个时候就不再做一次机票反查*/
                             data: pData,
                             timeout: 120000,
-                            success: function (data) {
+                            success: function(data) {
                                 self.status.isPay = true;
                                 data = typeof data === 'string' ? self.common.parseJSON(data) : data;
                                 if (data.errno === 0) {
@@ -1439,13 +1437,13 @@ define(function (require, exports, module) {
                                     closeBookSure(!0, pMe, pData);
                                 }
                             },
-                            error: function () {
+                            error: function() {
                                 bookingError(!0, pMe, pData, !0);
                             }
                         });
                     };
                 /*添加可预订检查代码 end*/
-                var submitFn = function (event) {
+                var submitFn = function(event) {
                     var me = this;
                     event.preventDefault();
 
@@ -1464,7 +1462,7 @@ define(function (require, exports, module) {
                     }
                     self.status.errorElem = null;
                     self.removeValidate();
-                    $.each('Travellers|Contacter|Invoice|Delivery'.split('|'), function (k, v) {
+                    $.each('Travellers|Contacter|Invoice|Delivery'.split('|'), function(k, v) {
                         mod[v].verify();
                         // if(!mod[v].verify()) return false;//去掉
                     });
@@ -1506,7 +1504,7 @@ define(function (require, exports, module) {
                             data: "TmpOrderID=" + GV.app.order.vars.initData.orderid + "&productID=" + GV.app.order.vars.initData.productID + "&customerInfo=" + cQuery.stringifyJSON(customerInfo) + "&OrderType=" + GV.app.order.vars.initData.OrderType,
                             timeout: 120000,
                             type: "POST",
-                            success: function (json) {
+                            success: function(json) {
                                 var jsonData = $.parseJSON(json);
                                 /*根据接口的返回碰到是否传人isSkipFAVCheck*/
                                 if (jsonData.isSkipFAVCheck) bookParameter += "&isSkipFAVCheck=" + jsonData.isSkipFAVCheck;
@@ -1533,15 +1531,15 @@ define(function (require, exports, module) {
                                                     bookingDataString += "【航班" + flightName[k] + "】、";
                                                 }
                                             }
-                                                /*酒店信息*/
+                                            /*酒店信息*/
                                             else if (bookingHandleData[j].Type == 202) {
                                                 bookingDataString += "【" + bookingHandleData[j].ResourceName.replace("|", "  ") + "】、";
                                             }
-                                                /*可选项信息*/
+                                            /*可选项信息*/
                                             else if (bookingHandleData[j].Type == 402) {
                                                 bookingDataString += "【" + bookingHandleData[j].ResourceName + "】、";
                                             }
-                                                /*新增类型*/
+                                            /*新增类型*/
                                             else if (bookingHandleData[j].Type == 101 || bookingHandleData[j].Type == 201 || bookingHandleData[j].Type == 301 || bookingHandleData[j].Type == 401 || bookingHandleData[j].Type == 102) {
                                                 bookingDataString += "【" + bookingHandleData[j].ResourceName + "】、";
                                             }
@@ -1552,21 +1550,18 @@ define(function (require, exports, module) {
                                         closeBookSure();
                                         bookingDataString = "";
                                         bookingHandleData = [];
-                                    }
-                                    else {
+                                    } else {
                                         /*邮轮*/
                                         for (var j = 0, lens = jsonData.data.length; j < lens; j++) {
                                             if (jsonData.data[j].Type == 501) {
                                                 bookingDataString += jsonData.data[j].ResourceName.split("邮轮可订检查失败:")[1];
-                                                bookingJsonData.type = "revert";      /*重新选择资源*/
-                                            }
-                                            else if (jsonData.data[j].Type == 502) {
+                                                bookingJsonData.type = "revert"; /*重新选择资源*/
+                                            } else if (jsonData.data[j].Type == 502) {
                                                 bookingDataString += jsonData.data[j].ResourceName.split("邮轮可订检查失败:")[1];
                                                 if (jsonData.CruiseItem.BookingID > 0) {
-                                                    bookingJsonData.other = "other";      /*查看其他房型*/
-                                                    bookingJsonData.steamer = "steamer";  /*继续预订*/
-                                                }
-                                                else {
+                                                    bookingJsonData.other = "other"; /*查看其他房型*/
+                                                    bookingJsonData.steamer = "steamer"; /*继续预订*/
+                                                } else {
                                                     bookingJsonData.type = "revert";
                                                 }
 
@@ -1578,8 +1573,7 @@ define(function (require, exports, module) {
                                         closeBookSure();
                                         bookingDataString = "";
                                     }
-                                }
-                                else {
+                                } else {
                                     /*如果是邮轮还要判断errno 如果不能0 则不能领取*/
                                     if (GV.app.order.vars.initData.OrderType.indexOf("CruiseOrder") != -1) {
                                         var tipsStr = "信息填写有误，请重新核对，如仍无法提交请拨打电话10106666，由专属客服为您解决。"
@@ -1588,29 +1582,26 @@ define(function (require, exports, module) {
                                                 var failPocessPointStr = jsonData.CruiseItem.FailPocessPoint.split("邮轮可订检查失败:")[1];
                                                 if (failPocessPointStr) {
                                                     bookingJsonData.data = failPocessPointStr;
-                                                }
-                                                else {
+                                                } else {
                                                     bookingJsonData.data = tipsStr;
                                                 }
-                                            }
-                                            else {
+                                            } else {
                                                 bookingJsonData.data = tipsStr;
                                             }
                                             bookingJsonData.type = "revert";
                                             closeBooKMasking(bookingJsonData, me);
                                             closeBookSure();
-                                        }
-                                        else {
+                                        } else {
                                             bookAjax(bookParameter, me);
                                         }
                                     }
-                                        /*不是邮轮的直接预订*/
+                                    /*不是邮轮的直接预订*/
                                     else {
                                         bookAjax(bookParameter, me);
                                     }
                                 }
                             },
-                            error: function () {
+                            error: function() {
                                 bookAjax(bookParameter, me);
                             }
                         })
@@ -1618,14 +1609,14 @@ define(function (require, exports, module) {
                 }
                 vdata.roles.submitID.bind('click', submitFn);
             },
-            save: function (isShow, isAuto) {
+            save: function(isShow, isAuto) {
                 var self = this;
                 var me = this;
                 var mod = this.data.modules;
                 var text;
                 var vdata = self.data;
-                var submitFn = function (el, event) {
-                    $.map('Travellers|Contacter|Extras|Delivery|Invoice'.split('|'), function (v, k) {
+                var submitFn = function(el, event) {
+                    $.map('Travellers|Contacter|Extras|Delivery|Invoice'.split('|'), function(v, k) {
                         mod[v].save();
                     });
                     self.formData.IsTmpOrder = 1;
@@ -1651,18 +1642,19 @@ define(function (require, exports, module) {
                             bookinginfo: cQuery.stringifyJSON(self.formData)
                         },
                         timeout: 10000,
-                        success: function (data) {
+                        success: function(data) {
                             if (isShow) return;
                             data = typeof data === 'string' ? self.common.parseJSON(data) : data;
                             if (data.errno === 0) {
-                                self.render(self.tpl.tempSave, data.data, function (dom) {
+                                self.render(self.tpl.tempSave, data.data, function(dom) {
                                     $('body').append(dom);
                                     cQuery('#tempSaveMask').mask();
-                                    $('#tempSaveMask').on('click', 'a[role="close"],a[role="confirm"]', function (event) {
+                                    $('#tempSaveMask').on('click', 'a[role="close"],a[role="confirm"]', function(event) {
                                         event.preventDefault();
                                         cQuery('#tempSaveMask').unmask();
+                                        // $('.book_jmpinfo').remove();
                                         $('#tempSaveMask').remove();
-                                        $(el).bind('click', function (event) {
+                                        $(el).bind('click', function(event) {
                                             submitFn(this, event);
                                         }).html(text);
                                     })
@@ -1671,21 +1663,21 @@ define(function (require, exports, module) {
                             }
                             if (data.errno === 1) {
                                 alert(data.errmsg);
-                                $(el).bind('click', function (event) {
+                                $(el).bind('click', function(event) {
                                     submitFn(this, event);
                                 }).html(text);
                             }
                         },
-                        error: function () {
+                        error: function() {
                             if (isShow) return;
                             alert('网络超时，请重新提交');
-                            $(el).bind('click', function (event) {
+                            $(el).bind('click', function(event) {
                                 submitFn(this, event);
                             }).html(text);
                         }
                     });
                 };
-                $('a[role="save"]').bind('click', function (event) {
+                $('a[role="save"]').bind('click', function(event) {
                     event.preventDefault();
                     if (!vdata.isLogin) {
                         loadCheckLogin && loadCheckLogin();
@@ -1695,19 +1687,19 @@ define(function (require, exports, module) {
                 });
                 return submitFn;
             },
-            autoSave: function () {
+            autoSave: function() {
                 var clientSource = GV.app.order.vars.initData.ClientSource;
                 if (clientSource && clientSource == "Online") {
                     var self = this;
                     var mod = this.data.modules;
                     var vdata = self.data;
                     if (!vdata.isLogin || !vdata.EnableAutoTemporarySave || vdata.isQuickLogin) return;
-                    window.onbeforeunload = function (event) {
-                        $(document).click(function (e) {
+                    window.onbeforeunload = function(event) {
+                        $(document).click(function(e) {
                             return false;
                         });
                         if (!self.status.isTmpSave && self.data.roles.travellersID.children('[filled="t"]').length && !self.status.isPay) {
-                            $.map('Travellers|Contacter|Extras|Delivery|Invoice'.split('|'), function (v, k) {
+                            $.map('Travellers|Contacter|Extras|Delivery|Invoice'.split('|'), function(v, k) {
                                 mod[v].save();
                             });
                             self.formData.IsTmpOrder = 1;
@@ -1722,13 +1714,13 @@ define(function (require, exports, module) {
                                     bookinginfo: cQuery.stringifyJSON(self.formData)
                                 },
                                 timeout: 15000,
-                                success: function (data) { }
+                                success: function(data) {}
                             });
                             if (cQuery.browser.isFirefox) {
                                 if (confirm('您的预订还未完成，我们会将您的订单暂存72小时，期间产品的价格库存可能会发生变化，请尽快至“我的携程-旅游度假订单”中完成预订。确定要离开本页吗？')) {
                                     history.go();
                                 } else {
-                                    window.setTimeout(function () {
+                                    window.setTimeout(function() {
                                         window.stop();
                                     }, 1);
                                 }
@@ -1740,29 +1732,29 @@ define(function (require, exports, module) {
                 }
             }
         },
-        regNational: function (el) {
+        regNational: function(el) {
             var self = this;
             return cQuery(el).regMod('address', '1.0', {
                 jsonpSource: 'http://webresource.c-ctrip.com/code/cquery/resource/address/flightintl/nationality_' + cQuery.config("charset") + '.js',
                 name: '.nationality',
                 isFocusNext: true,
                 template: {
-                    filterInit: function (c) {
+                    filterInit: function(c) {
                         var d = c.find('a[data]');
                         if (d.length) {
                             d.attr('href', '###');
                             self.data.dfNational = d.first().attr('data'); //记录默认的国籍
                         }
-                        d.bind('click', function (event) {
+                        d.bind('click', function(event) {
                             event.preventDefault();
                         })
                     },
                     isSuggestionSelect: true,
-                    suggestionInit: function (c) {
+                    suggestionInit: function(c) {
                         var me = this;
                         var d = c.find('a[data]');
                         var selectedItem = d.first().addClass('hover');
-                        var selectContent = function (s) {
+                        var selectContent = function(s) {
                             var items = d,
                                 newSelectedItem;
                             if (!selectedItem) {
@@ -1784,7 +1776,7 @@ define(function (require, exports, module) {
                                 selectedItem = undefined;
                             }
                         };
-                        var fn = function (event) {
+                        var fn = function(event) {
                             var b = event.target,
                                 key = event.which,
                                 s, val;
@@ -1803,21 +1795,21 @@ define(function (require, exports, module) {
                                 selectContent('up');
                             }
                         };
-                        var initSuggest = function () {
+                        var initSuggest = function() {
                             d.removeClass('hover');
                             selectedItem = d.first().addClass('hover');
                         };
                         if (d.length) {
                             self.data.dfNational = d.filter('[class="hover"]').attr('data'); //记录默认的国籍
                         }
-                        d.bind('mouseover', function () {
+                        d.bind('mouseover', function() {
                             $(this).addClass('hover')
-                        }).bind('mouseout', function () {
+                        }).bind('mouseout', function() {
                             $(this).removeClass('hover')
                         });
-                        $(el).bind('blur', function () {
+                        $(el).bind('blur', function() {
                             $(c).hide();
-                        }).bind('focus', function () {
+                        }).bind('focus', function() {
                             $(c).show();
                             initSuggest();
                         }).bind('keyup', fn);
@@ -1837,24 +1829,24 @@ define(function (require, exports, module) {
                         .c_address_pagebreak a { color: #0055AA; display: inline-block; font-family: Arial, Simsun, sans-serif; font-size: 14px; margin: 0; padding: 0 4px; text-align: center; text-decoration: underline; width: 15px; }\
                         a.address_current { color: #000; text-decoration: none; }',
                     suggestion: '<div class="c_address_select"><div class="c_address_wrap"><div class="c_address_hd">' + '输入中英文|代码搜索或↑↓选择.' + '</div><div style="" class="c_address_list">{{enum(key,arr) data}}{{each arr}}<a href="###" title="${display}" data="${data}"><span>${rightDisplay}</span>${display}</a>{{/each}}{{/enum}}</div></div></div>',
-                    suggestionStyle: '.c_address_select { width:276px; height:355px; font-family: Arial, Simsun; font-size: 12px; }.c_address_hd { height: 24px; border-color: #2C7ECF; border-style: solid; border-width: 1px 1px 0; background-color: #67A1E2; color: #fff; line-height: 24px; text-align:center }.c_address_bd { border-color: #999999; border-style: solid; border-width: 0 1px 1px; overflow: hidden; padding:10px; }.c_address_select { width:222px; height:300px; font-family: Arial, Simsun; font-size: 12px; }.c_address_wrap { width: 276px; height:310px; min-height: 305px; margin: 0; padding: 0 0 4px; border: 1px solid #969696; background:#fff; text-align: left; } .c_address_hd { margin:-1px; }.c_address_list { margin: 0; padding: 0; height:300px; }.c_address_list span { float: right; font: 10px/22px verdana; margin: 0; overflow: hidden; padding: 0; text-align: right; white-space: nowrap; width: 110px; }.c_address_list a { border-bottom: 1px solid #FFFFFF; border-top: 1px solid #FFFFFF; color: #0055AA; cursor: pointer; display: block; height: 22px; line-height: 22px; min-height: 22px; overflow: hidden; padding: 1px 9px 0; text-align: left; text-decoration: none; }.c_address_list a.hover,.c_address_list a:hover { background: none repeat scroll 0 0 #E8F4FF; border-bottom: 1px solid #7F9DB9; border-top: 1px solid #7F9DB9; }.address_selected { background: none repeat scroll 0 0 #FFE6A6; color: #FFFFFF; height: 22px; }.c_address_pagebreak { line-height: 25px; margin: 0; padding: 0; text-align: center; }.c_address_pagebreak a { color: #0055AA; display: inline-block; font-family: Arial, Simsun, sans-serif; font-size: 14px; margin: 0; padding: 0 4px; text-align: center; text-decoration: underline; width: 15px; }a.address_current { color: #000; text-decoration: none; }.c_address_select .ico_key, .c_address_select .ico_unkey{position: absolute;top: 1px;left: 1px;width: 34px;height: 24px;overflow: hidden;line-height: 999em;font-size: 0;content: "";background: url(http://pic.c-ctrip.com/ctripOnPad/ico_key.png) no-repeat 0 0;-webkit-transform: scale(.7);}.c_address_select .address_close {position: absolute;top: 3px;right: 4px;width: 18px;height: 19px;overflow: hidden;line-height: 999em;font-size: 0;content: "";text-indent: 99em;background: url(http://pic.c-ctrip.com/ctripOnPad/pad_address_icon.png) no-repeat -32px 0;-webkit-transform: scale(0.5);}.c_address_select .ico_unkey {background: url(http://pic.c-ctrip.com/ctripOnPad/ico_unkey.png) no-repeat 0 0;}'
-					, suggestionIpad: '\t\t\t\t<div class="city_select_lhsl">\t\t\t\t\t<p class="title"><a class="close CQ_suggestionClose" href="javascript:;">&times;</a></p><ul class="CQ_suggestionTabContainer">\t\t\t\t\t\t{{enum(key) $data.data}}\t\t\t\t\t\t\t<li class="CQ_suggestionTab"><span>${key}</span></li>\t\t\t\t\t\t{{/enum}}\t\t\t\t\t</ul>\t\t\t\t\t{{enum(key,arr) $data.data}}\t\t\t\t\t\t<div class="city_item CQ_suggestionPanel">\t\t\t\t\t\t\t{{each(i,item) arr}}\t\t\t\t\t\t\t\t<a data="${item.data}" href="javascript:void(0);">${item.display}</a>\t\t\t\t\t\t\t{{/each}}\t\t\t\t\t\t</div>\t\t\t\t\t{{/enum}}\t\t\t\t</div>\t\t\t'
+                    suggestionStyle: '.c_address_select { width:276px; height:355px; font-family: Arial, Simsun; font-size: 12px; }.c_address_hd { height: 24px; border-color: #2C7ECF; border-style: solid; border-width: 1px 1px 0; background-color: #67A1E2; color: #fff; line-height: 24px; text-align:center }.c_address_bd { border-color: #999999; border-style: solid; border-width: 0 1px 1px; overflow: hidden; padding:10px; }.c_address_select { width:222px; height:300px; font-family: Arial, Simsun; font-size: 12px; }.c_address_wrap { width: 276px; height:310px; min-height: 305px; margin: 0; padding: 0 0 4px; border: 1px solid #969696; background:#fff; text-align: left; } .c_address_hd { margin:-1px; }.c_address_list { margin: 0; padding: 0; height:300px; }.c_address_list span { float: right; font: 10px/22px verdana; margin: 0; overflow: hidden; padding: 0; text-align: right; white-space: nowrap; width: 110px; }.c_address_list a { border-bottom: 1px solid #FFFFFF; border-top: 1px solid #FFFFFF; color: #0055AA; cursor: pointer; display: block; height: 22px; line-height: 22px; min-height: 22px; overflow: hidden; padding: 1px 9px 0; text-align: left; text-decoration: none; }.c_address_list a.hover,.c_address_list a:hover { background: none repeat scroll 0 0 #E8F4FF; border-bottom: 1px solid #7F9DB9; border-top: 1px solid #7F9DB9; }.address_selected { background: none repeat scroll 0 0 #FFE6A6; color: #FFFFFF; height: 22px; }.c_address_pagebreak { line-height: 25px; margin: 0; padding: 0; text-align: center; }.c_address_pagebreak a { color: #0055AA; display: inline-block; font-family: Arial, Simsun, sans-serif; font-size: 14px; margin: 0; padding: 0 4px; text-align: center; text-decoration: underline; width: 15px; }a.address_current { color: #000; text-decoration: none; }.c_address_select .ico_key, .c_address_select .ico_unkey{position: absolute;top: 1px;left: 1px;width: 34px;height: 24px;overflow: hidden;line-height: 999em;font-size: 0;content: "";background: url(http://pic.c-ctrip.com/ctripOnPad/ico_key.png) no-repeat 0 0;-webkit-transform: scale(.7);}.c_address_select .address_close {position: absolute;top: 3px;right: 4px;width: 18px;height: 19px;overflow: hidden;line-height: 999em;font-size: 0;content: "";text-indent: 99em;background: url(http://pic.c-ctrip.com/ctripOnPad/pad_address_icon.png) no-repeat -32px 0;-webkit-transform: scale(0.5);}.c_address_select .ico_unkey {background: url(http://pic.c-ctrip.com/ctripOnPad/ico_unkey.png) no-repeat 0 0;}',
+                    suggestionIpad: '\t\t\t\t<div class="city_select_lhsl">\t\t\t\t\t<p class="title"><a class="close CQ_suggestionClose" href="javascript:;">&times;</a></p><ul class="CQ_suggestionTabContainer">\t\t\t\t\t\t{{enum(key) $data.data}}\t\t\t\t\t\t\t<li class="CQ_suggestionTab"><span>${key}</span></li>\t\t\t\t\t\t{{/enum}}\t\t\t\t\t</ul>\t\t\t\t\t{{enum(key,arr) $data.data}}\t\t\t\t\t\t<div class="city_item CQ_suggestionPanel">\t\t\t\t\t\t\t{{each(i,item) arr}}\t\t\t\t\t\t\t\t<a data="${item.data}" href="javascript:void(0);">${item.display}</a>\t\t\t\t\t\t\t{{/each}}\t\t\t\t\t\t</div>\t\t\t\t\t{{/enum}}\t\t\t\t</div>\t\t\t'
 
                 }
             });
         },
-        removeValidate: function () { //除去验证提示
+        removeValidate: function() { //除去验证提示
             var self = this;
             var _ref = self.insStatistics;
             if (!_ref) return;
-            $.map(_ref, function (v, k) {
+            $.map(_ref, function(v, k) {
                 v.hide();
             });
             $('input[role="cardValidUntilY"],input[role="cardValidUntilM"],input[role="birthdayY"],input[role="birthdayM"]', '#travellersID').removeClass('f_error');
         },
         //添加模版助手，以便模版内部能够直接将人数相加
-        handlerHelp: function () {
-            Handlebars.registerHelper('plus', function () {
+        handlerHelp: function() {
+            Handlebars.registerHelper('plus', function() {
                 var args = Array.prototype.slice.call(arguments);
                 var options = args.pop();
                 var num = 0;
@@ -1873,20 +1865,20 @@ define(function (require, exports, module) {
 				return Math.floor(parseInt(a)/parseInt(b));
             });*/
         },
-        initEvent: function () { //初始化事件绑定
+        initEvent: function() { //初始化事件绑定
             for (var i in this.events) {
                 this.events[i].call(this);
             }
         },
-        initHeadbarsHelper: function () {
-            Handlebars.registerHelper("equal", function (a, b, v1, v2) {
+        initHeadbarsHelper: function() {
+            Handlebars.registerHelper("equal", function(a, b, v1, v2) {
                 return a == b ? v1 : v2;
             });
-            Handlebars.registerHelper('add', function (a, b) {
+            Handlebars.registerHelper('add', function(a, b) {
                 return a + b;
             });
         },
-        toggleLoading: function (id, el) { //load加载
+        toggleLoading: function(id, el) { //load加载
             var id = 'queryLoading' + (id || '');
             var loading = $('#' + id);
             if (!loading.length) {
@@ -1896,7 +1888,7 @@ define(function (require, exports, module) {
                 loading.remove();
             }
         },
-        totalPrice: function () { //计算总金额
+        totalPrice: function() { //计算总金额
             var data = this.data;
             var total = data.Amount - data.couponPrice - data.couponNowPrice + data.postage;
             var roles = data.roles;
@@ -1910,14 +1902,14 @@ define(function (require, exports, module) {
             // this.formData.PromotionAmount = data.couponPrice ? data.couponPrice : 0;
             return total;
         },
-        render: function (tpl, data, handle, cb) {
+        render: function(tpl, data, handle, cb) {
             var Template = Handlebars.compile(tpl);
             var html = Template(data);
             typeof handle === 'function' && handle.call(this, html);
             typeof cb === 'function' && cb.call(this, html);
             return html;
         },
-        fetchData: function (opts, cb) { //ajax
+        fetchData: function(opts, cb) { //ajax
             var self = this;
             return $.ajax({
                 type: opts.method || 'GET',
@@ -1926,29 +1918,29 @@ define(function (require, exports, module) {
                 // cache: false,
                 dataType: 'html',
                 // timeout : 5000,
-                success: function (data) {
+                success: function(data) {
                     cb.call(self, data);
                 },
-                error: function (msg) {
+                error: function(msg) {
                     // alert(msg)
                 }
             });
         },
-        reviewPos: function () { //刷新提示位置
-            this.insStatistics && $.map(this.insStatistics, function (v) { //重新计算提示的位置
+        reviewPos: function() { //刷新提示位置
+            this.insStatistics && $.map(this.insStatistics, function(v) { //重新计算提示的位置
                 v.setPos();
             });
         },
-        validate: function () { //验证提示
+        validate: function() { //验证提示
             var statistics = []; //记录
-            var _userTrack = function () { //用户记录
+            var _userTrack = function() { //用户记录
                 if (statistics.length) {
                     for (var i = 0; i < statistics.length; i++) {
                         ubt_userblock_post(statistics[i].params.target, statistics[i].params.data || '');
                     }
                 }
             };
-            var ins = function (opts) {
+            var ins = function(opts) {
                 var _defaults = {
                     zIndex: 999,
                     errorClass: "f_error",
@@ -1961,13 +1953,13 @@ define(function (require, exports, module) {
                     isAutoHide: false,
                     hideSpeed: 2000,
                     /**显示后调用*/
-                    show: function () { },
+                    show: function() {},
                     /**隐藏后调用*/
-                    hide: function () { },
+                    hide: function() {},
                     /**位置*/
                     position: "rm_lm",
                     templs: {
-                        tipTempl: '<div id={{tipId}} class="{{tip}}"  style="min-width:{{minWidth}}px; width:{{maxWidth}}px;_width:{{minWidth}}px; width:auto !important;max-width:{{maxWidth}}px;overflow:hidden;display:block;z-index:99;margin:0;padding:0;left:0px;top:0px;overflow:hidden;position:absolute;padding-left:16px;"><div class="{{box}} {{boxType}} {{boxArrow}}" id={{boxId}}><b class="{{arrow}}" id={{arrowId}}></b><div class={{content}} id={{contentId}}></div></div>',
+                        tipTempl: '<div id={{tipId}} class="{{tip}}"  style="min-width:{{minWidth}}px; width:{{maxWidth}}px;_width:{{minWidth}}px; width:auto !important;max-width:{{maxWidth}}px;overflow:hidden;display:block;z-index:1999;margin:0;padding:0;left:0px;top:0px;overflow:hidden;position:absolute;padding-left:16px;"><div class="{{box}} {{boxType}} {{boxArrow}}" id={{boxId}}><b class="{{arrow}}" id={{arrowId}}></b><div class={{content}} id={{contentId}}></div></div>',
                         contentTpl: '<div class="jmp_bd">{{{txt}}}</div>'
                     },
                     css: {
@@ -2008,7 +2000,7 @@ define(function (require, exports, module) {
                 this.init();
             };
             ins.prototype = {
-                init: function () {
+                init: function() {
                     this.creatStyle(this.params.styles);
                     this.creatContainer();
                     this.creatContent();
@@ -2018,7 +2010,7 @@ define(function (require, exports, module) {
                         _userTrack();
                     }
                 },
-                creatStyle: function (styles) { //加入样式
+                creatStyle: function(styles) { //加入样式
                     var doc = document;
                     if (!doc.styles) {
                         if (cQuery.browser.isIE) {
@@ -2035,11 +2027,11 @@ define(function (require, exports, module) {
                         return;
                     }
                 },
-                uid: function () {
+                uid: function() {
                     var target = this.params.target;
                     var base = 'abcdefghijklmnopqrstuvwxyz';
                     var _i = 0,
-                        rd = function () {
+                        rd = function() {
                             return Math.random() * 26;
                         },
                         md = new Date,
@@ -2052,7 +2044,7 @@ define(function (require, exports, module) {
                     $(target).data('uid', ret);
                     return ret;
                 },
-                show: function (opts) {
+                show: function(opts) {
                     var me = this;
                     var opts = $.extend(this.params, opts);
                     var pos;
@@ -2075,14 +2067,14 @@ define(function (require, exports, module) {
                         if (this.timeid) clearTimeout(this.timeid);
                         this.timeid = setTimeout($.proxy(this.hide, this), opts.hideSpeed);
                     }
-                    $(opts.$obj).bind('focus', function () {
+                    $(opts.$obj).bind('focus', function() {
                         me.hide({
                             $obj: this
                         });
                     });
                     return this;
                 },
-                setPos: function (opts) {
+                setPos: function(opts) {
                     var pos = this.getPos();
                     if (parseInt(this.tipId.css('top')) > 0) {
                         this.tipId.css({
@@ -2094,7 +2086,7 @@ define(function (require, exports, module) {
                         });
                     }
                 },
-                hide: function (opts) {
+                hide: function(opts) {
                     var opts = $.extend(this.params, opts);
                     opts.$obj = opts.$obj ? opts.$obj : opts.target;
                     if (opts.removeErrorClass) {
@@ -2105,11 +2097,11 @@ define(function (require, exports, module) {
                         left: '-9999em'
                     });
                 },
-                render: function (tpl, data) {
+                render: function(tpl, data) {
                     var Template = Handlebars.compile(tpl);
                     return html = Template(data);
                 },
-                creatContainer: function () {
+                creatContainer: function() {
                     var opts = this.params;
                     var uid = this.oid || (this.oid = this.uid());
                     var oid = '#' + uid;
@@ -2142,14 +2134,14 @@ define(function (require, exports, module) {
                     this.contentId = $("#" + opts.ids.contentId, oid);
                     // $('#'+uid)[0].style.zIndex = opts.zIndex;
                 },
-                creatContent: function () {
+                creatContent: function() {
                     var opts = this.params;
                     var html = this.render(opts.templs.contentTpl, {
                         "txt": opts.data
                     });
                     this.contentId.html(html);
                 },
-                getPos: function () {
+                getPos: function() {
                     var opts = this.params;
                     var pos = opts.position.split("_")
                     var targ = {};
@@ -2203,16 +2195,16 @@ define(function (require, exports, module) {
             };
             return ins;
         }(),
-        hideTip: function (el, opts) {
+        hideTip: function(el, opts) {
             var opts = opts || {};
             if (el && $(el).data('valid')) {
                 $(el).data('valid').hide(opts);
             }
         },
-        Products: function () { //产品部分
+        Products: function() { //产品部分
             var self = this;
             return {
-                init: function () {
+                init: function() {
                     var me = this;
                     me.fnToggleProductDetail();
                     me.fnToggleDetailContent();
@@ -2225,8 +2217,8 @@ define(function (require, exports, module) {
                         fltDomestic: {}
                     };
                     var craftTypeUrl = "http://webresource.c-ctrip.com/code/js/resource/jmpinfo_tuna/CraftType_" + cQuery.config("charset") + ".js"
-                    $.getScript(craftTypeUrl, function () {
-                        var getData = function (page) {
+                    $.getScript(craftTypeUrl, function() {
+                        var getData = function(page) {
                             var pagevalue = "";
                             if (page.match(new RegExp('=(\\w+)')) != null) {
                                 pagevalue = page.match(new RegExp('=(\\w+)'))[1];
@@ -2248,8 +2240,8 @@ define(function (require, exports, module) {
                             }
                             return {};
                         };
-                        cQuery.mod.load('jmp', '1.0', function () {
-                            $('span[mod1="jmpInfo"]', '#productID').each(function () {
+                        cQuery.mod.load('jmp', '1.0', function() {
+                            $('span[mod1="jmpInfo"]', '#productID').each(function() {
                                 cQuery(this).regMod('jmp', '1.0', {
                                     options: {
                                         content: getData($(this).attr('mod_jmpinfo_page')),
@@ -2270,11 +2262,11 @@ define(function (require, exports, module) {
                     });
                 },
                 /**
-                * 点击隐藏明细和展开明细，显示隐藏Content按钮
-                * @return {void}
-                */
-                fnToggleProductDetail: function () {
-                    $('#base_bd .book_detail').click(function () {
+                 * 点击隐藏明细和展开明细，显示隐藏Content按钮
+                 * @return {void}
+                 */
+                fnToggleProductDetail: function() {
+                    $('#base_bd .book_detail').click(function() {
                         var jProduct = $(this).parent();
                         var jProductContent = jProduct.find('.book_product_content');
                         if (jProductContent.is(':hidden')) {
@@ -2288,18 +2280,18 @@ define(function (require, exports, module) {
                     });
                 },
                 /**
-                * 点击对应的链接，显示隐藏详细内容
-                * 点击所有.pack_up，找到祖先元素.hidden_content，隐藏之
-                * 点击所有.show_detailed，找到相邻的tr父元素，如果内部的确有详细内容则显示/隐藏详细内容
-                * @return {void}
-                */
-                fnToggleDetailContent: function () {
-                    $('#base_bd .pack_up').click(function () {
+                 * 点击对应的链接，显示隐藏详细内容
+                 * 点击所有.pack_up，找到祖先元素.hidden_content，隐藏之
+                 * 点击所有.show_detailed，找到相邻的tr父元素，如果内部的确有详细内容则显示/隐藏详细内容
+                 * @return {void}
+                 */
+                fnToggleDetailContent: function() {
+                    $('#base_bd .pack_up').click(function() {
                         var jHiddenContent = $(this).parentsUntil('td', '.hidden_content');
                         jHiddenContent.hide();
                         self.reviewPos(); //刷新提示位置
                     });
-                    $('#base_bd .show_detailed').click(function () {
+                    $('#base_bd .show_detailed').click(function() {
                         var jParentTr = $(this).parents('tr:first');
                         var jNextTr = jParentTr.next('tr');
                         var jHiddenContent = jNextTr.find('.hidden_content');
@@ -2311,14 +2303,14 @@ define(function (require, exports, module) {
                 }
             };
         },
-        Coupon: function () { //优惠券
+        Coupon: function() { //优惠券
             var self = this,
                 vdata = self.data,
                 roles = vdata.roles,
                 mod = vdata.modules,
                 parseJSON = self.common.parseJSON;
             return {
-                init: function () { //初始化
+                init: function() { //初始化
                     var me = this;
                     var data = me.handleData();
                     var list = data.data;
@@ -2331,7 +2323,7 @@ define(function (require, exports, module) {
                         }
                         self.render(tpl, {
                             'list': list
-                        }, function (dom) {
+                        }, function(dom) {
                             if (isSingle) {
                                 roles.singleConponID.html(dom).show();
                                 roles.couponID.children().eq(1).hide();
@@ -2340,7 +2332,7 @@ define(function (require, exports, module) {
                                 roles.couponID.show();
                             }
                             roles.fillsetID.show();
-                        }, function () {
+                        }, function() {
                             me.initSelect(isSingle);
                             me.select(isSingle);
                             // 点击input，下拉框自动显示该用户已有的优惠券（执行）
@@ -2351,7 +2343,7 @@ define(function (require, exports, module) {
                         roles.fillsetID.show();
                     }
                 },
-                handleData: function () {
+                handleData: function() {
                     var me = this,
                         _ret = [],
                         _ref = vdata.initData.availablePromotion,
@@ -2364,7 +2356,7 @@ define(function (require, exports, module) {
                             if (_ref.Promotions && _ref.Promotions.length) {
                                 _ret = _ref.Promotions;
                                 if (_ret.length) {
-                                    $.map(_ret, function (v, k) {
+                                    $.map(_ret, function(v, k) {
                                         if (v.PromotionID) {
                                             me.promotions[v.PromotionID] = v
                                             if (oSelected && oSelected.PromotionID === v.PromotionID) {
@@ -2400,7 +2392,7 @@ define(function (require, exports, module) {
                     }
                     return _obj;
                 },
-                initSelect: function (isSingle) {
+                initSelect: function(isSingle) {
                     var oSelected = vdata.initData.availablePromotion.SelectedPromotion;
                     var current;
                     var role, reduce;
@@ -2421,7 +2413,7 @@ define(function (require, exports, module) {
                     roles.amountCoupon.html(vdata.couponNowPrice = reduce);
                     self.totalPrice.call(self);
                 },
-                select: function (isSingle) {
+                select: function(isSingle) {
                     var request;
                     var validTip;
                     var _data = {
@@ -2430,11 +2422,11 @@ define(function (require, exports, module) {
                         CouponCode: ''
                     };
                     var conpon = isSingle ? roles.singleConponID : roles.couponID;
-                    var callback = function (amount) {
+                    var callback = function(amount) {
                         roles.amountCoupon.html(vdata.couponNowPrice = amount);
                         self.totalPrice.call(self); //总金额
                     };
-                    var getDate = function (role, obj, noShowTip, isChecked) {
+                    var getDate = function(role, obj, noShowTip, isChecked) {
                         _data.CouponCode = '';
                         if (obj) {
                             $.extend(_data, obj);
@@ -2442,7 +2434,7 @@ define(function (require, exports, module) {
                         request = self.fetchData({
                             url: vdata.handles.verifyPromotion,
                             data: _data
-                        }, function (data) {
+                        }, function(data) {
                             var amount, code, ref;
                             if (!request) return; //如果请求取消则停止回调
                             data = typeof data === 'string' ? parseJSON(data) : data;
@@ -2477,7 +2469,7 @@ define(function (require, exports, module) {
                             }
                         })
                     };
-                    var couponCHeck = function (role, promotionid, bl) {
+                    var couponCHeck = function(role, promotionid, bl) {
                         if (!bl) {
                             callback(0);
                             getDate(role, {
@@ -2489,7 +2481,7 @@ define(function (require, exports, module) {
                         role.couponCode && role.couponCode.val('');
                         role.tip && role.tip.html('');
                         role.checkcode.unbind('click');
-                        role.checkcode.bind('click', function () {
+                        role.checkcode.bind('click', function() {
                             var _code = $.trim(role.couponCode.val());
                             if (!_code) {
                                 if (validTip) {
@@ -2511,14 +2503,14 @@ define(function (require, exports, module) {
                     };
                     if (this.isSingle) {
                         var _role = self.common.getRoles(roles.singleConponID);
-                        roles.singleConponID.on('click', 'a[role="singleReInput"]', function () {
+                        roles.singleConponID.on('click', 'a[role="singleReInput"]', function() {
                             couponCHeck(_role, 0);
                             _role.cnew.show();
                             _role.had.hide().find('.explain, .singleName').html('');
                         });
                         couponCHeck(_role, 0, !0);
                     }
-                    conpon.on('click', 'input[type="radio"]', function () {
+                    conpon.on('click', 'input[type="radio"]', function() {
                         var _this = $(this);
                         var promotionID = _this.attr('PromotionID');
                         var strategyID = _this.attr('strategyID');
@@ -2553,7 +2545,7 @@ define(function (require, exports, module) {
                         }
                     });
 
-                    conpon.on('click', '[role="reinput"]', function () {
+                    conpon.on('click', '[role="reinput"]', function() {
                         var parent = $(this).hide().closest('li');
                         var role = self.common.getRoles(parent);
                         if (role.extendDescription) {
@@ -2564,23 +2556,26 @@ define(function (require, exports, module) {
                     })
                 },
                 // 点击input，下拉框自动显示该用户已有的优惠券（方法）
-                auto: function (isSingle) {
+                auto: function(isSingle) {
                     var _role = isSingle ? roles.singleConponID : roles.couponID,
                         timer,
-                        reviewPosition = function () {
-                            $("[id^='autoCoupon']:visible").each(function () {
+                        reviewPosition = function() {
+                            $("[id^='autoCoupon']:visible").each(function() {
                                 var $this = $(this);
                                 autoCouponId = $this.attr('id'),
                                 promotionId = autoCouponId.substr(autoCouponId.indexOf('_') + 1);
                                 input = isSingle ?
-                                        _role.find('[role = "couponCode"]') :
-                                        _role.find('[promotionid="' + promotionId + '"]').parent().next().children('[type="text"]'),
+                                    _role.find('[role = "couponCode"]') :
+                                    _role.find('[promotionid="' + promotionId + '"]').parent().next().children('[type="text"]'),
                                 x = input.offset().left,
                                 y = input.offset().top;
-                                $this.css({ left: x, top: y + input.outerHeight() })
+                                $this.css({
+                                    left: x,
+                                    top: y + input.outerHeight()
+                                })
                             })
                         };
-                    _role.on('click', '[role = "couponCode"]', function () {
+                    _role.on('click', '[role = "couponCode"]', function() {
                         var $this = $(this),
                             radio = $this.parent().prev().children('input'),
                             promotionId = radio.attr('promotionid') || '',
@@ -2591,7 +2586,10 @@ define(function (require, exports, module) {
                             y = $this.offset().top + $this.outerHeight();
                         // 阻止重复ajax
                         if ($this.data('requested')) {
-                            autoCoupon.css({ left: x, top: y }).show();
+                            autoCoupon.css({
+                                left: x,
+                                top: y
+                            }).show();
                             return
                         };
                         // ajax请求该用户已有的优惠券
@@ -2603,7 +2601,7 @@ define(function (require, exports, module) {
                                 pkgId: productID,
                                 promotionId: promotionId
                             },
-                            success: function (data) {
+                            success: function(data) {
                                 $this.data('requested', true);
                                 // 无返回数据或者返回数据为空
                                 if (!data || !data.length) {
@@ -2613,11 +2611,14 @@ define(function (require, exports, module) {
                                     'index': promotionId,
                                     'big': big,
                                     'list': data
-                                }, function (dom) {
+                                }, function(dom) {
                                     $(dom)
                                         .appendTo('body')
-                                        .css({ left: x, top: y })
-                                        .show().find('li').click(function () {
+                                        .css({
+                                            left: x,
+                                            top: y
+                                        })
+                                        .show().find('li').click(function() {
                                             $this.val($(this).find('.coupon_num').html() || $(this).children().html());
                                             autoCoupon.hide();
                                             $this.next('[role = "checkcode"]').click();
@@ -2627,23 +2628,23 @@ define(function (require, exports, module) {
                         })
                     })
                     // 点击下拉框隐藏
-                    $(document).mouseup(function () {
+                    $(document).mouseup(function() {
                         $("[id^='autoCoupon']").hide()
                     })
                     // 窗口大小变化重新定义下拉框位置
-                    $(window).resize(function () {
+                    $(window).resize(function() {
                         timer && clearTimeout(timer);
                         timer = setTimeout(reviewPosition, 200);
                     })
                 }
             }
         },
-        HotelCoupon: function () { //酒店优惠
+        HotelCoupon: function() { //酒店优惠
             var self = this,
                 vdata = self.data,
                 roles = vdata.roles;
             return {
-                init: function () {
+                init: function() {
                     var me = this;
                     var data = this.handleData(vdata.initData.Coupon);
                     if (!data && $.isEmptyObject(vdata.initData.availablePromotion)) {
@@ -2655,12 +2656,12 @@ define(function (require, exports, module) {
                         }
                         return;
                     }
-                    self.render(self.tpl.hotelCoupon, data, function (dom) {
+                    self.render(self.tpl.hotelCoupon, data, function(dom) {
                         var html = $(dom).appendTo(vdata.roles.couponID);
                         me.bindEvent(html, data);
                     });
                 },
-                handleData: function (data) {
+                handleData: function(data) {
                     if (!data) return;
                     var _ret = {
                         Amount: data.Amount,
@@ -2673,10 +2674,10 @@ define(function (require, exports, module) {
                     } else {
                         _ret.isRemain = true;
                     }
-                    $.map(data.ReturnTicketCash, function (v, k) {
+                    $.map(data.ReturnTicketCash, function(v, k) {
                         _ref += parseInt(v.Amount);
                     });
-                    data.UsedReturnCashRoomLst && $.map(data.UsedReturnCashRoomLst, function (v, k) {
+                    data.UsedReturnCashRoomLst && $.map(data.UsedReturnCashRoomLst, function(v, k) {
                         __ref += parseInt(v.Amount);
                     })
                     _ret.coupon = _ref;
@@ -2684,9 +2685,9 @@ define(function (require, exports, module) {
                     _ret.remain = parseInt(data.Amount) - parseInt(data.CanUseAmount);
                     return _ret;
                 },
-                bindEvent: function (el, data) {
+                bindEvent: function(el, data) {
                     var role = self.common.getRoles(el);
-                    role.confirm && role.confirm.click(function () {
+                    role.confirm && role.confirm.click(function() {
                         role.having.hide();
                         role.had.show();
                         self.formData.CouponInfo = {
@@ -2694,7 +2695,7 @@ define(function (require, exports, module) {
                             IsUseCoupon: 1
                         }
                     });
-                    role.cancel && role.cancel.click(function () {
+                    role.cancel && role.cancel.click(function() {
                         role.having.show();
                         role.had.hide();
                         self.formData.CouponInfo = {
@@ -2705,7 +2706,7 @@ define(function (require, exports, module) {
                 }
             }
         },
-        Travellers: function () { //出游人
+        Travellers: function() { //出游人
             var self = this;
             var vdata = self.data;
             var roles = vdata.roles;
@@ -2713,7 +2714,7 @@ define(function (require, exports, module) {
             var Validate = self.validate;
             var oBirth = new Birth('', vdata.initData.departDate);
             var mod = vdata.modules;
-            var Visitor = function (opts) { //旅客类
+            var Visitor = function(opts) { //旅客类
                 var _defaults = {
                     element: ''
                 };
@@ -2721,7 +2722,7 @@ define(function (require, exports, module) {
                 this.init();
             };
             Visitor.prototype = {
-                init: function () {
+                init: function() {
                     var role = this.role = self.common.getRoles(this.opts.element);
                     this.personType = +$(this.opts.element).attr('ptype');
                     this.cid = $(this.opts.element).attr('index');
@@ -2734,32 +2735,32 @@ define(function (require, exports, module) {
                         this.filterInputs();
                     }
                 },
-                initTips: function () {
+                initTips: function() {
 
                 },
-                regNationalAddr: function () { //注册国籍控件
+                regNationalAddr: function() { //注册国籍控件
                     var role = this.role;
                     var dfNational;
-                    cQuery.mod.load('address', '1.0', $.proxy(function () {
+                    cQuery.mod.load('address', '1.0', $.proxy(function() {
                         var me = this;
                         this.addressNational = self.regNational(role.national[0]);
                         if (/ipad/.test(navigator.userAgent.toLowerCase())) {
                             role.national[0].readOnly = true;
-                            role.national.bind('click', function () {
+                            role.national.bind('click', function() {
                                 $('.CQ_suggestionTabContainer')[0].style.width = "0px";
-                                setTimeout(function () {
+                                setTimeout(function() {
                                     role.national[0].readOnly = false;
                                     role.national[0].focus();
                                 }, 100);
                             });
-                            role.national.bind('blur', function () {
+                            role.national.bind('blur', function() {
                                 role.national[0].readOnly = true;
                             });
                         }
-                        this.addressNational.method('bind', 'change', function (event, data) { //绑定国籍事件
+                        this.addressNational.method('bind', 'change', function(event, data) { //绑定国籍事件
                             role.national.attr('mod_value', data.items[2]);
                         });
-                        this.addressNational.method('bind', 'userinput', function (a, b) {
+                        this.addressNational.method('bind', 'userinput', function(a, b) {
                             if (b.data) {
                                 vdata.dfNational = b.data;
                             }
@@ -2773,11 +2774,11 @@ define(function (require, exports, module) {
                         this.loadNationalData();
                     }, this));
                 },
-                loadNationalData: function () {
+                loadNationalData: function() {
                     var me = this;
                     cQuery.loader.jsonp('http://webresource.c-ctrip.com/code/cquery/resource/address/flightintl/nationality_' + cQuery.config("charset") + '.js', {
                         charset: cQuery.config("charset"),
-                        onload: function (data) {
+                        onload: function(data) {
                             if ($.isEmptyObject(vdata.nationalData)) {
                                 me.handleNationalData(data.data, data.suggestion['']);
                                 vdata.orgiNationalData = data;
@@ -2787,18 +2788,18 @@ define(function (require, exports, module) {
                         }
                     })
                 },
-                handleNationalData: function (data, sug) {
+                handleNationalData: function(data, sug) {
                     var reg = new RegExp('@([^@]*\\|[^@]*\\|[^@]*)@', 'gi');
                     vdata.nationalData = {};
-                    $.map(data.match(reg), function (v, k) {
+                    $.map(data.match(reg), function(v, k) {
                         var _ref = v.replace('@', '').replace('@', '').split('|');
                         vdata.nationalData[_ref[2]] = _ref[1];
                     });
-                    $.map(sug, function (v, k) {
+                    $.map(sug, function(v, k) {
                         vdata.nationalData[v.data.split('|')[2]] = v.display;
                     });
                 },
-                initNationalData: function () {
+                initNationalData: function() {
                     var role = this.role;
                     var val = $.trim(role.national.val());
                     if (val !== '' && val !== role.national.attr('_cqnotice')) { //改变CN成中国大陆
@@ -2819,7 +2820,7 @@ define(function (require, exports, module) {
                         })
                     }
                 },
-                setNationalData: function () {
+                setNationalData: function() {
                     var producttype = this.getProdctType();
                     var role = this.role;
                     if (producttype === 1 && role.national && role.idCardType) {
@@ -2874,25 +2875,25 @@ define(function (require, exports, module) {
                         }
                     }
                 },
-                bindEvent: function () {
+                bindEvent: function() {
                     var me = this;
                     var role = this.role;
                     var isHasEnName = role.nameEN;
                     me.setNationalData();
                     me.autoNext([role.birthdayY, role.birthdayM]).autoNext([role.cardValidUntilY, role.cardValidUntilM]);
-                    $(this.opts.element).on('blur', 'input[type="text"]', function (event) {
+                    $(this.opts.element).on('blur', 'input[type="text"]', function(event) {
                         var reg;
                         if (reg = $(this).attr('regex')) {
-                            me[reg]($.trim( $(this).val() ), $(this).prop('required'), this);
+                            me[reg]($.trim($(this).val()), $(this).prop('required'), this);
                         }
                         if ($(this).attr('role') === 'idCardNo') {
                             Reg.checkIdRepeat($(this).prev()[0].value, this, $(this).prev().find('option:selected')[0].innerHTML);
                         }
-                        if ($(this).attr('role') === 'birthPlace'){
+                        if ($(this).attr('role') === 'birthPlace') {
 
                         }
                     })
-                        .on('change', '[role="idCardType"]', function () {
+                        .on('change', '[role="idCardType"]', function() {
                             if ($(this).next().next().hasClass('repeatNum')) {
                                 $(this).next().next().remove();
                             }
@@ -2901,9 +2902,9 @@ define(function (require, exports, module) {
                             var cliendID = elem.attr('index');
                             var cobj = mod.Commoners.commonersObj[cliendID];
                             var _ref;
-                            var setCardDate = function (arr) {
+                            var setCardDate = function(arr) {
                                 if (role.cardValidUntilY) {
-                                    $.map('cardValidUntilY|cardValidUntilM|cardValidUntilD'.split('|'), function (v, k) {
+                                    $.map('cardValidUntilY|cardValidUntilM|cardValidUntilD'.split('|'), function(v, k) {
                                         role[v].val(arr[k]);
                                     })
                                 }
@@ -2921,7 +2922,7 @@ define(function (require, exports, module) {
                             if (cliendID && cobj && (_ref = cobj.IDCardInfo) && _ref.length) {
                                 role.idCardNo && role.idCardNo.val('');
                                 setCardDate(['', '', '']);
-                                $.map(_ref, function (v, k) {
+                                $.map(_ref, function(v, k) {
                                     var lt;
                                     if (v.IDCardType == val) {
                                         v.IDCardNo && role.idCardNo && role.idCardNo.val(v.IDCardNo).removeClass('inputSel');
@@ -2933,7 +2934,7 @@ define(function (require, exports, module) {
                             }
                         })
                 },
-                filterInputs: function () {
+                filterInputs: function() {
                     var val, role = this.role;
                     var optional = $('.optional', this.opts.element);
                     var later = $('.later', this.opts.element);
@@ -2950,7 +2951,7 @@ define(function (require, exports, module) {
                             later.length && later.hide();
                         } else {
                             // !later.hasClass('optional') && later.length && later.show();
-                            later.each(function () {
+                            later.each(function() {
                                 !$(this).hasClass('optional') && $(this).show();
                             })
                         }
@@ -2961,17 +2962,17 @@ define(function (require, exports, module) {
                         }
                     }
                 },
-                filterNationalData: function (arg) {
+                filterNationalData: function(arg) {
                     var source = cQuery.copy(vdata.orgiNationalData);
                     var _ret;
                     if (arg.length) {
-                        $.map(arg, function (v, k) {
+                        $.map(arg, function(v, k) {
                             source.data = source.data.replace(v, '');
                         })
                     }
                     return source;
                 },
-                setNational: function (val, attr) { //设置国籍
+                setNational: function(val, attr) { //设置国籍
                     this.role.national.val(val).attr('mod_value', attr).removeClass('inputSel');
                 },
                 /*  forForeign: function(isForeign, isHasEnName) { //是否是外宾
@@ -3006,10 +3007,10 @@ define(function (require, exports, module) {
                 }
                 self.reviewPos();
                 },*/
-                autoNext: function (el) {
+                autoNext: function(el) {
                     if (el[0]) {
-                        $(el).each(function (i) {
-                            $(this).bind('keyup', function () {
+                        $(el).each(function(i) {
+                            $(this).bind('keyup', function() {
                                 if (i === 0) {
                                     if ($(this).val().length >= 4) {
                                         $(this).next().focus();
@@ -3024,16 +3025,16 @@ define(function (require, exports, module) {
                     }
                     return this;
                 },
-                hideTip: function () { //提示隐藏 
+                hideTip: function() { //提示隐藏 
                     var tip;
                     $(this.opts.element).find('.cq').removeClass('inputSel').removeClass('f_error');
-                    $.each(this.role, function (k, v) {
+                    $.each(this.role, function(k, v) {
                         if (tip = v.data('valid')) {
                             tip.hide();
                         }
                     });
                 },
-                showTip: function (el, data, opts) {
+                showTip: function(el, data, opts) {
                     var showItem = $(el);
                     var ovalid = showItem.data('valid');
                     opts = $.extend({
@@ -3043,21 +3044,21 @@ define(function (require, exports, module) {
                         'errorClass': 'f_error'
                     });
                     ovalid = ovalid ? ovalid.show(opts) :
-                    new Validate(opts).show();
+                        new Validate(opts).show();
                     showItem.data('valid', ovalid);
                 },
-                getIdvalue: function () {
+                getIdvalue: function() {
                     var role = this.role;
                     return (role.idCardType && role.idCardType.val()) || 0;
                 },
-                getExpiryVal: function () {
+                getExpiryVal: function() {
                     var role = this.role;
                     var reg = /^(\d{4})-([01]?\d)-([0123]?\d)$/;
                     var _ret = [];
                     _ret.push(role.cardValidUntilY.val(), role.cardValidUntilM.val(), role.cardValidUntilD.val());
                     return reg.test(_ret.join('-')) ? _ret.join('-') : 0;
                 },
-                getCardValidUntil: function () {
+                getCardValidUntil: function() {
                     var role = this.role;
                     var t = this.getExpiryVal();
                     var cardDate;
@@ -3083,7 +3084,7 @@ define(function (require, exports, module) {
                     }
                     return [true, ];
                 },
-                getAgeInfo: function (str) {
+                getAgeInfo: function(str) {
                     var _ret;
                     var role = this.role;
                     if (role.birthdayY && role.birthdayY.closest('li').css('display') !== 'none') {
@@ -3105,7 +3106,7 @@ define(function (require, exports, module) {
                     }
                     return [true, ];
                 },
-                checkIdCardType: function () {
+                checkIdCardType: function() {
                     var role = this.role;
                     var dest = this.getDest();
                     if (!role.national) return true;
@@ -3119,17 +3120,17 @@ define(function (require, exports, module) {
                     // }
                     return true;
                 },
-                getDest: function () {
+                getDest: function() {
                     return vdata.initData.Dest;
                 },
-                getProdctType: function () {
+                getProdctType: function() {
                     return vdata.initData.ProductType;
                 },
-                checkName: function (str) {
+                checkName: function(str) {
                     var me = this
                     var role = this.role;
                     var bl;
-                    var showTip = function () {
+                    var showTip = function() {
                         me.showTip.apply(this, [role.name[0]].concat([].slice.call(arguments, 0)));
                     };
                     if ('' === str || str === role.name.attr('_cqnotice')) {
@@ -3164,7 +3165,7 @@ define(function (require, exports, module) {
                         return true;
                     }
                 },
-                checkCnName: function (str) {
+                checkCnName: function(str) {
                     var me = this;
                     var nameCN = me.role.nameCN;
                     var strs = $.trim(str) === nameCN.attr('_cqnotice') ? '' : $.trim(str);
@@ -3181,7 +3182,7 @@ define(function (require, exports, module) {
                     }
                     return true;
                 },
-                checkEnName: function (str) {
+                checkEnName: function(str) {
                     var strs = $.trim(str) === this.role.nameEN.attr('_cqnotice') ? '' : $.trim(str);
                     var bl = Reg.checkEnName(strs);
                     console.log(this);
@@ -3191,37 +3192,43 @@ define(function (require, exports, module) {
                     }
                     return true;
                 },
-                checkEnNameLast: function (str) {
+                checkEnNameLast: function(str) {
                     //英文姓检测
                     var name = $.trim(str);
                     if (/[^a-zA-Z]/.test(name)) {
-                        this.showTip(this.role.nameEnLast[0], [false, "英文姓只能包含字母，请检查"], { $obj: this.role.nameEnLast[0] });
+                        this.showTip(this.role.nameEnLast[0], [false, "英文姓只能包含字母，请检查"], {
+                            $obj: this.role.nameEnLast[0]
+                        });
                         return false;
                     }
                     return this.checkEnNameNew(name, this.role.nameEnLast);
                 },
-                checkEnNameFirst: function (str) {
+                checkEnNameFirst: function(str) {
                     //英文名检测
                     var name = $.trim(str);
                     if (/[^a-zA-Z]/.test(name)) {
-                        this.showTip(this.role.nameEnFirst[0], [false, "英文名只能包含字母，请检查"], { $obj: this.role.nameEnFirst[0] });
+                        this.showTip(this.role.nameEnFirst[0], [false, "英文名只能包含字母，请检查"], {
+                            $obj: this.role.nameEnFirst[0]
+                        });
                         return false;
                     }
                     return this.checkEnNameNew($.trim(str), this.role.nameEnFirst);
                 },
-                checkEnNameNew: function (str, obj, _bool) {
+                checkEnNameNew: function(str, obj, _bool) {
                     //英文单元检测
                     var role = this.role;
                     var strs = $.trim(str) === obj.attr('_cqnotice') ? '' : $.trim(str);
                     var bl = Reg.checkEnNameNew(strs, false);
 
                     if (!bl[0]) {
-                        this.showTip(this.role.nameEnFirst[0], bl[1], { $obj: obj[0] });
+                        this.showTip(this.role.nameEnFirst[0], bl[1], {
+                            $obj: obj[0]
+                        });
                         return false;
                     }
                     return true;
                 },
-                checkForeign: function (str) {
+                checkForeign: function(str) {
                     if (!(str === "CN" || str === "HK" || str === "MO" || str === "TW")) {
                         if (this.role.idCardType && this.role.idCardType.val() != '1') {
                             this.role.nameCN && self.hideTip(this.role.nameCN[0]);
@@ -3230,7 +3237,7 @@ define(function (require, exports, module) {
                     }
                     return true;
                 },
-                checkNationality: function (str) {
+                checkNationality: function(str) {
                     var role = this.role;
                     var type = this.getProdctType();
                     var national = $.trim(role.national.val());
@@ -3270,7 +3277,7 @@ define(function (require, exports, module) {
                     this.checkIdCardType();
                     return true;
                 },
-                checkIdCard: function (str) {
+                checkIdCard: function(str) {
                     var role = this.role;
                     var strs = str === role.idCardNo.attr('_cqnotice') ? '' : str;
                     var type = +this.getIdvalue();
@@ -3299,7 +3306,7 @@ define(function (require, exports, module) {
                     }
                     return true;
                 },
-                checkCardValidUntil: function (str, el) {
+                checkCardValidUntil: function(str, el) {
                     var data, target, reg;
                     var me = this;
                     var role = this.role;
@@ -3359,7 +3366,7 @@ define(function (require, exports, module) {
                     }
                     return true;
                 },
-                checkSex: function (str) {
+                checkSex: function(str) {
                     var role = this.role;
                     if ('-1' == role.gender.val() || '' == $.trim(role.gender.val())) {
                         this.showTip(role.gender[0], '请选择性别');
@@ -3367,7 +3374,7 @@ define(function (require, exports, module) {
                     }
                     return true;
                 },
-                checkBirthday: function (str, el) {
+                checkBirthday: function(str, el) {
                     var data, target, reg;
                     var me = this;
                     var role = this.role;
@@ -3424,7 +3431,7 @@ define(function (require, exports, module) {
                     }
                     return true;
                 },
-                checkMobile: function (str) {
+                checkMobile: function(str) {
                     var bl;
                     if ('' !== str) {
                         bl = Reg.checkMobile(str);
@@ -3442,7 +3449,7 @@ define(function (require, exports, module) {
                 //     }
                 //     return true;
                 // },
-                checkMobileIsNull: function () {
+                checkMobileIsNull: function() {
                     var str = $.trim(this.role.mobileNo.val());
                     if ('' === str) {
                         this.showTip(this.role.mobileNo[0], '请至少填写一位出行人的手机号码');
@@ -3450,15 +3457,15 @@ define(function (require, exports, module) {
                     }
                     return true;
                 },
-                linstenPickFill: function (bl) { //监听点选常用联系人
+                linstenPickFill: function(bl) { //监听点选常用联系人
                     bl && this.filterInputs();
                     this.hideTip();
                 },
-                verify: function () {
+                verify: function() {
                     var me = this;
                     var _ret = true;
                     var elem;
-                    $.each(this.role, function (k, v) {
+                    $.each(this.role, function(k, v) {
                         var reg, bl = true;
                         if ($(v).css('display') !== 'none' && $(v).closest('li').css('display') !== 'none') { //判断是否隐藏
                             if (reg = $(this).attr('regex')) {
@@ -3477,7 +3484,7 @@ define(function (require, exports, module) {
                 }
             };
             return {
-                init: function (arg) {
+                init: function(arg) {
                     var me = this;
                     var data = arg.initData;
                     var customer = data.CustomerInfoTemplate && data.CustomerInfoTemplate.CustomerInfoItems;
@@ -3499,7 +3506,7 @@ define(function (require, exports, module) {
                     if (data.Reminder) {
                         _obj.Reminder = data.Reminder;
                     }
-                    self.render(self.tpl.traveller, _obj, function (dom) {
+                    self.render(self.tpl.traveller, _obj, function(dom) {
                         roles.travellersID.append(dom);
                     });
 
@@ -3510,8 +3517,8 @@ define(function (require, exports, module) {
                     roles.bookInfoID.show();
                     require('./mod_book_calendar'); // 载入证件有效期，出生日期日历选择交互模块
                 },
-                handleHadData: function (data) {
-                    var handle = function (v, arg) {
+                handleHadData: function(data) {
+                    var handle = function(v, arg) {
                         data[v + 'Y'] = arg[0] || '';
                         data[v + 'M'] = arg[1] || '';
                         data[v + 'D'] = arg[2] || '';
@@ -3522,16 +3529,16 @@ define(function (require, exports, module) {
                     data = handle('IDCardTimelimit', data.IDCardTimelimit.split('-'));
                     return data;
                 },
-                handleInfoTemplate: function (data) {
+                handleInfoTemplate: function(data) {
                     var _ret = {
                         idOptions: [],
                         cutomerOptions: []
                     };
                     var infoType = 'UserName|ChineseName|EnglishName|Nationality|IDType|IDNumber|CardValidUntil|Sex|Birthday|BirthPlace|ContactPhone|CustomerType';
-                    $.map(infoType.split('|'), function (v, k) {
+                    $.map(infoType.split('|'), function(v, k) {
                         _ret[v] = '';
                     });
-                    $.map(data, function (v, k) {
+                    $.map(data, function(v, k) {
                         if (v.CustomerInfoItemModel === 1) {
                             _ret[v.CustomerInfoItemType] = v;
                         } else if (v.CustomerInfoItemModel === 2) {
@@ -3555,7 +3562,7 @@ define(function (require, exports, module) {
                     if (_ret.cutomerOptions.length) this.customerTypes = _ret.cutomerOptions;
                     return _ret;
                 },
-                handleData: function (data, customer) {
+                handleData: function(data, customer) {
                     var template = this.handleInfoTemplate(customer);
                     var df = data.OrderPassengerList;
                     var adult = +data.aduNumber;
@@ -3564,9 +3571,9 @@ define(function (require, exports, module) {
                     var dfData;
                     var me = this;
                     var ptype;
-                    var handle = function (type) {
+                    var handle = function(type) {
                         var __ret = [];
-                        df && $.map(df, function (v) {
+                        df && $.map(df, function(v) {
                             if (type === 'adult') {
                                 if (+v.clientType) {
                                     __ret.push(me.handleHadData(v));
@@ -3615,7 +3622,7 @@ define(function (require, exports, module) {
                     }
                     return _ret;
                 },
-                handleBirthDay: function (person) { //确定出行人的出生日期
+                handleBirthDay: function(person) { //确定出行人的出生日期
                     var _ret = null;
                     if (person.birthday) {
                         _ret = person.birthday;
@@ -3624,22 +3631,22 @@ define(function (require, exports, module) {
                     }
                     return _ret;
                 },
-                linstenPickFill: function (el, bl) { //监听点选常用联系人bl:填写/清除
+                linstenPickFill: function(el, bl) { //监听点选常用联系人bl:填写/清除
                     var index = roles.travellersID.children().index(el);
                     this.instances[index].linstenPickFill(bl);
                 },
-                bindEvent: function () {
+                bindEvent: function() {
                     var me = this;
                     var nameTips;
-                    roles.travellersID.on('click', 'a[role="saveId"]', function () { //是否保存常用联系人
+                    roles.travellersID.on('click', 'a[role="saveId"]', function() { //是否保存常用联系人
                         $(this).toggleClass('selected');
                     })
-                        // .on('click', '[role="name"],[role="nameCN"],[role="nameEnLast"],[role="nameEnFirst"]', function (event) { //输入姓名提示/可选择中英名字
-                        //     me.generateSug(this, $(this).attr('role'), nameTips);
-                        // })
-                        .on('click', 'a[role="clear"]', function () { //清除填写
-                            me.fillClear.call(me, $(this).closest('[role="youren"]'));
-                        });
+                    // .on('click', '[role="name"],[role="nameCN"],[role="nameEnLast"],[role="nameEnFirst"]', function (event) { //输入姓名提示/可选择中英名字
+                    //     me.generateSug(this, $(this).attr('role'), nameTips);
+                    // })
+                    .on('click', 'a[role="clear"]', function() { //清除填写
+                        me.fillClear.call(me, $(this).closest('[role="youren"]'));
+                    });
                     me.fillin();
                 },
                 instances: [],
@@ -3667,9 +3674,9 @@ define(function (require, exports, module) {
                 //         });
                 //     });
                 // },
-                toIns: function () {
+                toIns: function() {
                     var me = this;
-                    roles.travellersID.children().each(function () {
+                    roles.travellersID.children().each(function() {
                         me.instances.push(new Visitor({
                             element: this,
                             departDate: vdata.initData.departDate,
@@ -3677,11 +3684,11 @@ define(function (require, exports, module) {
                         }));
                     });
                 },
-                getTravellers: function () { //获取填写好的出行人
+                getTravellers: function() { //获取填写好的出行人
                     var _oarr = [],
                         _obj;
                     var role = self.common.getRoles(roles.travellersID[0]);
-                    role.youren.each(function (idx) {
+                    role.youren.each(function(idx) {
                         _obj = {}
                         if ($(this).attr('filled') === 'f')
                             return true;
@@ -3705,11 +3712,11 @@ define(function (require, exports, module) {
                     });
                     return _oarr;
                 },
-                fillin: function () { //手动填写订票信息
+                fillin: function() { //手动填写订票信息
                     var roles = vdata.roles;
                     var me = this;
                     var val;
-                    var isFilled = function (role) { //是否已经填充
+                    var isFilled = function(role) { //是否已经填充
                         for (var i in role) {
                             if (role[i].closest('li').css('display') !== 'none') {
                                 val = $.trim(role[i].val());
@@ -3720,7 +3727,7 @@ define(function (require, exports, module) {
                         }
                         return false;
                     };
-                    roles.travellersID.on('change', 'input[type="text"]', function () {
+                    roles.travellersID.on('change', 'input[type="text"]', function() {
                         var elem = $(this).closest('.product_input');
                         var role = self.common.getRoles(elem[0]);
                         var id;
@@ -3752,7 +3759,7 @@ define(function (require, exports, module) {
                         }
                     });
                 },
-                fillClear: function () { //清除填写和保存常用联系人
+                fillClear: function() { //清除填写和保存常用联系人
                     var role,
                         wrap,
                         id,
@@ -3781,7 +3788,7 @@ define(function (require, exports, module) {
                     this.linstenPickFill(wrap, !1);
                     this.setTravellerCount(+rptype, false, ptype);
                 },
-                setDataLayout: function () {
+                setDataLayout: function() {
                     var params = 'PassengerId|Name|CnName|Nationality|Gender|Birthday|HomePlace|MobilePhone|AgeRang';
                     var subpara = 'IdCardType|IdCardNo|PassportType|IdCardValidDate|IssueDate|IssuePlace'
                     var _tbj = {
@@ -3792,7 +3799,7 @@ define(function (require, exports, module) {
                         },
                         IdCardInfo: {}
                     };
-                    $.map(params.split('|'), function (v, k) {
+                    $.map(params.split('|'), function(v, k) {
                         if (v == 'Gender') {
                             _tbj[v] = -1;
                         } else {
@@ -3800,7 +3807,7 @@ define(function (require, exports, module) {
                         }
                     });
                     _tbj.Gender = -1;
-                    $.map(subpara.split('|'), function (v, k) {
+                    $.map(subpara.split('|'), function(v, k) {
                         if (v == 'IdCardType') {
                             _tbj.IdCardInfo[v] = 0;
                         } else {
@@ -3810,7 +3817,7 @@ define(function (require, exports, module) {
                     });
                     return _tbj;
                 },
-                setData: function (elem, role) {
+                setData: function(elem, role) {
                     var role = role || self.common.getRoles(elem);
                     var uid = $(elem).attr('index');
                     var _obj = this.setDataLayout();
@@ -3818,7 +3825,7 @@ define(function (require, exports, module) {
                     _obj.PassengerId = uid ? uid : 0;
                     _obj.AgeRang = +$(elem).attr('ptype');
                     _obj.isSaveTo = role.saveId.hasClass('selected') ? 1 : 0;
-                    $.each(role, function (k, v) {
+                    $.each(role, function(k, v) {
                         var val;
                         if (k !== 'clear' && k !== 'saveId') {
                             val = $.trim(v.val());
@@ -3932,10 +3939,10 @@ define(function (require, exports, module) {
                     }
                     return _obj;
                 },
-                verify: function () {
+                verify: function() {
                     var _ret = true;
                     var mobile = false;
-                    $.each(this.instances, function (k, v) {
+                    $.each(this.instances, function(k, v) {
                         var arg = v.verify();
                         if (!mobile) {
                             if (!v.role.mobileNo || v.role.mobileNo.val() != '') {
@@ -3962,27 +3969,27 @@ define(function (require, exports, module) {
                     }
                     return _ret;
                 },
-                save: function (isSubmit) {
+                save: function(isSubmit) {
                     var me = this;
                     var elems = isSubmit ? roles.travellersID.children() : roles.travellersID.children('[filled="t"]');
                     self.formData.PassengerInfos.length = 0;
-                    elems.each(function () {
+                    elems.each(function() {
                         self.formData.PassengerInfos.push(me.setData(this));
                     });
                 },
-                setTravellerCount: function (type, isAdd, add) {
+                setTravellerCount: function(type, isAdd, add) {
                     if (isAdd) {
                         if (type == 0 || (add && add == 0))
                             this.childCount.length++;
                         else if (type == 1 || (add && add == 1))
                             this.adultCount.length++
-                        this.travellerCount.length++;
+                            this.travellerCount.length++;
                     } else {
                         if (type == 0 || (add && add == 0))
                             this.childCount.length--;
                         else if (type == 1 || (add && add == 1))
                             this.adultCount.length--
-                        this.travellerCount.length--;
+                            this.travellerCount.length--;
                     }
                 },
                 idCards: [],
@@ -3992,7 +3999,7 @@ define(function (require, exports, module) {
                 travellerCount: [] //已选择的旅客个数
             }
         },
-        Commoners: function () { //常用联系人
+        Commoners: function() { //常用联系人
             var self = this,
                 vdata = self.data,
                 cache = vdata.cache,
@@ -4002,7 +4009,7 @@ define(function (require, exports, module) {
             return {
                 commonersObj: {}, //常用联系人数据
                 allCommoners: null, //原始的常用联系人
-                init: function () {
+                init: function() {
                     var me = this;
                     if (!vdata.isLogin) {
                         $('#searchID').hide();
@@ -4013,7 +4020,7 @@ define(function (require, exports, module) {
                     self.toggleLoading('contact', roles.linkManID[0]); //联系人
                     self.fetchData({
                         url: vdata.handles.getContacts
-                    }, function (data) {
+                    }, function(data) {
                         var _data, _obj, _ref;
                         data = typeof data === 'string' ? parseJSON(data) : data;
                         _data = data.data;
@@ -4033,7 +4040,7 @@ define(function (require, exports, module) {
                         var obj = {
                             collecters: _obj
                         };
-                        obj.collecters.length && self.render(self.tpl.commoners, obj, function (dom) {
+                        obj.collecters.length && self.render(self.tpl.commoners, obj, function(dom) {
                             roles.commonersID.html(dom);
                             me.bindEvent.call(me);
                             me.commonersDom = roles.commonersID.children();
@@ -4042,18 +4049,18 @@ define(function (require, exports, module) {
                         me.search();
                     })
                 },
-                handleData: function (_data) { //处理数据以供渲染
+                handleData: function(_data) { //处理数据以供渲染
                     var me = this;
                     var oBirth = new Birth('', vdata.initData.departDate);
                     var dfMan = vdata.initData.OrderPassengerList;
                     var _ref = [];
                     var age;
                     if (dfMan) {
-                        $.map(dfMan, function (v, k) {
+                        $.map(dfMan, function(v, k) {
                             _ref.push(v.clientID);
                         });
                     }
-                    $.map(_data, function (v, k) {
+                    $.map(_data, function(v, k) {
                         if (_ref.length) {
                             if ($.inArray(v.clientID, _ref) !== -1)
                                 _data[k].selected = true;
@@ -4072,12 +4079,12 @@ define(function (require, exports, module) {
                     });
                     return _data;
                 },
-                handleBirthDay: function (person) { //确定出行人的出生日期
+                handleBirthDay: function(person) { //确定出行人的出生日期
                     var _ret = null;
                     if (person.birthday) {
                         _ret = person.birthday;
                     } else if (person.IDCardInfo) {
-                        $.each(person.IDCardInfo, function (k, v) {
+                        $.each(person.IDCardInfo, function(k, v) {
                             if (v.IDCardType == 1) {
                                 _ret = v.IDCardNo;
                                 return false;
@@ -4089,11 +4096,11 @@ define(function (require, exports, module) {
                     }
                     return _ret;
                 },
-                search: function () { //常用联系人搜索
+                search: function() { //常用联系人搜索
                     var me = this;
                     var _obj = me.commonersObj;
                     var _lis = roles.commonersID.find('li');
-                    roles.searchID.length && roles.searchID.bind('keyup', function (event) {
+                    roles.searchID.length && roles.searchID.bind('keyup', function(event) {
                         var tempObj = [];
                         var val = $.trim($(this).val()).toLowerCase();
                         var i = 0;
@@ -4102,7 +4109,7 @@ define(function (require, exports, module) {
                             return false;
                         }
                         _lis.hide();
-                        $.each(_lis, function () {
+                        $.each(_lis, function() {
                             var _ref = _obj[$(this).attr('cid')];
                             var name = ((_ref.nameCN + (_ref.ENLastName + _ref.ENFirstName + _ref.ENMiddleName)) || '').toLowerCase();
                             if (name.indexOf(val) != -1) {
@@ -4111,17 +4118,17 @@ define(function (require, exports, module) {
                         });
                     });
                 },
-                bindEvent: function () { //点选出行人
+                bindEvent: function() { //点选出行人
                     var me = this;
                     if (!roles.travellersID.children().length) return;
-                    roles.fillsetID.on('click', '[role="topContact"]', function (event) { //?=====
+                    roles.fillsetID.on('click', '[role="topContact"]', function(event) { //?=====
                         event.preventDefault();
                         var bl = $(this).hasClass('selected');
                         me.fillVisitor(this, bl);
                         me.commonersDom = roles.commonersID.children(); //更新常用联系人dom
                     });
                 },
-                checkFullNNT: function (type) { //检查人数是否已满
+                checkFullNNT: function(type) { //检查人数是否已满
                     var count = mod.Travellers[type + 'Count'].length;
                     if (type === 'adult') {
                         return count >= vdata.initData.aduNumber;
@@ -4131,7 +4138,7 @@ define(function (require, exports, module) {
                         return count >= vdata.initData.aduNumber + vdata.initData.chlidNumber;
                     }
                 },
-                showTip: function (el, obj, data, opts) {
+                showTip: function(el, obj, data, opts) {
                     var ovalid = $(el).data('valid');
                     opts = $.extend({
                         target: obj,
@@ -4141,7 +4148,7 @@ define(function (require, exports, module) {
                         new self.validate(opts).show();
                     $(el).data('valid', ovalid);
                 },
-                fillVisitor: function (el, bl) { //填充及清除出行人信息
+                fillVisitor: function(el, bl) { //填充及清除出行人信息
                     var _this = $(el);
                     var me = this;
                     var id = $(el).attr('cid');
@@ -4192,14 +4199,14 @@ define(function (require, exports, module) {
                         mod.Travellers.linstenPickFill(abled, !1);
                     }
                 },
-                setValue: function (role, id) {
+                setValue: function(role, id) {
                     var me = this;
                     var limitedTime = [];
                     var obj = me.commonersObj[id];
                     var birthday = obj.birthday ? obj.birthday.split('-') : [];
                     var val = "",
                         idcard = '';
-                    $.each(role, function (k, v) {
+                    $.each(role, function(k, v) {
                         if (v.attr('role') === 'name') {
                             if (obj.nameCN) {
                                 val = obj.nameCN;
@@ -4275,7 +4282,7 @@ define(function (require, exports, module) {
                         v[0].setAttribute('value', val);
                     });
                 },
-                checkCustomers: function (customerType) {
+                checkCustomers: function(customerType) {
                     var initData = vdata.initData.CustomerInfoTemplate.CustomerInfoItems
                     for (var i = 0, len = initData.length; i < len; i++) {
                         if (initData[i].CustomerInfoItemModel === 3 && initData[i].CustomerInfoItemType == customerType) {
@@ -4284,23 +4291,23 @@ define(function (require, exports, module) {
                     }
                     return false;
                 },
-                checkIdcard: function (id, type) {
+                checkIdcard: function(id, type) {
                     var ids = this.commonersObj[id].IDCardInfo;
                     var cards = mod.Travellers.idCards;
                     var _ref = {};
                     var _ret;
                     if (!ids || !cards.length) return false;
-                    $.map(cards, function (v, k) {
+                    $.map(cards, function(v, k) {
                         _ref[v.CustomerInfoItemType] = v;
                     });
                     if (type) {
-                        $.map(ids, function (v, k) {
+                        $.map(ids, function(v, k) {
                             if (v.IDCardType == type) {
                                 _ret = v;
                                 return false;
                             }
                         })
-                    } !_ret && $.map(ids, function (v, k) {
+                    }!_ret && $.map(ids, function(v, k) {
                         if (v.IDCardType in _ref) {
                             _ret = v;
                             return false;
@@ -4308,14 +4315,14 @@ define(function (require, exports, module) {
                     })
                     return _ret;
                 },
-                removeCommonerSelected: function (id) { //去除常用联系人的选择
+                removeCommonerSelected: function(id) { //去除常用联系人的选择
                     var commoners = this.commonersDom;
                     if (!commoners) return;
                     commoners.find('a.cb-item[cid="' + id + '"]').removeClass('selected'); //找到对应的常用联系人并取消选择
                 }
             }
         },
-        Contacter: function () { //联系人
+        Contacter: function() { //联系人
             var self = this,
                 vdata = self.data,
                 mod = vdata.modules,
@@ -4325,13 +4332,13 @@ define(function (require, exports, module) {
                 oBoard, isEmpty,
                 Reg = self.Reg;
             return {
-                init: function (data) {
+                init: function(data) {
                     var me = this;
                     me.commonContacters = {};
                     self.toggleLoading('contact');
                     this.commonContact = data ? data : null;
                     if (this.commonContact) {
-                        $.map(this.commonContact, function (v, k) {
+                        $.map(this.commonContact, function(v, k) {
                             me.commonContacters[v.InfoID] = v;
                         })
                     }
@@ -4340,15 +4347,17 @@ define(function (require, exports, module) {
                     }
                     if (vdata.initData.IsVisa) {
                         //添加验证邮件是否是签证页面
-                        $.extend(oLinkman, { IsVisa: vdata.initData.IsVisa });
+                        $.extend(oLinkman, {
+                            IsVisa: vdata.initData.IsVisa
+                        });
                     }
                     if (isEmpty = !$.isEmptyObject(oLinkman)) {
-                        self.render(self.tpl.linkmanDf, oLinkman, function (dom) {
+                        self.render(self.tpl.linkmanDf, oLinkman, function(dom) {
                             roles.linkManID.append(dom);
                         });
                         self.formData.ContactInfo = me.setData(oLinkman);
                     }
-                    self.render(self.tpl.linkmanBox, oLinkman, function (dom) {
+                    self.render(self.tpl.linkmanBox, oLinkman, function(dom) {
                         var tlin = $(dom).appendTo(roles.linkManID).hide();
                         !isEmpty && tlin.show();
                     });
@@ -4356,7 +4365,7 @@ define(function (require, exports, module) {
                     this.bindEvent();
                     this.bindVerifyEvent();
                 },
-                handleData: function (data) {
+                handleData: function(data) {
                     var _ret = {};
                     if (data) {
                         _ret = {
@@ -4368,7 +4377,7 @@ define(function (require, exports, module) {
                     }
                     return _ret;
                 },
-                setData: function (data) {
+                setData: function(data) {
                     return {
                         ContactName: data.name,
                         ContactEmail: data.email,
@@ -4376,7 +4385,7 @@ define(function (require, exports, module) {
                         ContactTel: data.telNo
                     };
                 },
-                fill: function (name, email, phone, tel) {
+                fill: function(name, email, phone, tel) {
                     var t;
                     roles.ctname[0].value = name;
                     roles.ctemail[0].value = email;
@@ -4396,13 +4405,13 @@ define(function (require, exports, module) {
                         roles.ctext[0].value = '';
                     }
                 },
-                initSug: function () {
+                initSug: function() {
                     var oc = this.commonContact;
                     var ob = this.oBoard = mod.Travellers.getTravellers();
                     var oca = [],
                         sug = '',
                         _i = 0;
-                    oc && $.each(oc, function (k, v) {
+                    oc && $.each(oc, function(k, v) {
                         if (_i > 5) return false;
                         oca.push(v);
                         _i++;
@@ -4415,11 +4424,11 @@ define(function (require, exports, module) {
                     }
                     return sug;
                 },
-                bindEvent: function () {
+                bindEvent: function() {
                     var sugg;
                     var me = this;
                     var logTip;
-                    roles.contact.on('click', 'input[role="ctname"]', function () {
+                    roles.contact.on('click', 'input[role="ctname"]', function() {
                         var offset = $(this).offset();
                         var height = $(this).outerHeight();
                         var sug = me.initSug();
@@ -4431,11 +4440,11 @@ define(function (require, exports, module) {
                                 'left': offset.left,
                                 'zIndex': '100'
                             });
-                            sugg.on('mousedown', 'a', function (event) {
+                            sugg.on('mousedown', 'a', function(event) {
                                 var uid = $(this).attr('uid');
                                 var index = $(this).attr('index');
                                 var ref;
-                                var obj = (function () {
+                                var obj = (function() {
                                     if (uid) {
                                         ref = me.commonContacters[uid];
                                         return {
@@ -4454,24 +4463,24 @@ define(function (require, exports, module) {
                                 var tel = obj.tel || '';
                                 me.fill(name, email, phone, tel);
                             });
-                            $(this).bind('blur', function () {
+                            $(this).bind('blur', function() {
                                 sugg && sugg.hide();
                             });
                         }
                     });
-                    roles.linkManID.on('click', 'a.revise', function (event) {
+                    roles.linkManID.on('click', 'a.revise', function(event) {
                         event.preventDefault();
                         $(this).closest('ul').hide();
                         roles.contact.show();
                     });
                 },
-                bindVerifyEvent: function () {
+                bindVerifyEvent: function() {
                     var me = this;
-                    roles.contact.on('blur', 'input[type="text"]', function () {
+                    roles.contact.on('blur', 'input[type="text"]', function() {
                         me.errTip(this);
                     });
                 },
-                errTip: function (el) {
+                errTip: function(el) {
                     var _el = $(el),
                         val = $.trim(_el.val()),
                         reg = _el.attr('regex'),
@@ -4497,23 +4506,23 @@ define(function (require, exports, module) {
                     _el.data('valid', ovalid);
                     return ret;
                 },
-                showTip: function (valid, target, data, opts) {
+                showTip: function(valid, target, data, opts) {
                     opts = opts || {};
                     return valid ? valid.show($.extend({
-                        target: target,
-                        data: data
-                    }, opts)) :
+                            target: target,
+                            data: data
+                        }, opts)) :
                         new oValidate($.extend({
                             target: target,
                             data: data
                         }, opts)).show();
                 },
-                save: function () {
+                save: function() {
                     var role = self.common.getRoles(roles.linkManID);
                     var zcode = $.trim(role.ctzcode.val()),
                         tphone = $.trim(role.cttphone.val()),
                         ext = $.trim(role.ctext.val());
-                    var tel = (function () {
+                    var tel = (function() {
                         if (zcode && zcode !== role.ctzcode.attr('_cqnotice')) {
                             tphone = (tphone && tphone !== role.cttphone.attr('_cqnotice')) ? '-' + tphone : '';
                             ext = (tphone && ext) ? '-' + ext : '';
@@ -4528,7 +4537,7 @@ define(function (require, exports, module) {
                         "ContactEmail": role.ctemail.val()
                     };
                 },
-                checkName: function (str) {
+                checkName: function(str) {
                     var bl;
                     if ('' === str)
                         return [false, '请填写联系人姓名'];
@@ -4542,14 +4551,14 @@ define(function (require, exports, module) {
                     }
                     return [true, ];
                 },
-                checkEmail: function (str) {
+                checkEmail: function(str) {
                     if ('' === str)
                         return [false, '请填写您的E-mail地址'];
                     if (!/^([a-zA-Z0-9]+[_|\_|\.|-]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.|-]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test(str))
                         return [false, '请填写正确的E-mail地址，格式：a@b.c'];
                     return [true, ];
                 },
-                checkMobile: function (str) {
+                checkMobile: function(str) {
                     // if ('' === str)
                     //     return [false, '手机号码或联系电话至少选填一项'];
                     // if (!/^0?1[3458]\d{9}$/.test(str))
@@ -4562,7 +4571,7 @@ define(function (require, exports, module) {
                     return [true, ];
                 },
                 checkPhone: Reg.checkPhone,
-                verify: function () {
+                verify: function() {
                     var me = this;
                     var status = self.status;
                     var error = 0;
@@ -4570,10 +4579,10 @@ define(function (require, exports, module) {
                     var bl;
                     var ovalid;
                     var phoneVal = '';
-                    var isPhoneFilled = function () {
+                    var isPhoneFilled = function() {
                         var bl = false;
                         var el, val;
-                        $.map(['ctzcode', 'cttphone', 'ctext'], function (v, k) {
+                        $.map(['ctzcode', 'cttphone', 'ctext'], function(v, k) {
                             el = roles[v];
                             val = $.trim(el.val());
                             if (val !== '' && val !== el.attr('_cqnotice')) {
@@ -4596,7 +4605,7 @@ define(function (require, exports, module) {
                     } else {
                         elems.push(roles.ctmphone);
                     }
-                    $.each(elems, function (k, v) {
+                    $.each(elems, function(k, v) {
                         ovalid = v.data('valid');
                         bl = me[v.attr('regex')]($.trim(v.val()), v.attr('role').slice(2));
                         if (!bl[0]) {
@@ -4631,12 +4640,12 @@ define(function (require, exports, module) {
                 }
             }
         },
-        Price: function () {
+        Price: function() {
             var self = this,
                 vdata = self.data,
                 roles = vdata.roles;
             return {
-                init: function () {
+                init: function() {
                     var data;
                     var me = this;
                     var coupon = vdata.initData.availablePromotion;
@@ -4658,7 +4667,7 @@ define(function (require, exports, module) {
                         if (GV.app.order.vars.initData.OrderType.indexOf("CruiseOrder") != -1) {
                             self.render(self.tpl.priceCur, $.extend(data, {
                                 ChatUrl: vdata.initData.ChatUrl
-                            }), function (dom) {
+                            }), function(dom) {
                                 roles.priceID.append(dom);
                                 me.setPos();
                                 $.extend(roles, self.common.getRoles(roles.priceID));
@@ -4671,7 +4680,7 @@ define(function (require, exports, module) {
                         } else {
                             self.render(self.tpl.price, $.extend(data, {
                                 ChatUrl: vdata.initData.ChatUrl
-                            }), function (dom) {
+                            }), function(dom) {
                                 roles.priceID.append(dom);
                                 me.setPos();
                                 $.extend(roles, self.common.getRoles(roles.priceID));
@@ -4687,7 +4696,7 @@ define(function (require, exports, module) {
                         $('#J_online_service').show();
                     }
                 },
-                showTelTip: function () {
+                showTelTip: function() {
                     var initDataObject = GV.app.order.vars.initData;
                     if (initDataObject.hasOwnProperty("Hotline") && initDataObject.Hotline.length > 0) {
                         var sHotLineValue = initDataObject.Hotline;
@@ -4697,9 +4706,9 @@ define(function (require, exports, module) {
                         }
                     }
                 },
-                setPos: function () {
+                setPos: function() {
                     var obj = document.getElementById("price_box_wrap");
-                    var getTop = function (e) {
+                    var getTop = function(e) {
                         var offset = e.offsetTop;
                         if (e.offsetParent != null) {
                             offset += getTop(e.offsetParent)
@@ -4708,7 +4717,7 @@ define(function (require, exports, module) {
                     }
                     var top = getTop(obj);
                     var isIE6 = /msie 6/i.test(navigator.userAgent);
-                    window.onscroll = function () {
+                    window.onscroll = function() {
                         var bodyScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
                         if (bodyScrollTop > top) {
                             obj.style.position = (isIE6) ? "absolute" : "fixed";
@@ -4720,7 +4729,7 @@ define(function (require, exports, module) {
                 }
             };
         },
-        Invoice: function () {
+        Invoice: function() {
             var self = this,
                 vdata = self.data,
                 roles = vdata.roles,
@@ -4730,14 +4739,14 @@ define(function (require, exports, module) {
                     title: '',
                     content: ''
                 },
-                init: function () {
+                init: function() {
                     var me = this;
                     var data = vdata.initData.Invoice;
-                    var initData = (function () { //初始化发票信息
+                    var initData = (function() { //初始化发票信息
                         var _data = vdata.initData.OrderInvoice;
                         var _ret = {};
                         if (_data) {
-                            $.each(_data, function (k, v) {
+                            $.each(_data, function(k, v) {
                                 if (v)
                                     _ret['init' + k] = v;
                             })
@@ -4748,27 +4757,27 @@ define(function (require, exports, module) {
                         roles.invoiceID.hide();
                         return;
                     }
-                    self.render(self.tpl.invoiceDf, initData, function (dom) {
+                    self.render(self.tpl.invoiceDf, initData, function(dom) {
                         roles.invoiceID.append(dom);
                     });
-                    self.render(self.tpl.invoiceBox, $.extend(data, initData), function (dom) {
+                    self.render(self.tpl.invoiceBox, $.extend(data, initData), function(dom) {
                         $(dom).appendTo(roles.invoiceID).hide();
                         me.role = self.common.getRoles(roles.invoiceID);
                         me.bindEvent($.isEmptyObject(initData), initData);
                     });
                 },
-                bindEvent: function (isNoInit, data) { //isNoInit 没有初始化数据
+                bindEvent: function(isNoInit, data) { //isNoInit 没有初始化数据
                     var me = this;
                     var role = this.role;
                     var myInvoices;
                     var sug;
-                    roles.invoiceID.on('click', 'a.revise', function (event) {
+                    roles.invoiceID.on('click', 'a.revise', function(event) {
                         event.preventDefault();
                         $(this).closest('ul').hide();
                         role.selectInvo.click();
                         role.invoice.show();
                     })
-                        .on('blur', 'input[role="getInvoice"]', function () {
+                        .on('blur', 'input[role="getInvoice"]', function() {
                             me.checkInvoiceTitle();
                         });
                     if (!isNoInit) {
@@ -4777,7 +4786,7 @@ define(function (require, exports, module) {
                             content: data.initContent
                         };
                     }
-                    role.selectInvo.click(function () {
+                    role.selectInvo.click(function() {
                         // ie9强制再选择是按钮
                         $('#invoice01').attr('checked', true);
                         role.invoiceli.show();
@@ -4787,7 +4796,7 @@ define(function (require, exports, module) {
                             $('#J_invoiceTip').text(GV.app.order.vars.InvoiceCaption).show();
                         }
                     });
-                    role.cancelInvo.click(function () {
+                    role.cancelInvo.click(function() {
                         role.invoiceli.hide();
                         mod.Delivery.hideTip();
                         mod.Delivery.toRender('noInvoice');
@@ -4800,26 +4809,26 @@ define(function (require, exports, module) {
                     });
                     if (myInvoices = vdata.initData.Invoice.MyInvoices) {
                         sug = me.genarateSug(myInvoices);
-                        role.getInvoice.bind('focus', function () {
+                        role.getInvoice.bind('focus', function() {
                             var _this = $(this);
                             var offset = _this.offset();
                             sug.show().css({
                                 top: offset.top + _this.outerHeight(),
                                 left: offset.left
                             });
-                            sug.find('a').bind('mousedown', function () {
+                            sug.find('a').bind('mousedown', function() {
                                 _this.val($(this).html());
                             });
-                        }).bind('blur', function () {
+                        }).bind('blur', function() {
                             sug.hide();
                         });
                     }
                 },
-                genarateSug: function (data) {
+                genarateSug: function(data) {
                     var _ret;
                     self.render(self.tpl.ivoiceSug, {
                         list: data
-                    }, function (dom) {
+                    }, function(dom) {
                         _ret = $(dom).appendTo('body').css({
                             'position': 'absolute',
                             'display': 'none'
@@ -4827,7 +4836,7 @@ define(function (require, exports, module) {
                     });
                     return _ret;
                 },
-                save: function () {
+                save: function() {
                     if (!vdata.initData.Invoice) {
                         return;
                     }
@@ -4845,7 +4854,7 @@ define(function (require, exports, module) {
                         Detail: this.invoiceInfo.content
                     };
                 },
-                showTip: function (el, data, opts) {
+                showTip: function(el, data, opts) {
                     var ovalid = $(el).data('valid');
                     opts = $.extend({
                         target: el,
@@ -4855,7 +4864,7 @@ define(function (require, exports, module) {
                         new self.validate(opts).show();
                     $(el).data('valid', ovalid);
                 },
-                checkInvoiceTitle: function () {
+                checkInvoiceTitle: function() {
                     var el = this.role.getInvoice;
                     if (!el) {
                         return false;
@@ -4871,7 +4880,7 @@ define(function (require, exports, module) {
                     }
                     return true;
                 },
-                verify: function () {
+                verify: function() {
                     var me = this;
                     if (!me.role) {
                         return true;
@@ -4897,14 +4906,63 @@ define(function (require, exports, module) {
                 }
             }
         },
-        Delivery: function () {
+        _simpleAddressTpl: function(data) {
+            console.log(data);
+            return '<p class="name">' + data.CityName + '</p>' +
+                '<p class="address">' + data.CityName + ' ' + data.City + ' ' + data.Address + '</p>' +
+                '<p class="code">' + data.PostCode + '</p>' +
+                '<i class="ico_checked"></i>' +
+                '<a href="###" role="adsedit" class="edit" cantonID="' + data.Canton + '" infoId="' + data.InfoID + '" data-Recipient="{{Recipient}}" data-CityName="' + data.CityName + '" data-CantonName="' + data.City + '" data-Address="' + data.Address + '" data-Post="' + data.PostCode + '"><i></i>编辑</a>' +
+                '<input cantonID="' + data.Canton + '" checked="checked" index="' + data.InfoID + '" type="radio" value="' + data.InfoID + '" name="' + data.type + '" id="ps' + data.type + '" style="display:none">';
+        },
+        _addressTpl: function(data) {
+            var mobile = data.ContactTel;
+            if(data.MobilePhone){
+                mobile = data.MobilePhone;
+            }
+            return '<p class="name">('+ data.Recipient +' 收)</p>' +
+                '<p class="tel">' + mobile + '</p>' +
+                '<p class="address">' + data.ProvinceName + ' ' + data.CityName + ' ' + data.CantonName + ' ' + unescape(data.Address) + '</p>' +
+                '<p class="code">' + data.PostCode + '</p>' +
+                '<i class="ico_checked"></i>' +
+                '<a href="###" role="adsedit" class="edit" cantonID="{{CantonID}}" infoId="' + data.InfoID + '" data-Recipient="'+ data.Recipient +'" data-tel="' + mobile + '" data-CityName="' + data.CityName + '" data-CantonName="{{CantonName}}" data-Address="' + unescape(data.Address) + '" data-Post="' + data.PostCode + '"><i></i>编辑</a>' +
+                '<input cantonID="' + data.CantonID + '" checked="checked" index="' + data.InfoID + '" type="radio" value="' + data.InfoID + '" name="' + data.type + '" id="ems' + data.InfoID + '" style="display:none">';
+        },
+        _areaTips: function(_dom){
+            new this.validate({
+                target: _dom,
+                data: msg.selectCity,
+                errorClass: 'f_error'
+            }).show();
+            return false;
+        },
+        _areaEditCheck: function(){
+            var self = this,
+                proviceDom = cQuery('#provice'),
+                proviceVal = proviceDom.value(),
+                cityDom = cQuery('#city'),
+                cityVal = cityDom.value(),
+                areaDom = cQuery('#area'),
+                areaVal = areaDom.value();
+            if(!proviceVal){
+                self._areaTips(proviceDom[0]);
+            } else if(!cityVal){
+                self._areaTips(cityDom[0]);
+            } else if(!areaVal){
+                self._areaTips(areaDom[0]);
+            }
+
+            return true;
+
+        },
+        Delivery: function() {
             var self = this,
                 vdata = self.data,
                 roles = vdata.roles
             msg = {
                 recipient: '请填写收件人',
                 contactTel: '请填写联系电话',
-                selectCity: '请选择城市',
+                selectCity: '请选择省市区',
                 detail: '请填写正确的地址',
                 postage: '请填写邮编',
                 contactTelErr: '请填写正确的联系电话',
@@ -4916,19 +4974,19 @@ define(function (require, exports, module) {
                 postage: {}, //配送方式的费用
                 Cantons: {}, //配送城市的行政区
                 tabType: null,
-                init: function () {
+                init: function() {
                     var _data = vdata.initData.OrderInvoice; //是否默认有发票
                     _data ? this.toRender('invoice') : this.toRender('noInvoice');
                     this.bindEvent();
                 },
-                toRender: function (type) {
+                toRender: function(type) {
                     var me = this;
                     var data = me.handleData(vdata.initData.DeliveryReult);
                     var isEmpty = true;
                     var _initData = vdata.initData.OrderDelivery;
                     var selectTab = (_initData && me.tabType) ? me.tabType[_initData.DeliveryType] - 1 : 0;
                     var curTabType;
-                    var handle = function (data) {
+                    var handle = function(data) {
                         var addr = {
                             1: '市内配送',
                             2: '市内自取',
@@ -4950,7 +5008,7 @@ define(function (require, exports, module) {
                     if (_initData) {
                         _initData.AddressInfo.Address = unescape(_initData.AddressInfo.Address);
                         _initData.AddressInfo.Recipient = unescape(_initData.AddressInfo.Recipient);
-                        self.render(self.tpl.deliveryDf, handle(_initData), function (dom) {
+                        self.render(self.tpl.deliveryDf, handle(_initData), function(dom) {
                             roles.deliveryID.append(dom).parent().show();
                             isEmpty = false;
                         });
@@ -4962,10 +5020,10 @@ define(function (require, exports, module) {
                     } else {
                         roles.deliveryID.parent().show();
                     }
-                    self.render(self.tpl.deliveryBox, $.extend(data, data[type]), function (dom) {
+                    self.render(self.tpl.deliveryBox, $.extend(data, data[type]), function(dom) {
                         var html = $(dom).appendTo(roles.deliveryID);
                         !isEmpty && html.hide();
-                        cQuery.mod.load('tab', '1.2', function () {
+                        cQuery.mod.load('tab', '1.2', function() {
                             var config = {
                                 options: {
                                     index: selectTab,
@@ -4981,7 +5039,7 @@ define(function (require, exports, module) {
                                     }
                                 },
                                 listeners: {
-                                    initEventCallback: function () {
+                                    initEventCallback: function() {
                                         curTabType = $('li[class="cur"]', '#tabs').attr('type');
                                         me.countPostage(curTabType); //暂时
                                         cities.init({
@@ -5003,86 +5061,115 @@ define(function (require, exports, module) {
                             selClass: 'inputSel'
                         }, true);
                     });
-                    $('#content').children().each(function (i) {
+                    $('#content').children().each(function(i) {
                         $(this).children().eq(0).addClass('tab_0' + i);
                     });
 
 
-                    $(document).delegate('a[role="saveaddress"]', 'click', function(){
-                            event.preventDefault();
-                            var _self = this,
-                                type = $(_self).attr('type'),
-                                cnt = $('#mask_popup'),
-                                postData;
-                            postData = {
-                                "addresstype": type,
-                                "address": escape($('#notice15').val()),
-                                "canton": $('#J_popcanton').val(),
-                                "city": $('#J_popcanton').find('option:selected').text(),
-                                "infoid": $(_self).attr('infoid')
-                            };
-                            
-                            if(type != 1){
-                                postData = {
-                                    "addresstype": type,
-                                    "address": escape(cnt.find('input[role="recipient"]').val()),
-                                    "cityname": cnt.find('#city').val(),
-                                    "fee":"",
-                                    "mobilephone":cnt.find('input[role="contactTel"]').val(),
-                                    "contacttel":"",
-                                    "recipient":cnt.find('input[role="recipient"]').val(),
-                                    "postcode":cnt.find('input[role="postage"]').val(),
-                                    "infoid":$(_self).attr('infoid')
-                                };
-                            };
-                            console.log(postData);
-                            $.ajax({
-                                type: 'post',
-                                url:'',
-                                // url: GV.app.order.vars.handles.saveAddressInfo,
-                                dataType: 'json',
-                                data:{
-                                    bookinginfo: cQuery.stringifyJSON(postData)
-                                },
-                                success: function(_data){
-                                    
-                                }
-                            });
-                            if(true){
-                                console.log(self);
+
+                    $(document).delegate('a[role="saveaddress"]', 'click', function() {
+                        event.preventDefault();
+                        var _self = this,
+                            type = $(_self).attr('type'),
+                            cnt = $('#mask_popup'),
+                            postData,
+                            isAdd = $(this).attr('data-add') - 0,
+                            formCheck = true;
+
+                        //TODO 表单验证
+                        $('#mask_popup input').blur();
+                        $.each($('#mask_popup input'), function(_index, _item){
+                            if($(_item).hasClass('f_error')){
+                                formCheck = false;
                             }
                         });
+                        if(!formCheck && !self._areaEditCheck() ){
+                            return false;
+                        }
+                        postData = {
+                            "type": $(_self).attr('type'),
+                            "AddressType": "F",
+                            "Address": $('#notice15').val(),
+                            "Canton": $('#J_popcanton').val(),
+                            "City": $('#J_popcanton').find('option:selected').text(),
+                            "CityName": $(this).attr('data-cityname') || '',
+                            "InfoID": $(_self).attr('infoid'),
+                            "PostCode": $(this).attr('data-post') || ''
+                        };
+
+                        if (type != 1) {
+                            postData = {
+                                "AddressType": "E",
+                                "type": $(_self).attr('type'),
+                                "Address": cnt.find('input[role="detail"]').val() || '',
+                                "CityName": cnt.find('#city').val() || '',
+                                "ProvinceName": cnt.find('#provice').val() || '',
+                                "CantonName": cnt.find('#area').val() || '',
+                                "Fee": "10",
+                                "MobilePhone": cnt.find('input[role="contactTel"]').val() || '',
+                                "ContactTel": "",
+                                "Recipient": cnt.find('input[role="recipient"]').val() || '',
+                                "PostCode": cnt.find('input[role="postage"]').val() || '',
+                                "InfoID": $(_self).attr('infoid') || 0,
+                                "CantonID": $(_self).attr("CantonID") || 0
+                            };
+                        };
+                        $(_self).removeAttr('role').html('保存中...');
+
+                        if (postData.AddressType == "F"){
+                            html = self._simpleAddressTpl(postData);
+                        } else {
+                            html = self._addressTpl(postData);
+                        };
+                        if(isAdd){
+                            $($('#content').find('ul[type="' + postData.type + '"] li')[0]).html(html);
+                        } else {
+                            $('#content').find('ul[type="' + postData.type + '"]').find('.usual_address_item_selected').html(html);
+                        }
+                        
+                        cQuery('#mask_popup').unmask();
+                        cQuery('#mask_popup').remove();
+
+                        // $.ajax({
+                        //     type: 'post',
+                        //     url: GV.app.order.vars.handles.saveAddressInfo,
+                        //     dataType: 'json',
+                        //     data: {
+                        //         SaveUserAddressInfo: cQuery.stringifyJSON(postData)
+                        //     },
+                        //     success: function(_data) {
+                        //         var html = '';
+                        //         if (_data.errno === 0) {
+
+                        //             if (postData.AddressType == "F"){
+                        //                 html = self._simpleAddressTpl(postData);
+                        //             } else {
+                        //                 html = self._addressTpl(postData);
+                        //             }
+                        //             $('#content').find('ul[type="' + postData.AddressType + '"]').find('.usual_address_item_selected').html(html);
+                        //             cQuery('#mask_popup').unmask();
+                        //             cQuery('#mask_popup').remove();
+                        //         }
+                                
+                        //     }
+                        // });
+                        
+                    });
 
 
 
                 },
-                _simpleAddressTpl: function(data){
-                    return '<p class="name">{{CityName}}</p>' +
-                              '<p class="address">{{../../CityName}} {{CityName}} {{CantonName}} {{Address}}</p>' +
-                              '<p class="code">{{Post}}</p>' +
-                              '<i class="ico_checked"></i>' +
-                              '<a href="###" role="adsedit" class="edit" cantonID="{{CantonID}}" infoId="{{InfoId}}" data-Recipient="{{Recipient}}" data-CityName="{{CityName}}" data-CantonName="{{CantonName}}" data-Address="{{Address}}" data-Post="{{Post}}"><i></i>编辑</a>' +
-                              '<input cantonID="{{CantonID}}" checked="checked" index={{index}} type="radio" value="{{index}}" name="' + name + '" id="ps{{@index}}" style="display:none">';
-                },
-                _addressTpl: function(data){
-                    return '<p class="name">{{#if Recipient}}({{Recipient}} 收){{/if}}</p>' +
-                              '<p class="tel">{{#if Mobile}}{{Mobile}}{{else}}{{#if Tel}}{{Tel}}{{/if}}{{/if}}</p>' +
-                              '<p class="address">{{Address}}</p>' +
-                              '<p class="code">{{Post}}</p>' +
-                              '<i class="ico_checked"></i>' +
-                              '<a href="###" role="adsedit" class="edit" cantonID="{{CantonID}}" infoId="{{InfoId}}" data-Recipient="{{Recipient}}" data-tel="{{#if Mobile}}{{Mobile}}{{else}}{{#if Tel}}{{Tel}}{{/if}}{{/if}}" data-CityName="{{CityName}}" data-CantonName="{{CantonName}}" data-Address="{{Address}}" data-Post="{{Post}}"><i></i>编辑</a>' +
-                              '<input cantonID="{{CantonID}}" checked="checked" index="{{index}}" type="radio" value="{{index}}" name="' + name + '" id="ems{{@index}}" style="display:none">';
-                },
-                countPostage: function (i) {
+
+                countPostage: function(i) {
                     vdata.postage = i ? this.postage[i] : 0;
                     self.totalPrice();
                 },
-                bindEvent: function () {
+                bindEvent: function() {
                     var me = this;
                     var selected;
                     var reg;
                     var role;
-                    roles.deliveryID.on('click', '[role="new"]', function (event) {
+                    roles.deliveryID.on('click', '[role="new"]', function(event) {
                         event.preventDefault();
                         var parent = $(this).parent();
                         var next = parent.next();
@@ -5103,7 +5190,7 @@ define(function (require, exports, module) {
                         }
                         me.hideTip();
                     })
-                        .on('click', '[role="other"]', function (event) {
+                        .on('click', '[role="other"]', function(event) {
                             event.preventDefault();
                             var index = +$(this).closest('.delivery').attr('type');
                             var name = $(this).closest('.delivery').attr('type');
@@ -5114,13 +5201,13 @@ define(function (require, exports, module) {
                                 obj: MyAddress,
                                 CityName: me.toCity,
                                 radioName: 'radio' + index
-                            }, function (dom) {
+                            }, function(dom) {
                                 var _role;
                                 $(dom).appendTo('body');
                                 _role = self.common.getRoles('#mask_popup');
                                 cQuery('#mask_popup').mask();
                                 $('#mask_popup').find('input:first').attr('checked', true);
-                                _role.close.click(function (event) {
+                                _role.close.click(function(event) {
                                     event.preventDefault();
                                     cQuery('#mask_popup').unmask();
                                     $('#mask_popup').remove();
@@ -5129,57 +5216,60 @@ define(function (require, exports, module) {
                             });
                             me.hideTip();
                         })
-                        .on('click', 'a.revise', function (event) {
+                        .on('click', 'a.revise', function(event) {
                             event.preventDefault();
                             $(this).closest('ul').hide().next().show();
-                        }).on('click', '#cities,#cities_p', function () {
+                        }).on('click', '#cities,#cities_p', function() {
                             $(this).data('valid') && $(this).data('valid').hide();
                         })
-                        .on('blur', 'input[type="text"]', function () {
+                        .on('blur', 'input[type="text"]', function() {
                             if (reg = $(this).attr('regex')) {
                                 me[reg]($.trim($(this).val()), this);
                             }
                         })
-                        .on('click', 'li[role="tab"] a', function (event) {
+                        .on('click', 'li[role="tab"] a', function(event) {
                             event.preventDefault();
                             var tab = $(this).attr('type');
                             me.countPostage(tab);
                             self.removeValidate();
                         })
-                        .on('click', 'input[type="radio"]', function () {
+                        .on('click', 'input[type="radio"]', function() {
                             var parent = $(this).closest('div.delivery');
                             $(this).closest('li').addClass('cur').siblings().removeClass('cur');
                             parent.find('div.hide_options').hide();
                             me.hideTip();
                         })
-                        .on('click', '.usual_address_list li', function(){  // 配送区块切换 除自取
+                        .on('click', '.usual_address_list li', function() { // 配送区块切换 除自取
                             var cnt = $(this).closest('ul');
                             cnt.find('li').removeClass('usual_address_item_selected');
                             cnt.find('input').prop('checked', false);
                             $(this).addClass('usual_address_item_selected');
                             $(this).find('input:radio').prop('checked', true);
                         })
-                        .on('click', '.select_address_list li', function(){  // 自取区块切换
+                        .on('click', '.select_address_list li', function() { // 自取区块切换
                             var cnt = $(this).closest('ul');
                             cnt.find('li').removeClass('cur');
                             cnt.find('input').prop('checked', false);
                             $(this).addClass('cur');
                             $(this).find('input:radio').prop('checked', true);
                         })
-                        .on('click', 'a[role="adsedit"]', function(event){    // 编辑配送地址
+                        .on('click', 'a[role="adsedit"]', function(event) { // 编辑配送地址
                             event.preventDefault();
                             var index = +$(this).closest('.delivery').attr('type');
                             var tpl = index == 1 ? self.tpl.editInCityAddress : self.tpl.editAllAddress;
                             var tempData = me.handleData(vdata.initData.DeliveryReult);
                             var CantonID = $(this).attr('cantonid');
                             var infoID = $(this).attr('infoid');
+                            var cityName = $(this).attr('data-cityname') || '';
+                            var proviceName = $(this).attr('data-provicename') || '';
+                            var postCode = $(this).attr('data-post') || '';
                             self.render(tpl, {
                                 CityCanton: tempData.CityCanton,
                                 address: $(this).attr('data-address'),
-                                recipient:$(this).attr('data-recipient'),
-                                tel:$(this).attr('data-tel'),
-                                code:$(this).attr('data-post')
-                            }, function (dom) {
+                                recipient: $(this).attr('data-recipient'),
+                                tel: $(this).attr('data-tel'),
+                                code: $(this).attr('data-post')
+                            }, function(dom) {
                                 var _role;
                                 $(dom).appendTo('body');
                                 _role = self.common.getRoles('#mask_popup');
@@ -5192,93 +5282,115 @@ define(function (require, exports, module) {
                                     id: '#cities_p',
                                     type: 'select'
                                 });
-                                $.each($('#J_popcanton option'), function(_index, _item){
-                                    if($(_item).val() == CantonID){
+                                $.each($('#J_popcanton option'), function(_index, _item) {
+                                    if ($(_item).val() == CantonID) {
                                         $(_item).prop('selected', true)
                                     }
                                 });
-                                $('#mask_popup').find('a[role="saveaddress"]').attr('type', index).attr('infoid', infoID);
-                                _role.close.click(function (event) {
+                                $('#mask_popup input[type="text"]').on('blur', function() {
+                                    if (reg = $(this).attr('regex')) {
+                                        me[reg]($.trim($(this).val()), this);
+                                    }
+                                });
+                                $('#mask_popup').find('a[role="saveaddress"]').attr('type', index).attr('infoid', infoID).attr('data-add',0).attr('data-cityname', cityName).attr('data-post', postCode);
+                                _role.close.click(function(event) {
                                     event.preventDefault();
                                     cQuery('#mask_popup').unmask();
+                                    $('.book_jmpinfo').remove();
                                     $('#mask_popup').remove();
                                 });
                                 //me.editSampleAddress();
                             });
                             me.hideTip();
                         })
-                        // TODO 新增配送地址
-                        .on('click', 'a[role="addads"]', function(event){
-                            event.preventDefault();
-                            var index = +$(this).closest('.delivery').attr('type');
-                            var tpl = index == 1 ? self.tpl.editInCityAddress : self.tpl.editAllAddress;
-                            var tempData = me.handleData(vdata.initData.DeliveryReult);
-                            var Canton = $(this).attr('data-cantonname');
-                            console.log(tempData);
-                            self.render(tpl, {
-                                CityCanton: tempData.CityCanton,
-                                address: $(this).attr('data-address')
-                            }, function (dom) {
-                                var _role;
-                                $(dom).appendTo('body');
-                                _role = self.common.getRoles('#mask_popup');
-                                cQuery('#mask_popup').mask();
-                                cities.init({
-                                    id: '#cities',
-                                    type: 'select'
-                                });
-                                cities.init({
-                                    id: '#cities_p',
-                                    type: 'select'
-                                });
-                                _role.close.click(function (event) {
-                                    event.preventDefault();
-                                    cQuery('#mask_popup').unmask();
-                                    $('#mask_popup').remove();
-                                });
-                                // me.editSampleAddress();
+                    // TODO 新增配送地址
+                    .on('click', 'a[role="addads"]', function(event) {
+                        event.preventDefault();
+                        var index = +$(this).closest('.delivery').attr('type');
+                        var tpl = index == 1 ? self.tpl.editInCityAddress : self.tpl.editAllAddress;
+                        var tempData = me.handleData(vdata.initData.DeliveryReult);
+                        var Canton = $(this).attr('data-cantonname');
+                        console.log(tempData);
+                        self.render(tpl, {
+                            CityCanton: tempData.CityCanton,
+                            address: $(this).attr('data-address')
+                        }, function(dom) {
+                            var _role;
+                            $(dom).appendTo('body');
+                            _role = self.common.getRoles('#mask_popup');
+                            cQuery('#mask_popup').mask();
+                            cities.init({
+                                id: '#cities',
+                                type: 'select'
                             });
-                            me.hideTip();
-                        })
-                        // .on('click', 'a[role="saveaddress"]', function(){
-                        //     event.preventDefault();
-                        //     var self = this,
-                        //         postData;
-                        //     postData = {
-                        //         "addresstype": $(self).attr('type'),
-                        //         "address": $('#notice15').val(),
-                        //         "canton": $('#J_popcanton').val(),
-                        //         "city": $('#J_popcanton').text(),
-                        //         "infoid": $(self).attr('infoid')
-                        //     };
-                        //     console.log(postData);
-                        //     if(type != 1){
-                        //         postData = {
-                        //             "addresstype": "",
-                        //             "address": "",
-                        //             "cityname": "",
-                        //             "fee":"",
-                        //             "mobilephone":"",
-                        //             "contacttel":"",
-                        //             "recipient":"",
-                        //             "postcode":"",
-                        //             "infoid":""
-                        //         };
-                        //     };
-                        //     $.ajax({
-                        //         type: 'post',
-                        //         url: GV.app.order.vars.handles.saveAddressInfo,
-                        //         dataType: 'json',
-                        //         data:{
-                        //             bookinginfo: cQuery.stringifyJSON(postData)
-                        //         },
-                        //         success: function(_data){
-                                    
-                        //         }
-                        //     });
-                        // });
+                            cities.init({
+                                id: '#cities_p',
+                                type: 'select'
+                            });
+                            if( index == 1){
+                                $('#mask_popup').find('a[role="saveaddress"]').attr('type', index).attr('data-add',1).attr('data-cityname', '上海');
+                            } else {
+                                $('#mask_popup').find('a[role="saveaddress"]').attr('type', index).attr('data-add',1);
+                            }
+                            
+                            $('#mask_popup input[type="text"]').on('blur', function() {
+                                if (reg = $(this).attr('regex')) {
+                                    me[reg]($.trim($(this).val()), this);
+                                }
+                            });
+
+                            _role.close.click(function(event) {
+                                event.preventDefault();
+                                cQuery('#mask_popup').unmask();
+                                $('.book_jmpinfo').remove();
+                                $('#mask_popup').remove();
+                            });
+
+
+
+                            // me.editSampleAddress();
+                        });
+                        me.hideTip();
+                    })
+                    // .on('click', 'a[role="saveaddress"]', function(){
+                    //     event.preventDefault();
+                    //     var self = this,
+                    //         postData;
+                    //     postData = {
+                    //         "addresstype": $(self).attr('type'),
+                    //         "address": $('#notice15').val(),
+                    //         "canton": $('#J_popcanton').val(),
+                    //         "city": $('#J_popcanton').text(),
+                    //         "infoid": $(self).attr('infoid')
+                    //     };
+                    //     console.log(postData);
+                    //     if(type != 1){
+                    //         postData = {
+                    //             "addresstype": "",
+                    //             "address": "",
+                    //             "cityname": "",
+                    //             "fee":"",
+                    //             "mobilephone":"",
+                    //             "contacttel":"",
+                    //             "recipient":"",
+                    //             "postcode":"",
+                    //             "infoid":""
+                    //         };
+                    //     };
+                    //     $.ajax({
+                    //         type: 'post',
+                    //         url: GV.app.order.vars.handles.saveAddressInfo,
+                    //         dataType: 'json',
+                    //         data:{
+                    //             bookinginfo: cQuery.stringifyJSON(postData)
+                    //         },
+                    //         success: function(_data){
+
+                    //         }
+                    //     });
+                    // });
                 },
-                defaultData: function () {
+                defaultData: function() {
                     var _initData = vdata.initData.OrderDelivery;
                     if (_initData) {
                         this.setData({
@@ -5293,51 +5405,51 @@ define(function (require, exports, module) {
                     }
                     return false;
                 },
-                hideTip: function (role) {
+                hideTip: function(role) {
                     var role = role || self.common.getRoles('.hide_options');
-                    !$.isEmptyObject(role) && $.each(role, function (k, v) { //清除提示
+                    !$.isEmptyObject(role) && $.each(role, function(k, v) { //清除提示
                         if ($(v).data('valid')) {
                             $(v).data('valid').hide();
                         }
                     });
                 },
-                selectAddress: function (_role, _i, name) {
+                selectAddress: function(_role, _i, name) {
                     var me = this;
                     var role = self.common.getRoles(roles.deliveryID);
                     // var tpl1 = '<li class="cur add"><label><input index="{{index}}" cantonID="{{CantonID}}" type="radio" value="{{index}}" name="' + name + '" checked="checked"> {{Address}} {{Post}} {{#if Recipient}}({{Recipient}} 收){{/if}} {{#if Mobile}}{{Mobile}}{{else}}{{#if Tel}}{{Tel}}{{/if}}{{/if}}</label></li>';
                     var tpl1 = '<li class="usual_address_item usual_address_item_selected">' +
-                                  '<p class="name">{{#if Recipient}}({{Recipient}} 收){{/if}}</p>' +
-                                  '<p class="tel">{{#if Mobile}}{{Mobile}}{{else}}{{#if Tel}}{{Tel}}{{/if}}{{/if}}</p>' +
-                                  '<p class="address">{{Address}}</p>' +
-                                  '<p class="code">{{Post}}</p>' +
-                                  '<i class="ico_checked"></i>' +
-                                  '<a href="###" role="adsedit" class="edit" cantonID="{{CantonID}}" infoId="{{InfoId}}" data-Recipient="{{Recipient}}" data-tel="{{#if Mobile}}{{Mobile}}{{else}}{{#if Tel}}{{Tel}}{{/if}}{{/if}}" data-CityName="{{CityName}}" data-CantonName="{{CantonName}}" data-Address="{{Address}}" data-Post="{{Post}}"><i></i>编辑</a>' +
-                                  '<input cantonID="{{CantonID}}" checked="checked" index="{{index}}" type="radio" value="{{index}}" name="' + name + '" id="ems{{@index}}" style="display:none">' +
-                                '</li>';
+                        '<p class="name">{{#if Recipient}}({{Recipient}} 收){{/if}}</p>' +
+                        '<p class="tel">{{#if Mobile}}{{Mobile}}{{else}}{{#if Tel}}{{Tel}}{{/if}}{{/if}}</p>' +
+                        '<p class="address">{{Address}}</p>' +
+                        '<p class="code">{{Post}}</p>' +
+                        '<i class="ico_checked"></i>' +
+                        '<a href="###" role="adsedit" class="edit" cantonID="{{CantonID}}" infoId="{{InfoId}}" data-Recipient="{{Recipient}}" data-tel="{{#if Mobile}}{{Mobile}}{{else}}{{#if Tel}}{{Tel}}{{/if}}{{/if}}" data-CityName="{{CityName}}" data-CantonName="{{CantonName}}" data-Address="{{Address}}" data-Post="{{Post}}"><i></i>编辑</a>' +
+                        '<input cantonID="{{CantonID}}" checked="checked" index="{{index}}" type="radio" value="{{index}}" name="' + name + '" id="ems{{@index}}" style="display:none">' +
+                        '</li>';
                     var tpl2 = '<li class="usual_address_item usual_address_item_selected">' +
-                              '<p class="name">{{CityName}}</p>' +
-                              '<p class="address">{{../../CityName}} {{CityName}} {{CantonName}} {{Address}}</p>' +
-                              '<p class="code">{{Post}}</p>' +
-                              '<i class="ico_checked"></i>' +
-                              '<a href="###" role="adsedit" class="edit" cantonID="{{CantonID}}" infoId="{{InfoId}}" data-Recipient="{{Recipient}}" data-CityName="{{CityName}}" data-CantonName="{{CantonName}}" data-Address="{{Address}}" data-Post="{{Post}}"><i></i>编辑</a>' +
-                              '<input cantonID="{{CantonID}}" checked="checked" index={{index}} type="radio" value="{{index}}" name="' + name + '" id="ps{{@index}}" style="display:none">' +
-                            '</li>';
+                        '<p class="name">{{CityName}}</p>' +
+                        '<p class="address">{{../../CityName}} {{CityName}} {{CantonName}} {{Address}}</p>' +
+                        '<p class="code">{{Post}}</p>' +
+                        '<i class="ico_checked"></i>' +
+                        '<a href="###" role="adsedit" class="edit" cantonID="{{CantonID}}" infoId="{{InfoId}}" data-Recipient="{{Recipient}}" data-CityName="{{CityName}}" data-CantonName="{{CantonName}}" data-Address="{{Address}}" data-Post="{{Post}}"><i></i>编辑</a>' +
+                        '<input cantonID="{{CantonID}}" checked="checked" index={{index}} type="radio" value="{{index}}" name="' + name + '" id="ps{{@index}}" style="display:none">' +
+                        '</li>';
                     // var tpl2 = '<li class="cur add"><label><input index="{{index}}" cantonID="{{CantonID}}" type="radio" value="{{index}}" name="' + name + '" checked="checked">{{toCity}} {{CityName}} {{CantonName}} {{Address}} {{Post}}</label></li>';
                     var tpl = _i == 1 ? tpl2 : tpl1;
                     var address = _i == 1 ? me.commonInCityAddr : me.commonEMSAddr;
-                    $('#mask_popup').on('click', 'input', function () {
+                    $('#mask_popup').on('click', 'input', function() {
                         $("input[name='radio'][checked]", '#mask_popup').attr('checked', false);
                         $(this).attr('checked', true);
                     });
                     _role.confirm.unbind('click');
-                    _role.confirm.click(function (event) {
+                    _role.confirm.click(function(event) {
                         event.preventDefault();
                         var index = $("input[type='radio']:checked", '#mask_popup').attr('index');
                         var wrap;
                         self.render(tpl, $.extend(address[index], {
                             toCity: me.toCity,
                             index: index
-                        }), function (dom) {
+                        }), function(dom) {
                             wrap = $(role.addressList).filter('[type="' + _i + '"]');
                             wrap.find('li.usual_address_item_selected').remove();
                             wrap.find('input:checked').prop('checked', false);
@@ -5349,12 +5461,12 @@ define(function (require, exports, module) {
                         });
                     });
                 },
-                handleData: function (data) {
+                handleData: function(data) {
                     var me = this;
                     var _ref = {};
-                    var handle = function (data) {
+                    var handle = function(data) {
                         var _ret = {};
-                        $.map(data, function (v, k) {
+                        $.map(data, function(v, k) {
                             switch (v.DeliveryType) {
                                 case 1:
                                     _ret.ps = v;
@@ -5412,17 +5524,17 @@ define(function (require, exports, module) {
                         };
                         return _ret;
                     };
-                    var goods = function (goods) {
+                    var goods = function(goods) {
                         var _ret = [];
                         if (!goods || !goods.length) return null;
-                        $.map(goods, function (v, k) {
+                        $.map(goods, function(v, k) {
                             _ret.push('<p>' + (k + 1) + '. ' + v.replace(/[\r\n]/g, "") + '</p>');
                         });
                         _ret.push('<p class="alert_info">(内容仅供参考，以实际送出物为准。)</p>');
                         return _ret.join('');
                     };
                     if (!data || !data.DeliveryInfoList) return _ref;
-                    $.map(data.DeliveryInfoList, function (v, k) {
+                    $.map(data.DeliveryInfoList, function(v, k) {
                         if (v.isHasInvoice === 1) {
                             _ref.invoice = handle(v.DeliveryType);
                             _ref.invoice.deliveryGoods = goods(v.DeliveryGoodsDescriptions);
@@ -5438,7 +5550,7 @@ define(function (require, exports, module) {
                     _ref.CityCanton = data.CityCanton || [];
                     if (data.MyEMSAddress) {
                         _ref.emsAddress = data.MyEMSAddress.slice(0, 3);
-                        $.map(data.MyEMSAddress, function (v, k) {
+                        $.map(data.MyEMSAddress, function(v, k) {
                             me.commonEMSAddr[v.InfoId] = v;
                         });
                         if (data.MyEMSAddress.length < 4) {
@@ -5447,19 +5559,19 @@ define(function (require, exports, module) {
                     }
                     if (data.InCityDelivery) {
                         _ref.inCityAddress = data.InCityDelivery.slice(0, 3);
-                        $.map(data.InCityDelivery, function (v, k) {
+                        $.map(data.InCityDelivery, function(v, k) {
                             me.commonInCityAddr[v.InfoId] = v;
                         });
                         if (data.InCityDelivery.length < 4) {
                             _ref.hideInCityAddress = true;
                         }
                     }
-                    data.CityCanton && $.map(data.CityCanton, function (v, k) {
+                    data.CityCanton && $.map(data.CityCanton, function(v, k) {
                         me.Cantons[v.Key] = v;
                     })
                     return _ref;
                 },
-                getPsAddr: function (role, isTemp) { //获取新增市内配送地址
+                getPsAddr: function(role, isTemp) { //获取新增市内配送地址
                     // var idx = role.getCanton.val()
                     var canton = role.getCanton.find("option:selected").text();
                     var cantonID = role.getCanton.val() || 0;
@@ -5484,7 +5596,7 @@ define(function (require, exports, module) {
                     }
                     return [canton, detail, cantonID];
                 },
-                showTip: function (el, data, opts) {
+                showTip: function(el, data, opts) {
                     var ovalid = $(el).data('valid');
                     opts = $.extend({
                         target: el,
@@ -5494,17 +5606,17 @@ define(function (require, exports, module) {
                         new self.validate(opts).show();
                     $(el).data('valid', ovalid);
                 },
-                checkNull: function (str) {
+                checkNull: function(str) {
                     return '' === str ? true : false;
                 },
-                checkRecipient: function (str, el) { //验证收件人
+                checkRecipient: function(str, el) { //验证收件人
                     if (this.checkNull(str)) {
                         this.showTip(el, msg.recipient);
                         return false;
                     }
                     return true;
                 },
-                checkContactTel: function (str, el) { //验证收件人电话
+                checkContactTel: function(str, el) { //验证收件人电话
                     if (this.checkNull(str)) {
                         this.showTip(el, msg.contactTel);
                         return false;
@@ -5514,14 +5626,14 @@ define(function (require, exports, module) {
                     }
                     return true;
                 },
-                checkDetail: function (str, el) { //验证详细收件地址
+                checkDetail: function(str, el) { //验证详细收件地址
                     if (this.checkNull(str)) {
                         this.showTip(el, msg.detail);
                         return false;
                     }
                     return true;
                 },
-                checkPostage: function (str, el) { //验证邮编
+                checkPostage: function(str, el) { //验证邮编
                     if (this.checkNull(str)) {
                         this.showTip(el, msg.postage);
                         return false;
@@ -5531,16 +5643,16 @@ define(function (require, exports, module) {
                     }
                     return true;
                 },
-                getEmsAddr: function (r, isTemp, isPy) { //获取新增EMS配送地址
+                getEmsAddr: function(r, isTemp, isPy) { //获取新增EMS配送地址
                     var me = this;
                     var _ref = {};
                     var _ret = true;
                     var role = self.common.getRoles(r);
-                    var getCities = function () {
+                    var getCities = function() {
                         return isPy ? cities.get('#cities_p') : cities.get('#cities');
                     };
-                    var getVal = function () {
-                        $.each(role, function (k, v) {
+                    var getVal = function() {
+                        $.each(role, function(k, v) {
                             if (k != 'selectCity') {
                                 _ref[k] = $(v).val();
                             } else {
@@ -5551,7 +5663,7 @@ define(function (require, exports, module) {
                     };
                     isTemp = isTemp || 0;
                     if (!isTemp) {
-                        $.each(role, function (k, v) {
+                        $.each(role, function(k, v) {
                             var val;
                             val = k != 'selectCity' ? $.trim($(v).val()) : getCities();
                             if ('' === val) {
@@ -5582,7 +5694,7 @@ define(function (require, exports, module) {
                     }
                     return [_ret, getVal()];
                 },
-                setData: function (obj) { //设置要提交的配送数据
+                setData: function(obj) { //设置要提交的配送数据
                     return self.formData.DeliverInfo = {
                         DeliverType: obj.DeliverType || 0,
                         AddresseeName: obj.AddresseeName,
@@ -5593,12 +5705,12 @@ define(function (require, exports, module) {
                         InfoId: obj.InfoId || 0
                     };
                 },
-                save: function (isSubmit) {
+                save: function(isSubmit) {
                     var type, which, role, id, isPy;
                     var DeliverInfo = self.formData.DeliverInfo;
                     var me = this;
                     var addr, commonInCityAddr, commonEMSAddr;
-                    var _assign = function (type, name, tel, addr, post, canton, id) {
+                    var _assign = function(type, name, tel, addr, post, canton, id) {
                         me.setData({
                             DeliverType: type,
                             AddresseeName: name,
@@ -5670,16 +5782,16 @@ define(function (require, exports, module) {
                     }
                     return true;
                 },
-                verify: function () {
+                verify: function() {
                     this.save(!0);
                 }
             }
         },
-        Extras: function () {
+        Extras: function() {
             var self = this;
             var vdata = self.data;
             return {
-                init: function () {
+                init: function() {
                     var _data = vdata.initData.OrderOther;
                     var role = this.role = self.common.getRoles(vdata.roles.extrasID);
                     var bed;
@@ -5709,19 +5821,19 @@ define(function (require, exports, module) {
                     }
 
                 },
-                isNull: function (obj) {
+                isNull: function(obj) {
                     var _ret = false;
                     if (!obj) return false;
-                    $.each(obj, function (k, v) {
+                    $.each(obj, function(k, v) {
                         if (v) {
                             _ret = true;
                         }
                     });
                     return _ret;
                 },
-                bindEvent: function () {
+                bindEvent: function() {
                     var role = this.role;
-                    role.mores && role.mores.bind('click', function () {
+                    role.mores && role.mores.bind('click', function() {
                         role.extrasInputs.toggle();
                         if (role.extrasInputs.css('display') !== 'none') {
                             $(this).html('更多需求&lt;&lt;')
@@ -5729,7 +5841,7 @@ define(function (require, exports, module) {
                             $(this).html('更多需求&gt;&gt;')
                         }
                     });
-                    role.selectBedDes && role.selectBedDes.bind('click', function () {
+                    role.selectBedDes && role.selectBedDes.bind('click', function() {
                         if ($(this).prop('checked')) {
                             role.bedDes.prop('disabled', false);
                         } else {
@@ -5737,13 +5849,13 @@ define(function (require, exports, module) {
                             role.bedDes.children('[value="0"]').attr('selected', true);
                         }
                     });
-                    role.selectRemark && role.selectRemark.bind('click', function () {
+                    role.selectRemark && role.selectRemark.bind('click', function() {
                         role.Remark.toggle();
                     });
                 },
-                getBedVal: function (v) {
+                getBedVal: function(v) {
                     var _ret;
-                    $.each(this.bedValue, function (key, val) {
+                    $.each(this.bedValue, function(key, val) {
                         if (v === val) {
                             _ret = key;
                             return false;
@@ -5751,7 +5863,7 @@ define(function (require, exports, module) {
                     });
                     return _ret;
                 },
-                save: function () {
+                save: function() {
                     var role = this.role;
                     var OtherInfo = self.formData.OtherInfo;
                     var remark = role.Remark;
@@ -5777,28 +5889,28 @@ define(function (require, exports, module) {
                         OtherInfo.Remark = '';
                     }
                 },
-                verify: function () {
+                verify: function() {
                     this.save();
                     return true;
                 }
             }
         },
-        AsyncInit: function () {
+        AsyncInit: function() {
             var self = this,
                 vdata = self.data;
             return {
-                init: function () {
+                init: function() {
                     var module = [];
                     self.fetchData({
                         url: vdata.handles.otherInfo,
                         dataType: 'text'
-                    }, function (data) {
+                    }, function(data) {
                         data = typeof data === 'string' ? self.common.parseJSON(data) : data;
                         vdata.roles.loadingID.remove();
                         if (data.errno) return;
                         $.extend(vdata.initData, data.data);
-                        (function (args) {
-                            $.map([self.Travellers, self.Commoners, self.Delivery, self.Invoice, self.Extras], function (o, i) {
+                        (function(args) {
+                            $.map([self.Travellers, self.Commoners, self.Delivery, self.Invoice, self.Extras], function(o, i) {
                                 module[args[i]] = o.call(self);
                             });
                         }('Travellers|Commoners|Delivery|Invoice|Extras'.split('|')));
@@ -5814,10 +5926,10 @@ define(function (require, exports, module) {
             }
         },
         /**
-        * 根据参数返回input的jquery对象
-        * @param  {String} str     input上的参数值
-        * @return {cQuery Obj}     [description]
-        */
+         * 根据参数返回input的jquery对象
+         * @param  {String} str     input上的参数值
+         * @return {cQuery Obj}     [description]
+         */
         // _getInput: function (str) {
         //     var obj;
         //     $.each($('#linkManID input'), function (index, item) {
@@ -5876,13 +5988,13 @@ define(function (require, exports, module) {
         // },
 
         /**
-        * 简单模式提交订单操作
-        * 填写页下一步Savebookinghandler接口时，你需要给我多传一个int类型参数ProposalOrderType（如果是意向单点下一步时传2，如果是常规的点击下一步时传1）
-        * @param {Number} _type 订单类型
-        * @return {[type]} [description]
-        * 
-        */
-        _paySubmit: function () {
+         * 简单模式提交订单操作
+         * 填写页下一步Savebookinghandler接口时，你需要给我多传一个int类型参数ProposalOrderType（如果是意向单点下一步时传2，如果是常规的点击下一步时传1）
+         * @param {Number} _type 订单类型
+         * @return {[type]} [description]
+         *
+         */
+        _paySubmit: function() {
             var self = this,
                 me = this,
                 mod = this.data.modules,
@@ -5891,11 +6003,11 @@ define(function (require, exports, module) {
 
             // 异步提交意愿单订单
             $(document).undelegate('#J_paysubmit', 'click');
-            $(document).delegate('#J_paysubmit', 'click', function () {
+            $(document).delegate('#J_paysubmit', 'click', function() {
                 var linkManEdit = $('#linkManID .linkman_info'),
                     linkManIsHidden = $(linkManEdit[1]).is(':hidden');
 
-                $.map('Travellers|Contacter|Extras|Delivery|Invoice'.split('|'), function (v, k) {
+                $.map('Travellers|Contacter|Extras|Delivery|Invoice'.split('|'), function(v, k) {
                     mod[v].save();
                 });
 
@@ -5926,7 +6038,7 @@ define(function (require, exports, module) {
                         },
                         //data: 'bookinginfo=' + cQuery.stringifyJSON(ContactInfo),
                         timeout: 10000,
-                        success: function (data) {
+                        success: function(data) {
                             $('#J_forminfocnt').show();
                             $('#J_simplepay').hide();
                             $('#J_paysubmitSucc').show();
@@ -5941,7 +6053,7 @@ define(function (require, exports, module) {
          * 显示为意向单的表单
          * @return {[type]} [description]
          */
-        _newForm: function () {
+        _newForm: function() {
             $('#J_paysubmitid').text(GV.app.order.vars.initData.orderid);
             $('a.temporary_order').hide();
 
@@ -5955,13 +6067,13 @@ define(function (require, exports, module) {
          * 显示不是意向单的表单
          * @return {[type]} [description]
          */
-        _defaultForm: function () {
+        _defaultForm: function() {
             // 显示原来的页面
             $('#J_simplepay').hide();
             $('#J_forminfocnt').show();
         },
 
-        init: function () { //初始化
+        init: function() { //初始化
             var self = this;
             var vdata = self.data;
 
@@ -6015,10 +6127,10 @@ define(function (require, exports, module) {
             // });
 
             self.handlerHelp();
-            return function () {
+            return function() {
                 var modules = vdata.modules;
                 if (!arguments.length) return;
-                $.each('loadingID|couponID|fillsetID|bookInfoID|linkManID|travellersID|commonersID|priceID|invoiceID|searchID|deliveryID|totalID|submitID|extrasID|singleConponID'.split('|'), function (k, v) {
+                $.each('loadingID|couponID|fillsetID|bookInfoID|linkManID|travellersID|commonersID|priceID|invoiceID|searchID|deliveryID|totalID|submitID|extrasID|singleConponID'.split('|'), function(k, v) {
                     vdata.roles[v] = $('#' + v);
                 });
                 vdata = $.extend(self.data, arguments[0].initData);
@@ -6039,15 +6151,15 @@ define(function (require, exports, module) {
                     self.formData.TempOrderType = 1;
                 }
 
-                (function (args) {
-                    $.map([self.Products, self.Price, self.Coupon, self.HotelCoupon, self.AsyncInit], function (o, i) {
+                (function(args) {
+                    $.map([self.Products, self.Price, self.Coupon, self.HotelCoupon, self.AsyncInit], function(o, i) {
                         modules[args[i]] = o.call(self);
                     });
                 }('Products|Price|Coupon|HotelCoupon|AsyncInit'.split('|')));
                 for (var i in modules) {
                     modules[i].init(vdata);
                 }
-                
+
             };
         }
     };

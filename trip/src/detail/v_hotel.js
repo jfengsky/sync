@@ -198,7 +198,7 @@ define(function (require, exports, module) {
                         hotelUI.on('room-click', function (room) {
                             var roomLi = room.node,
                                 roomId = roomLi.data('room-id'),
-                                hotelId = roomLi.parents('.mask_htl_wrap').data('hotel-id'),
+                                hotelId = roomLi.data('hotel-id'),
                                 roomNum = parseInt(room.countSelector.getValue()),
                                 ChosedResource = {
                                     CheckInDate: CheckInDate,

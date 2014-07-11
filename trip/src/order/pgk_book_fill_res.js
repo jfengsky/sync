@@ -6,9 +6,6 @@ define(function (require, exports, module) {
     var cities = require('../public/address');
     var IDCheck = require('../public/IDCheck');
     var IsTmporaryOrder = false; // 是否暂存订单
-
-    
-
     window.__bfi = window.__bfi || [];
     function ubt_userblock_post(el, msg) {
         if (!el) return false;
@@ -112,32 +109,28 @@ define(function (require, exports, module) {
             hasEnChar: function (str) {
                 return /[A-Za-z]/.test(str);
             },
-            checkCnName: function (str, req) {
-                if(req){
-                    if ('' === str || str === "证件的中文姓名")
-                        return [false, "请填写中文名"];
-                    if (this.isCnChar(str) && str.length === 1)
-                        return [false, "中文姓名不可少于2个汉字"];
-                    if (this.isEnChar(str) || this.isEnName(str))
-                        return [false, "请保持姓名与证件上的姓名一致"];
-                    if (!/^[\u4e00-\u9fa5a-zA-Z-]+$/.test(str))
-                        return [false, "中文姓名只能包含汉字（至少一个）、字母和连字符，生僻字可用拼音代替"];
-                    if (this.hasEnChar(str))
-                        return [true, '请确认填写的姓名与证件上姓名是否一致，生僻字可用拼音代替'];
-                    if (/\u5c0f\u59d0|\u5148\u751f|\u592a\u592a|\u592b\u4eba/.test(str))
-                        return [true, '您提交的姓名中含有称谓，请确认是否为您证件上的姓名'];
-                }
+            checkCnName: function (str) {
+                if ('' === str || str === "证件的中文姓名")
+                    return [false, "请填写中文名"];
+                if (this.isCnChar(str) && str.length === 1)
+                    return [false, "中文姓名不可少于2个汉字"];
+                if (this.isEnChar(str) || this.isEnName(str))
+                    return [false, "请保持姓名与证件上的姓名一致"];
+                if (!/^[\u4e00-\u9fa5a-zA-Z-]+$/.test(str))
+                    return [false, "中文姓名只能包含汉字（至少一个）、字母和连字符，生僻字可用拼音代替"];
+                if (this.hasEnChar(str))
+                    return [true, '请确认填写的姓名与证件上姓名是否一致，生僻字可用拼音代替'];
+                if (/\u5c0f\u59d0|\u5148\u751f|\u592a\u592a|\u592b\u4eba/.test(str))
+                    return [true, '您提交的姓名中含有称谓，请确认是否为您证件上的姓名'];
                 return [true, ];
             },
-            checkEnNameNew: function (str, req) {
-                if(req){
-                    if ('' === str)
-                        return [false, "请输入英文/拼音，如姓名为张小明，则在“姓（拼音或英文）”栏中输入Zhang；在“名（拼音或英文）”栏中输入XiaoMing"];
-                    if (/[^a-zA-Z. \/'-]/.test(str))
-                        return [false, "英文姓名中包含非法字符，请检查"];
-                    if (!/^[a-zA-Z]/.test(str))
-                        return [false, "英文的姓名必须以字母开头"];
-                }
+            checkEnNameNew: function (str) {
+                if ('' === str)
+                    return [false, "请输入英文/拼音，如姓名为张小明，则在“姓（拼音或英文）”栏中输入Zhang；在“名（拼音或英文）”栏中输入XiaoMing"];
+                if (/[^a-zA-Z. \/'-]/.test(str))
+                    return [false, "英文姓名中包含非法字符，请检查"];
+                if (!/^[a-zA-Z]/.test(str))
+                    return [false, "英文的姓名必须以字母开头"];
                 return [true, ];
             },
             checkEnName: function (str) {
@@ -358,8 +351,7 @@ define(function (require, exports, module) {
                             {{#with UserName}}\
                             <li>\
                                 <label for="" class="product_label">{{Name}}</label>\
-                                <span class="frm_required">*</span>\
-                                <input type="text" class="input_m cq" _cqnotice="证件的姓名" value="{{#if ../../nameCN}}{{../../nameCN}}{{else}}{{../../ENLastName}}{{#if ../../ENLastName}}/{{/if}}{{../../ENFirstName}} {{../../ENMiddleName}}{{/if}}" role="name" regex="checkName" required/>\
+                                <input type="text" class="input_m cq" _cqnotice="证件的姓名" value="{{#if ../../nameCN}}{{../../nameCN}}{{else}}{{../../ENLastName}}{{#if ../../ENLastName}}/{{/if}}{{../../ENFirstName}} {{../../ENMiddleName}}{{/if}}" role="name" regex="checkName"/>\
                                 <a tabindex="-1" href="###" class="explain" data-role="jmp" data-params="{options: {css:{maxWidth:\'400\',minWidth:\'240\'},type:\'jmp_table\', classNames:{boxType:\'jmp_table\'},template:\'#jmp_table1_1\',alignTo:\'cursor\'}}">填写说明</a>\
                             </li>\
                             {{/with}}\
@@ -368,8 +360,7 @@ define(function (require, exports, module) {
                             {{#with ChineseName}}\
                             <li>\
                                 <label for="" class="product_label">{{Name}}</label>\
-                                <span class="frm_required">*</span>\
-                                <input type="text" class="input_m cq" _cqnotice="证件的中文姓名" value="{{../../nameCN}}" role="nameCN" regex="checkCnName" required/>\
+                                <input type="text" class="input_m cq" _cqnotice="证件的中文姓名" value="{{../../nameCN}}" role="nameCN" regex="checkCnName"/>\
                                 <a tabindex="-1" href="###" class="explain" data-role="jmp" data-params="{options: {css:{maxWidth:\'400\',minWidth:\'240\'},type:\'jmp_table\', classNames:{boxType:\'jmp_table\'},template:\'#jmp_table1_2\',alignTo:\'cursor\'}}">填写说明</a>\
                             </li>\
                             {{/with}}\
@@ -378,10 +369,9 @@ define(function (require, exports, module) {
                             {{#with EnglishName}}\
                             <li class="optional">\
                                 <label for="" class="product_label">{{Name}}</label>\
-                                <input type="text" class="input_englishname cq" _cqnotice="姓（拼音或英文）" value="{{#if ../../ENLastName}}{{../../ENLastName}}{{/if}}" role="nameEnLast" />\
-                                <input type="text" class="input_englishname input_engnomar cq" _cqnotice="名（拼音或英文）" value="{{#if ../../ENFirstName}}{{../../ENFirstName}}{{#if ../../ENMiddleName}} {{../../../ENMiddleName}}{{/if}}{{/if}}" role="nameEnFirst"  />\
+                                <input type="text" class="input_englishname cq" _cqnotice="姓（拼音或英文）" value="{{#if ../../ENLastName}}{{../../ENLastName}}{{/if}}" role="nameEnLast" regex="checkEnNameLast"/>\
+                                <input type="text" class="input_englishname input_engnomar cq" _cqnotice="名（拼音或英文）" value="{{#if ../../ENFirstName}}{{../../ENFirstName}}{{#if ../../ENMiddleName}} {{../../../ENMiddleName}}{{/if}}{{/if}}" role="nameEnFirst" regex="checkEnNameFirst" />\
                                 <a tabindex="-1" href="###" class="explain" data-role="jmp" data-params="{options: {css:{maxWidth:\'400\',minWidth:\'240\'},type:\'jmp_table\', classNames:{boxType:\'jmp_table\'},template:\'#jmp_table1_3\',alignTo:\'cursor\'}}">填写说明</a>\
-                                <span class="hrs hrs2">(可稍后提供)</span>\
                             </li>\
                             {{/with}}\
                         {{/if}}\
@@ -389,8 +379,7 @@ define(function (require, exports, module) {
                             {{#with Nationality}}\
                             <li class="optional later" style={{#equal ../../IDCardType 1 "display:none" ""}}{{/equal}}>\
                                 <label for="" class="product_label">{{Name}}</label>\
-                                <span class="frm_required">*</span>\
-                                <input mod_value="{{../../national}}" type="text" value="{{../../national}}" regex="checkNationality" role="national" class="input_m cq nationality" _cqnotice="中文/拼音" required/>\
+                                <input mod_value="{{../../national}}" type="text" value="{{../../national}}" regex="checkNationality" role="national" class="input_m cq nationality" _cqnotice="中文/拼音"/>\
                             </li>\
                             {{/with}}\
                         {{/if}}\
@@ -398,15 +387,13 @@ define(function (require, exports, module) {
                             {{#with IDType}}\
                             <li>\
                                 <label for="" class="product_label">{{Name}}</label>\
-                                <span class="frm_required">*</span>\
                                 <select name="" value="{{../../IDCardType}}" role="idCardType" regex="checkIdCardType">\
                                 {{#each ../idOptions}}\
                                     <option {{#equal ../../IDCardType CustomerInfoItemType "selected" ""}}{{/equal}} value="{{CustomerInfoItemType}}">{{Name}}</option>\
                                 {{/each}}\
                                 </select>\
-                                <input type="text" value="{{../../IDCardNo}}" role="idCardNo" class="input_s later cq" regex="checkIdCard" _cqnotice="证件号码" note="{{../../restrictions}}" required/>\
+                                <input type="text" value="{{../../IDCardNo}}" role="idCardNo" class="input_s later cq" regex="checkIdCard" _cqnotice="证件号码" note="{{../../restrictions}}"/>\
                                 <span class="hrs" role="passportType" style={{#equal ../../IDCardType 2 "" "display:none;"}}{{/equal}}>因私护照</span>\
-                                <div class="help_block"><span class="ico"></span>特别提醒：为了您能顺利出行，请确保旅行结束日期至少比证件有效期早6个月。</div>\
                             </li>\
                             {{/with}}\
                         {{/if}}\
@@ -414,8 +401,7 @@ define(function (require, exports, module) {
                             {{#with CardValidUntil}}\
                             <li class="optional later" style={{#equal ../../IDCardType 1 "display:none" ""}}{{/equal}}>\
                                 <label for="" class="product_label">{{Name}}</label>\
-                                <input type="number" value="{{../../IDCardTimelimitY}}" class="all_field_width cq J_uyear"  role="cardValidUntilY" _cqnotice="yyyy" style="" >&nbsp;-&nbsp;<input type="number" value="{{../../IDCardTimelimitM}}" class="all_field_width cq J_umonth" role="cardValidUntilM" _cqnotice="mm" style="" >&nbsp;-&nbsp;<input type="number" value="{{../../IDCardTimelimitD}}" role="cardValidUntilD" class="all_field_width cq J_udate"  _cqnotice="dd" >\
-                                <span class="hrs hrs2">(可稍后提供)</span>\
+                                <input type="number" value="{{../../IDCardTimelimitY}}" class="all_field_width cq"  role="cardValidUntilY" _cqnotice="yyyy" style="" regex="checkCardValidUntil">&nbsp;-&nbsp;<input type="number" value="{{../../IDCardTimelimitM}}" class="all_field_width cq" role="cardValidUntilM" _cqnotice="mm" style="" regex="checkCardValidUntil">&nbsp;-&nbsp;<input type="number" value="{{../../IDCardTimelimitD}}" role="cardValidUntilD" class="all_field_width cq"  _cqnotice="dd" regex="checkCardValidUntil">\
                             </li>\
                             {{/with}}\
                         {{/if}}\
@@ -423,8 +409,7 @@ define(function (require, exports, module) {
                             {{#with Sex}}\
                              <li class="optional" style={{#equal ../../IDCardType 1 "display:none" ""}}{{/equal}}>\
                                 <label for="" class="product_label">{{Name}}</label>\
-                                <span class="frm_required">*</span>\
-                                <select name="" value="{{../gender}}" role="gender" regex="checkSex" required>\
+                                <select name="" value="{{../gender}}" role="gender" regex="checkSex">\
                                     <option value="-1">请选择</option>\
                                     <option {{#equal ../../gender 0 "selected" ""}}{{/equal}} value="0">男</option>\
                                     <option {{#equal ../../gender 1 "selected" ""}}{{/equal}} value="1">女</option>\
@@ -435,9 +420,8 @@ define(function (require, exports, module) {
                         {{#if Birthday}}\
                         {{#with Birthday}}\
                             <li class="optional later" style={{#equal ../../IDCardType 1 "display:none" ""}}{{/equal}}>\
-                              <label for="" class="product_label">{{Name}}</label>\
-                              <input type="number" value="{{../../birthdayY}}" class="all_field_width cq"  role="birthdayY" _cqnotice="yyyy" style="">&nbsp;-&nbsp;<input type="number" value="{{../../birthdayM}}" class="all_field_width cq" role="birthdayM"  _cqnotice="mm" style="">&nbsp;-&nbsp;<input type="number" value="{{../../birthdayD}}" role="birthdayD" class="all_field_width cq"  _cqnotice="dd">\
-                              <span class="hrs hrs2">(可稍后提供)</span>\
+                                <label for="" class="product_label">{{Name}}</label>\
+                                <input type="number" value="{{../../birthdayY}}" class="all_field_width cq" regex="checkBirthday"  role="birthdayY" _cqnotice="yyyy" style="">&nbsp;-&nbsp;<input type="number" value="{{../../birthdayM}}" class="all_field_width cq" regex="checkBirthday" role="birthdayM"  _cqnotice="mm" style="">&nbsp;-&nbsp;<input type="number" value="{{../../birthdayD}}" role="birthdayD" class="all_field_width cq" regex="checkBirthday"  _cqnotice="dd">\
                             </li>\
                         {{/with}}\
                         {{/if}}\
@@ -445,18 +429,16 @@ define(function (require, exports, module) {
                         {{#with BirthPlace}}\
                         <li class="optional later" style={{#equal ../../IDCardType 1 "display:none" ""}}{{/equal}}>\
                             <label for="" class="product_label">{{Name}}</label>\
-                            <input type="text" value="{{../../HomePlace}}" role="birthPlace" class="input_m"/>\
-                            <span class="hrs hrs2">(可稍后提供)</span>\
+                            <input type="text" value="{{../../HomePlace}}" role="birthPlace" class="input_m" regex="checkBirthPlace"/>\
                         </li>\
                         {{/with}}\
                         {{/if}}\
-                        {{#if CustomerType}}\
+            {{#if CustomerType}}\
                             {{#is cutomerOptions.length \'>\' 0}}\
-                            {{#with CustomerType}}\
+              {{#with CustomerType}}\
                              <li class="optional">\
                                 <label for="" class="product_label">{{Name}}</label>\
-                                <span class="frm_required">*</span>\
-                                 <select name="" value="{{../../CustomerNoType}}" role="CustomerType" required>\
+                                 <select name="" value="{{../../CustomerNoType}}" role="CustomerType">\
                                 {{#each ../cutomerOptions}}\
                                     <option {{#equal ../../CustomerNoType CustomerInfoItemType "selected" ""}}{{/equal}} value="{{CustomerInfoItemType}}">{{Name}}</option>\
                                 {{/each}}\
@@ -469,8 +451,7 @@ define(function (require, exports, module) {
                         {{#with ContactPhone}}\
                         <li>\
                             <label for="" class="product_label">手机号码</label>\
-                            <span class="frm_required">*</span>\
-                            <input type="number" class="input_m" value="{{../../mobileNo}}" role="mobileNo" class="" regex="checkMobile" required/>\
+                            <input type="number" class="input_m" value="{{../../mobileNo}}" role="mobileNo" class="" regex="checkMobile"/>\
                             <span style="margin-left:10px;color:#999;">请至少输入一位出行旅客的手机号码</span>\
                         </li>\
                         {{/with}}\
@@ -848,24 +829,19 @@ define(function (require, exports, module) {
                                         {{#if ems.DeliveryAmount}}<div class="postage"><span>邮递费</span><dfn>¥</dfn>{{ems.DeliveryAmount}}</div>{{/if}}\
                                         选择常用地址\
                                     </div>\
-                                    <div class="usual_address_mod">\
-                                      {{#if emsAddress}}\
-                                      <ul class="usual_address_list">\
+                                    {{#if emsAddress}}\
+                                        <ul class="address_list" role="addressList" type="4">\
                                         {{#each emsAddress}}\
-                                        <li class="usual_address_item {{#unless @index}}usual_address_item_selected{{/unless}}">\
-                                          <p class="name">{{#if Recipient}}({{Recipient}} 收){{/if}}</p>\
-                                          <p class="tel">{{#if Mobile}}{{Mobile}}{{else}}{{#if Tel}}{{Tel}}{{/if}}{{/if}}</p>\
-                                          <p class="address">{{Address}}</p>\
-                                          <p class="code">{{Post}}</p>\
-                                          <i class="ico_checked"></i>\
-                                          <a href="###" class="edit"><i></i>编辑</a>\
-                                          <input cantonID="{{CantonID}}" {{#equal @index 0 "checked=checked" ""}}{{/equal}} index={{InfoId}} type="radio" value="{{InfoId}}" name="radio4" id="py{{@index}}" class="J_hideradio">\
-                                        </li>\
+                                         <li {{#unless @index}}class="cur"{{/unless}}><label for="py{{@index}}"><input cantonID="{{CantonID}}" {{#equal @index 0 "checked=checked" ""}}{{/equal}} index={{InfoId}} type="radio" value="{{InfoId}}" name="radio4" id="py{{@index}}"> {{Address}} {{Post}} {{#if Recipient}}({{Recipient}} 收){{/if}} {{#if Mobile}}{{Mobile}}{{else}}{{#if Tel}}{{Tel}}{{/if}}{{/if}}</label></li>\
                                         {{/each}}\
-                                      </ul>\
-                                      {{/if}}\
-                                      <div class="handle_area"><a href="###"><i class="ico_more"></i>更多地址</a><a href="###"><i class="ico_add"></i>新增地址</a></div>\
+                                        </ul>\
+                                    <div class="btn">\
+                                        <a class="btn_submit" href="###" role="new">使用新地址</a>\
+                                        {{#unless hideEmsAddress}}\
+                                        <a href="###" role="other">使用其他地址</a>\
+                                        {{/unless}}\
                                     </div>\
+                                    {{/if}}\
                                     <div class="hide_options" role="hideOptions" style={{#if emsAddress}}"display:none"{{else}}"display:block"{{/if}}>\
                                         <table>\
                                             <tbody><tr>\
@@ -907,24 +883,19 @@ define(function (require, exports, module) {
                                         {{#if ps.DeliveryAmount}}<div class="postage"><span>配送费</span><dfn>¥</dfn>{{ps.DeliveryAmount}}<span>起，具体金额以预订员确认为准。</span></div>{{/if}}\
                                         配送城市<strong>{{CityName}}</strong>\
                                     </div>\
-                                    <div class="usual_address_mod">\
-                                      {{#if inCityAddress}}\
-                                      <ul class="usual_address_list">\
-                                      {{#each inCityAddress}}\
-                                        <li class="usual_address_item usual_address_item_selected">\
-                                        <p class="name">{{CityName}}</p>\
-                                        <p class="tel">1811234678</p>\
-                                        <p class="address">{{../../CityName}} {{CityName}} {{CantonName}} {{Address}}</p>\
-                                        <p class="code">{{Post}}</p>\
-                                        <i class="ico_checked"></i>\
-                                        <a href="###" class="edit"><i></i>编辑</a>\
-                                        <input cantonID="{{CantonID}}" {{#equal @index 0 "checked=checked" ""}}{{/equal}} index={{InfoId}} type="radio" value="{{InfoId}}" name="radio1" id="ps{{@index}}">\
-                                        </li>\
-                                      {{/each}}\
-                                      </ul>\
-                                      {{/if}}\
-                                      <div class="handle_area"><a href="###"><i class="ico_more"></i>更多地址</a><a href="###"><i class="ico_add"></i>新增地址</a></div>\
+                                    {{#if inCityAddress}}\
+                                    <ul class="address_list"  role="addressList" type="1">\
+                                        {{#each inCityAddress}}\
+                                            <li {{#unless @index}}class="cur"{{/unless}}><label for="ps{{@index}}"><input cantonID="{{CantonID}}" {{#equal @index 0 "checked=checked" ""}}{{/equal}} index={{InfoId}} type="radio" value="{{InfoId}}" name="radio1" id="ps{{@index}}">{{../../CityName}} {{CityName}} {{CantonName}} {{Address}} {{Post}}</label></li>\
+                                        {{/each}}\
+                                    </ul>\
+                                    <div class="btn">\
+                                        <a class="btn_submit" href="###"  role="new">使用新地址</a>\
+                                        {{#unless hideInCityAddress}}\
+                                        <a href="###" role="other">使用其他地址</a>\
+                                        {{/unless}}\
                                     </div>\
+                                    {{/if}}\
                                     <div class="hide_options" style={{#if inCityAddress}}"display:none"{{else}}"display:block"{{/if}}>\
                                         <table>\
                                             <tbody><tr>\
@@ -945,12 +916,12 @@ define(function (require, exports, module) {
                                     <div class="tit">\
                                         自取城市<strong>{{CityName}}</strong>\
                                     </div>\
-                                    <ul class="select_address_list">\
-                                      {{#if selfPickupAddr}}\
-                                      {{#each selfPickupAddr}}\
-                                      <li {{#unless @index}}class="cur"{{/unless}}>{{this}}<i class="ico_checked"></i><input {{equal @index 0 "checked=checked" ""}} type="radio" value="{{this}}" name="radio2" id="self{{@index}}"></li>\
-                                      {{/each}}\
-                                      {{/if}}\
+                                    <ul class="address_list" role="addressList"  type="2">\
+                                        {{#if selfPickupAddr}}\
+                                        {{#each selfPickupAddr}}\
+                                        <li {{#unless @index}}class="cur"{{/unless}}><label for="self{{@index}}"><input {{equal @index 0 "checked=checked" ""}} type="radio" value="{{this}}" name="radio2" id="self{{@index}}">{{this}}</label></li>\
+                                        {{/each}}\
+                                        {{/if}}\
                                     </ul>\
                                 </div>\
                                 {{/if}}\
@@ -962,24 +933,19 @@ define(function (require, exports, module) {
                                         {{#if ems.DeliveryAmount}}<div class="postage"><span>邮递费</span><dfn>¥</dfn>{{ems.DeliveryAmount}}</div>{{/if}}\
                                         选择常用地址\
                                     </div>\
-                                    <div class="usual_address_mod">\
-                                      {{#if emsAddress}}\
-                                      <ul class="usual_address_list">\
+                                    {{#if emsAddress}}\
+                                        <ul class="address_list" role="addressList" type="3">\
                                         {{#each emsAddress}}\
-                                        <li class="usual_address_item usual_address_item_selected">\
-                                          <p class="name">{{#if Recipient}}({{Recipient}} 收){{/if}}</p>\
-                                          <p class="tel">{{#if Mobile}}{{Mobile}}{{else}}{{#if Tel}}{{Tel}}{{/if}}{{/if}}</p>\
-                                          <p class="address">{{Address}}</p>\
-                                          <p class="code">{{Post}}</p>\
-                                          <i class="ico_checked"></i>\
-                                          <a href="###" class="edit"><i></i>编辑</a>\
-                                          <input cantonID="{{CantonID}}" {{#equal @index 0 "checked=checked" ""}}{{/equal}} index={{InfoId}} type="radio" value="{{InfoId}}" name="radio3" id="ems{{@index}}">\
-                                        </li>\
+                                         <li {{#unless @index}}class="cur"{{/unless}}><label for="ems{{@index}}"><input cantonID="{{CantonID}}" {{#equal @index 0 "checked=checked" ""}}{{/equal}} index={{InfoId}} type="radio" value="{{InfoId}}" name="radio3" id="ems{{@index}}"> {{Address}} {{Post}} {{#if Recipient}}({{Recipient}} 收){{/if}} {{#if Mobile}}{{Mobile}}{{else}}{{#if Tel}}{{Tel}}{{/if}}{{/if}}</label></li>\
                                         {{/each}}\
-                                      </ul>\
-                                      {{/if}}\
-                                      <div class="handle_area"><a href="###"><i class="ico_more"></i>更多地址</a><a href="###"><i class="ico_add"></i>新增地址</a></div>\
+                                        </ul>\
+                                    <div class="btn">\
+                                        <a class="btn_submit" href="###" role="new">使用新地址</a>\
+                                        {{#unless hideEmsAddress}}\
+                                        <a href="###" role="other">使用其他地址</a>\
+                                        {{/unless}}\
                                     </div>\
+                                    {{/if}}\
                                     <div class="hide_options" role="hideOptions" style={{#if emsAddress}}"display:none"{{else}}"display:block"{{/if}}>\
                                         <table>\
                                             <tbody><tr>\
@@ -1286,6 +1252,7 @@ define(function (require, exports, module) {
                                                 </div>',
                     bookingJsonData = {},
                     bookingDataString = "",
+                    bookingDataStringShop = "",
                     bookingHandleData = [],
                     customerInfo = [],
                    closeBooKMasking = function (pData, pMe) {
@@ -1455,7 +1422,7 @@ define(function (require, exports, module) {
                                 if (jsonData.data && jsonData.data.length > 0) {
                                     self.status.isPay = true;
                                     self.events.save.call(self, !0, self.formData.TempOrderType != 0)();
-                                    if (!jsonData.CruiseItem) {
+                                    // if (!jsonData.CruiseItem ) {
                                         /*非邮轮*/
                                         for (var i = 0, len = jsonData.data.length; i < len; i++) {
                                             if (jsonData.data[i] instanceof Array) {
@@ -1466,6 +1433,7 @@ define(function (require, exports, module) {
                                                 bookingHandleData.push(jsonData.data[i]);
                                             }
                                         }
+                                        bookingJsonData.type = "revert";
                                         for (var j = 0, lens = bookingHandleData.length; j < lens; j++) {
                                             /*航班信息*/
                                             if (bookingHandleData[j].Type == 302) {
@@ -1485,41 +1453,56 @@ define(function (require, exports, module) {
                                                 /*新增类型*/
                                             else if (bookingHandleData[j].Type == 101 || bookingHandleData[j].Type == 201 || bookingHandleData[j].Type == 301 || bookingHandleData[j].Type == 401 || bookingHandleData[j].Type == 102) {
                                                 bookingDataString += "【" + bookingHandleData[j].ResourceName + "】、";
-                                            }
-                                        }
-                                        bookingJsonData.data = "您所选的" + bookingDataString.slice(0, bookingDataString.length - 1) + "已订完，请重新选择！";
-                                        bookingJsonData.type = "revert";
-                                        closeBooKMasking(bookingJsonData, me);
-                                        closeBookSure();
-                                        bookingDataString = "";
-                                        bookingHandleData = [];
-                                    }
-                                    else {
-                                        /*邮轮*/
-                                        for (var j = 0, lens = jsonData.data.length; j < lens; j++) {
-                                            if (jsonData.data[j].Type == 501) {
-                                                bookingDataString += jsonData.data[j].ResourceName.split("邮轮可订检查失败:")[1];
-                                                bookingJsonData.type = "revert";      /*重新选择资源*/
+                                            } else if (jsonData.data[j].Type == 501) {
+                                                bookingDataStringShop += jsonData.data[j].ResourceName.split("邮轮可订检查失败:")[1];
                                             }
                                             else if (jsonData.data[j].Type == 502) {
-                                                bookingDataString += jsonData.data[j].ResourceName.split("邮轮可订检查失败:")[1];
+                                                bookingDataStringShop += jsonData.data[j].ResourceName.split("邮轮可订检查失败:")[1];
                                                 if (jsonData.CruiseItem.BookingID > 0) {
                                                     bookingJsonData.other = "other";      /*查看其他房型*/
                                                     bookingJsonData.steamer = "steamer";  /*继续预订*/
-                                                }
-                                                else {
-                                                    bookingJsonData.type = "revert";
+                                                    bookingJsonData.type = "";
                                                 }
 
+
                                             }
+                                        };
+                                        if(bookingDataString){
+                                            bookingDataString =  "您所选的" + bookingDataString.slice(0, bookingDataString.length - 1) + "已订完，请重新选择！";
                                         }
-                                        bookingJsonData.data = bookingDataString;
+
+                                        
+                                        // for (var j = 0, lens = jsonData.data.length; j < lens; j++) {
+                                        //     if (jsonData.data[j].Type == 501) {
+                                        //         bookingDataString += jsonData.data[j].ResourceName.split("邮轮可订检查失败:")[1];
+                                        //         //bookingJsonData.type = "revert";      /*重新选择资源*/
+                                        //     }
+                                        //     else if (jsonData.data[j].Type == 502) {
+                                        //         bookingDataString += jsonData.data[j].ResourceName.split("邮轮可订检查失败:")[1];
+                                        //         if (jsonData.CruiseItem.BookingID > 0) {
+                                        //             bookingJsonData.other = "other";      /*查看其他房型*/
+                                        //             bookingJsonData.steamer = "steamer";  /*继续预订*/
+                                        //         }
+                                        //         // else {
+                                        //         //     bookingJsonData.type = "revert";
+                                        //         // }
+
+                                        //     }
+                                        // }
+
+
+                                        // bookingJsonData.data = "您所选的" + bookingDataString.slice(0, bookingDataString.length - 1) + "已订完，请重新选择！";
+                                        // bookingJsonData.type = "revert";
+
+
+                                        bookingHandleData = [];
+                                        bookingJsonData.data = bookingDataString + bookingDataStringShop;
                                         closeBooKMasking(bookingJsonData, me);
                                         closeBookAgain(bookParameter, me);
                                         closeBookSure();
                                         bookingDataString = "";
+                                        bookingDataStringShop = "";
                                     }
-                                }
                                 else {
                                     /*如果是邮轮还要判断errno 如果不能0 则不能领取*/
                                     if (GV.app.order.vars.initData.OrderType.indexOf("CruiseOrder") != -1) {
@@ -2824,13 +2807,10 @@ define(function (require, exports, module) {
                     $(this.opts.element).on('blur', 'input[type="text"]', function (event) {
                         var reg;
                         if (reg = $(this).attr('regex')) {
-                            me[reg]($.trim( $(this).val() ), $(this).prop('required'), this);
+                            me[reg]($.trim($(this).val()), this);
                         }
                         if ($(this).attr('role') === 'idCardNo') {
                             Reg.checkIdRepeat($(this).prev()[0].value, this, $(this).prev().find('option:selected')[0].innerHTML);
-                        }
-                        if ($(this).attr('role') === 'birthPlace'){
-
                         }
                     })
                         .on('change', '[role="idCardType"]', function () {
@@ -2850,9 +2830,9 @@ define(function (require, exports, module) {
                                 }
                             };
                             me.filterInputs();
-                            // $.map('nameEnLast|nameEnFirst|idCardNo|gender|birthdayY|birthdayM|birthdayD|national|cardValidUntilY|cardValidUntilM|cardValidUntilD|birthPlace'.split('|'), function (v, k) { //隐藏提示
-                            //     role[v] && self.hideTip(role[v][0]);
-                            // });
+                            $.map('nameEnLast|nameEnFirst|idCardNo|gender|birthdayY|birthdayM|birthdayD|national|cardValidUntilY|cardValidUntilM|cardValidUntilD|birthPlace'.split('|'), function (v, k) { //隐藏提示
+                                role[v] && self.hideTip(role[v][0]);
+                            });
                             $('input[role="cardValidUntilY"],input[role="cardValidUntilM"]', '#travellersID').removeClass('f_error');
                             // if((val === '2' || val === '22') && me.getDest() === 32){
                             //     me.showTip(role.idCardType,'香港海关入境处规定，在香港转机到第三国（地区），可以凭护照签证或《往来台湾通行证》，和到目的地的机票可以在港合法滞留7天。',{errorClass:''});
@@ -3110,7 +3090,7 @@ define(function (require, exports, module) {
                     var nameCN = me.role.nameCN;
                     var strs = $.trim(str) === nameCN.attr('_cqnotice') ? '' : $.trim(str);
                     if ((me.role.national && me.checkForeign(me.role.national.attr('mod_value'))) || (this.role.idCardType && this.role.idCardType.val() == '1')) {
-                        var bl = Reg.checkCnName(strs, $(nameCN).prop('required'));
+                        var bl = Reg.checkCnName(strs);
                         if (!bl[0]) {
                             me.showTip(nameCN[0], bl[1]);
                             return false;
@@ -3125,7 +3105,6 @@ define(function (require, exports, module) {
                 checkEnName: function (str) {
                     var strs = $.trim(str) === this.role.nameEN.attr('_cqnotice') ? '' : $.trim(str);
                     var bl = Reg.checkEnName(strs);
-                    console.log(this);
                     if (!bl[0]) {
                         this.showTip(this.role.nameEN[0], bl[1]);
                         return false;
@@ -3136,26 +3115,20 @@ define(function (require, exports, module) {
                     //英文姓检测
                     var name = $.trim(str);
                     if (/[^a-zA-Z]/.test(name)) {
-                        this.showTip(this.role.nameEnLast[0], [false, "英文姓只能包含字母，请检查"], { $obj: this.role.nameEnLast[0] });
+                        this.showTip(this.role.nameEnFirst[0], [false, "英文姓只能包含字母，请检查"], { $obj: this.role.nameEnLast[0] });
                         return false;
                     }
                     return this.checkEnNameNew(name, this.role.nameEnLast);
                 },
                 checkEnNameFirst: function (str) {
                     //英文名检测
-                    var name = $.trim(str);
-                    if (/[^a-zA-Z]/.test(name)) {
-                        this.showTip(this.role.nameEnFirst[0], [false, "英文名只能包含字母，请检查"], { $obj: this.role.nameEnFirst[0] });
-                        return false;
-                    }
                     return this.checkEnNameNew($.trim(str), this.role.nameEnFirst);
                 },
-                checkEnNameNew: function (str, obj, _bool) {
+                checkEnNameNew: function (str, obj) {
                     //英文单元检测
                     var role = this.role;
                     var strs = $.trim(str) === obj.attr('_cqnotice') ? '' : $.trim(str);
-                    var bl = Reg.checkEnNameNew(strs, false);
-
+                    var bl = Reg.checkEnNameNew(strs);
                     if (!bl[0]) {
                         this.showTip(this.role.nameEnFirst[0], bl[1], { $obj: obj[0] });
                         return false;
@@ -3376,13 +3349,13 @@ define(function (require, exports, module) {
                     }
                     return true
                 },
-                // checkBirthPlace: function (str) {
-                //     if ('' === str) {
-                //         this.showTip(this.role.birthPlace[0], '请填写出生地');
-                //         return false;
-                //     }
-                //     return true;
-                // },
+                checkBirthPlace: function (str) {
+                    if ('' === str) {
+                        this.showTip(this.role.birthPlace[0], '请填写出生地');
+                        return false;
+                    }
+                    return true;
+                },
                 checkMobileIsNull: function () {
                     var str = $.trim(this.role.mobileNo.val());
                     if ('' === str) {
@@ -3445,11 +3418,13 @@ define(function (require, exports, module) {
                     });
 
 
+
+
+
                     roles.fillsetID.show();
                     me.toIns();
                     me.bindEvent();
                     roles.bookInfoID.show();
-                    require('./mod_book_calendar'); // 载入证件有效期，出生日期日历选择交互模块
                 },
                 handleHadData: function (data) {
                     var handle = function (v, arg) {
@@ -3575,39 +3550,39 @@ define(function (require, exports, module) {
                     roles.travellersID.on('click', 'a[role="saveId"]', function () { //是否保存常用联系人
                         $(this).toggleClass('selected');
                     })
-                        // .on('click', '[role="name"],[role="nameCN"],[role="nameEnLast"],[role="nameEnFirst"]', function (event) { //输入姓名提示/可选择中英名字
-                        //     me.generateSug(this, $(this).attr('role'), nameTips);
-                        // })
+                        .on('click', '[role="name"],[role="nameCN"],[role="nameEnLast"],[role="nameEnFirst"]', function (event) { //输入姓名提示/可选择中英名字
+                            me.generateSug(this, $(this).attr('role'), nameTips);
+                        })
                         .on('click', 'a[role="clear"]', function () { //清除填写
                             me.fillClear.call(me, $(this).closest('[role="youren"]'));
                         });
                     me.fillin();
                 },
                 instances: [],
-                // generateSug: function (el, role, nameTips) { //姓名提示
-                //     nameTips && nameTips.remove();
-                //     var _this = $(el);
-                //     var offset = _this.offset(),
-                //         height = _this.outerHeight(),
-                //         id = _this.closest('[role="youren"]').attr('index'),
-                //         _obj = id && mod.Commoners.commonersObj[id];
-                //     var obj = _obj ? _obj : {}; //取得选定常用联系人的信息
-                //     self.render(self.tpl[role + 'Tips'], obj, function (dom) {
-                //         nameTips = $(dom).appendTo('body').css({
-                //             'position': 'absolute',
-                //             'top': offset.top + height,
-                //             'left': offset.left
-                //         });
-                //     }, function () {
-                //         nameTips.on('mousedown', '.had', function (event) {
-                //             _this.val($(this).find('.name').html());
-                //             nameTips.hide();
-                //         });
-                //         _this.bind('blur', function () {
-                //             nameTips && nameTips.remove();
-                //         });
-                //     });
-                // },
+                generateSug: function (el, role, nameTips) { //姓名提示
+                    nameTips && nameTips.remove();
+                    var _this = $(el);
+                    var offset = _this.offset(),
+                        height = _this.outerHeight(),
+                        id = _this.closest('[role="youren"]').attr('index'),
+                        _obj = id && mod.Commoners.commonersObj[id];
+                    var obj = _obj ? _obj : {}; //取得选定常用联系人的信息
+                    self.render(self.tpl[role + 'Tips'], obj, function (dom) {
+                        nameTips = $(dom).appendTo('body').css({
+                            'position': 'absolute',
+                            'top': offset.top + height,
+                            'left': offset.left
+                        });
+                    }, function () {
+                        nameTips.on('mousedown', '.had', function (event) {
+                            _this.val($(this).find('.name').html());
+                            nameTips.hide();
+                        });
+                        _this.bind('blur', function () {
+                            nameTips && nameTips.remove();
+                        });
+                    });
+                },
                 toIns: function () {
                     var me = this;
                     roles.travellersID.children().each(function () {
@@ -4139,11 +4114,24 @@ define(function (require, exports, module) {
                     var obj = me.commonersObj[id];
                     var birthday = obj.birthday ? obj.birthday.split('-') : [];
                     var val = "",
-                        idcard = '';
+                        idcard = '',
+                        tempIdCardType = '',
+                        tempNationality = '',
+                        tempFirstEN = '',
+                        tempMiddleEN = '',
+                        tempLastEN = '',
+                        cnInput,
+                        EnName = '',
+                        tempNameCN = '',
+                        tempNameCNEN = '';
+
                     $.each(role, function (k, v) {
                         if (v.attr('role') === 'name') {
                             if (obj.nameCN) {
                                 val = obj.nameCN;
+                                tempNameCN = obj.nameCN;
+                                cnInput = v;
+                                tempNameCNEN = obj.ENLastName + '/' + obj.ENFirstName + ' ' + obj.ENMiddleName;
                             } else if (obj.ENFirstName) {
                                 val = obj.ENLastName + '/' + obj.ENFirstName + ' ' + obj.ENMiddleName;
                             } else {
@@ -4155,25 +4143,32 @@ define(function (require, exports, module) {
                             } else {
                                 val = '';
                             }
+                            cnInput = v;
                         } else if (v.attr('role') === 'nameEnFirst') {
                             if (obj.ENFirstName) {
                                 val = obj.ENFirstName;
                                 if (obj.ENMiddleName) {
-                                    val += ' ' + obj.ENMiddleName
+                                    val += ' ' + obj.ENMiddleName;
+                                    tempMiddleEN = obj.ENMiddleName
+                                    tempFirstEN = obj.ENFirstName;
                                 }
                             } else {
                                 val = '';
+                                tempFirstEN = '';
                             }
                         } else if (v.attr('role') === 'nameEnLast') {
                             if (obj.ENFirstName) {
                                 val = obj.ENLastName;
+                                tempLastEN = obj.ENLastName;
                             } else {
                                 val = '';
+                                tempLastEN = '';
                             }
                         } else if (v.attr('role') === 'national') {
                             if (obj.national) {
                                 val = vdata.nationalData[obj.national];
                                 v.attr('mod_value', obj.national);
+                                tempNationality = obj.national;
                             } else {
                                 val = '';
                                 v.attr('mod_value', '');
@@ -4185,6 +4180,7 @@ define(function (require, exports, module) {
                                 v.val(va = ids.IDCardType);
                                 idcard = ids.IDCardNo;
                                 limitedTime = ids.IDCardTimelimit ? ids.IDCardTimelimit.split('-') : [];
+                                tempIdCardType = ids.IDCardType;
                             }
                             val = va;
                         } else if (v.attr('role') === 'CustomerType') {
@@ -4209,12 +4205,43 @@ define(function (require, exports, module) {
                             val = birthday[2] || '';
                         } else if (v.attr('role') === 'birthPlace') {
                             val = obj.HomePlace !== null ? obj.HomePlace : '';
+                        } else if( v.attr('role') === 'nameCN' ){
+                            val = obj[k] !== null ? obj[k] : '';
+                            cnInput = v;
+                            v.val(val);
+                            v[0].setAttribute('value', val);
                         } else {
                             val = obj[k] !== null ? obj[k] : '';
                         }
                         v.val(val);
                         v[0].setAttribute('value', val);
                     });
+
+                    // 在调用常用旅客信息的时候，如果为非中国大陆、中国台湾、中国香港、中国澳门国籍的出行人，证件类型为非身份证时，填写姓名/中文姓名取英文姓名，如果没有英文姓名时，则置空。
+                    if ( tempIdCardType !== 1 && !( tempNationality === 'CN' || tempNationality === 'HK' || tempNationality === 'MO' || tempNationality === 'TW') ){
+                        if(tempNameCN){
+                            // 去获取enName 重新赋值进去
+                            if (tempNameCNEN == '/ '){
+                                tempNameCNEN = '';
+                            }
+                            if(cnInput){
+                                $(cnInput[0]).val(tempNameCNEN);
+                                cnInput[0].setAttribute('value', tempNameCNEN);
+                            };
+                        } else {
+                            // tempNameCNEN = obj.ENLastName + '/' + obj.ENFirstName + ' ' + obj.ENMiddleName;
+                            if( tempFirstEN || tempLastEN){
+                                EnName = tempLastEN + '/' + tempFirstEN + ' ' + tempMiddleEN;
+                            };
+                            if(cnInput){
+                                $(cnInput[0]).val(EnName);
+                                cnInput[0].setAttribute('value', EnName);
+                            };
+                        }
+                        
+                        
+                    }
+                    
                 },
                 checkCustomers: function (customerType) {
                     var initData = vdata.initData.CustomerInfoTemplate.CustomerInfoItems
@@ -4256,6 +4283,13 @@ define(function (require, exports, module) {
                 }
             }
         },
+        _getURLPara: function(paraName){
+            var sUrl  =  location.href; 
+            var sReg  =  "(?:\\?|&){1}"+paraName+"=([^&]*)" 
+            var re=new RegExp(sReg,"gi"); 
+            re.exec(sUrl); 
+            return RegExp.$1; 
+        },
         Contacter: function () { //联系人
             var self = this,
                 vdata = self.data,
@@ -4296,6 +4330,44 @@ define(function (require, exports, module) {
                     $.extend(roles, self.common.getRoles(roles.linkManID));
                     this.bindEvent();
                     this.bindVerifyEvent();
+                    // 联系人手机是否已经注册判断
+                    if( GV.app.order.vars.isQuickLogin === 1 ){
+                        $('#linkManID').delegate('input[role="ctmphone"]', 'blur', function(){
+                            var mobileInput = cQuery(this),
+                                mobileVal = mobileInput.value(),
+                                nickMobileCheck = self.Contacter().checkMobile(mobileVal);
+                            //检查手机
+                            if (mobileVal && !nickMobileCheck[0]) {
+                                new self.validate({
+                                    target: mobileInput[0],
+                                    data: nickMobileCheck[1],
+                                    errorClass: ''
+                                }).show();
+                                return false;
+                            } else {
+                                $.ajax({
+                                    type: 'get',
+                                    url: '/booking/PkgBook2.aspx',
+                                    data:{
+                                        TmpOrderID: self._getURLPara('TmpOrderID'),
+                                        Action:'CheckUserByPhone',
+                                        Phone: mobileVal
+                                    },
+                                    success: function(_data){
+                                        if (_data == 1){
+                                            var html = '您已是携程会员。<a href="javascript:void(0)" onclick="stdLogin()">登录</a>后可获得此订单的积分并便于您管理订单。';
+                                            new self.validate({
+                                                target: mobileInput[0],
+                                                data: html,
+                                                errorClass: ''
+                                            }).show();
+                                        }
+                                    }
+                                });
+                            }
+                        })
+                    }
+
                 },
                 handleData: function (data) {
                     var _ret = {};
@@ -4495,9 +4567,9 @@ define(function (require, exports, module) {
                     //     return [false, '手机号码或联系电话至少选填一项'];
                     // if (!/^0?1[3458]\d{9}$/.test(str))
                     //     return [false, '您填写的手机号码有误，请重新填写'];
-                    if (str === '' && ($('#notice3').val() === '')) {
+                    if( str ==='' && ($('#notice3').val() === '') ){
                         return [false, '手机号码或联系电话至少选填一项'];
-                    } else if (str && !/^0?1[34578]\d{9}$/.test(str)) {
+                    } else if(str && !/^0?1[34578]\d{9}$/.test(str)){
                         return [false, '您填写的手机号码有误，请重新填写'];
                     }
                     return [true, ];
@@ -4524,7 +4596,7 @@ define(function (require, exports, module) {
                         })
                         return bl;
                     };
-                    // if (roles.contact[0].style.display !== 'block') return true;
+                   // if (roles.contact[0].style.display !== 'block') return true;
                     var elems = [roles.ctname, roles.ctemail];
                     var ext;
                     if (isPhoneFilled()) {
@@ -4624,7 +4696,7 @@ define(function (require, exports, module) {
                     if (GV.app.order.vars.initData.Alternative != "B") {
                         $('#J_tmpriceorder').show();
                     };
-                    if (!(vdata.ProductCategoryType && vdata.ProductCategoryType.toLowerCase() === 'visa')) {
+                    if( !(vdata.ProductCategoryType && vdata.ProductCategoryType.toLowerCase() === 'visa') ){
                         $('#J_online_service').show();
                     }
                 },
@@ -4720,12 +4792,12 @@ define(function (require, exports, module) {
                     }
                     role.selectInvo.click(function () {
                         // ie9强制再选择是按钮
-                        $('#invoice01').attr('checked', true);
+                        $('#invoice01').attr('checked',true);
                         role.invoiceli.show();
                         mod.Delivery.hideTip();
                         mod.Delivery.toRender('invoice');
-                        if (GV.app.order.vars.InvoiceCaption) {
-                            $('#J_invoiceTip').text(GV.app.order.vars.InvoiceCaption).show();
+                        if(GV.app.order.vars.InvoiceCaption){
+                          $('#J_invoiceTip').text(GV.app.order.vars.InvoiceCaption).show();
                         }
                     });
                     role.cancelInvo.click(function () {
@@ -4890,7 +4962,7 @@ define(function (require, exports, module) {
                     roles.deliveryID.empty();
                     if (_initData) {
                         _initData.AddressInfo.Address = unescape(_initData.AddressInfo.Address);
-                        _initData.AddressInfo.Recipient = unescape(_initData.AddressInfo.Recipient);
+                      _initData.AddressInfo.Recipient = unescape(_initData.AddressInfo.Recipient);
                         self.render(self.tpl.deliveryDf, handle(_initData), function (dom) {
                             roles.deliveryID.append(dom).parent().show();
                             isEmpty = false;
@@ -4946,24 +5018,6 @@ define(function (require, exports, module) {
                     });
                     $('#content').children().each(function (i) {
                         $(this).children().eq(0).addClass('tab_0' + i);
-                    });
-                    
-                    // 配送区块切换 除自取
-                    $('#content').delegate('.usual_address_list li','click', function(){
-                      var cnt = $(this).closest('ul');
-                      cnt.find('li').removeClass('usual_address_item_selected');
-                      cnt.find('input').prop('checked', false);
-                      $(this).addClass('usual_address_item_selected');
-                      $(this).find('input:radio').prop('checked', true);
-                    });
-
-                    // 自取区块切换
-                    $('#content').delegate('.select_address_list li','click', function(){
-                      var cnt = $(this).closest('ul');
-                      cnt.find('li').removeClass('cur');
-                      cnt.find('input').prop('checked', false);
-                      $(this).addClass('cur');
-                      $(this).find('input:radio').prop('checked', true);
                     });
                 },
                 countPostage: function (i) {
@@ -5660,9 +5714,9 @@ define(function (require, exports, module) {
                 if (!self._simpleFormCheck()) {
                     return false
                 };
-                if (linkManIsHidden) {
-                    $(linkManEdit[1]).hide();
-                    $(linkManEdit[0]).show();
+                if( linkManIsHidden ){
+                  $(linkManEdit[1]).hide();
+                  $(linkManEdit[0]).show();
                 }
 
                 if (self._simpleFormCheck()) {
@@ -5798,7 +5852,6 @@ define(function (require, exports, module) {
                 for (var i in modules) {
                     modules[i].init(vdata);
                 }
-                
             };
         }
     };

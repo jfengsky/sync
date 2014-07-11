@@ -860,7 +860,7 @@ define(function (require, exports, module) {
 
                 if (DetailData.ClientSource == "Offline") {
                     this.riskRewardDate = _.filter(this.availableDate, function(d){
-                        return ("RiskReward" in d) && d.RiskReward != -1;
+						return ("RiskSchedule" in d) && d.RiskSchedule != null;
                     });
                 }
             },
@@ -886,20 +886,81 @@ define(function (require, exports, module) {
                 });
                 return (data && data[0]) || null;
             },
-            getRiskRewardData: function (date) {
+            getRiskRewardData: function (date,id) {
                 var data = _.filter(this.riskRewardDate, function (d) {
                     return d.Date == date;
                 });
-                if (data && data[0]) return data[0].RiskReward;
+                if (data && data[0]){
+					var html = null;
+					if(data[0].RiskSchedule){
+						html = "";
+						if(GV.app.detail.data.IsTourGroupProduct){
+							var TourGroupDescriptions  = GV.app.detail.data.TourGroupDescriptions, // 依据此条返回数据定义线路名称
+								obj = {},
+								ar = ["A","B","C","D","E","F","G","H"],
+								newAr = [];
+							for(var j=0;j<TourGroupDescriptions.length;j++){
+								obj[TourGroupDescriptions[j].ProductID] = ar[j];
+								for(var k=0;k<data[0].RiskSchedule.length;k++){
+									if(TourGroupDescriptions[j].ProductID == data[0].RiskSchedule[k].ProductID){
+										newAr[j] = data[0].RiskSchedule[k];
+									}
+								}
+							}
+							for(var i=0;i<newAr.length;i++){
+								html += obj[newAr[i].ProductID] + "：" + newAr[i].RiskReward + "<br/>";
+							}
+						}else{
+							html = data[0].RiskSchedule[0].RiskReward
+						}
+					}
+					return html;
+				}
                 else return null;
             },
+			getRiskRewardMoney : function(date,id){
+				var data = _.filter(this.riskRewardDate, function (d) {
+                    return d.Date == date;
+                });
+                if (data && data[0]){
+					var money = null;
+					if(data[0].RiskSchedule){
+						for(var i=0;i<data[0].RiskSchedule.length;i++){
+							if(data[0].RiskSchedule[i].ProductID == id){
+								money = data[0].RiskSchedule[i].RiskReward;
+								break;
+							}
+						}
+					}
+					return money; 
+				}
+                else return null;
+			},
             getRiskRemarkData: function(date){
                 var data = _.filter(this.riskRewardDate, function (d) {
                     return d.Date == date;
                 });
                 if (data && data[0]) return data[0].RiskRemark;
                 else return null;
-            }
+            },
+			getRiskRemarkDataNew : function(date,id){
+				var data = _.filter(this.riskRewardDate, function (d) {
+                    return d.Date == date;
+                });
+                if (data && data[0]){
+					if(data[0].RiskSchedule){
+						var remark = null;
+						for(var i=0;i<data[0].RiskSchedule.length;i++){
+							if(data[0].RiskSchedule[i].ProductID == id){
+								remark = data[0].RiskSchedule[i].RiskRemark;
+								break;
+							}
+						}
+					}
+					return remark;
+				}
+                else return null;
+			}
         }
         ///////////////////
         //////////////      大日历 数据 end

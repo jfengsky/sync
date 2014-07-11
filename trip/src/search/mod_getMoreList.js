@@ -60,7 +60,10 @@ define(function (require, exports, module) {
 						 {{#if IsHHTravel}}\
 							<div class="theme">\
 								<h3><a rel="nofollow" data-href="{{ProductUrl}}{{CtmTxt}}" data-c="" href="{{ProductUrl}}{{CtmTxt}}" title="" target="_blank">【{{ProductName}}】</a></h3>\
-							  {{#if ShowWifi}}<i class="free_wifi" title="{{WifiDescription}}"></i>{{/if}}\
+							    {{#if ShowWifi}}<span class="label_iocn label_green" title="{{WifiDescription}}"><i class="wifi"></i>免费WiFi</span>{{/if}}\
+                                {{#if ShowDv}}<span class="label_iocn label_green"><i class="dv"></i>DV旅拍</span>{{/if}}\
+                                {{#if Mingpai}}<span class="label_iocn label_brown">上海名牌</span>{{/if}}\
+                                {{#if Tieding}}<span class="label_iocn label_brown">铁定成团</span>{{/if}}\
 							  {{#if Schedule}}<div class="product_style">班期：{{Schedule}}\</div>{{/if}}\
 							</div>\
 							<div class="product_prise">\
@@ -70,13 +73,10 @@ define(function (require, exports, module) {
 						 {{else}}\
 						 <div class="theme">\
 							  <h3><a rel="nofollow" data-href="{{ProductUrl}}{{CtmTxt}}" data-c="" href="{{ProductUrl}}{{CtmTxt}}" title="" target="_blank">【{{ProductNameInGroup}}】</a></h3>\
-							 {{#if ShowWifi}}<i class="free_wifi" title="{{WifiDescription}}"></i>{{/if}}\
-							 {{#if excluvTagName}}<span class="sr_label01" title="{{excluvTagDescription}}">{{{excluvTagName}}}</span>{{/if}}\
-							  {{#if ExtendTags}}<span class="sr_label01">{{{ExtendTags}}}</span>{{/if}}\
-							 {{#ifOne DepartureCityName NormalTagName}}<span class="leave_trans">\
-								{{#judgeMice ProductType}}{{else}}{{#if DepartureCityName}}<em>{{DepartureCityName}}出发</em>{{/if}}{{/judgeMice}}\
-								{{#if NormalTagName}}<em>{{NormalTagName}}</em>{{/if}}</span>\
-                              {{/ifOne}}\
+							  {{#if ShowWifi}}<span class="label_iocn label_green" title="{{WifiDescription}}"><i class="wifi"></i>免费WiFi</span>{{/if}}\
+                                {{#if ShowDv}}<span class="label_iocn label_green"><i class="dv"></i>DV旅拍</span>{{/if}}\
+                                {{#if Mingpai}}<span class="label_iocn label_brown">上海名牌</span>{{/if}}\
+                                {{#if Tieding}}<span class="label_iocn label_brown">铁定成团</span>{{/if}}\
 						</div>\
 						 <div class="center">\
 						  {{#if PromotionInfo}}<div class="product_favorable"><span title="{{PromotionInfo}}">{{PromotionInfo}}</span></div>{{/if}}\
@@ -84,6 +84,10 @@ define(function (require, exports, module) {
 								 {{#if VisaAcceptedRange}}<div class="arange"><em>受理范围：</em>{{VisaAcceptedRange}}</div>{{/if}}\
 								{{#judgeMice ProductType}}{{else}}\
 								<div class="product_other"><div class="other_list">\
+                                    {{#ifOne DepartureCityName NormalTagName}}<span class="leave_trans">\
+								        {{#judgeMice ProductType}}{{else}}{{#if DepartureCityName}}<em>{{DepartureCityName}}出发</em>{{/if}}{{/judgeMice}}\
+								        {{#if NormalTagName}}<em>{{NormalTagName}}</em>{{/if}}</span>\
+                                    {{/ifOne}}\
                                      {{#if ProviderName}}<span class="supplier" title="{{ProviderName}}">供应商：{{#equal ProviderName "携程国旅"}}<i></i>{{/equal}}{{ProviderName}}</span>{{/if}}\
 									 {{#compareTo ReviewScore 0}}<a class="comment02" data-comment={"Url":"{{ProductUrl}}{{CtmTxt}}","ProductID":"{{ProductId}}"}>点评：<em>{{ReviewScore}}</em><b class="down"></b></a>{{/compareTo}}\
                                      <span class="go_days">{{#if Schedule}}班期：{{#if Festival}}<em class="date">{{Festival}}</em>{{/if}}{{Schedule}}{{/if}}</span>\

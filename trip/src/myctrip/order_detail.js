@@ -1478,7 +1478,8 @@ define(function (require, exports, module) {
                             json = $.parseJSON(re);
                             if (json.errno == 0) {
                                 cQuery('#js_order_success').mask();
-                                $('.js_order_success_txt').html('修改发票请求已发送，请耐心等待携程确认，谢谢！');
+                                // $('.js_order_success_txt').html('修改发票请求已发送，请耐心等待携程确认，谢谢！');
+                                $('.js_order_success_txt').html('信息已保存，如有问题我们将第一时间联系您，谢谢！');
                                 $('.js_order_success_title').html('修改发票');
                                 setTimeout(function () {
                                     location.reload();
@@ -1650,7 +1651,8 @@ define(function (require, exports, module) {
                             json = $.parseJSON(re);
                             if (json.errno == 0) {
                                 cQuery('#js_order_success').mask();
-                                $('.js_order_success_txt').html('修改联系人请求已发送，请耐心等待携程确认，谢谢！');
+                                // $('.js_order_success_txt').html('修改联系人请求已发送，请耐心等待携程确认，谢谢！');
+                                $('.js_order_success_txt').html('信息已保存，如有问题我们将第一时间联系您，谢谢！');
                                 $('.js_order_success_title').html('修改联系人');
                                 setTimeout(function () {
                                     location.reload();

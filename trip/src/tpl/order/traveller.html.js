@@ -27,7 +27,7 @@ define(function(){
             <label for=\"\" class=\"product_label\">{{Name}}</label>\n\
             <input type=\"text\" class=\"{{#is ../InputClassType 'PkgOrderDetail.aspx'}}input_text{{else}}input_m cq{{/is}}\" _cqnotice=\"证件的中文姓名\" value=\"{{../../nameCN}}\" role=\"nameCN\" regex=\"checkCnName\" />\n\
             <a tabindex=\"-1\" href=\"###\" class=\"explain\" data-role=\"jmp\" data-params=\"{options: {css:{maxWidth:\'400\',minWidth:\'240\'},type:\'jmp_table\', classNames:{boxType:\'jmp_table\'},template:\'#jmp_table1_2\',alignTo:\'cursor\'}}\">填写说明</a>\n\
-            <label class=\"foreign_guest\"><input tabindex=\"-1\" type=\"checkbox\" role=\"foreign\">我是外宾</label>\n\
+            <label class=\"foreign_guest\"></label>\n\
         </li>\n\
         {{/with}}\n\
     {{/if}}\n\

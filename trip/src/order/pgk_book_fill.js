@@ -5,8 +5,9 @@ define(function(require, exports, module) {
     var $ = require('jquery');
     var cities = require('../public/address');
     var IDCheck = require('../public/IDCheck');
+    var BirthDay = require('./mod_book_calendar');
+    var DefAddress = require('./mod_def_address');
     var IsTmporaryOrder = false; // 是否暂存订单
-
 
 
     window.__bfi = window.__bfi || [];
@@ -359,9 +360,10 @@ define(function(require, exports, module) {
                             {{#with UserName}}\
                             <li>\
                                 <label for="" class="product_label">{{Name}}</label>\
-                                <span class="frm_required">*</span>\
-                                <input type="text" class="input_m cq" _cqnotice="证件的姓名" value="{{#if ../../nameCN}}{{../../nameCN}}{{else}}{{../../ENLastName}}{{#if ../../ENLastName}}/{{/if}}{{../../ENFirstName}} {{../../ENMiddleName}}{{/if}}" role="name" regex="checkName" required/>\
+                                {{#if IsRequired}}<span class="frm_required">*</span>{{/if}}\
+                                <input type="text" class="input_m cq" _cqnotice="证件的姓名" value="{{#if ../../nameCN}}{{../../nameCN}}{{else}}{{../../ENLastName}}{{#if ../../ENLastName}}/{{/if}}{{../../ENFirstName}} {{../../ENMiddleName}}{{/if}}" role="name" regex="checkName" {{#if IsRequired}}required{{/if}} />\
                                 <a tabindex="-1" href="###" class="explain" data-role="jmp" data-params="{options: {css:{maxWidth:\'400\',minWidth:\'240\'},type:\'jmp_table\', classNames:{boxType:\'jmp_table\'},template:\'#jmp_table1_1\',alignTo:\'cursor\'}}">填写说明</a>\
+                                {{#if IsRequired}}{{else}}<span class="hrs hrs2">(可稍后提供)</span>{{/if}}\
                             </li>\
                             {{/with}}\
                         {{/if}}\
@@ -369,9 +371,10 @@ define(function(require, exports, module) {
                             {{#with ChineseName}}\
                             <li>\
                                 <label for="" class="product_label">{{Name}}</label>\
-                                <span class="frm_required">*</span>\
-                                <input type="text" class="input_m cq" _cqnotice="证件的中文姓名" value="{{../../nameCN}}" role="nameCN" regex="checkCnName" required/>\
+                                {{#if IsRequired}}<span class="frm_required">*</span>{{/if}}\
+                                <input type="text" class="input_m cq" _cqnotice="证件的中文姓名" value="{{../../nameCN}}" role="nameCN" regex="checkCnName" {{#if IsRequired}}required{{/if}} />\
                                 <a tabindex="-1" href="###" class="explain" data-role="jmp" data-params="{options: {css:{maxWidth:\'400\',minWidth:\'240\'},type:\'jmp_table\', classNames:{boxType:\'jmp_table\'},template:\'#jmp_table1_2\',alignTo:\'cursor\'}}">填写说明</a>\
+                                {{#if IsRequired}}{{else}}<span class="hrs hrs2">(可稍后提供)</span>{{/if}}\
                             </li>\
                             {{/with}}\
                         {{/if}}\
@@ -379,10 +382,11 @@ define(function(require, exports, module) {
                             {{#with EnglishName}}\
                             <li class="optional">\
                                 <label for="" class="product_label">{{Name}}</label>\
-                                <input type="text" class="input_englishname cq" _cqnotice="姓（拼音或英文）" value="{{#if ../../ENLastName}}{{../../ENLastName}}{{/if}}" role="nameEnLast" />\
-                                <input type="text" class="input_englishname input_engnomar cq" _cqnotice="名（拼音或英文）" value="{{#if ../../ENFirstName}}{{../../ENFirstName}}{{#if ../../ENMiddleName}} {{../../../ENMiddleName}}{{/if}}{{/if}}" role="nameEnFirst"  />\
+                                {{#if IsRequired}}<span class="frm_required">*</span>{{/if}}\
+                                <input type="text" class="input_englishname cq" _cqnotice="姓（拼音或英文）" value="{{#if ../../ENLastName}}{{../../ENLastName}}{{/if}}" role="nameEnLast" regex="checkEnNameLast" {{#if IsRequired}}required{{/if}} />\
+                                <input type="text" class="input_englishname input_engnomar cq" _cqnotice="名（拼音或英文）" value="{{#if ../../ENFirstName}}{{../../ENFirstName}}{{#if ../../ENMiddleName}} {{../../../ENMiddleName}}{{/if}}{{/if}}" role="nameEnFirst" regex="checkEnNameFirst" {{#if IsRequired}}required{{/if}} />\
                                 <a tabindex="-1" href="###" class="explain" data-role="jmp" data-params="{options: {css:{maxWidth:\'400\',minWidth:\'240\'},type:\'jmp_table\', classNames:{boxType:\'jmp_table\'},template:\'#jmp_table1_3\',alignTo:\'cursor\'}}">填写说明</a>\
-                                <span class="hrs hrs2">(可稍后提供)</span>\
+                                {{#if IsRequired}}{{else}}<span class="hrs hrs2">(可稍后提供)</span>{{/if}}\
                             </li>\
                             {{/with}}\
                         {{/if}}\
@@ -390,8 +394,9 @@ define(function(require, exports, module) {
                             {{#with Nationality}}\
                             <li class="optional later" style={{#equal ../../IDCardType 1 "display:none" ""}}{{/equal}}>\
                                 <label for="" class="product_label">{{Name}}</label>\
-                                <span class="frm_required">*</span>\
-                                <input mod_value="{{../../national}}" type="text" value="{{../../national}}" regex="checkNationality" role="national" class="input_m cq nationality" _cqnotice="中文/拼音" required/>\
+                                {{#if IsRequired}}<span class="frm_required">*</span>{{/if}}\
+                                <input mod_value="{{../../national}}" type="text" value="{{../../national}}" regex="checkNationality" role="national" class="input_m cq nationality" _cqnotice="中文/拼音" {{#if IsRequired}}required{{/if}} />\
+                                {{#if IsRequired}}{{else}}<span class="hrs hrs2">(可稍后提供)</span>{{/if}}\
                             </li>\
                             {{/with}}\
                         {{/if}}\
@@ -399,15 +404,16 @@ define(function(require, exports, module) {
                             {{#with IDType}}\
                             <li>\
                                 <label for="" class="product_label">{{Name}}</label>\
-                                <span class="frm_required">*</span>\
+                                {{#if IsRequired}}<span class="frm_required">*</span>{{/if}}\
                                 <select name="" value="{{../../IDCardType}}" role="idCardType" regex="checkIdCardType">\
                                 {{#each ../idOptions}}\
                                     <option {{#equal ../../IDCardType CustomerInfoItemType "selected" ""}}{{/equal}} value="{{CustomerInfoItemType}}">{{Name}}</option>\
                                 {{/each}}\
                                 </select>\
-                                <input type="text" value="{{../../IDCardNo}}" role="idCardNo" class="input_s later cq" regex="checkIdCard" _cqnotice="证件号码" note="{{../../restrictions}}" required/>\
+                                <input type="text" value="{{../../IDCardNo}}" role="idCardNo" class="input_s later cq" regex="checkIdCard" _cqnotice="证件号码" note="{{../../restrictions}}" {{#if IsRequired}}required{{/if}} />\
+                                {{#if IsRequired}}{{else}}<span class="hrs hrs2">(可稍后提供)</span>{{/if}}\
                                 <span class="hrs" role="passportType" style={{#equal ../../IDCardType 2 "" "display:none;"}}{{/equal}}>因私护照</span>\
-                                <div class="help_block"><span class="ico"></span>特别提醒：为了您能顺利出行，请确保旅行结束日期至少比证件有效期早6个月。</div>\
+                                <div class="help_block J_notice" style="display:none"><span class="ico"></span>特别提醒：为了您能顺利出行，请确保旅行结束日期至少比证件有效期早6个月。</div>\
                             </li>\
                             {{/with}}\
                         {{/if}}\
@@ -415,8 +421,9 @@ define(function(require, exports, module) {
                             {{#with CardValidUntil}}\
                             <li class="optional later" style={{#equal ../../IDCardType 1 "display:none" ""}}{{/equal}}>\
                                 <label for="" class="product_label">{{Name}}</label>\
-                                <input type="number" value="{{../../IDCardTimelimitY}}" class="all_field_width cq J_uyear"  role="cardValidUntilY" _cqnotice="yyyy" style="" >&nbsp;-&nbsp;<input type="number" value="{{../../IDCardTimelimitM}}" class="all_field_width cq J_umonth" role="cardValidUntilM" _cqnotice="mm" style="" >&nbsp;-&nbsp;<input type="number" value="{{../../IDCardTimelimitD}}" role="cardValidUntilD" class="all_field_width cq J_udate"  _cqnotice="dd" >\
-                                <span class="hrs hrs2">(可稍后提供)</span>\
+                                {{#if IsRequired}}<span class="frm_required">*</span>{{/if}}\
+                                <input type="text" value="{{../../IDCardTimelimitY}}{{#if ../../IDCardTimelimitY}}-{{/if}}{{../../IDCardTimelimitM}}{{#if ../../IDCardTimelimitM}}-{{/if}}{{../../IDCardTimelimitD}}" class="input_m" regex="checkCardValidUntil" role="cardValidUntilS" {{#if IsRequired}}required{{/if}} readonly />\
+                                {{#if IsRequired}}{{else}}<span class="hrs hrs2">(可稍后提供)</span>{{/if}}\
                             </li>\
                             {{/with}}\
                         {{/if}}\
@@ -424,12 +431,13 @@ define(function(require, exports, module) {
                             {{#with Sex}}\
                              <li class="optional" style={{#equal ../../IDCardType 1 "display:none" ""}}{{/equal}}>\
                                 <label for="" class="product_label">{{Name}}</label>\
-                                <span class="frm_required">*</span>\
-                                <select name="" value="{{../gender}}" role="gender" regex="checkSex" required>\
+                                {{#if IsRequired}}<span class="frm_required">*</span>{{/if}}\
+                                <select name="" value="{{../gender}}" role="gender" regex="checkSex" {{#if IsRequired}}required{{/if}} >\
                                     <option value="-1">请选择</option>\
                                     <option {{#equal ../../gender 0 "selected" ""}}{{/equal}} value="0">男</option>\
                                     <option {{#equal ../../gender 1 "selected" ""}}{{/equal}} value="1">女</option>\
                                 </select>\
+                                {{#if IsRequired}}{{else}}<span class="hrs hrs2">(可稍后提供)</span>{{/if}}\
                             </li>\
                             {{/with}}\
                         {{/if}}\
@@ -437,8 +445,9 @@ define(function(require, exports, module) {
                         {{#with Birthday}}\
                             <li class="optional later" style={{#equal ../../IDCardType 1 "display:none" ""}}{{/equal}}>\
                               <label for="" class="product_label">{{Name}}</label>\
-                              <input type="number" value="{{../../birthdayY}}" class="all_field_width cq"  role="birthdayY" _cqnotice="yyyy" style="">&nbsp;-&nbsp;<input type="number" value="{{../../birthdayM}}" class="all_field_width cq" role="birthdayM"  _cqnotice="mm" style="">&nbsp;-&nbsp;<input type="number" value="{{../../birthdayD}}" role="birthdayD" class="all_field_width cq"  _cqnotice="dd">\
-                              <span class="hrs hrs2">(可稍后提供)</span>\
+                              {{#if IsRequired}}<span class="frm_required">*</span>{{/if}}\
+                              <input type="text" value="{{../../birthdayY}}{{#if ../../birthdayY}}-{{/if}}{{../../birthdayM}}{{#if ../../birthdayM}}-{{/if}}{{../../birthdayD}}" class="input_m"  role="birthdayS" regex="checkBirthday" readOnly {{#if IsRequired}}required{{/if}} readonly />\
+                              {{#if IsRequired}}{{else}}<span class="hrs hrs2">(可稍后提供)</span>{{/if}}\
                             </li>\
                         {{/with}}\
                         {{/if}}\
@@ -446,8 +455,9 @@ define(function(require, exports, module) {
                         {{#with BirthPlace}}\
                         <li class="optional later" style={{#equal ../../IDCardType 1 "display:none" ""}}{{/equal}}>\
                             <label for="" class="product_label">{{Name}}</label>\
-                            <input type="text" value="{{../../HomePlace}}" role="birthPlace" class="input_m"/>\
-                            <span class="hrs hrs2">(可稍后提供)</span>\
+                            {{#if IsRequired}}<span class="frm_required">*</span>{{/if}}\
+                            <input type="text" value="{{../../HomePlace}}" role="birthPlace" class="input_m" regex="checkBirthPlace"  {{#if IsRequired}}required{{/if}}/>\
+                            {{#if IsRequired}}{{else}}<span class="hrs hrs2">(可稍后提供)</span>{{/if}}\
                         </li>\
                         {{/with}}\
                         {{/if}}\
@@ -456,12 +466,13 @@ define(function(require, exports, module) {
                             {{#with CustomerType}}\
                              <li class="optional">\
                                 <label for="" class="product_label">{{Name}}</label>\
-                                <span class="frm_required">*</span>\
-                                 <select name="" value="{{../../CustomerNoType}}" role="CustomerType" required>\
+                                {{#if IsRequired}}<span class="frm_required">*</span>{{/if}}\
+                                 <select name="" value="{{../../CustomerNoType}}" role="CustomerType" {{#if IsRequired}}required{{/if}}>\
                                 {{#each ../cutomerOptions}}\
                                     <option {{#equal ../../CustomerNoType CustomerInfoItemType "selected" ""}}{{/equal}} value="{{CustomerInfoItemType}}">{{Name}}</option>\
                                 {{/each}}\
                                 </select>\
+                                {{#if IsRequired}}{{else}}<span class="hrs hrs2">(可稍后提供)</span>{{/if}}\
                             </li>\
                             {{/with}}\
                             {{/is}}\
@@ -470,8 +481,9 @@ define(function(require, exports, module) {
                         {{#with ContactPhone}}\
                         <li>\
                             <label for="" class="product_label">手机号码</label>\
-                            <span class="frm_required">*</span>\
+                            {{#if IsRequired}}<span class="frm_required">*</span>{{/if}}\
                             <input type="number" class="input_m" value="{{../../mobileNo}}" role="mobileNo" class="" regex="checkMobile" required/>\
+                            {{#if IsRequired}}{{else}}<span class="hrs hrs2">(可稍后提供)</span>{{/if}}\
                             <span style="margin-left:10px;color:#999;">请至少输入一位出行旅客的手机号码</span>\
                         </li>\
                         {{/with}}\
@@ -843,7 +855,7 @@ define(function(require, exports, module) {
                             </div>\
                             <div id="content" class="delivery_content">\
                                 {{#if py}}\
-                                <div class="delivery"  type="4"  style="display:none">\
+                                <div class="delivery"  type="4" data-fee="{{ems.DeliveryAmount}}"  style="display:none">\
                                     <b></b>\
                                     <div class="tit">\
                                         {{#if ems.DeliveryAmount}}<div class="postage"><span>邮递费</span><dfn>¥</dfn>{{ems.DeliveryAmount}}</div>{{/if}}\
@@ -864,7 +876,7 @@ define(function(require, exports, module) {
                                         </li>\
                                         {{/each}}\
                                       </ul>\
-                                      <div class="handle_area">{{#unless hideEmsAddress}}<a href="###" role="other"><i class="ico_more"></i>更多地址</a>{{/unless}}<a href="###" role="addads"><i class="ico_add"></i>新增地址</a></div>\
+                                      <div class="handle_area">{{#unless hideEmsAddress}}<a href="###" role="other"><i class="ico_more"></i>更多地址</a>{{/unless}}<a href="###" role="addads" ><i class="ico_add"></i>新增地址</a></div>\
                                     </div>\
                                     {{/if}}\
                                     <div class="hide_options" role="hideOptions" style={{#if emsAddress}}"display:none"{{else}}"display:block"{{/if}}>\
@@ -901,7 +913,7 @@ define(function(require, exports, module) {
                                 </div>\
                                 {{/if}}\
                                 {{#if ps}}\
-                                <div class="delivery" style="display:none" type="1">\
+                                <div class="delivery" style="display:none" type="1" data-fee="{{ps.DeliveryAmount}}">\
                                     <b></b>\
                                     <div class="tit">\
                                         <a href="http://pages.ctrip.com/homepage/xuzhi.htm" target="_blank">送票范围说明</a>\
@@ -955,7 +967,7 @@ define(function(require, exports, module) {
                                 </div>\
                                 {{/if}}\
                                 {{#if ems}}\
-                                <div class="delivery"  type="3"  style="display:none">\
+                                <div class="delivery"  type="3"  style="display:none" data-fee="{{ems.DeliveryAmount}}">\
                                     <b></b>\
                                     <div class="tit">\
                                         <a href="###" onclick="window.open(\'http://www.ctrip.com/Supermarket/package/EMSNote.asp\',\'\',\'status=no,menubar=no,top=20,left=20,width=600,height=400,resizable=yes,scrollbars=no\')">EMS服务说明</a>\
@@ -1014,7 +1026,7 @@ define(function(require, exports, module) {
                                 </div>\
                                 {{/if}}\
                                 {{#if sf}}\
-                                <div class="delivery"  type="5"  style="display:none">\
+                                <div class="delivery"  type="5" data-fee="{{ems.DeliveryAmount}}"  style="display:none">\
                                     <b></b>\
                                     <div class="tit">\
                                         {{#if ems.DeliveryAmount}}<div class="postage"><span>邮递费</span><dfn>¥</dfn>{{ems.DeliveryAmount}}</div>{{/if}}\
@@ -1100,7 +1112,7 @@ define(function(require, exports, module) {
                             <a href="###" role="close" class="btn_shut_popup">×</a>\
                         </div>',
             editAllAddress: '<div class="mask_popup" style="width:590px;display:none;" id="mask_popup">\
-                                <h3>填写新地址</h3>\
+                                <h3>填写地址</h3>\
                                 <table class="popup_book_table">\
                                     <tbody><tr>\
                                         <th>收件人</th>\
@@ -1137,7 +1149,7 @@ define(function(require, exports, module) {
                                 <a href="###" role="close" class="btn_shut_popup">×</a>\
                             </div>',
             editInCityAddress: '<div class="mask_popup" style="width:590px;display:none;" id="mask_popup" type="1">\
-                                    <h3>填写新地址</h3>\
+                                    <h3>填写地址</h3>\
                                     <table class="popup_book_table">\
                                         <tbody><tr>\
                                             <th>配送地址</th>\
@@ -1346,6 +1358,7 @@ define(function(require, exports, module) {
                                                 </div>',
                     bookingJsonData = {},
                     bookingDataString = "",
+                    bookingDataStringShop = "",
                     bookingHandleData = [],
                     customerInfo = [],
                     closeBooKMasking = function(pData, pMe) {
@@ -1452,10 +1465,6 @@ define(function(require, exports, module) {
                         return false
                     }
 
-
-                    // TODO 验证稍后提供
-
-
                     if (!vdata.isLogin) {
                         loadCheckLogin && loadCheckLogin();
                         return;
@@ -1475,6 +1484,14 @@ define(function(require, exports, module) {
                     }
                     self.formData.IsTmpOrder = 0;
                     self.formData.ProposalOrderType = IsTmporaryOrder ? 2 : 1;
+                    self.formData.IsNullClientOption = 'F';
+                    // 检查是否有选填项没有填写
+                    $.each($('#travellersID input').not('[role="mobileNo"]').not('[required]'), function(_index, _item){
+                        if( $(_item).val() === '' ){
+                            self.formData.IsNullClientOption = 'T';
+                        }
+                    });
+
                     if (self.status.errorElem) {
                         $(document).scrollTop($(self.status.errorElem).offset().top - 20);
                         return false;
@@ -1504,7 +1521,7 @@ define(function(require, exports, module) {
                             data: "TmpOrderID=" + GV.app.order.vars.initData.orderid + "&productID=" + GV.app.order.vars.initData.productID + "&customerInfo=" + cQuery.stringifyJSON(customerInfo) + "&OrderType=" + GV.app.order.vars.initData.OrderType,
                             timeout: 120000,
                             type: "POST",
-                            success: function(json) {
+                            success: function (json) {
                                 var jsonData = $.parseJSON(json);
                                 /*根据接口的返回碰到是否传人isSkipFAVCheck*/
                                 if (jsonData.isSkipFAVCheck) bookParameter += "&isSkipFAVCheck=" + jsonData.isSkipFAVCheck;
@@ -1512,7 +1529,7 @@ define(function(require, exports, module) {
                                 if (jsonData.data && jsonData.data.length > 0) {
                                     self.status.isPay = true;
                                     self.events.save.call(self, !0, self.formData.TempOrderType != 0)();
-                                    if (!jsonData.CruiseItem) {
+                                    // if (!jsonData.CruiseItem ) {
                                         /*非邮轮*/
                                         for (var i = 0, len = jsonData.data.length; i < len; i++) {
                                             if (jsonData.data[i] instanceof Array) {
@@ -1523,6 +1540,7 @@ define(function(require, exports, module) {
                                                 bookingHandleData.push(jsonData.data[i]);
                                             }
                                         }
+                                        bookingJsonData.type = "revert";
                                         for (var j = 0, lens = bookingHandleData.length; j < lens; j++) {
                                             /*航班信息*/
                                             if (bookingHandleData[j].Type == 302) {
@@ -1531,49 +1549,68 @@ define(function(require, exports, module) {
                                                     bookingDataString += "【航班" + flightName[k] + "】、";
                                                 }
                                             }
-                                            /*酒店信息*/
+                                                /*酒店信息*/
                                             else if (bookingHandleData[j].Type == 202) {
                                                 bookingDataString += "【" + bookingHandleData[j].ResourceName.replace("|", "  ") + "】、";
                                             }
-                                            /*可选项信息*/
+                                                /*可选项信息*/
                                             else if (bookingHandleData[j].Type == 402) {
                                                 bookingDataString += "【" + bookingHandleData[j].ResourceName + "】、";
                                             }
-                                            /*新增类型*/
+                                                /*新增类型*/
                                             else if (bookingHandleData[j].Type == 101 || bookingHandleData[j].Type == 201 || bookingHandleData[j].Type == 301 || bookingHandleData[j].Type == 401 || bookingHandleData[j].Type == 102) {
                                                 bookingDataString += "【" + bookingHandleData[j].ResourceName + "】、";
+                                            } else if (jsonData.data[j].Type == 501) {
+                                                bookingDataStringShop += jsonData.data[j].ResourceName.split("邮轮可订检查失败:")[1];
                                             }
-                                        }
-                                        bookingJsonData.data = "您所选的" + bookingDataString.slice(0, bookingDataString.length - 1) + "已订完，请重新选择！";
-                                        bookingJsonData.type = "revert";
-                                        closeBooKMasking(bookingJsonData, me);
-                                        closeBookSure();
-                                        bookingDataString = "";
-                                        bookingHandleData = [];
-                                    } else {
-                                        /*邮轮*/
-                                        for (var j = 0, lens = jsonData.data.length; j < lens; j++) {
-                                            if (jsonData.data[j].Type == 501) {
-                                                bookingDataString += jsonData.data[j].ResourceName.split("邮轮可订检查失败:")[1];
-                                                bookingJsonData.type = "revert"; /*重新选择资源*/
-                                            } else if (jsonData.data[j].Type == 502) {
-                                                bookingDataString += jsonData.data[j].ResourceName.split("邮轮可订检查失败:")[1];
+                                            else if (jsonData.data[j].Type == 502) {
+                                                bookingDataStringShop += jsonData.data[j].ResourceName.split("邮轮可订检查失败:")[1];
                                                 if (jsonData.CruiseItem.BookingID > 0) {
-                                                    bookingJsonData.other = "other"; /*查看其他房型*/
-                                                    bookingJsonData.steamer = "steamer"; /*继续预订*/
-                                                } else {
-                                                    bookingJsonData.type = "revert";
+                                                    bookingJsonData.other = "other";      /*查看其他房型*/
+                                                    bookingJsonData.steamer = "steamer";  /*继续预订*/
+                                                    bookingJsonData.type = "";
                                                 }
 
+
                                             }
+                                        };
+                                        if(bookingDataString){
+                                            bookingDataString =  "您所选的" + bookingDataString.slice(0, bookingDataString.length - 1) + "已订完，请重新选择！";
                                         }
-                                        bookingJsonData.data = bookingDataString;
+
+                                        
+                                        // for (var j = 0, lens = jsonData.data.length; j < lens; j++) {
+                                        //     if (jsonData.data[j].Type == 501) {
+                                        //         bookingDataString += jsonData.data[j].ResourceName.split("邮轮可订检查失败:")[1];
+                                        //         //bookingJsonData.type = "revert";      /*重新选择资源*/
+                                        //     }
+                                        //     else if (jsonData.data[j].Type == 502) {
+                                        //         bookingDataString += jsonData.data[j].ResourceName.split("邮轮可订检查失败:")[1];
+                                        //         if (jsonData.CruiseItem.BookingID > 0) {
+                                        //             bookingJsonData.other = "other";      /*查看其他房型*/
+                                        //             bookingJsonData.steamer = "steamer";  /*继续预订*/
+                                        //         }
+                                        //         // else {
+                                        //         //     bookingJsonData.type = "revert";
+                                        //         // }
+
+                                        //     }
+                                        // }
+
+
+                                        // bookingJsonData.data = "您所选的" + bookingDataString.slice(0, bookingDataString.length - 1) + "已订完，请重新选择！";
+                                        // bookingJsonData.type = "revert";
+
+
+                                        bookingHandleData = [];
+                                        bookingJsonData.data = bookingDataString + bookingDataStringShop;
                                         closeBooKMasking(bookingJsonData, me);
                                         closeBookAgain(bookParameter, me);
                                         closeBookSure();
                                         bookingDataString = "";
+                                        bookingDataStringShop = "";
                                     }
-                                } else {
+                                else {
                                     /*如果是邮轮还要判断errno 如果不能0 则不能领取*/
                                     if (GV.app.order.vars.initData.OrderType.indexOf("CruiseOrder") != -1) {
                                         var tipsStr = "信息填写有误，请重新核对，如仍无法提交请拨打电话10106666，由专属客服为您解决。"
@@ -1582,20 +1619,23 @@ define(function(require, exports, module) {
                                                 var failPocessPointStr = jsonData.CruiseItem.FailPocessPoint.split("邮轮可订检查失败:")[1];
                                                 if (failPocessPointStr) {
                                                     bookingJsonData.data = failPocessPointStr;
-                                                } else {
+                                                }
+                                                else {
                                                     bookingJsonData.data = tipsStr;
                                                 }
-                                            } else {
+                                            }
+                                            else {
                                                 bookingJsonData.data = tipsStr;
                                             }
                                             bookingJsonData.type = "revert";
                                             closeBooKMasking(bookingJsonData, me);
                                             closeBookSure();
-                                        } else {
+                                        }
+                                        else {
                                             bookAjax(bookParameter, me);
                                         }
                                     }
-                                    /*不是邮轮的直接预订*/
+                                        /*不是邮轮的直接预订*/
                                     else {
                                         bookAjax(bookParameter, me);
                                     }
@@ -1652,6 +1692,7 @@ define(function(require, exports, module) {
                                     $('#tempSaveMask').on('click', 'a[role="close"],a[role="confirm"]', function(event) {
                                         event.preventDefault();
                                         cQuery('#tempSaveMask').unmask();
+                                        // $('.book_jmpinfo').remove();
                                         $('#tempSaveMask').remove();
                                         $(el).bind('click', function(event) {
                                             submitFn(this, event);
@@ -1841,7 +1882,8 @@ define(function(require, exports, module) {
             $.map(_ref, function(v, k) {
                 v.hide();
             });
-            $('input[role="cardValidUntilY"],input[role="cardValidUntilM"],input[role="birthdayY"],input[role="birthdayM"]', '#travellersID').removeClass('f_error');
+            // $('input[role="cardValidUntilY"],input[role="cardValidUntilM"],input[role="birthdayY"],input[role="birthdayM"]', '#travellersID').removeClass('f_error');
+            $('input[role="cardValidUntilS"],input[role="birthdayS"]', '#travellersID').removeClass('f_error');
         },
         //添加模版助手，以便模版内部能够直接将人数相加
         handlerHelp: function() {
@@ -1914,7 +1956,7 @@ define(function(require, exports, module) {
                 type: opts.method || 'GET',
                 url: opts.url || self.config.fetchUrl,
                 data: opts.data,
-                // cache: false,
+                cache: false,
                 dataType: 'html',
                 // timeout : 5000,
                 success: function(data) {
@@ -1958,7 +2000,7 @@ define(function(require, exports, module) {
                     /**位置*/
                     position: "rm_lm",
                     templs: {
-                        tipTempl: '<div id={{tipId}} class="{{tip}}"  style="min-width:{{minWidth}}px; width:{{maxWidth}}px;_width:{{minWidth}}px; width:auto !important;max-width:{{maxWidth}}px;overflow:hidden;display:block;z-index:99;margin:0;padding:0;left:0px;top:0px;overflow:hidden;position:absolute;padding-left:16px;"><div class="{{box}} {{boxType}} {{boxArrow}}" id={{boxId}}><b class="{{arrow}}" id={{arrowId}}></b><div class={{content}} id={{contentId}}></div></div>',
+                        tipTempl: '<div id={{tipId}} class="{{tip}}"  style="min-width:{{minWidth}}px; width:{{maxWidth}}px;_width:{{minWidth}}px; width:auto !important;max-width:{{maxWidth}}px;overflow:hidden;display:block;z-index:1999;margin:0;padding:0;left:0px;top:0px;overflow:hidden;position:absolute;padding-left:16px;"><div class="{{box}} {{boxType}} {{boxArrow}}" id={{boxId}}><b class="{{arrow}}" id={{arrowId}}></b><div class={{content}} id={{contentId}}></div></div>',
                         contentTpl: '<div class="jmp_bd">{{{txt}}}</div>'
                     },
                     css: {
@@ -2879,7 +2921,7 @@ define(function(require, exports, module) {
                     var role = this.role;
                     var isHasEnName = role.nameEN;
                     me.setNationalData();
-                    me.autoNext([role.birthdayY, role.birthdayM]).autoNext([role.cardValidUntilY, role.cardValidUntilM]);
+                    // me.autoNext([role.birthdayY, role.birthdayM]).autoNext([role.cardValidUntilY, role.cardValidUntilM]);
                     $(this.opts.element).on('blur', 'input[type="text"]', function(event) {
                         var reg;
                         if (reg = $(this).attr('regex')) {
@@ -2888,9 +2930,9 @@ define(function(require, exports, module) {
                         if ($(this).attr('role') === 'idCardNo') {
                             Reg.checkIdRepeat($(this).prev()[0].value, this, $(this).prev().find('option:selected')[0].innerHTML);
                         }
-                        if ($(this).attr('role') === 'birthPlace') {
+                        // if ($(this).attr('role') === 'birthPlace') {
 
-                        }
+                        // }
                     })
                         .on('change', '[role="idCardType"]', function() {
                             if ($(this).next().next().hasClass('repeatNum')) {
@@ -2902,17 +2944,22 @@ define(function(require, exports, module) {
                             var cobj = mod.Commoners.commonersObj[cliendID];
                             var _ref;
                             var setCardDate = function(arr) {
-                                if (role.cardValidUntilY) {
-                                    $.map('cardValidUntilY|cardValidUntilM|cardValidUntilD'.split('|'), function(v, k) {
+                                if (role.cardValidUntilS) {
+                                    $.map('cardValidUntilS'.split('cardValidUntilS'), function(v, k) {
                                         role[v].val(arr[k]);
                                     })
                                 }
+                                // if (role.cardValidUntilY) {
+                                //     $.map('cardValidUntilY|cardValidUntilM|cardValidUntilD'.split('|'), function(v, k) {
+                                //         role[v].val(arr[k]);
+                                //     })
+                                // }
                             };
                             me.filterInputs();
                             // $.map('nameEnLast|nameEnFirst|idCardNo|gender|birthdayY|birthdayM|birthdayD|national|cardValidUntilY|cardValidUntilM|cardValidUntilD|birthPlace'.split('|'), function (v, k) { //隐藏提示
                             //     role[v] && self.hideTip(role[v][0]);
                             // });
-                            $('input[role="cardValidUntilY"],input[role="cardValidUntilM"]', '#travellersID').removeClass('f_error');
+                            $('input[role="cardValidUntilS"],input[role="cardValidUntilM"]', '#travellersID').removeClass('f_error');
                             // if((val === '2' || val === '22') && me.getDest() === 32){
                             //     me.showTip(role.idCardType,'香港海关入境处规定，在香港转机到第三国（地区），可以凭护照签证或《往来台湾通行证》，和到目的地的机票可以在港合法滞留7天。',{errorClass:''});
                             // }
@@ -3006,24 +3053,24 @@ define(function(require, exports, module) {
                 }
                 self.reviewPos();
                 },*/
-                autoNext: function(el) {
-                    if (el[0]) {
-                        $(el).each(function(i) {
-                            $(this).bind('keyup', function() {
-                                if (i === 0) {
-                                    if ($(this).val().length >= 4) {
-                                        $(this).next().focus();
-                                    }
-                                } else {
-                                    if ($.trim($(this).val()).length >= 2) {
-                                        $(this).next().focus();
-                                    }
-                                }
-                            });
-                        });
-                    }
-                    return this;
-                },
+                // autoNext: function(el) {
+                //     if (el[0]) {
+                //         $(el).each(function(i) {
+                //             $(this).bind('keyup', function() {
+                //                 if (i === 0) {
+                //                     if ($(this).val().length >= 4) {
+                //                         $(this).next().focus();
+                //                     }
+                //                 } else {
+                //                     if ($.trim($(this).val()).length >= 2) {
+                //                         $(this).next().focus();
+                //                     }
+                //                 }
+                //             });
+                //         });
+                //     }
+                //     return this;
+                // },
                 hideTip: function() { //提示隐藏 
                     var tip;
                     $(this.opts.element).find('.cq').removeClass('inputSel').removeClass('f_error');
@@ -3054,8 +3101,10 @@ define(function(require, exports, module) {
                     var role = this.role;
                     var reg = /^(\d{4})-([01]?\d)-([0123]?\d)$/;
                     var _ret = [];
-                    _ret.push(role.cardValidUntilY.val(), role.cardValidUntilM.val(), role.cardValidUntilD.val());
-                    return reg.test(_ret.join('-')) ? _ret.join('-') : 0;
+                    // _ret.push(role.cardValidUntilY.val(), role.cardValidUntilM.val(), role.cardValidUntilD.val());
+                    // return reg.test(_ret.join('-')) ? _ret.join('-') : 0;
+                    var value = role.cardValidUntilS.val();
+                    return reg.test(value) ? value : 0;
                 },
                 getCardValidUntil: function() {
                     var role = this.role;
@@ -3086,8 +3135,8 @@ define(function(require, exports, module) {
                 getAgeInfo: function(str) {
                     var _ret;
                     var role = this.role;
-                    if (role.birthdayY && role.birthdayY.closest('li').css('display') !== 'none') {
-                        if (!/^(\d{4})-([01]?\d)-([0123]?\d)$/.test([role.birthdayY.val(), role.birthdayM.val(), role.birthdayD.val()].join('-'))) {
+                    if (role.birthdayS && role.birthdayS.closest('li').css('display') !== 'none') {
+                        if ( !/^(\d{4})-([01]?\d)-([0123]?\d)$/.test( role.birthdayS.val() ) ) {
                             return [true, ];
                         }
                     }
@@ -3184,7 +3233,6 @@ define(function(require, exports, module) {
                 checkEnName: function(str) {
                     var strs = $.trim(str) === this.role.nameEN.attr('_cqnotice') ? '' : $.trim(str);
                     var bl = Reg.checkEnName(strs);
-                    console.log(this);
                     if (!bl[0]) {
                         this.showTip(this.role.nameEN[0], bl[1]);
                         return false;
@@ -3217,8 +3265,8 @@ define(function(require, exports, module) {
                     //英文单元检测
                     var role = this.role;
                     var strs = $.trim(str) === obj.attr('_cqnotice') ? '' : $.trim(str);
-                    var bl = Reg.checkEnNameNew(strs, false);
-
+                    var isRequire = $(obj[0]).prop('required');
+                    var bl = Reg.checkEnNameNew(strs, isRequire);
                     if (!bl[0]) {
                         this.showTip(this.role.nameEnFirst[0], bl[1], {
                             $obj: obj[0]
@@ -3313,33 +3361,35 @@ define(function(require, exports, module) {
                     var elem = el;
                     var error = 0;
                     var index = $(elem).attr('role');
-                    if ('' === str || $(elem).attr('_cqnotice') === str) {
+                    // if ('' === str || $(elem).attr('_cqnotice') === str) {
+                    if ('' === str) {
                         data = '请填写证件有效期';
-                        me.showTip(role.cardValidUntilD[0], data, {
+                        me.showTip(role.cardValidUntilS[0], data, {
                             $obj: elem
                         });
                         return false;
-                    } else {
-                        if (index === 'cardValidUntilY') {
-                            reg = /^\d{4}$/;
-                        }
-                        if (index === 'cardValidUntilM') {
-                            reg = /^(0?[1-9]|1[0-2])$/;
-                        }
-                        if (index === 'cardValidUntilD') {
-                            reg = /^[0123]?\d$/;
-                        }
-                    }
+                    } 
+                    // else {
+                    //     if (index === 'cardValidUntilY') {
+                    //         reg = /^\d{4}$/;
+                    //     }
+                    //     if (index === 'cardValidUntilM') {
+                    //         reg = /^(0?[1-9]|1[0-2])$/;
+                    //     }
+                    //     if (index === 'cardValidUntilD') {
+                    //         reg = /^[0123]?\d$/;
+                    //     }
+                    // }
                     if (reg && !reg.test(str)) {
                         data = '请填写正确的证件有效期，格式：yyyy-mm-dd';
                         error++;
                     }
                     if (data) {
-                        me.showTip(role.cardValidUntilD[0], data, {
+                        me.showTip(role.cardValidUntilS[0], data, {
                             $obj: elem
                         });
                     } else {
-                        self.hideTip(role.cardValidUntilD[0], {
+                        self.hideTip(role.cardValidUntilS[0], {
                             $obj: elem
                         });
                     }
@@ -3347,16 +3397,16 @@ define(function(require, exports, module) {
                         var bl = this.getCardValidUntil();
                         if (bl) {
                             if (bl[0]) {
-                                bl[1] && me.showTip(role.cardValidUntilD[0], bl[1], {
+                                bl[1] && me.showTip(role.cardValidUntilS[0], bl[1], {
                                     errorClass: ''
                                 });
-                                self.hideTip(role.cardValidUntilY[0]);
-                                self.hideTip(role.cardValidUntilM[0]);
-                                role.cardValidUntilY.removeClass('f_error');
+                                // self.hideTip(role.cardValidUntilY[0]);
+                                // self.hideTip(role.cardValidUntilM[0]);
+                                role.cardValidUntilS.removeClass('f_error');
                                 return true;
                             } else {
-                                me.showTip(role.cardValidUntilD[0], bl[1], {
-                                    $obj: role.cardValidUntilY[0],
+                                me.showTip(role.cardValidUntilS[0], bl[1], {
+                                    $obj: role.cardValidUntilS[0],
                                     errorClass: 'f_error'
                                 });
                                 return false;
@@ -3380,51 +3430,54 @@ define(function(require, exports, module) {
                     var elem = el;
                     var index = $(elem).attr('role');
                     var error = 0;
-                    if ('' === str || $(elem).attr('_cqnotice') === str) {
-                        data = '请正确填写出生日期，格式：yyyy-mm-dd，且不得晚于出发日期';
-                        me.showTip(role.birthdayD[0], data, {
+                    // if ('' === str || $(elem).attr('_cqnotice') === str) {
+                    if ('' === str ) {
+                        data = '请正确选择出生日期，且不得晚于出发日期';
+                        me.showTip(role.birthdayS[0], data, {
                             $obj: elem
                         });
                         return false;
-                    } else {
-                        if (index === 'birthdayY') {
-                            reg = /^\d{4}$/;
-                        }
-                        if (index === 'birthdayM') {
-                            reg = /^(0?[1-9]|1[0-2])$/;
-                        }
-                        if (index === 'birthdayD') {
-                            reg = /^[0123]?\d$/;
-                        }
                     }
-                    if (reg && !reg.test(str)) {
-                        data = '请正确填写出生日期，格式：yyyy-mm-dd，且不得晚于出发日期';
-                        error++;
-                    }
+                    //  else {
+                    //     if (index === 'birthdayY') {
+                    //         reg = /^\d{4}$/;
+                    //     }
+                    //     if (index === 'birthdayM') {
+                    //         reg = /^(0?[1-9]|1[0-2])$/;
+                    //     }
+                    //     if (index === 'birthdayD') {
+                    //         reg = /^[0123]?\d$/;
+                    //     }
+                    // }
+                    // if (reg && !reg.test(str)) {
+                    //     data = '请正确填写出生日期，格式：yyyy-mm-dd，且不得晚于出发日期';
+                    //     error++;
+                    // }
                     if (data) {
-                        me.showTip(role.birthdayD[0], data, {
+                        me.showTip(role.birthdayS[0], data, {
                             $obj: elem
                         });
                     } else {
-                        $(role.birthdayD).data('valid') &&
-                            $(role.birthdayD).data('valid').hide({
+                        $(role.birthdayS).data('valid') &&
+                            $(role.birthdayS).data('valid').hide({
                                 $obj: elem
                             });
                     }
                     if (!error) {
-                        var bl = this.getAgeInfo([role.birthdayY.val(), role.birthdayM.val(), role.birthdayD.val()].join('-'));
+                        // var bl = this.getAgeInfo([role.birthdayY.val(), role.birthdayM.val(), role.birthdayD.val()].join('-'));
+                        var bl = this.getAgeInfo(str);
                         if (!bl[0]) {
-                            me.showTip(role.birthdayD[0], bl[1], {
-                                $obj: role.birthdayY[0]
+                            me.showTip(role.birthdayS[0], bl[1], {
+                                $obj: role.birthdayS[0]
                             });
                             return false;
                         } else if (bl[1]) {
-                            me.showTip(role.birthdayD[0], bl[1], {
-                                $obj: role.birthdayY[0],
+                            me.showTip(role.birthdayS[0], bl[1], {
+                                $obj: role.birthdayS[0],
                                 errorClass: ''
                             });
                         } else {
-                            role.birthdayY.removeClass('f_error'); //temp
+                            role.birthdayS.removeClass('f_error'); //temp
                         }
                         return true;
                     }
@@ -3441,13 +3494,13 @@ define(function(require, exports, module) {
                     }
                     return true
                 },
-                // checkBirthPlace: function (str) {
-                //     if ('' === str) {
-                //         this.showTip(this.role.birthPlace[0], '请填写出生地');
-                //         return false;
-                //     }
-                //     return true;
-                // },
+                checkBirthPlace: function (str) {
+                    if ('' === str) {
+                        this.showTip(this.role.birthPlace[0], '请填写出生地');
+                        return false;
+                    }
+                    return true;
+                },
                 checkMobileIsNull: function() {
                     var str = $.trim(this.role.mobileNo.val());
                     if ('' === str) {
@@ -3514,7 +3567,41 @@ define(function(require, exports, module) {
                     me.toIns();
                     me.bindEvent();
                     roles.bookInfoID.show();
-                    require('./mod_book_calendar'); // 载入证件有效期，出生日期日历选择交互模块
+                    new BirthDay().init(); // 载入证件有效期，出生日期日历选择交互模块
+
+                    // “特别提醒：为了您能顺利出行，请确保旅行结束日期至少比证件有效期早6个月。”提示出现的条件是：
+                    // 产品目的地是海外&需要用户填写证件&但是模板内没有证件有效期&选择的非身份证
+                    if( GV.app.order.vars.IsOverseas ){
+                        $.each($('#travellersID [role="youren"]'), function(_index, _item){
+                            var cardValidUntilY = false, // 是否有证件有效期
+                                isidenCard = false;  // 是否身份证
+                            if( $(_item).find('input[role="cardValidUntilS"]').length > 0){
+                                cardValidUntilY = true;
+                            };
+                            if( $(_item).find('select[role="idCardType"]').val() === '1'){
+                                isidenCard = true;
+                            };
+                            if( !cardValidUntilY && !isidenCard){
+
+                                $(_item).find('.J_notice').show();
+                            }
+                        })
+                    }
+                    me._idCardChange();
+                },
+                _idCardChange: function(){
+                    $('#travellersID').find('select[role="idCardType"]').bind('change', function(){
+                        var _this = this,
+                            cnt = $(this).closest('[role="youren"]'),
+                            thisValue = $(this).val();
+                        if(GV.app.order.vars.IsOverseas && thisValue != '1'){
+                            if( cnt.find('input[role="cardValidUntilS"]').length <= 0){
+                                $(cnt).find('.J_notice').show();
+                            }
+                        } else {
+                            $(cnt).find('.J_notice').hide();
+                        }
+                    })
                 },
                 handleHadData: function(data) {
                     var handle = function(v, arg) {
@@ -3823,7 +3910,7 @@ define(function(require, exports, module) {
                     var _info;
                     _obj.PassengerId = uid ? uid : 0;
                     _obj.AgeRang = +$(elem).attr('ptype');
-                    _obj.isSaveTo = role.saveId.hasClass('selected') ? 1 : 0;
+                    _obj.isSaveTo = $(role.saveId).hasClass('selected') ? 1 : 0;
                     $.each(role, function(k, v) {
                         var val;
                         if (k !== 'clear' && k !== 'saveId') {
@@ -3886,7 +3973,7 @@ define(function(require, exports, module) {
                                 case 'gender':
                                     _obj.Gender = val || -1;
                                     break;
-                                case 'birthdayY':
+                                case 'birthdayS':
                                     _obj.Birthday = val === v.attr('_cqnotice') ? '' : val;
                                     break;
                                 case 'birthdayM':
@@ -3904,7 +3991,7 @@ define(function(require, exports, module) {
                                 case 'idCardNo':
                                     _obj.IdCardInfo.IdCardNo = val === v.attr('_cqnotice') ? '' : val;
                                     break;
-                                case 'cardValidUntilY':
+                                case 'cardValidUntilS':
                                     _obj.IdCardInfo.IdCardValidDate = val === v.attr('_cqnotice') ? '' : val;
                                     break;
                                 case 'cardValidUntilM':
@@ -4198,17 +4285,31 @@ define(function(require, exports, module) {
                         mod.Travellers.linstenPickFill(abled, !1);
                     }
                 },
-                setValue: function(role, id) {
+                setValue: function (role, id) {
                     var me = this;
                     var limitedTime = [];
                     var obj = me.commonersObj[id];
-                    var birthday = obj.birthday ? obj.birthday.split('-') : [];
+                    // var birthday = obj.birthday ? obj.birthday.split('-') : [];
+                    var birthday = obj.birthday || '';
                     var val = "",
-                        idcard = '';
-                    $.each(role, function(k, v) {
+                        idcard = '',
+                        tempIdCardType = '',
+                        tempNationality = '',
+                        tempFirstEN = '',
+                        tempMiddleEN = '',
+                        tempLastEN = '',
+                        cnInput,
+                        EnName = '',
+                        tempNameCN = '',
+                        tempNameCNEN = '';
+
+                    $.each(role, function (k, v) {
                         if (v.attr('role') === 'name') {
                             if (obj.nameCN) {
                                 val = obj.nameCN;
+                                tempNameCN = obj.nameCN;
+                                cnInput = v;
+                                tempNameCNEN = obj.ENLastName + '/' + obj.ENFirstName + ' ' + obj.ENMiddleName;
                             } else if (obj.ENFirstName) {
                                 val = obj.ENLastName + '/' + obj.ENFirstName + ' ' + obj.ENMiddleName;
                             } else {
@@ -4220,25 +4321,32 @@ define(function(require, exports, module) {
                             } else {
                                 val = '';
                             }
+                            cnInput = v;
                         } else if (v.attr('role') === 'nameEnFirst') {
                             if (obj.ENFirstName) {
                                 val = obj.ENFirstName;
                                 if (obj.ENMiddleName) {
-                                    val += ' ' + obj.ENMiddleName
+                                    val += ' ' + obj.ENMiddleName;
+                                    tempMiddleEN = obj.ENMiddleName
+                                    tempFirstEN = obj.ENFirstName;
                                 }
                             } else {
                                 val = '';
+                                tempFirstEN = '';
                             }
                         } else if (v.attr('role') === 'nameEnLast') {
                             if (obj.ENFirstName) {
                                 val = obj.ENLastName;
+                                tempLastEN = obj.ENLastName;
                             } else {
                                 val = '';
+                                tempLastEN = '';
                             }
                         } else if (v.attr('role') === 'national') {
                             if (obj.national) {
                                 val = vdata.nationalData[obj.national];
                                 v.attr('mod_value', obj.national);
+                                tempNationality = obj.national;
                             } else {
                                 val = '';
                                 v.attr('mod_value', '');
@@ -4249,7 +4357,8 @@ define(function(require, exports, module) {
                             if (ids) {
                                 v.val(va = ids.IDCardType);
                                 idcard = ids.IDCardNo;
-                                limitedTime = ids.IDCardTimelimit ? ids.IDCardTimelimit.split('-') : [];
+                                limitedTime = ids.IDCardTimelimit || '';
+                                tempIdCardType = ids.IDCardType;
                             }
                             val = va;
                         } else if (v.attr('role') === 'CustomerType') {
@@ -4260,26 +4369,57 @@ define(function(require, exports, module) {
                             val = va;
                         } else if (v.attr('role') === 'idCardNo') {
                             val = idcard;
-                        } else if (v.attr('role') === 'cardValidUntilY') {
+                        } else if (v.attr('role') === 'cardValidUntilS') {
                             val = limitedTime[0] || '';
-                        } else if (v.attr('role') === 'cardValidUntilM') {
-                            val = limitedTime[1] || '';
-                        } else if (v.attr('role') === 'cardValidUntilD') {
-                            val = limitedTime[2] || '';
-                        } else if (v.attr('role') === 'birthdayY') {
-                            val = birthday[0] || '';
-                        } else if (v.attr('role') === 'birthdayM') {
-                            val = birthday[1] || '';
-                        } else if (v.attr('role') === 'birthdayD') {
-                            val = birthday[2] || '';
+                        // } else if (v.attr('role') === 'cardValidUntilM') {
+                        //     val = limitedTime[1] || '';
+                        // } else if (v.attr('role') === 'cardValidUntilD') {
+                        //     val = limitedTime[2] || '';
+                        } else if (v.attr('role') === 'birthdayS') {
+                            val = birthday || '';
+                        // } else if (v.attr('role') === 'birthdayM') {
+                        //     val = birthday[1] || '';
+                        // } else if (v.attr('role') === 'birthdayD') {
+                        //     val = birthday[2] || '';
                         } else if (v.attr('role') === 'birthPlace') {
                             val = obj.HomePlace !== null ? obj.HomePlace : '';
+                        } else if( v.attr('role') === 'nameCN' ){
+                            val = obj[k] !== null ? obj[k] : '';
+                            cnInput = v;
+                            v.val(val);
+                            v[0].setAttribute('value', val);
                         } else {
                             val = obj[k] !== null ? obj[k] : '';
                         }
                         v.val(val);
                         v[0].setAttribute('value', val);
                     });
+
+                    // 在调用常用旅客信息的时候，如果为非中国大陆、中国台湾、中国香港、中国澳门国籍的出行人，证件类型为非身份证时，填写姓名/中文姓名取英文姓名，如果没有英文姓名时，则置空。
+                    if ( tempIdCardType !== 1 && !( tempNationality === 'CN' || tempNationality === 'HK' || tempNationality === 'MO' || tempNationality === 'TW') ){
+                        if(tempNameCN){
+                            // 去获取enName 重新赋值进去
+                            if (tempNameCNEN == '/ '){
+                                tempNameCNEN = '';
+                            }
+                            if(cnInput){
+                                $(cnInput[0]).val(tempNameCNEN);
+                                cnInput[0].setAttribute('value', tempNameCNEN);
+                            };
+                        } else {
+                            // tempNameCNEN = obj.ENLastName + '/' + obj.ENFirstName + ' ' + obj.ENMiddleName;
+                            if( tempFirstEN || tempLastEN){
+                                EnName = tempLastEN + '/' + tempFirstEN + ' ' + tempMiddleEN;
+                            };
+                            if(cnInput){
+                                $(cnInput[0]).val(EnName);
+                                cnInput[0].setAttribute('value', EnName);
+                            };
+                        }
+                        
+                        
+                    }
+                    
                 },
                 checkCustomers: function(customerType) {
                     var initData = vdata.initData.CustomerInfoTemplate.CustomerInfoItems
@@ -4320,6 +4460,13 @@ define(function(require, exports, module) {
                     commoners.find('a.cb-item[cid="' + id + '"]').removeClass('selected'); //找到对应的常用联系人并取消选择
                 }
             }
+        },
+        _getURLPara: function(paraName){
+            var sUrl  =  location.href; 
+            var sReg  =  "(?:\\?|&){1}"+paraName+"=([^&]*)" 
+            var re=new RegExp(sReg,"gi"); 
+            re.exec(sUrl); 
+            return RegExp.$1; 
         },
         Contacter: function() { //联系人
             var self = this,
@@ -4363,6 +4510,43 @@ define(function(require, exports, module) {
                     $.extend(roles, self.common.getRoles(roles.linkManID));
                     this.bindEvent();
                     this.bindVerifyEvent();
+                    // 联系人手机是否已经注册判断
+                    if( GV.app.order.vars.isQuickLogin === 1 ){
+                        $('#linkManID').delegate('input[role="ctmphone"]', 'blur', function(){
+                            var mobileInput = cQuery(this),
+                                mobileVal = mobileInput.value(),
+                                nickMobileCheck = self.Contacter().checkMobile(mobileVal);
+                            //检查手机
+                            if (mobileVal && !nickMobileCheck[0]) {
+                                new self.validate({
+                                    target: mobileInput[0],
+                                    data: nickMobileCheck[1],
+                                    errorClass: ''
+                                }).show();
+                                return false;
+                            } else {
+                                $.ajax({
+                                    type: 'get',
+                                    url: '/booking/PkgBook2.aspx',
+                                    data:{
+                                        TmpOrderID: self._getURLPara('TmpOrderID'),
+                                        Action:'CheckUserByPhone',
+                                        Phone: mobileVal
+                                    },
+                                    success: function(_data){
+                                        if (_data == 1){
+                                            var html = '您已是携程会员。<a href="javascript:void(0)" onclick="stdLogin()">登录</a>后可获得此订单的积分并便于您管理订单。';
+                                            new self.validate({
+                                                target: mobileInput[0],
+                                                data: html,
+                                                errorClass: ''
+                                            }).show();
+                                        }
+                                    }
+                                });
+                            }
+                        })
+                    }
                 },
                 handleData: function(data) {
                     var _ret = {};
@@ -4906,49 +5090,74 @@ define(function(require, exports, module) {
             }
         },
         _simpleAddressTpl: function(data) {
-            return '<p class="name">{{CityName}}</p>' +
-                '<p class="address">{{../../CityName}} {{CityName}} {{CantonName}} {{Address}}</p>' +
-                '<p class="code">{{Post}}</p>' +
+            return '<p class="name">' + data.CityName + '</p>' +
+                '<p class="address">' + data.CityName + ' ' + data.CantonName + ' ' + data.Address + '</p>' +
+                '<p class="code">' + data.PostCode + '</p>' +
                 '<i class="ico_checked"></i>' +
-                '<a href="###" role="adsedit" class="edit" cantonID="{{CantonID}}" infoId="{{InfoId}}" data-Recipient="{{Recipient}}" data-CityName="{{CityName}}" data-CantonName="{{CantonName}}" data-Address="{{Address}}" data-Post="{{Post}}"><i></i>编辑</a>' +
-                '<input cantonID="{{CantonID}}" checked="checked" index={{index}} type="radio" value="{{index}}" name="' + name + '" id="ps{{@index}}" style="display:none">';
+                '<a href="###" role="adsedit" class="edit" cantonID="' + data.Canton + '" infoId="' + data.InfoID + '" data-Recipient="{{Recipient}}" data-CityName="' + data.CityName + '" data-CantonName="' + data.CantonName + '" data-Address="' + data.Address + '" data-Post="' + data.PostCode + '"><i></i>编辑</a>' +
+                '<input cantonID="' + data.Canton + '" checked="checked" index="' + data.InfoID + '" type="radio" value="' + data.InfoID + '" name="' + data.type + '" id="ps' + data.type + '" style="display:none">';
         },
         _addressTpl: function(data) {
-            console.log(data);
-            console.log(GV);
             var mobile = data.ContactTel;
             if(data.MobilePhone){
                 mobile = data.MobilePhone;
-            }
-            return '<p class="name">('+ data.recipient +' 收)</p>' +
-                '<p class="tel">' + mobile + '</p>' +
-                '<p class="address">' + unescape(data.Address) + '</p>' +
-                '<p class="code">' + data.postcode + '</p>' +
-                '<i class="ico_checked"></i>' +
-                '<a href="###" role="adsedit" class="edit" cantonID="{{CantonID}}" infoId="' + data.infoid + '" data-Recipient="'+ data.recipient +'" data-tel="' + mobile + '" data-CityName="' + data.CityName + '" data-CantonName="{{CantonName}}" data-Address="' + unescape(data.Address) + '" data-Post="' + data.postcode + '"><i></i>编辑</a>' +
-                '<input cantonID="{{CantonID}}" checked="checked" index="' + data.infoid + '" type="radio" value="' + data.infoid + '" name="' + data.AddressType + '" id="ems' + data.infoid + '" style="display:none">';
-        },
-        _addressEditCheck: function(){
-            cQname = cQuery('#mask_popup input[role="recipient"]');
-            cQnameVal = cQname.value();
-            cQphone = cQuery('#mask_popup input[role="contactTel"]').value();
-            cQaddress = cQuery('#mask_popup input[role="detail"]').value();
-            cQpostCode = cQuery('#mask_popup input[role="postage"]').value();
-            nickNameCheck = this.Contacter().checkName(cQnameVal);
-            nickMobileCheck = this.Contacter().checkMobile(cQphone);
-            console.log(nickNameCheck);
-
-            // 检查名字
-            console.log(cQname[0]);
-            console.log(nickNameCheck[1]);
-            if (!nickNameCheck[0]) {
-                new self.validate({
-                    target: cQname[0],
-                    data: nickNameCheck[1],
-                    errorClass: ''
-                }).show();
-                return false;
             };
+            return '<p class="name">('+ data.Recipient +' 收)</p>' +
+                '<p class="tel">' + mobile + '</p>' +
+                '<p class="address">' + data.ProvinceName + ' ' + data.CityName + ' ' + data.CantonName + ' ' + unescape(data.Address) + '</p>' +
+                '<p class="code">' + data.PostCode + '</p>' +
+                '<i class="ico_checked"></i>' +
+                '<a href="###" role="adsedit" class="edit" cantonID="' + data.CantonID + '" infoId="' + data.InfoID + '" data-Recipient="'+ data.Recipient +'" data-tel="' + mobile + '" data-CityName="' + data.CityName + '" data-CantonName="{{CantonName}}" data-Address="' + unescape(data.Address) + '" data-Post="' + data.PostCode + '"><i></i>编辑</a>' +
+                '<input cantonID="' + data.CantonID + '" checked="checked" index="' + data.InfoID + '" type="radio" value="' + data.InfoID + '" name="' + data.type + '" id="ems' + data.InfoID + '" style="display:none">';
+        },
+        _areaTips: function(_dom){
+            new this.validate({
+                target: _dom,
+                data: msg.selectCity,
+                errorClass: 'f_error'
+            }).show();
+            
+        },
+        _areaEditCheck: function(_type){
+            var self = this,
+                proviceDom = cQuery('#provice'),
+                proviceVal = proviceDom.value(),
+                cityDom = cQuery('#city'),
+                cityVal = cityDom.value(),
+                areaDom,
+                areaVal,
+                addrDetailDom,
+                addrDetailVal;
+            if(_type == '1'){
+                addrDetailDom = cQuery('#mask_popup input[role="getAddrDetail"]');
+                addrDetailVal = addrDetailDom.value();
+                if(!addrDetailVal){
+                    new this.validate({
+                        target: addrDetailDom,
+                        data: msg.detail,
+                        errorClass: 'f_error'
+                    }).show();
+                    return false;
+                }
+            } else {
+                if(!proviceVal){
+                    self._areaTips(proviceDom[0]);
+                    return false;
+                } else if(!cityVal){
+                    self._areaTips(cityDom[0]);
+                    return false;
+                };
+                if( !$('#mask_popup #area').is(':hidden') ){
+                    areaDom = cQuery('#area');
+                    areaVal = areaDom.value();
+                    if(!areaVal){
+                        self._areaTips(areaDom[0]);
+                        return false;
+                    }
+                }
+            };
+
+            return true;
 
         },
         Delivery: function() {
@@ -4958,7 +5167,7 @@ define(function(require, exports, module) {
             msg = {
                 recipient: '请填写收件人',
                 contactTel: '请填写联系电话',
-                selectCity: '请选择城市',
+                selectCity: '请选择省市区',
                 detail: '请填写正确的地址',
                 postage: '请填写邮编',
                 contactTelErr: '请填写正确的联系电话',
@@ -5062,65 +5271,92 @@ define(function(require, exports, module) {
                     });
 
 
+
                     $(document).delegate('a[role="saveaddress"]', 'click', function() {
                         event.preventDefault();
                         var _self = this,
                             type = $(_self).attr('type'),
                             cnt = $('#mask_popup'),
-                            postData;
+                            postData,
+                            isAdd = $(this).attr('data-add') - 0,
+                            formCheck = true,
+                            fee = $(this).attr('data-fee') || '';
 
                         //TODO 表单验证
-
-                        self._addressEditCheck();
-
-                        postData = {
-                            "AddressType": "F",
-                            "Address": $('#notice15').val(),
-                            "Canton": $('#J_popcanton').val(),
-                            "City": $('#J_popcanton').find('option:selected').text(),
-                            "InfoID": $(_self).attr('infoid')
-                        };
-
-                        if (type != 1) {
-                            postData = {
-                                "AddressType": "E",
-                                "type": $(_self).attr('type'),
-                                "Address": cnt.find('input[role="detail"]').val(),
-                                "CityName": cnt.find('#city').val(),
-                                "Fee": "10",
-                                "MobilePhone": cnt.find('input[role="contactTel"]').val(),
-                                "ContactTel": "",
-                                "Recipient": cnt.find('input[role="recipient"]').val(),
-                                "PostCode": cnt.find('input[role="postage"]').val(),
-                                "InfoID": $(_self).attr('infoid')
-                            };
-                        };
-                        console.log(postData);
-                        $(_self).removeAttr('role').html('保存中...');
-                        return false;
-                        $.ajax({
-                            type: 'post',
-                            url: GV.app.order.vars.handles.saveAddressInfo,
-                            dataType: 'json',
-                            data: {
-                                SaveUserAddressInfo: cQuery.stringifyJSON(postData)
-                            },
-                            success: function(_data) {
-                                var html = '';
-                                if (_data.errno === 0) {
-                                    if (postData.AddressType == "F"){
-                                        html = self._simpleAddressTpl(postData);
-                                    } else {
-                                        html = self._addressTpl(postData);
-                                    }
-                                    $('#content').find('ul[type="' + postData.AddressType + '"]').find('.usual_address_item_selected').html(html);
-                                    cQuery('#mask_popup').unmask();
-                                    cQuery('#mask_popup').remove();
-                                }
-                                
+                        $('#mask_popup input').blur();
+                        $.each($('#mask_popup input'), function(_index, _item){
+                            if($(_item).hasClass('f_error')){
+                                formCheck = false;
                             }
                         });
+                        if( formCheck && self._areaEditCheck(type) ){
+                            
                         
+                            postData = {
+                                "type": $(_self).attr('type'),
+                                "AddressType": "F",
+                                "Address": $('#notice15').val() || '',
+                                "Canton": $('#J_popcanton').val() || '',
+                                "CantonName": $('#J_popcanton').find('option:selected').text(),
+                                // "City": $('#J_popcanton').find('option:selected').text(),
+                                "CityName": $(this).attr('data-cityname') || '',
+                                "InfoID": $(_self).attr('infoid') || 0,
+                                "PostCode": $(this).attr('data-post') || ''
+                            };
+
+                            // TODO tel的验证，不止是手机
+
+                            if (type != 1) {
+                                postData = {
+                                    "AddressType": "E",
+                                    "type": $(_self).attr('type'),
+                                    "Address": cnt.find('input[role="detail"]').val() || '',
+                                    "CityName": cnt.find('#city').val() || '',
+                                    "ProvinceName": cnt.find('#provice').val() || '',
+                                    "CantonName": cnt.find('#area').val() || '',
+                                    "Fee": fee,
+                                    "MobilePhone": '',
+                                    "ContactTel": cnt.find('input[role="contactTel"]').val() || '',
+                                    "Recipient": cnt.find('input[role="recipient"]').val() || '',
+                                    "PostCode": cnt.find('input[role="postage"]').val() || '',
+                                    "InfoID": $(_self).attr('infoid') || 0,
+                                    "CantonID": $(_self).attr("CantonID") || 0
+                                };
+                            };
+                            $(_self).removeAttr('role').html('保存中...');
+                            
+                        
+                            $.ajax({
+                                type: 'post',
+                                url: GV.app.order.vars.handles.saveAddressInfo,
+                                dataType: 'json',
+                                data: {
+                                    SaveUserAddressInfo: cQuery.stringifyJSON(postData)
+                                },
+                                success: function(_data) {
+                                    var html = '';
+                                    if (_data.errno === 0) {
+                                        postData['InfoID'] = _data.data.InfoId;
+                                        if (postData.AddressType == "F"){
+                                            html = self._simpleAddressTpl(postData);
+                                        } else {
+                                            html = self._addressTpl(postData);
+                                        };
+                                        if(isAdd){
+                                            $($('#content').find('ul[type="' + postData.type + '"] li')[0]).html(html);
+                                        } else {
+                                            $('#content').find('ul[type="' + postData.type + '"]').find('.usual_address_item_selected').html(html);
+                                        }
+                                        
+                                        cQuery('#mask_popup').unmask();
+                                        cQuery('#mask_popup').remove();
+                                    } else {
+                                        alert( _data.errmsg);
+                                    }
+                                    
+                                }
+                            });
+                        }
                     });
 
 
@@ -5223,10 +5459,14 @@ define(function(require, exports, module) {
                         .on('click', 'a[role="adsedit"]', function(event) { // 编辑配送地址
                             event.preventDefault();
                             var index = +$(this).closest('.delivery').attr('type');
+                            var fee = $(this).closest('.delivery').attr('data-fee') || '';
                             var tpl = index == 1 ? self.tpl.editInCityAddress : self.tpl.editAllAddress;
                             var tempData = me.handleData(vdata.initData.DeliveryReult);
                             var CantonID = $(this).attr('cantonid');
                             var infoID = $(this).attr('infoid');
+                            var cityName = $(this).attr('data-cityname') || '';
+                            var proviceName = $(this).attr('data-provicename') || '';
+                            var postCode = $(this).attr('data-post') || '';
                             self.render(tpl, {
                                 CityCanton: tempData.CityCanton,
                                 address: $(this).attr('data-address'),
@@ -5234,27 +5474,44 @@ define(function(require, exports, module) {
                                 tel: $(this).attr('data-tel'),
                                 code: $(this).attr('data-post')
                             }, function(dom) {
-                                var _role;
+                                var _role,
+                                    addressCity;
+                                if (cityName) {
+                                    addressCity = new DefAddress().init(cityName).join(',');
+                                };
                                 $(dom).appendTo('body');
                                 _role = self.common.getRoles('#mask_popup');
                                 cQuery('#mask_popup').mask();
+                                $('#cities').attr('data-address-value',addressCity);
                                 cities.init({
                                     id: '#cities',
                                     type: 'select'
                                 });
-                                cities.init({
-                                    id: '#cities_p',
-                                    type: 'select'
-                                });
-                                $.each($('#J_popcanton option'), function(_index, _item) {
-                                    if ($(_item).val() == CantonID) {
-                                        $(_item).prop('selected', true)
+                                // cities.init({
+                                //     id: '#cities_p',
+                                //     type: 'select'
+                                // });
+                                if(index === 1){
+                                    $.each($('#J_popcanton option'), function(_index, _item) {
+                                        if ($(_item).val() == CantonID) {
+                                            $(_item).prop('selected', true)
+                                        }
+                                    });
+                                } 
+                                // else if(index === 3 || index === 4 || index === 5) {
+                                //     $($('#cities').find('#provice option')[5]).prop('selected', true);
+                                // }
+                                
+                                $('#mask_popup input[type="text"]').on('blur', function() {
+                                    if (reg = $(this).attr('regex')) {
+                                        me[reg]($.trim($(this).val()), this);
                                     }
                                 });
-                                $('#mask_popup').find('a[role="saveaddress"]').attr('type', index).attr('infoid', infoID);
+                                $('#mask_popup').find('a[role="saveaddress"]').attr('type', index).attr('infoid', infoID).attr('data-add',0).attr('data-cityname', cityName).attr('data-post', postCode).attr('data-fee', fee);
                                 _role.close.click(function(event) {
                                     event.preventDefault();
                                     cQuery('#mask_popup').unmask();
+                                    $('.book_jmpinfo').remove();
                                     $('#mask_popup').remove();
                                 });
                                 //me.editSampleAddress();
@@ -5265,10 +5522,10 @@ define(function(require, exports, module) {
                     .on('click', 'a[role="addads"]', function(event) {
                         event.preventDefault();
                         var index = +$(this).closest('.delivery').attr('type');
+                        var fee = $(this).closest('.delivery').attr('data-fee') || 0;
                         var tpl = index == 1 ? self.tpl.editInCityAddress : self.tpl.editAllAddress;
                         var tempData = me.handleData(vdata.initData.DeliveryReult);
                         var Canton = $(this).attr('data-cantonname');
-                        console.log(tempData);
                         self.render(tpl, {
                             CityCanton: tempData.CityCanton,
                             address: $(this).attr('data-address')
@@ -5285,52 +5542,27 @@ define(function(require, exports, module) {
                                 id: '#cities_p',
                                 type: 'select'
                             });
+                            if( index == 1){
+                                $('#mask_popup').find('a[role="saveaddress"]').attr('type', index).attr('data-add',1).attr('data-cityname', '上海').attr('data-fee', fee);
+                            } else {
+                                $('#mask_popup').find('a[role="saveaddress"]').attr('type', index).attr('data-add',1).attr('data-fee', fee);;
+                            }
+                            
+                            $('#mask_popup input[type="text"]').on('blur', function() {
+                                if (reg = $(this).attr('regex')) {
+                                    me[reg]($.trim($(this).val()), this);
+                                }
+                            });
+
                             _role.close.click(function(event) {
                                 event.preventDefault();
                                 cQuery('#mask_popup').unmask();
+                                $('.book_jmpinfo').remove();
                                 $('#mask_popup').remove();
                             });
-                            // me.editSampleAddress();
                         });
                         me.hideTip();
                     })
-                    // .on('click', 'a[role="saveaddress"]', function(){
-                    //     event.preventDefault();
-                    //     var self = this,
-                    //         postData;
-                    //     postData = {
-                    //         "addresstype": $(self).attr('type'),
-                    //         "address": $('#notice15').val(),
-                    //         "canton": $('#J_popcanton').val(),
-                    //         "city": $('#J_popcanton').text(),
-                    //         "infoid": $(self).attr('infoid')
-                    //     };
-                    //     console.log(postData);
-                    //     if(type != 1){
-                    //         postData = {
-                    //             "addresstype": "",
-                    //             "address": "",
-                    //             "cityname": "",
-                    //             "fee":"",
-                    //             "mobilephone":"",
-                    //             "contacttel":"",
-                    //             "recipient":"",
-                    //             "postcode":"",
-                    //             "infoid":""
-                    //         };
-                    //     };
-                    //     $.ajax({
-                    //         type: 'post',
-                    //         url: GV.app.order.vars.handles.saveAddressInfo,
-                    //         dataType: 'json',
-                    //         data:{
-                    //             bookinginfo: cQuery.stringifyJSON(postData)
-                    //         },
-                    //         success: function(_data){
-
-                    //         }
-                    //     });
-                    // });
                 },
                 defaultData: function() {
                     var _initData = vdata.initData.OrderDelivery;
@@ -5362,7 +5594,7 @@ define(function(require, exports, module) {
                     var tpl1 = '<li class="usual_address_item usual_address_item_selected">' +
                         '<p class="name">{{#if Recipient}}({{Recipient}} 收){{/if}}</p>' +
                         '<p class="tel">{{#if Mobile}}{{Mobile}}{{else}}{{#if Tel}}{{Tel}}{{/if}}{{/if}}</p>' +
-                        '<p class="address">{{Address}}</p>' +
+                        '<p class="address">{{CityName}} {{Address}}</p>' +
                         '<p class="code">{{Post}}</p>' +
                         '<i class="ico_checked"></i>' +
                         '<a href="###" role="adsedit" class="edit" cantonID="{{CantonID}}" infoId="{{InfoId}}" data-Recipient="{{Recipient}}" data-tel="{{#if Mobile}}{{Mobile}}{{else}}{{#if Tel}}{{Tel}}{{/if}}{{/if}}" data-CityName="{{CityName}}" data-CantonName="{{CantonName}}" data-Address="{{Address}}" data-Post="{{Post}}"><i></i>编辑</a>' +
@@ -6040,33 +6272,6 @@ define(function(require, exports, module) {
                 self._defaultForm();
             }
 
-            // $.ajax({
-            //     url: '/Booking/Ajax/Order/NeedTrackOrder.aspx',
-            //     type: 'get',
-            //     data: {
-            //         ProductID: GV.app.order.vars.initData.productID,
-            //         IsQuickLogin: GV.app.order.vars.isQuickLogin,
-            //         Alternative: GV.app.order.vars.initData.Alternative
-            //     },
-            //     cache: false,
-            //     dataType: 'json',
-            //     success: function (data) {
-            //         $('#J_paysubmitid').text(GV.app.order.vars.initData.orderid);
-            //         if (data.errno === 0 && data.data) {
-            //             // 根据IsTemporaryOrder判断是否显示追单页面 true:暂存过了，显示老的页面
-            //             if (GV.app.order.vars.initData.IsTemporaryOrder) {
-            //                 self._defaultForm();
-
-            //                 // 显示已经预订的绿色框
-            //                 $('#J_paysubmitSucc').show();
-            //             } else {
-            //                 self._newForm();
-            //             }
-            //         } else {
-            //             self._defaultForm();
-            //         }
-            //     }
-            // });
 
             self.handlerHelp();
             return function() {

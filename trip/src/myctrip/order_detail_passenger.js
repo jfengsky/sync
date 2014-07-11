@@ -12,8 +12,8 @@ define(function (require, exports, module) {
     var Select = require('../Modules/Select');
 
     var qbo = '';
-    if (DataOrder.data.qb_o) {
-        qbo = DataOrder.data.qb_o;
+    if (GV.app.detail.data.qb_o) {
+        qbo = GV.app.detail.data.qb_o;
     };
 
     Travellers.setJQuery($);
@@ -450,7 +450,8 @@ define(function (require, exports, module) {
     */
     GV.on('save-success', function (options) {
         //if(options.type == '')
-        var msg = options.msg || '修改旅客请求已发送，请耐心等待携程确认，谢谢！';
+        // var msg = options.msg || '修改旅客请求已发送，请耐心等待携程确认，谢谢！';
+        var msg = options.msg || '信息已保存，如有问题我们将第一时间联系您，谢谢！';
         var title = options.title || '修改旅客';
         $('.js_order_success_txt').html(msg);
         $('.js_order_success_title').html(title);

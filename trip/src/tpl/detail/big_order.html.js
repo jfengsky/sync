@@ -84,7 +84,7 @@ define(function(){
 {{#unless isStartup}}\n\
 {{#if hasRiskRemark}}\n\
 <div class=\"y_box\">\n\
-    <p>奖励金额：{{RiskReward}}<br/>备注：{{RiskRemark}}</p>\n\
+    <p>奖励金额：{{RiskMoney}}元/成人<br/>备注：{{RiskRemarkNew}}</p>\n\
 </div>\n\
 {{/if}}\n\
 <div class=\"all_resource\">\n\

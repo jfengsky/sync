@@ -116,7 +116,7 @@ define(function (require, exports, module) {
                     var top = node.position().top + 22,
                         left = node.position().left + 40;
                     var riskReward = calendarDataManager.getRiskRewardData(UtilCalendar.format(event.day.date, 'yyyy-mm-dd'));
-                    $("#js_calendar div.calendar_time_alert").children("div").text(riskReward)
+                    $("#js_calendar div.calendar_time_alert").children("div").html(riskReward)
                         .end().css({top:top, left:left}).show()
                         .off().on("mouseenter", function(){ $(this).show();});
                 }

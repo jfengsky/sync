@@ -7,9 +7,9 @@ define(function (require, exports, module) {
   "use strict";
   var $ = require('jquery');
   var qbo = '';
-  if (DataOrder.data.qb_o) {
-      qbo = DataOrder.data.qb_o;
-  }
+  if (GV.app.detail.data.qb_o) {
+      qbo = GV.app.detail.data.qb_o;
+  };
 
   function HtmlUpload() {
 

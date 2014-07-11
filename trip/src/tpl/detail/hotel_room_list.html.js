@@ -1,7 +1,7 @@
 define(function(){
 	return "<ul class=\"htl_room_list\">\n\
 	{{#each RoomInfos}}\n\
-	<li class=\"js-room-item\" data-room-id={{Room}} data-price=\"{{RoomPrice}}\" style=\"{{#is ../RoomTotalCount \'<=\' 1}}border-bottom:none;{{/is}}{{#is @index \'>\' 0}}display:none;{{/is}}\">\n\
+	<li class=\"js-room-item\" data-room-id={{Room}} data-hotel-id={{Hotel}} data-price=\"{{RoomPrice}}\" style=\"{{#is ../RoomTotalCount \'<=\' 1}}border-bottom:none;{{/is}}{{#is @index \'>\' 0}}display:none;{{/is}}\">\n\
         <div class=\"room_name\">\n\
             <span>{{RoomName}}</span>\n\
             {{#notEmpty HotelAddInfos}}<i class=\"icon_htltips\" data-params=\"{options:{type:\'jmp_table\',classNames:{boxType:\'jmp_table\'},template:\'#jmp_pkg_title\', content:{txt0:\'酒店特别提示\',txt1:\'{{#each HotelAddInfos}}{{#dtdate EffectDate}}{{/dtdate}}至{{#dtdate ExpireDate}}{{/dtdate}}:{{#noNewline Description}}{{/noNewline}}<br>{{/each}}\'},css:{maxWidth:\'500\',minWidth:\'300\'},alignTo:\'cursor\'}}\" data-role=\"jmp\"></i>{{/notEmpty}}\n\
