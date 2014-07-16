@@ -137,7 +137,6 @@
     #cui_lang_bottom .cui_lang_big5,#cui_lang_bottom .cui_lang_gb,#cui_lang_bottom .cui_lang_jp,#cui_lang_bottom .cui_lang_jap,#cui_lang_bottom .cui_lang_korea,#cui_lang_bottom .cui_lang_ru_big5{background-color:#666;}
     #cui_lang_bottom .cui_lang_ru_big5{width:62px;overflow:hidden;}.nav_ico_trains{position:absolute;z-index:2;display:block;width:33px;height:26px;margin:-10px 0 0 30px;overflow:hidden;background:url(http://picint.sh.ctriptravel.com/packages111012/un_ico_nav130117.png) 0 0 no-repeat;_background:url(http://picint.sh.ctriptravel.com/packages111012/un_ico_nav130117_8.png) 0 0 no-repeat;cursor:pointer;*margin-top:-22px;}
     a:hover .nav_ico_trains{width:52px;background-position:-47px 0;}
-    #J_loading span{width:60px;height:60px;display:block;margin:10px auto}
   </style>
   <link href="./pl_files/pkg_header.css" rel="stylesheet" type="text/css">
   <link href="./pl_files/public_vacation130620.css" rel="stylesheet" type="text/css">
@@ -175,13 +174,30 @@
       <p>人数：2成人 出发日期：2014-06-14</p>
     </div>
   </div>
-  <div class="pay_box" id="J_paybox">
-    <ul id="J_paycnt">
-      <li id="J_loading"><span><img src="http://pic.c-ctrip.com/packages111012/loading_50-0816.gif"></span></li>
+  <div class="pay_box">
+    <ul>
+      <li>此订单您拆分成了3笔支付</li>
+      <li>
+        <span class="pay_ways">支付方式一：</span>
+        <span class="pay_choose">现金</span>
+        <p class="pay_yetnum">支付<span class="pay_price"><dfn>￥</dfn>0</span></p>
+        <a href="http://prototype.dev.sh.ctriptravel.com/code_pub/offline/vacation_v2/pay/pay.php###" class="pay_link">填写礼品卡信息</a>
+      </li>
+      <li>
+        <span class="pay_ways">支付方式二：</span>
+        <span class="pay_choose">信用卡</span>
+        <p class="pay_yetnum">支付<span class="pay_price"><dfn>￥</dfn>1234560</span></p>
+        <a href="http://prototype.dev.sh.ctriptravel.com/code_pub/offline/vacation_v2/pay/pay.php###" class="pay_link">修改信用卡/礼品卡信息</a>
+        <span class="pay_notnull"><b>＊</b>信用卡信息必填</span>
+      </li>
     </ul>
+    <div class="pay_split">
+      <a href="http://prototype.dev.sh.ctriptravel.com/code_pub/offline/vacation_v2/pay/pay.php###">重新拆分</a>
+      <p class="pay_tipnum">重新拆分后，已录入的信用卡/礼品卡信息会清空，请谨慎操作</p>
+    </div>
     <p class="pay_step">
-      <a href="#" class="pay_prestep" title="重新拆分后，已录入的信用卡/礼品卡信息会清空，请谨慎操作"><b></b>上一步</a>
-      <a href="javascript:void(0)" class="btn_blue_big" id="J_submit">确认拆分</a>
+      <a href="http://prototype.dev.sh.ctriptravel.com/code_pub/offline/vacation_v2/pay/pay.php###" class="pay_prestep" title="重新拆分后，已录入的信用卡/礼品卡信息会清空，请谨慎操作"><b></b>上一步</a>
+      <a href="http://prototype.dev.sh.ctriptravel.com/code_pub/offline/vacation_v2/pay/pay.php###" class="btn_blue_big">确认提交</a>
     </p>
   </div>
 
@@ -227,7 +243,7 @@
       jquery: 'vacation/lib/jquery'
     }
   });
-  seajs.use('pay/pay/detachpay');
+  seajs.use('pay/paycheck');
 </script>
 
 </body>
