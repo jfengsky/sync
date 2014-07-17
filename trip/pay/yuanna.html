@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>越南标题</title>
+  <script type="text/javascript" src="http://webresource.ctrip.com/code/cquery/LABjs/LAB.js?releaseno=2014_02_24_001" charset="utf-8"></script>
+  <script type="text/javascript" src="http://webresource.ctrip.com/code/cquery/cQuery_110421.js?releaseno=2014_02_24_001" charset="utf-8"></script>
+  <script type="text/javascript" src="http://webresource.c-ctrip.com/ResVacationOnline/R7/js/vacation/lib/vacation_global.min.js?releaseno=2014_02_24_001" charset="utf-8"></script>
+
+</head>
+<body id="test">
+<a href="#">越南</a>
+<div class="">
+  <p>越南话</p>
+  <div class="">
+    <div>
+      文本3
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+(function(){
+  var obj = document.getElementsByTagName('html');
+  function text(e) {
+    var t = "",
+        Regx = /越南/g;
+    e = e.childNodes || e;
+    for (var j = 0; j < e.length; j++) {
+      if (e[j].nodeName !== 'SCRIPT') {
+        t = e[j].nodeType != 1 ? e[j].nodeValue : text(e[j].childNodes);
+        if(t && Regx.test(t) ){
+          $(e[j]).text(t.replace(Regx,''))
+        }
+      }
+    }
+  }
+  text(obj);
+})();
+//var obj = document.getElementById("test");
+
+</script>
+
+
+
+</body>
+</html>

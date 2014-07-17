@@ -18,7 +18,16 @@
  */
 define(function(require, exports, module) {
   "use strict";
-  var $ = require('jquery');
+  var $ = require('jquery'),
+      formCheck = {
+        reg:{
+          moneyReg: /^[0-9]{1}\d*(\.\d{1,2})?$/        // 数字金额正则验证，2位小数
+        },
+        msg:{
+          moneyMsg: '清输入正确的金额，小数点2位',
+          maxThan: '填写金额超出支付金额'
+        }
+      };
 
   // TODO 获取可拆分次数
   function payDeatch(){
@@ -33,7 +42,13 @@ define(function(require, exports, module) {
       radioIndex = 1,
 
       // TODO 获取订单金额
-      payTotal = 123456,
+      PAYTOTAL = 10000,
+
+      // 已支付金额，由于第一个支付方式默认全部支付，所以默认值与总额一致
+      tempTotal = PAYTOTAL,
+
+      // 还剩需要支付金额
+      tempLeft = 0,
 
     // TODO 获取可选支付方式
     payType = ['信用卡', '外网自助支付', '现金'];
@@ -59,6 +74,13 @@ define(function(require, exports, module) {
       return '<li id="J_payinfo">'+ btn +'已选择支付：<span class="pay_price"><dfn>￥</dfn><span id="J_haspay">' + _hasPay + '</span></span>还剩余：<span class="pay_price"><dfn>￥</dfn><span id="J_leftpay">' + _leftPay + '</span></span></li>';
     }
 
+    this._moneyErr = function(_obj, _str){
+      var tpl = '<p class="pay_tipnum"><b></b><i></i>' + _str + '</p>';
+      $(_obj).addClass('payerror').closest('li').append(tpl);
+    };
+    this._clearMoneyErr = function(_obj){
+      $(_obj).removeClass('payerror').closest('li').find('.pay_tipnum').remove();
+    };
 
     /**
      * 拆分按钮 异步加入页面中
@@ -110,7 +132,11 @@ define(function(require, exports, module) {
      *    hasCash: 是否现金, 只能选一次现金，其它则灰掉
      */
     this._tpl = function( _args ){
-      var payTypeList = '';
+      var payTypeList = '',
+          leftMoney = _args.total;
+      if(leftMoney <= 0){
+        leftMoney = ''
+      }
       $.each(_args.payType, function(_index, _item){
         if(_index === 0){
           payTypeList += '<label class="base_label"><input type="radio" name="pay'+ _args.radioIndex +'" checked>' + _item + '</label>';
@@ -118,11 +144,11 @@ define(function(require, exports, module) {
           payTypeList += '<label class="base_label"><input type="radio" name="pay'+ _args.radioIndex +'">' + _item + '</label>';
         }
       });
+
       return '<li id="J_paylist' + _args.NO + '">' +
         '<a href="javascript:void(0)" class="pay_del J_patydel">删除</a>' +
         '<span class="pay_ways">支付方式<span class="J_payindex"></span>：</span>' + payTypeList +
-        '<strong>支付</strong><input type="number" value="' + _args.total + '" class="pay_inputnum J_payinput">元' +
-        '<p class="pay_tipnum" style="display:none"><b></b><i></i>填写金额超出支付金额</p>';
+        '<strong>支付</strong><input type="number" value="' + leftMoney + '" class="pay_inputnum J_payinput">元';
     };
 
     /**
@@ -143,10 +169,13 @@ define(function(require, exports, module) {
 
       // 添加支付方式
       $('#J_paybox').delegate('#J_detach', 'click', function(){
+//        if(tempLeft <= 0){
+//          console.log('已经超过最大金额');
+//        }
         var html = self._tpl({
           payType: payType,
           NO: detachIndex,
-          total: payTotal,
+          total: tempLeft,
           hasCash: true,
           detachs: detachNum,
           radioIndex: radioIndex
@@ -157,6 +186,7 @@ define(function(require, exports, module) {
           $('#J_detach').remove();
         }
         self._payIndex();
+        self._sumMoney();
         detachIndex++;
         radioIndex++;
       });
@@ -178,15 +208,49 @@ define(function(require, exports, module) {
             $('#J_payinfo').prepend(self._detachButton);
           }
           self._payIndex();
+          self._sumMoney();
           detachIndex--;
         }
 
       })
+
+      // 数字输入框绑定事件
+      $('#J_paybox').delegate('.J_payinput', 'focus', function(){
+        self._clearMoneyErr(this);
+      });
+
+      $('#J_paybox').delegate('.J_payinput', 'blur', function(){
+        var val = $(this).val();
+        if( formCheck.reg.moneyReg.test(val) ){
+          self._sumMoney(this);
+        } else {
+          self._moneyErr(this, formCheck.msg.moneyMsg);
+        }
+      });
+
     };
 
-    this._delPay = function(){
+    /**
+     * 计算金额
+     * @private
+     */
+    this._sumMoney = function(_obj){
+      var total = 0;
+      $.each($('#J_paycnt .J_payinput'), function(_index, _item){
+        total += $(_item).val() - 0;
+      });
+      tempLeft = tempTotal - total;
+      if( tempLeft >= 0){
+        $('#J_haspay').text(total);
+        $('#J_leftpay').text(tempLeft);
+        $('.J_payinput').removeClass('payerror');
+        $('.pay_tipnum').remove();
+      } else if( tempLeft < 0 && _obj) {
+          self._moneyErr(_obj, formCheck.msg.maxThan);
+      }
 
     };
+
     /**
      * 默认第一条支付 填写金额 选择第一个支付方式
      * @private
@@ -198,7 +262,7 @@ define(function(require, exports, module) {
       if(_arg.detachs > 1){
         moreDetach = true
       }
-      html += self._leftPay(payTotal, 0, moreDetach);
+      html += self._leftPay(tempTotal, 0, moreDetach);
 
       $('#J_loading').remove();
       $('#J_paycnt').append(html);
@@ -214,7 +278,7 @@ define(function(require, exports, module) {
       self._defaultPay({
         payType: payType,
         NO: detachIndex,
-        total:payTotal,
+        total:tempTotal,
         hasCash: true,
         detachs: detachNum,
         radioIndex: radioIndex
@@ -222,6 +286,7 @@ define(function(require, exports, module) {
 
       // 按钮绑定事件
       self._bind();
+
 
     }
   }
