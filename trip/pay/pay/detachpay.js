@@ -58,7 +58,7 @@ define(function(require, exports, module) {
      * @param {Number} _number
      * @returns {string}
      */
-    this._topNotice = function( _number ){
+    this._topNotice = function( _number ){ // 可拆分笔数提示
       return '<li>拆分支付笔数不得大于出行成人数，此订单最多可拆分' + _number + '笔支付</li>';
     };
 
@@ -66,7 +66,7 @@ define(function(require, exports, module) {
      * 剩余金额模板
      * @private
      */
-    this._leftPay = function(_hasPay, _leftPay, _bool){
+    this._leftPay = function(_hasPay, _leftPay, _bool){  // 剩余金额模板
       var btn = '';
       if(_bool){
         btn = self._detachButton
@@ -74,11 +74,11 @@ define(function(require, exports, module) {
       return '<li id="J_payinfo">'+ btn +'已选择支付：<span class="pay_price"><dfn>￥</dfn><span id="J_haspay">' + _hasPay + '</span></span>还剩余：<span class="pay_price"><dfn>￥</dfn><span id="J_leftpay">' + _leftPay + '</span></span></li>';
     }
 
-    this._moneyErr = function(_obj, _str){
+    this._moneyErr = function(_obj, _str){ // 错误金额提示
       var tpl = '<p class="pay_tipnum"><b></b><i></i>' + _str + '</p>';
       $(_obj).addClass('payerror').closest('li').append(tpl);
     };
-    this._clearMoneyErr = function(_obj){
+    this._clearMoneyErr = function(_obj){ // 移除错误金额提示
       $(_obj).removeClass('payerror').closest('li').find('.pay_tipnum').remove();
     };
 
@@ -88,7 +88,7 @@ define(function(require, exports, module) {
     this._detachButton = '<a href="javascript:void(0)" id="J_detach" class="pay_waysbtn"><span>+</span>支付方式</a>';
 
 
-    this._listNo = function( _num ){
+    this._listNo = function( _num ){ // 转中文序号
       switch (_num){
         case 1:
           return '一';
@@ -131,7 +131,7 @@ define(function(require, exports, module) {
      *    total: 支付金额
      *    hasCash: 是否现金, 只能选一次现金，其它则灰掉
      */
-    this._tpl = function( _args ){
+    this._tpl = function( _args ){ //拆分模板
       var payTypeList = '',
           leftMoney = _args.total;
       if(leftMoney <= 0){
@@ -155,7 +155,7 @@ define(function(require, exports, module) {
      * 重排支付方式序号
      * @private
      */
-    this._payIndex = function(){
+    this._payIndex = function(){ //重排支付方式序号
       $.each($('#J_paycnt .J_payindex'), function(_index, _item){
         $(_item).text(self._listNo(_index + 1));
       });
@@ -165,7 +165,7 @@ define(function(require, exports, module) {
      * 按钮绑定添加事件
      * @private
      */
-    this._bind = function(){
+    this._bind = function(){  // 按钮绑定添加事件
 
       // 添加支付方式
       $('#J_paybox').delegate('#J_detach', 'click', function(){
@@ -234,7 +234,7 @@ define(function(require, exports, module) {
      * 计算金额
      * @private
      */
-    this._sumMoney = function(_obj){
+    this._sumMoney = function(_obj){ // 计算金额
       var total = 0;
       $.each($('#J_paycnt .J_payinput'), function(_index, _item){
         total += $(_item).val() - 0;
@@ -255,7 +255,7 @@ define(function(require, exports, module) {
      * 默认第一条支付 填写金额 选择第一个支付方式
      * @private
      */
-    this._defaultPay = function( _arg ){
+    this._defaultPay = function( _arg ){ // 默认第一条支付
       var html = self._topNotice(_arg.detachs),
           moreDetach = false;
       html += self._tpl(_arg);
