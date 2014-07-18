@@ -25,7 +25,9 @@ define(function(require, exports, module) {
         },
         msg:{
           moneyMsg: '清输入正确的金额，小数点2位',
-          maxThan: '填写金额超出支付金额'
+          maxThan: '填写金额超出支付金额',
+          submintMaxThan: '支付金额必须与订单总额一致',
+          submitCashOnce: '拆分支付只能选择一次现金支付，请重新拆分'
         }
       };
 
@@ -49,6 +51,8 @@ define(function(require, exports, module) {
 
       // 还剩需要支付金额
       tempLeft = 0,
+
+      hasTips = false,
 
     // TODO 获取可选支付方式
     payType = ['信用卡', '外网自助支付', '现金'];
@@ -82,6 +86,18 @@ define(function(require, exports, module) {
       $(_obj).removeClass('payerror').closest('li').find('.pay_tipnum').remove();
     };
 
+    /**
+     * 错误提示
+     * @param {String} _str 提示话语
+     * @return
+     */
+    this._errorTips = function(_str){ // 错误提示
+      var tpl = '<p class="pay_tips">' + _str + '</p>';
+      if(!hasTips){
+        $('#J_paycnt').after(tpl);
+      };
+      hasTips = true;
+    };
     /**
      * 拆分按钮 异步加入页面中
      */
@@ -228,6 +244,17 @@ define(function(require, exports, module) {
         }
       });
 
+      /**
+       * 提交支付按钮
+       */
+      $('#J_submit').bind('click', function(){
+        // TODO 金额校验
+        // TODO 只能选一个现金支付校验
+        if (tempLeft < 0 ){
+          self._errorTips(formCheck.msg.submintMaxThan);
+          return false;
+        }
+      })
     };
 
     /**
