@@ -154,14 +154,15 @@ define(function(require, exports, module) {
         leftMoney = ''
       }
       $.each(_args.payType, function(_index, _item){
+        // TODO radio的value问题
         if(_index === 0){
-          payTypeList += '<label class="base_label"><input type="radio" name="pay'+ _args.radioIndex +'" checked>' + _item + '</label>';
+          payTypeList += '<label class="base_label"><input type="radio" name="pay'+ _args.radioIndex +'" value="' + _item + '" checked>' + _item + '</label>';
         } else {
-          payTypeList += '<label class="base_label"><input type="radio" name="pay'+ _args.radioIndex +'">' + _item + '</label>';
+          payTypeList += '<label class="base_label"><input type="radio" name="pay'+ _args.radioIndex +'" value="' + _item + '">' + _item + '</label>';
         }
       });
 
-      return '<li id="J_paylist' + _args.NO + '">' +
+      return '<li class="J_list">' +
         '<a href="javascript:void(0)" class="pay_del J_patydel">删除</a>' +
         '<span class="pay_ways">支付方式<span class="J_payindex"></span>：</span>' + payTypeList +
         '<strong>支付</strong><input type="number" value="' + leftMoney + '" class="pay_inputnum J_payinput">元';
@@ -175,6 +176,21 @@ define(function(require, exports, module) {
       $.each($('#J_paycnt .J_payindex'), function(_index, _item){
         $(_item).text(self._listNo(_index + 1));
       });
+    };
+
+    /**
+     * 获取要提交的内容
+     * @return {Array} 提交的数组
+     */
+    this._getSendData = function(){
+      var sendData = [];
+      $.each( $('#J_paycnt li.J_list'), function(_index, _item){
+        var tempData = {}
+        tempData.type = $(_item).find('input[type="radio"]:checked').val();
+        tempData.value = $(_item).find('input.J_payinput').val();
+        sendData.push(tempData);
+      });
+      return sendData;
     };
 
     /**
@@ -248,12 +264,28 @@ define(function(require, exports, module) {
        * 提交支付按钮
        */
       $('#J_submit').bind('click', function(){
+        var cashIndex = 0;
         // TODO 金额校验
-        // TODO 只能选一个现金支付校验
         if (tempLeft < 0 ){
           self._errorTips(formCheck.msg.submintMaxThan);
           return false;
         }
+
+        // TODO 只能选一个现金支付校验
+        console.log(self._getSendData());
+
+//        $.each( $('#J_paycnt input[type="radio"]:checked') , function(_index, _item){
+//          if ($(_item).val() ==="现金"){
+//            cashIndex++
+//          }
+//        })
+//        if( cashIndex >= 2){
+//          self._errorTips(formCheck.msg.submitCashOnce);
+//          return false;
+//        }
+
+
+
       })
     };
 
