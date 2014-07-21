@@ -178,6 +178,9 @@ define(function(require, exports, module) {
       });
     };
 
+    this._checkSendData = function(){
+
+    };
     /**
      * 获取要提交的内容
      * @return {Array} 提交的数组
