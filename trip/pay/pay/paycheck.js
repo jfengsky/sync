@@ -7,7 +7,7 @@
 
 define(function(require, exports, module) {
   "use strict";
-
+  var $ = require('jquery');
   // loading动画，请求数据然后显示拆分支付方式
   function PayCheck(){
     var data = {
@@ -26,26 +26,38 @@ define(function(require, exports, module) {
 
     /**
      * 支付拆分模板
-     * @param {} _data
      * @returns {string}
      *
      */
-    this._tpl = function(_data){
-      return '<li>' +
-        '<span class="pay_ways">支付方式一：</span>' +
-        '<span class="pay_choose">现金</span>' +
-        '<p class="pay_yetnum">支付<span class="pay_price"><dfn>￥</dfn>0</span></p>' +
+    this._tpl = function(){
+      return '{{#pay}}' +
+      '<li>' +
+        '<span class="pay_ways"></span>' +
+        '<span class="pay_choose">{{type}}</span>' +
+        '<p class="pay_yetnum">支付<span class="pay_price"><dfn>￥</dfn>{{money}}</span></p>' +
         '<a href="javascript:void(0)" class="pay_link">填写礼品卡信息</a>' +
-        '</li>';
+        '</li>' +
+        '{{/pay}}';
     }
 
-    this.init = function(){
-      $.each(data, function(_index, _item){
-        var html = '';
-          html += self._tpl(_item);
-      })
+    /**
+     *
+     * @private
+     */
+    this._payNo = function(){
+      $.each(data.pay, function(_index, _item){
 
+      })
+    };
+
+    this.init = function(){
+      var template = Handlebars.compile(self._tpl());
+
+      $('#J_loading').remove();
+      $("#J_paybox").html(template(data));
     }
   };
 
+
+  new PayCheck().init();
 });
