@@ -92,7 +92,8 @@ define(function(require, exports, module) {
      * @return
      */
     this._errorTips = function(_str){ // 错误提示
-      var tpl = '<p class="pay_tips">' + _str + '</p>';
+      var tpl = '<p class="pay_tips" id="J_errTip">' + _str + '</p>';
+      $('#J_errTip').remove();
       if(!hasTips){
         $('#J_paycnt').after(tpl);
       };
@@ -178,8 +179,22 @@ define(function(require, exports, module) {
       });
     };
 
-    this._checkSendData = function(){
-
+    this._checkSendData = function(_data){
+      var cashNum = 0;
+      $.each(_data, function(_index, _item){
+        if(_item.type === '现金'){
+          cashNum++;
+        };
+//        if(!_item.value){
+//          _data.splice(_index, 1);
+//        }
+      })
+      // 只能选一个现金支付
+      if( cashNum >= 2){
+        self._errorTips(formCheck.msg.submitCashOnce);
+        return false;
+      }
+      return [true, _data];
     };
     /**
      * 获取要提交的内容
@@ -187,8 +202,8 @@ define(function(require, exports, module) {
      */
     this._getSendData = function(){
       var sendData = [];
-      $.each( $('#J_paycnt li.J_list'), function(_index, _item){
-        var tempData = {}
+      $.each( $('#J_paycnt .J_list'), function(_index, _item){
+        var tempData = {};
         tempData.type = $(_item).find('input[type="radio"]:checked').val();
         tempData.value = $(_item).find('input.J_payinput').val();
         sendData.push(tempData);
@@ -275,17 +290,17 @@ define(function(require, exports, module) {
         }
 
         // TODO 只能选一个现金支付校验
-        console.log(self._getSendData());
+        self._checkSendData(self._getSendData());
+//        if( self._checkSendData(self._getSendData()) ){
+//
+//        }
 
 //        $.each( $('#J_paycnt input[type="radio"]:checked') , function(_index, _item){
 //          if ($(_item).val() ==="现金"){
 //            cashIndex++
 //          }
 //        })
-//        if( cashIndex >= 2){
-//          self._errorTips(formCheck.msg.submitCashOnce);
-//          return false;
-//        }
+
 
 
 
