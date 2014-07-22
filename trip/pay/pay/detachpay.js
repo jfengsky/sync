@@ -279,6 +279,22 @@ define(function(require, exports, module) {
       });
 
       /**
+       * 向服务端发送数据
+       * @param {} _data
+       * @private
+       */
+      this._send = function(_data){
+        $.ajax({
+          url: '',
+          type: 'post',
+          cache: false,
+          success: function(_d){
+            console.log(_d)
+          }
+        });
+      };
+
+      /**
        * 提交支付按钮
        */
       $('#J_submit').bind('click', function(){
@@ -301,7 +317,7 @@ define(function(require, exports, module) {
 //          }
 //        })
 
-
+        self._send();
 
 
       })

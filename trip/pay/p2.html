@@ -176,6 +176,10 @@
   </div>
   <div class="pay_box">
     <ul>
+      <li id="J_loading"><span><img src="http://pic.c-ctrip.com/packages111012/loading_50-0816.gif"></span></li>
+    </ul>
+    <!--
+    <ul>
       <li>此订单您拆分成了3笔支付</li>
       <li>
         <span class="pay_ways">支付方式一：</span>
@@ -191,6 +195,7 @@
         <span class="pay_notnull"><b>＊</b>信用卡信息必填</span>
       </li>
     </ul>
+    -->
     <div class="pay_split">
       <a href="http://prototype.dev.sh.ctriptravel.com/code_pub/offline/vacation_v2/pay/pay.php###">重新拆分</a>
       <p class="pay_tipnum">重新拆分后，已录入的信用卡/礼品卡信息会清空，请谨慎操作</p>
@@ -243,7 +248,7 @@
       jquery: 'vacation/lib/jquery'
     }
   });
-  seajs.use('pay/paycheck');
+  seajs.use('pay/pay/paycheck');
 </script>
 
 </body>
