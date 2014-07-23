@@ -15,7 +15,8 @@ define(function(require, exports, module) {
       pay:[
         {
           "type": "现金",
-          "money": 1000
+          "money": 1000,
+          "giftcard": true
         },{
           "type": "信用卡",
           "money": 2000
@@ -35,13 +36,15 @@ define(function(require, exports, module) {
         '<span class="pay_ways"></span>' +
         '<span class="pay_choose">{{type}}</span>' +
         '<p class="pay_yetnum">支付<span class="pay_price"><dfn>￥</dfn>{{money}}</span></p>' +
+        '{{#if giftcard}}' +
         '<a href="javascript:void(0)" class="pay_link">填写礼品卡信息</a>' +
+        '{{/if}}' +
         '</li>' +
         '{{/pay}}';
     }
 
     /**
-     *
+     * 拼装数据，给每个支付加上序号
      * @private
      */
     this._payNo = function(){
