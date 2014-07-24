@@ -57,6 +57,13 @@ define(function(require, exports, module) {
     // TODO 获取可选支付方式
     payType = ['信用卡', '外网自助支付', '现金'];
 
+    var paymentType = {
+      0: '现金',
+      1: '信用卡',
+      3: '第三方支付',
+      4: '其它'
+    };
+
     /**
      * 可拆分笔数提示
      * @param {Number} _number
