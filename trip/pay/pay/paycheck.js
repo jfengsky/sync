@@ -87,7 +87,6 @@ define(function(require, exports, module) {
       $.each(data.pay, function(_index, _item){
         data.pay[_index].NO = '支付方式' + self._listNo(_index + 1) + '：'
       })
-      console.log(data)
     };
 
     this.init = function(){
