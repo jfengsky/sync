@@ -234,8 +234,10 @@ define(function(require, exports, module) {
       }
       return [true, _data];
     };
+
     /**
      * 获取要提交的内容
+     * savepaymentinfo{"TmpOrderID":127692610,"OrderID":1148679317,"Pkg":2270307,"PkgName":"中国1-9999日私家团•B线--常规测试专用","NumAdult":2,"NumChild":0,"TotalAmount":110.0000,"IsEnableTicketPay":false,"TakeoffDate":"2014-08-28T00:00:00","Payments":[{"PaymentId":"1","Amount":"50.00","PaymentType":"Cash"},{"PaymentId":"2","Amount":"60.00","PaymentType":"CCard"}]}
      * @return {Array} 提交的数组
      */
     this._getSendData = function(){
@@ -246,6 +248,7 @@ define(function(require, exports, module) {
         tempData.value = $(_item).find('input.J_payinput').val();
         sendData.push(tempData);
       });
+      console.log(sendData)
       return sendData;
     };
 
@@ -334,7 +337,7 @@ define(function(require, exports, module) {
           type: 'post',
           cache: false,
           success: function(_d){
-            console.log(_d)
+            // console.log(_d)
             // TODO 返回可定检查后的表单，然后再隐藏提交
           }
         });

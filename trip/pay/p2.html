@@ -242,6 +242,34 @@
 
 <script src="../vacation/lib/vacation_global.min.js"></script>
 <script>
+  GV.app.order = {
+    para: {
+      ver: ''
+    },
+    vars: {
+      handles: {//api
+        getPayHtmlInfo:"/booking/Handler2/PaymentOperatationHandler.aspx? ?uid=4q7ytwVAoLtbJoRiISHzmg%3d%3d&tmporderid=127692610"
+      },
+      initData: {//初始化的JSON数据
+        TotalAmount:110.0000,
+        productID:2270307,
+        tmpOrderId:127692610,
+        aduNumber:2,
+        serverDataTime:'2014-07-30 16:49:03',
+        paymentOrderInfoJson:'{"TmpOrderID":127692610,"OrderID":1148679317,"Pkg":2270307,"PkgName":"中国1-9999日私家团•B线--常规测试专用","NumAdult":2,"NumChild":0,"TotalAmount":110.0000,"IsEnableTicketPay":false,"TakeoffDate":"2014-08-28T00:00:00","Payments":[{"PaymentId":"1","Amount":"50.00","PaymentType":"Cash","BillNo":"0"},{"PaymentId":"2","Amount":"60.00","PaymentType":"CCard","BillNo":"12345"}]}',
+        PaymentCategory:'CCard,ThirdPay,Cash',
+        ClientSource: 'Offline'
+
+      },
+      IsError:'1',
+      ErrorMessage:'',
+      IsDirectFlight:'1',
+      isLogin:1,
+      SubmitOrderUrl:'booking/Handler2/SubmitBillOrder.aspx'
+    }
+  };
+</script>
+<script>
   seajs.config({
     base: '../',
     charset: 'utf-8',
