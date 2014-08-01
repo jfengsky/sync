@@ -3,11 +3,16 @@
 <head lang="en">
   <meta charset="UTF-8">
   <title>suggest功能</title>
+  <style>
+  .cur{
+    color: #f60
+  }
+  </style>
 </head>
 <body>
 
 <input type="text" name="" id="J_keyword" />
-<div id="J_list">
+<div id="J_list" style="display:none">
   <ul>
     <li>aaa</li>
     <li>bbb</li>
@@ -16,5 +21,17 @@
     <li>eee</li>
   </ul>
 </div>
+
+<script src="../vacation/lib/vacation_global.min.js"></script>
+<script>
+  seajs.config({
+    base: '../',
+    charset: 'utf-8',
+    alias: {
+      jquery: 'vacation/lib/jquery'
+    }
+  });
+  seajs.use('pay/suggest');
+</script>
 </body>
 </html>

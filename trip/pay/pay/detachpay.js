@@ -29,22 +29,40 @@ define(function(require, exports, module) {
           submintMaxThan: '支付金额必须与订单总额一致',
           submitCashOnce: '拆分支付只能选择一次现金支付，请重新拆分'
         }
-      };
+      },
+      PAYTYPES = [{  // 支付方式和显示顺序对照
+        rk: 0,
+        en:"Cash",
+        ch:"现金"
+      },{
+        rk: 1,
+        en:"CCard",
+        ch:"信用卡"
+      },{
+        rk: 2,
+        en:"ThirdPay",
+        ch:"第三方支付"
+      },{
+        rk: 3,
+        en:"Other",
+        ch:"其他"
+      }],
+      GVO = GV.app.order;
 
-  // TODO 获取可拆分次数
+  // 获取可拆分次数
   function payDeatch(){
     var self = this,
 
       // TODO 获取可拆分次数
-      detachNum = 5,
+      detachNum = GVO.vars.initData.aduNumber,
 
       // 已经创立的支付方式个数
       detachIndex = 1,
 
       radioIndex = 1,
 
-      // TODO 获取订单金额
-      PAYTOTAL = 10000,
+      // 获取订单金额
+      PAYTOTAL = GVO.vars.initData.TotalAmount,
 
       // 已支付金额，由于第一个支付方式默认全部支付，所以默认值与总额一致
       tempTotal = PAYTOTAL,
@@ -54,15 +72,9 @@ define(function(require, exports, module) {
 
       hasTips = false,
 
-    // TODO 获取可选支付方式
-    payType = ['信用卡', '外网自助支付', '现金'];
+      payTypes = GVO.vars.initData.PaymentCategory,
 
-    var paymentType = {
-      0: '现金',
-      1: '信用卡',
-      3: '第三方支付',
-      4: '其它'
-    };
+      payType = [];
 
     /**
      * 可拆分笔数提示
@@ -162,11 +174,10 @@ define(function(require, exports, module) {
         leftMoney = ''
       }
       $.each(_args.payType, function(_index, _item){
-        // TODO radio的value问题
         if(_index === 0){
-          payTypeList += '<label class="base_label"><input type="radio" name="pay'+ _args.radioIndex +'" value="' + _item + '" checked>' + _item + '</label>';
+          payTypeList += '<label class="base_label"><input type="radio" name="pay'+ _args.radioIndex +'" value="' + _item['en'] + '" checked>' + _item['ch'] + '</label>';
         } else {
-          payTypeList += '<label class="base_label"><input type="radio" name="pay'+ _args.radioIndex +'" value="' + _item + '">' + _item + '</label>';
+          payTypeList += '<label class="base_label"><input type="radio" name="pay'+ _args.radioIndex +'" value="' + _item['en'] + '">' + _item['ch'] + '</label>';
         }
       });
 
@@ -177,10 +188,30 @@ define(function(require, exports, module) {
     };
 
     /**
-     * 重排支付方式序号
+     * 获取当前用户可支付方式并按 现金>信用卡>第三方支付>其它 排序
+     * @param {Array}  _allTypes       所有支付方式
+     * @param {String} _thisType       当前用户可支付字符串
+     * @returns {Array}                排序后的当前用户可支付方式
+     */
+    this._payRank = function(_allTypes, _thisType){  //排序后的当前用户可支付方式
+      var tempThisType = [],
+          tempAllType = [];
+      if(_thisType){
+        tempThisType = _thisType.split(',');
+      };
+      $.each(_allTypes, function(_index, _item){
+        if( $.inArray(_item['en'], tempThisType) > -1 ){
+          tempAllType.push(_item)
+        }
+      });
+      return tempAllType
+    };
+
+    /**
+     * 重排支付序号
      * @private
      */
-    this._payIndex = function(){ //重排支付方式序号
+    this._payIndex = function(){ // 重排支付序号
       $.each($('#J_paycnt .J_payindex'), function(_index, _item){
         $(_item).text(self._listNo(_index + 1));
       });
@@ -218,6 +249,8 @@ define(function(require, exports, module) {
       return sendData;
     };
 
+
+
     /**
      * 按钮绑定添加事件
      * @private
@@ -226,14 +259,18 @@ define(function(require, exports, module) {
 
       // 添加支付方式
       $('#J_paybox').delegate('#J_detach', 'click', function(){
-//        if(tempLeft <= 0){
-//          console.log('已经超过最大金额');
-//        }
-        var html = self._tpl({
+        var html = '',
+            hascheckCash = false;
+        $.each($('#J_paycnt input[type="radio"]:checked'), function(_index, _item){
+          if($(_item).val() === 'Cash'){
+            hascheckCash = true;
+          }
+        });
+        html = self._tpl({
           payType: payType,
           NO: detachIndex,
           total: tempLeft,
-          hasCash: true,
+          hasCash: hascheckCash,
           detachs: detachNum,
           radioIndex: radioIndex
         });
@@ -242,6 +279,7 @@ define(function(require, exports, module) {
         if( detachIndex === detachNum){
           $('#J_detach').remove();
         }
+
         self._payIndex();
         self._sumMoney();
         detachIndex++;
@@ -253,21 +291,21 @@ define(function(require, exports, module) {
 
         if( detachIndex <= 2){
           // 只剩1个支付方式则删除金额
-
+          $('#J_paycnt input.J_payinput').val('')
         } else {
           $(this).closest('li').remove();
-          // TODO 重写支付金额
-
-          // TODO 重排支付方式序号
 
           // 加入支付按钮
           if( $('#J_detach').length === 0){
             $('#J_payinfo').prepend(self._detachButton);
           }
+
+          // 重排支付方式序号
           self._payIndex();
-          self._sumMoney();
           detachIndex--;
         }
+        // 重写支付金额
+        self._sumMoney();
 
       })
 
@@ -297,6 +335,7 @@ define(function(require, exports, module) {
           cache: false,
           success: function(_d){
             console.log(_d)
+            // TODO 返回可定检查后的表单，然后再隐藏提交
           }
         });
       };
@@ -305,6 +344,9 @@ define(function(require, exports, module) {
        * 提交支付按钮
        */
       $('#J_submit').bind('click', function(){
+
+        // TODO 在发送ajax后页面交互屏蔽
+
         var cashIndex = 0;
         // TODO 金额校验
         if (tempLeft < 0 ){
@@ -374,12 +416,15 @@ define(function(require, exports, module) {
     // 初始化
     this.init = function(){
 
+      // 初始化当前订单可支付方式
+      payType = self._payRank(PAYTYPES, payTypes);
+
       // 初始化默认拆分模板
       self._defaultPay({
         payType: payType,
         NO: detachIndex,
         total:tempTotal,
-        hasCash: true,
+        hasCash: false,
         detachs: detachNum,
         radioIndex: radioIndex
       });
