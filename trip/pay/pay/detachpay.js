@@ -53,7 +53,7 @@ define(function(require, exports, module) {
   function payDeatch(){
     var self = this,
 
-      // TODO 获取可拆分次数
+      // 获取可拆分次数
       detachNum = GVO.vars.initData.aduNumber,
 
       // 已经创立的支付方式个数
@@ -70,7 +70,7 @@ define(function(require, exports, module) {
       // 还剩需要支付金额
       tempLeft = 0,
 
-      hasTips = false,
+      // hasTips = false,
 
       payTypes = GVO.vars.initData.PaymentCategory,
 
@@ -87,7 +87,10 @@ define(function(require, exports, module) {
 
     /**
      * 剩余金额模板
-     * @private
+     * @param  {Number}   _hasPay    已经支付的金额数
+     * @param  {Number}   _leftPay   剩余未支付的金额数
+     * @param  {Boolean}  _bool      是否显示拆分支付按钮
+     * @return {String}
      */
     this._leftPay = function(_hasPay, _leftPay, _bool){  // 剩余金额模板
       var btn = '';
@@ -113,10 +116,11 @@ define(function(require, exports, module) {
     this._errorTips = function(_str){ // 错误提示
       var tpl = '<p class="pay_tips" id="J_errTip">' + _str + '</p>';
       $('#J_errTip').remove();
-      if(!hasTips){
-        $('#J_paycnt').after(tpl);
-      };
-      hasTips = true;
+      $('#J_paycnt').after(tpl);
+      // if(!hasTips){
+      //   $('#J_paycnt').after(tpl);
+      // };
+      // hasTips = true;
     };
     /**
      * 拆分按钮 异步加入页面中
@@ -160,6 +164,22 @@ define(function(require, exports, module) {
     };
 
     /**
+     * 支付方式radiobox
+     * @param  {Number}  _index   序号
+     * @param  {String}  _en      值，支付方式英文
+     * @param  {String}  _ch      支付方式中文
+     * @param  {Boolean} _bool    是否选中
+     * @return {String}           支付方式字符串
+     */
+    this._payCheckBox = function(_index, _en, _ch, _bool){
+      var tempCheck = '';
+      if(_bool){
+        tempCheck = 'checked'
+      }
+      return '<label class="base_label"><input type="radio" name="pay'+ _index +'" value="' + _en + '" ' + tempCheck + '>' + _ch + '</label>'
+    }
+
+    /**
      * 拆分模板
      * @param {Object} _args 传入参数对象
      *    NO: 支付序号
@@ -173,12 +193,29 @@ define(function(require, exports, module) {
       if(leftMoney <= 0){
         leftMoney = ''
       }
+
+      /**
+       * 当有现金支付方式，默认第一个自动选择，后续添加不选择现金支付
+       * 当没有现金支付方式，都默认选择第一个支付方式
+       */
       $.each(_args.payType, function(_index, _item){
-        if(_index === 0){
-          payTypeList += '<label class="base_label"><input type="radio" name="pay'+ _args.radioIndex +'" value="' + _item['en'] + '" checked>' + _item['ch'] + '</label>';
+        if(_args.payType.length > 0 && _args.payType[0]['en'] === 'Cash'){
+          if(_item['en'] === 'Cash' && !_args.hasCash){
+            // payTypeList += '<label class="base_label"><input type="radio" name="pay'+ _args.radioIndex +'" value="' + _item['en'] + '" checked>' + _item['ch'] + '</label>';
+            payTypeList += self._payCheckBox(_args.radioIndex, _item['en'], _item['ch'], true)
+          } else if( _args.hasCash && _index === 1){
+            payTypeList += self._payCheckBox(_args.radioIndex, _item['en'], _item['ch'], true)
+          } else {
+            payTypeList += self._payCheckBox(_args.radioIndex, _item['en'], _item['ch'], false)
+          }
         } else {
-          payTypeList += '<label class="base_label"><input type="radio" name="pay'+ _args.radioIndex +'" value="' + _item['en'] + '">' + _item['ch'] + '</label>';
+          if(_index === 0){
+            payTypeList += self._payCheckBox(_args.radioIndex, _item['en'], _item['ch'], true)
+          } else {
+            payTypeList += self._payCheckBox(_args.radioIndex, _item['en'], _item['ch'], false)
+          }
         }
+        
       });
 
       return '<li class="J_list">' +
@@ -217,16 +254,22 @@ define(function(require, exports, module) {
       });
     };
 
+    /**
+     * 表单提交校验
+     * @param  {Object} _data 拆分支付信息
+     * @return {Array}  
+     */
     this._checkSendData = function(_data){
       var cashNum = 0;
       $.each(_data, function(_index, _item){
-        if(_item.type === '现金'){
+        if(_item.type === 'Cash'){
           cashNum++;
         };
 //        if(!_item.value){
 //          _data.splice(_index, 1);
 //        }
       })
+
       // 只能选一个现金支付
       if( cashNum >= 2){
         self._errorTips(formCheck.msg.submitCashOnce);
@@ -252,6 +295,22 @@ define(function(require, exports, module) {
       return sendData;
     };
 
+    /**
+     * 向服务端发送数据
+     * @param {Object} _data 拆分支付信息
+     * @private
+     */
+    this._send = function(_data){
+      $.ajax({
+        url: '',
+        type: 'post',
+        cache: false,
+        success: function(_d){
+          // console.log(_d)
+          // TODO 返回可定检查后的表单，然后再隐藏提交
+        }
+      });
+    };
 
 
     /**
@@ -318,30 +377,18 @@ define(function(require, exports, module) {
       });
 
       $('#J_paybox').delegate('.J_payinput', 'blur', function(){
+        // console.log(this.validity.badInput)
         var val = $(this).val();
         if( formCheck.reg.moneyReg.test(val) ){
           self._sumMoney(this);
         } else {
           self._moneyErr(this, formCheck.msg.moneyMsg);
+          // TODO 当金额正确后不提示空白错误
+          // if(tempLeft !== 0 && (val != '' || this.validity.badInput) ){
+          //   self._moneyErr(this, formCheck.msg.moneyMsg);
+          // }
         }
       });
-
-      /**
-       * 向服务端发送数据
-       * @param {} _data
-       * @private
-       */
-      this._send = function(_data){
-        $.ajax({
-          url: '',
-          type: 'post',
-          cache: false,
-          success: function(_d){
-            // console.log(_d)
-            // TODO 返回可定检查后的表单，然后再隐藏提交
-          }
-        });
-      };
 
       /**
        * 提交支付按钮
@@ -377,10 +424,12 @@ define(function(require, exports, module) {
 
     /**
      * 计算金额
-     * @private
+     * @param  {Object} _obj 支付表单
+     * @return
      */
     this._sumMoney = function(_obj){ // 计算金额
       var total = 0;
+      console.log(_obj)
       $.each($('#J_paycnt .J_payinput'), function(_index, _item){
         total += $(_item).val() - 0;
       });
@@ -390,7 +439,7 @@ define(function(require, exports, module) {
         $('#J_leftpay').text(tempLeft);
         $('.J_payinput').removeClass('payerror');
         $('.pay_tipnum').remove();
-      } else if( tempLeft < 0 && _obj) {
+      } else if( tempLeft !== 0 && _obj) {
           self._moneyErr(_obj, formCheck.msg.maxThan);
       }
 
@@ -404,7 +453,7 @@ define(function(require, exports, module) {
       var html = self._topNotice(_arg.detachs),
           moreDetach = false;
       html += self._tpl(_arg);
-      if(_arg.detachs > 1){
+      if(_arg.detachs > 1 && !(payType.length === 1 && payType[0]['en'] === 'Cash') ){
         moreDetach = true
       }
       html += self._leftPay(tempTotal, 0, moreDetach);
