@@ -262,7 +262,7 @@ define(function(require, exports, module) {
     this._checkSendData = function(_data){
       var cashNum = 0;
       $.each(_data, function(_index, _item){
-        if(_item.type === 'Cash'){
+        if(_item.PaymentType === 'Cash'){
           cashNum++;
         };
 //        if(!_item.value){
@@ -284,12 +284,27 @@ define(function(require, exports, module) {
      * @return {Array} 提交的数组
      */
     this._getSendData = function(){
-      var sendData = [];
+      var sendData = [],
+          payIndex = 1;
       $.each( $('#J_paycnt .J_list'), function(_index, _item){
-        var tempData = {};
-        tempData.type = $(_item).find('input[type="radio"]:checked').val();
-        tempData.value = $(_item).find('input.J_payinput').val();
-        sendData.push(tempData);
+        var tempData = {},
+            value = $(_item).find('input.J_payinput').val(),
+            type = '';
+            if (value){
+              tempData.PaymentId = payIndex;
+              tempData.Amount = value;
+              tempData.PaymentType = $(_item).find('input[type="radio"]:checked').val();
+              payIndex++;
+              sendData.push(tempData);
+            } else {
+              // TODO 处理未填金额的拆分方式
+              $(_item).closest('li').css('opacity', .5)
+            }
+
+        // {"PaymentId":"1","Amount":"50.00","PaymentType":"Cash"}
+        // tempData.type = $(_item).find('input[type="radio"]:checked').val();
+        // tempData.value = $(_item).find('input.J_payinput').val();
+        // sendData.push(tempData);
       });
       console.log(sendData)
       return sendData;
@@ -398,8 +413,9 @@ define(function(require, exports, module) {
         // TODO 在发送ajax后页面交互屏蔽
 
         var cashIndex = 0;
+
         // TODO 金额校验
-        if (tempLeft < 0 ){
+        if (tempLeft != 0 ){
           self._errorTips(formCheck.msg.submintMaxThan);
           return false;
         }
@@ -429,7 +445,6 @@ define(function(require, exports, module) {
      */
     this._sumMoney = function(_obj){ // 计算金额
       var total = 0;
-      console.log(_obj)
       $.each($('#J_paycnt .J_payinput'), function(_index, _item){
         total += $(_item).val() - 0;
       });
