@@ -257,25 +257,31 @@ define(function(require, exports, module) {
     /**
      * 表单提交校验
      * @param  {Object} _data 拆分支付信息
-     * @return {Array}  
+     * @return {Object}
      */
     this._checkSendData = function(_data){
-      var cashNum = 0;
+      var cashNum = 0,
+          tempData;
+
+      // 金额校验
+      if (tempLeft != 0 ){
+        self._errorTips(formCheck.msg.submintMaxThan);
+        return false;
+      }
+
+      // 只能选一个现金支付
       $.each(_data, function(_index, _item){
         if(_item.PaymentType === 'Cash'){
           cashNum++;
         };
-//        if(!_item.value){
-//          _data.splice(_index, 1);
-//        }
-      })
-
-      // 只能选一个现金支付
+      });
       if( cashNum >= 2){
         self._errorTips(formCheck.msg.submitCashOnce);
         return false;
       }
-      return [true, _data];
+      tempData = cQuery.parseJSON(GVO.vars.initData.paymentOrderInfoJson);
+      tempData.Payments = _data;
+      return tempData;
     };
 
     /**
@@ -306,7 +312,7 @@ define(function(require, exports, module) {
         // tempData.value = $(_item).find('input.J_payinput').val();
         // sendData.push(tempData);
       });
-      console.log(sendData)
+
       return sendData;
     };
 
@@ -320,9 +326,12 @@ define(function(require, exports, module) {
         url: '',
         type: 'post',
         cache: false,
+        data:{
+          savepaymentinfo: cQuery.stringifyJSON(_data)
+        },
         success: function(_d){
-          // console.log(_d)
           // TODO 返回可定检查后的表单，然后再隐藏提交
+          console.log(_d)
         }
       });
     };
@@ -409,30 +418,9 @@ define(function(require, exports, module) {
        * 提交支付按钮
        */
       $('#J_submit').bind('click', function(){
-
-        // TODO 在发送ajax后页面交互屏蔽
-
-        var cashIndex = 0;
-
-        // TODO 金额校验
-        if (tempLeft != 0 ){
-          self._errorTips(formCheck.msg.submintMaxThan);
-          return false;
-        }
-
-        // TODO 只能选一个现金支付校验
-        self._checkSendData(self._getSendData());
-//        if( self._checkSendData(self._getSendData()) ){
-//
-//        }
-
-//        $.each( $('#J_paycnt input[type="radio"]:checked') , function(_index, _item){
-//          if ($(_item).val() ==="现金"){
-//            cashIndex++
-//          }
-//        })
-
-        self._send();
+        var sendPayInfo = self._checkSendData(self._getSendData())
+        console.log(sendPayInfo);
+        self._send( sendPayInfo );
 
 
       })
