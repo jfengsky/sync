@@ -332,6 +332,9 @@ define(function(require, exports, module) {
         success: function(_d){
           // TODO 返回可定检查后的表单，然后再隐藏提交
           console.log(_d)
+          if(true){
+            document.location.href = GVO.vars.PaymentCheckPageUrl + '?TmpOrderId=' + GVO.vars.initData.tmpOrderId
+          }
         }
       });
     };
@@ -419,10 +422,7 @@ define(function(require, exports, module) {
        */
       $('#J_submit').bind('click', function(){
         var sendPayInfo = self._checkSendData(self._getSendData())
-        console.log(sendPayInfo);
         self._send( sendPayInfo );
-
-
       })
     };
 
