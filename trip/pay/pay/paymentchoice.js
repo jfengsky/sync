@@ -279,7 +279,7 @@ define(function(require, exports, module) {
         self._errorTips(formCheck.msg.submitCashOnce);
         return false;
       }
-      tempData = cQuery.parseJSON(GVO.vars.initData.paymentOrderInfoJson);
+      tempData = cQuery.parseJSON(GVO.vars.initData.PaymentOrderInfoJson);
       tempData.Payments = _data;
       return tempData;
     };
@@ -323,16 +323,16 @@ define(function(require, exports, module) {
      */
     this._send = function(_data){
       $.ajax({
-        url: '',
+        url: GVO.vars.handles.savePaymentInfo,
         type: 'post',
         cache: false,
+        dataType: 'json',
         data:{
           savepaymentinfo: cQuery.stringifyJSON(_data)
         },
         success: function(_d){
-          // TODO 返回可定检查后的表单，然后再隐藏提交
-          console.log(_d)
-          if(true){
+          // 返回可定检查后的表单，然后再隐藏提交
+          if(_d.errno === 0){
             document.location.href = GVO.vars.PaymentCheckPageUrl + '?TmpOrderId=' + GVO.vars.initData.tmpOrderId
           }
         }

@@ -4989,8 +4989,12 @@
 	<b></b>
 	<i></i>
 </div>
-<script type="text/javascript" charset="utf-8" async="" src="./search_files/_bfa.min.js"></script><script type="text/javascript" src="./search_files/cQuery_110421.js" charset="utf-8"></script>
-<script type="text/javascript" src="./search_files/calendar-3.0.js" charset="utf-8"></script>
+<script type="text/javascript" src="search_files/cQuery_110421.js" charset="utf-8"></script>
+<script src="../vacation/lib/vacation_global.min.js"></script>
+<script type="text/javascript" charset="utf-8" async="" src="search_files/_bfa.min.js">
+</script>
+
+<script type="text/javascript" src="search_files/calendar-3.0.js" charset="utf-8"></script>
 <script type="text/javascript">
 	   for (var i = 0; i < 4; i++) {
 	   		$("#date"+i).regMod("calendar", "3.0", {
@@ -5079,5 +5083,16 @@ $LAB.script({ src: "http://webresource.c-ctrip.com/code/cquery/cQuery_110421.js"
 });
 </script>
 
+
+<script>
+  seajs.config({
+    base: '../',
+    charset: 'utf-8',
+    alias: {
+      jquery: 'vacation/lib/jquery'
+    }
+  });
+  seajs.use('search/search/search');
+</script>
 
 </body></html>

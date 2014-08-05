@@ -36,19 +36,6 @@ define(function(require, exports, module) {
 
   // loading动画，请求数据然后显示拆分支付方式
   function PayCheck(){
-//    var data = {
-//      total: 30000,
-//      pay:[
-//        {
-//          "type": "现金",
-//          "money": 1000,
-//          "giftcard": true
-//        },{
-//          "type": "信用卡",
-//          "money": 2000
-//        }
-//      ]
-//    };
     var self = this;
 
     /**
