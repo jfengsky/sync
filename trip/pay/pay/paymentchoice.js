@@ -202,17 +202,17 @@ define(function(require, exports, module) {
         if(_args.payType.length > 0 && _args.payType[0]['en'] === 'Cash'){
           if(_item['en'] === 'Cash' && !_args.hasCash){
             // payTypeList += '<label class="base_label"><input type="radio" name="pay'+ _args.radioIndex +'" value="' + _item['en'] + '" checked>' + _item['ch'] + '</label>';
-            payTypeList += self._payCheckBox(_args.radioIndex, _item['en'], _item['ch'], true)
+            payTypeList += self._payCheckBox(_args.radioIndex, _item['rk'], _item['ch'], true)
           } else if( _args.hasCash && _index === 1){
-            payTypeList += self._payCheckBox(_args.radioIndex, _item['en'], _item['ch'], true)
+            payTypeList += self._payCheckBox(_args.radioIndex, _item['rk'], _item['ch'], true)
           } else {
-            payTypeList += self._payCheckBox(_args.radioIndex, _item['en'], _item['ch'], false)
+            payTypeList += self._payCheckBox(_args.radioIndex, _item['rk'], _item['ch'], false)
           }
         } else {
           if(_index === 0){
-            payTypeList += self._payCheckBox(_args.radioIndex, _item['en'], _item['ch'], true)
+            payTypeList += self._payCheckBox(_args.radioIndex, _item['rk'], _item['ch'], true)
           } else {
-            payTypeList += self._payCheckBox(_args.radioIndex, _item['en'], _item['ch'], false)
+            payTypeList += self._payCheckBox(_args.radioIndex, _item['rk'], _item['ch'], false)
           }
         }
         
@@ -257,31 +257,30 @@ define(function(require, exports, module) {
     /**
      * 表单提交校验
      * @param  {Object} _data 拆分支付信息
-     * @return {Object}
+     * @return {Array}
      */
     this._checkSendData = function(_data){
       var cashNum = 0,
           tempData;
-
       // 金额校验
       if (tempLeft != 0 ){
         self._errorTips(formCheck.msg.submintMaxThan);
-        return false;
+        return [false];
       }
 
       // 只能选一个现金支付
       $.each(_data, function(_index, _item){
-        if(_item.PaymentType === 'Cash'){
+        if(_item.PaymentType === '0'){
           cashNum++;
         };
       });
       if( cashNum >= 2){
         self._errorTips(formCheck.msg.submitCashOnce);
-        return false;
+        return [false];
       }
       tempData = cQuery.parseJSON(GVO.vars.initData.PaymentOrderInfoJson);
       tempData.Payments = _data;
-      return tempData;
+      return [true, tempData];
     };
 
     /**
@@ -296,7 +295,7 @@ define(function(require, exports, module) {
         var tempData = {},
             value = $(_item).find('input.J_payinput').val(),
             type = '';
-            if (value){
+            if (value && value != 0){
               tempData.PaymentId = payIndex;
               tempData.Amount = value;
               tempData.PaymentType = $(_item).find('input[type="radio"]:checked').val();
@@ -312,8 +311,18 @@ define(function(require, exports, module) {
         // tempData.value = $(_item).find('input.J_payinput').val();
         // sendData.push(tempData);
       });
-
       return sendData;
+    };
+
+    /**
+     * 获取地址栏参数
+     * @param {String} name 要获取的参数
+     * @returns {String}
+     */
+    this._getQueryString = function(name){
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null) return unescape(r[2]); return null;
     };
 
     /**
@@ -332,8 +341,11 @@ define(function(require, exports, module) {
         },
         success: function(_d){
           // 返回可定检查后的表单，然后再隐藏提交
+          var tmporderid = self._getQueryString('TmpOrderID');
           if(_d.errno === 0){
-            document.location.href = GVO.vars.PaymentCheckPageUrl + '?TmpOrderId=' + GVO.vars.initData.tmpOrderId
+
+            // TODO TmpOrderId取URL上的
+            document.location.href = GVO.vars.PaymentCheckPageUrl + '?TmpOrderId=' + tmporderid
           }
         }
       });
@@ -351,7 +363,7 @@ define(function(require, exports, module) {
         var html = '',
             hascheckCash = false;
         $.each($('#J_paycnt input[type="radio"]:checked'), function(_index, _item){
-          if($(_item).val() === 'Cash'){
+          if($(_item).val() === '0'){
             hascheckCash = true;
           }
         });
@@ -406,7 +418,7 @@ define(function(require, exports, module) {
       $('#J_paybox').delegate('.J_payinput', 'blur', function(){
         // console.log(this.validity.badInput)
         var val = $(this).val();
-        if( formCheck.reg.moneyReg.test(val) ){
+        if( formCheck.reg.moneyReg.test(val) && val != 0 ){
           self._sumMoney(this);
         } else {
           self._moneyErr(this, formCheck.msg.moneyMsg);
@@ -421,8 +433,10 @@ define(function(require, exports, module) {
        * 提交支付按钮
        */
       $('#J_submit').bind('click', function(){
-        var sendPayInfo = self._checkSendData(self._getSendData())
-        self._send( sendPayInfo );
+        var sendPayInfo = self._checkSendData(self._getSendData());
+        if(sendPayInfo[0]){
+          self._send( sendPayInfo[1] );
+        }
       })
     };
 
@@ -470,7 +484,6 @@ define(function(require, exports, module) {
 
     // 初始化
     this.init = function(){
-
       // 初始化当前订单可支付方式
       payType = self._payRank(PAYTYPES, payTypes);
 

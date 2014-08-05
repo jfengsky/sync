@@ -95,7 +95,7 @@ define(function(require, exports, module) {
     this._typeFormat = function(_type){
       var tempType;
       $.each(PAYTYPES, function(_index, _item){
-        if(_item.en === _type){
+        if(_item.rk === _type){
           tempType = _item.ch
         }
       })

@@ -256,7 +256,7 @@
         tmpOrderId:127692610,
         aduNumber:2,
         serverDataTime:'2014-07-30 16:49:03',
-        paymentOrderInfoJson:'{"TmpOrderID":127692610,"OrderID":1148679317,"Pkg":2270307,"PkgName":"中国1-9999日私家团•B线--常规测试专用","NumAdult":2,"NumChild":0,"TotalAmount":110.0000,"IsEnableTicketPay":true,"TakeoffDate":"2014-08-28T00:00:00","Payments":[{"PaymentId":"1","Amount":"50.00","PaymentType":"Cash","BillNo":"0"},{"PaymentId":"2","Amount":"60.00","PaymentType":"CCard","BillNo":"12345"},{"PaymentId":"3","Amount":"60.00","PaymentType":"ThirdPay","BillNo":"12345"},{"PaymentId":"4","Amount":"60.00","PaymentType":"Other","BillNo":"12345"}]}',
+        paymentOrderInfoJson:'{"TmpOrderID":127692610,"OrderID":1148679317,"Pkg":2270307,"PkgName":"中国1-9999日私家团•B线--常规测试专用","NumAdult":2,"NumChild":0,"TotalAmount":110.0000,"IsEnableTicketPay":true,"TakeoffDate":"2014-08-28T00:00:00","Payments":[{"PaymentId":"1","Amount":"50.00","PaymentType":0,"BillNo":"0"},{"PaymentId":"2","Amount":"60.00","PaymentType":1,"BillNo":"12345"},{"PaymentId":"3","Amount":"60.00","PaymentType":2,"BillNo":"12345"},{"PaymentId":"3","Amount":"60.00","PaymentType":3,"BillNo":"12345"}]}',
         PaymentCategory:'CCard,ThirdPay,Cash',
         ClientSource: 'Offline'
 
@@ -277,7 +277,7 @@
       jquery: 'vacation/lib/jquery'
     }
   });
-  seajs.use('pay/pay/paycheck');
+  seajs.use('pay/pay/paymentcheck');
 </script>
 
 </body>
