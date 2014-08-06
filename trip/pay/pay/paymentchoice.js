@@ -295,7 +295,7 @@ define(function(require, exports, module) {
         var tempData = {},
             value = $(_item).find('input.J_payinput').val(),
             type = '';
-            if (value && value != 0){
+            if (value && value > 0){
               tempData.PaymentId = payIndex;
               tempData.Amount = value;
               tempData.PaymentType = $(_item).find('input[type="radio"]:checked').val();
@@ -418,14 +418,9 @@ define(function(require, exports, module) {
       $('#J_paybox').delegate('.J_payinput', 'blur', function(){
         // console.log(this.validity.badInput)
         var val = $(this).val();
-        if( formCheck.reg.moneyReg.test(val) && val != 0 ){
-          self._sumMoney(this);
-        } else {
+        self._sumMoney(this);
+        if(!formCheck.reg.moneyReg.test(val) || val <= 0){
           self._moneyErr(this, formCheck.msg.moneyMsg);
-          // TODO 当金额正确后不提示空白错误
-          // if(tempLeft !== 0 && (val != '' || this.validity.badInput) ){
-          //   self._moneyErr(this, formCheck.msg.moneyMsg);
-          // }
         }
       });
 
@@ -448,18 +443,20 @@ define(function(require, exports, module) {
     this._sumMoney = function(_obj){ // 计算金额
       var total = 0;
       $.each($('#J_paycnt .J_payinput'), function(_index, _item){
-        total += $(_item).val() - 0;
+        var tempThispay = $(_item).val() - 0;
+        if(tempThispay > 0){
+          total += tempThispay;
+        }
       });
       tempLeft = tempTotal - total;
+      $('#J_haspay').text(total);
+      $('#J_leftpay').text(tempLeft);
       if( tempLeft >= 0){
-        $('#J_haspay').text(total);
-        $('#J_leftpay').text(tempLeft);
         $('.J_payinput').removeClass('payerror');
         $('.pay_tipnum').remove();
       } else if( tempLeft !== 0 && _obj) {
           self._moneyErr(_obj, formCheck.msg.maxThan);
       }
-
     };
 
     /**
