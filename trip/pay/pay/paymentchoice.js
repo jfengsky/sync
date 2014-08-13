@@ -298,7 +298,7 @@ define(function(require, exports, module) {
             if (value && value > 0){
               tempData.PaymentId = payIndex;
               tempData.Amount = value;
-              tempData.PaymentType = $(_item).find('input[type="radio"]:checked').val();
+              tempData.PaymentType = $(_item).find('input[type="radio"]:checked').val() - 0;
               payIndex++;
               sendData.push(tempData);
             } else {

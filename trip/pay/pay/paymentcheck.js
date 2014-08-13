@@ -47,36 +47,38 @@ define(function(require, exports, module) {
 
       // IsEnableTicketPay 字段为是否可以使用礼品卡，需要控制上图中 修改礼品卡的话术是否显示，如为false 上图礼品卡3个字不需要显示。 注意：如果不支持使用礼品卡IsEnableTicketPay=false 现金的支付方式则不显示去支付的这个链接。
       // 第三方支付的支付方式，不用显示 后面的去支付的链接。
-      // TODO IsDirectFlight 字段表示为是否为直连机票1为false  为0时，需对拆分的信用卡的支付方式留下卡号信息。判断对应支付方式上面BillNo是否有值
+      // TODO IsDirectFlight 字段表示为是否为直连机票1为false  为0时，需对拆分的信用卡的支付方式留下卡号信息。判断对应支付方式上面BillNO是否有值
 
       var tempData = {},
-          payInfo = cQuery.parseJSON(_data.vars.initData.paymentOrderInfoJson),
+          payInfo = cQuery.parseJSON(_data.vars.initData.PaymentOrderInfoJson),
           IsEnableTicketPay = payInfo.IsEnableTicketPay;
       tempData.total = _data.vars.initData.TotalAmount;
       tempData.Payments = payInfo.Payments;
 
       $.each(tempData.Payments, function(_index, _item){
         var itemData = {},
-            paymentsIndex = tempData.Payments[_index];
-        itemData.type = _item.PaymentType;
+            paymentsIndex = tempData.Payments[_index],
+            isEdit = (_item.BillNO - 0 === 0) ? '填写' : '修改';
+        itemData.type = _item.PaymentType - 0;
         paymentsIndex['chid'] = '支付方式' + self._listNo(_item.PaymentId - 0);
         paymentsIndex['chtype'] = self._typeFormat(_item.PaymentType);
         // paymentsIndex['paylink'] = GVO.vars.handles.getPayHtmlInfo + '&PaymentId=' + _item.PaymentId;
-        if( _item.PaymentType === 'Cash' ){
+
+        if( _item.PaymentType === 0 ){
 
           // IsEnableTicketPay = false 并且是现金支付，不显示支付链接
           if (!IsEnableTicketPay){
             tempData.Payments[_index]['linkText'] = ''
           } else {
-            tempData.Payments[_index]['linkText'] = '填写/修改礼品卡信息'
+            tempData.Payments[_index]['linkText'] = isEdit + '礼品卡信息'
           }
-        } else if(_item.PaymentType === 'CCard'){
+        } else if(_item.PaymentType === 1){
 
           // IsEnableTicketPay = false 不显示礼品卡三个字
           if(!IsEnableTicketPay){
-            tempData.Payments[_index]['linkText'] = '填写/修改信用卡信息'
+            tempData.Payments[_index]['linkText'] = isEdit + '信用卡信息'
           } else {
-            tempData.Payments[_index]['linkText'] = '填写/修改信用卡/礼品卡信息'
+            tempData.Payments[_index]['linkText'] = isEdit + '信用卡/礼品卡信息'
           }
         } else {
 
@@ -171,23 +173,25 @@ define(function(require, exports, module) {
         type: 'post',
         url: _args.url,
         data: _args.data,
+        dataType: 'json',
         success: function(_data){
           _args.callback(_data)
         },
         error: function(){
           // _args.errback()
+          _args.errback();
         }
       });
     }
 
     /**
-     * 检查BillNo是否有为0的
+     * 检查BillNO是否有为0的
      * @return {Boolean}
      */
     this._checkBillNo = function(_tplData){
       var isZero = false;
       $.each(_tplData, function(_index, _item){
-        if(_item.BillNo === "0"){
+        if(_item.BillNO === "0"){
           isZero = true
         }
       })
@@ -212,7 +216,7 @@ define(function(require, exports, module) {
               if($('#J_subform').length > 0){
                 $('#J_subform').remove()
               }
-              $('body').append('<div style="display:none" id="J_subform">+ _data.data +</div>');
+              $('body').append('<div style="display:none" id="J_subform">' + _data.data + '</div>');
 
               // 隐藏form提交
               $('#J_subform').find('form').submit();
@@ -231,13 +235,19 @@ define(function(require, exports, module) {
           // TODO 不能提交提示
           return false;
         } else {
-          self._send({
-            url:GVO.vars.SubmitOrderUrl,
-            data:{
-              saveorderinfo: GVO.vars.initData.paymentOrderInfoJson
-            },
-            callback: function(_data){
 
+          // 按钮disabled掉
+          $(this).attr('disabled', true);
+
+          self._send({
+            url: GVO.vars.SubmitOrderUrl,
+            data:{
+                savepaymentinfo: GVO.vars.initData.PaymentOrderInfoJson
+            },
+            callback: function(_data){},
+            errback: function(){
+
+              $(this).attr('disabled', false);
             }
           });
         }
@@ -248,8 +258,6 @@ define(function(require, exports, module) {
       // 重新格式化显示参数
       var tplData = this._formatData(GVO),
           template = Handlebars.compile(self._tpl());
-
-      console.log(tplData);
       $('#J_loading').remove();
       $("#J_paybox").html(template(tplData));
 
