@@ -244,7 +244,20 @@ define(function(require, exports, module) {
             data:{
                 savepaymentinfo: GVO.vars.initData.PaymentOrderInfoJson
             },
-            callback: function(_data){},
+            callback: function(_data){
+              if(_data.errno === 0){
+                // 生成表单去提交
+                if($('#J_subform').length > 0){
+                  $('#J_subform').remove()
+                }
+                $('body').append('<div style="display:none" id="J_subform">' + _data.data + '</div>');
+
+                // 隐藏form提交
+                $('#J_subform').find('form').submit();
+              } else {
+                alert(_data.errmsg)
+              }
+            },
             errback: function(){
 
               $(this).attr('disabled', false);
