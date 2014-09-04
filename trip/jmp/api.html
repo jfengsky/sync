@@ -1,0 +1,812 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>携程旅行网</title>
+<script type="text/javascript" src="http://webresource.c-ctrip.com/code/cquery/cQuery_110421.js" charset="utf-8"></script>
+
+
+
+
+<style>
+/* ==================== | DEFAULT FONTS | ==================== */
+
+body {
+  font:12px 'lucida sans unicode','lucida sans','lucida grande',helvetica,arial,sans-serif;
+}
+table, th, td, input, select, textarea {
+  font:1em 'lucida sans unicode','lucida sans','lucida grande',helvetica,arial,sans-serif;
+}
+
+
+
+/* ==================== | DEFAULT STYLES | ==================== */
+
+html, body, h1, h2, h3, h4, p, ul, ol, li, form, input, select, dl, dt, dd, fieldset, blockquote {
+  margin:0;
+  padding:0;
+}
+a img {
+  border:none;
+}
+a.sup {
+  text-decoration:none;
+}
+fieldset {
+  display:block;
+  border:0;
+}
+abbr {
+  border-bottom:1px dotted;
+}
+
+
+
+/*  ==================== | LINKS | ==================== */
+
+a {
+  text-decoration:none;
+  color:#860404;
+}
+
+
+
+/* ==================== | LAYOUT | ==================== */
+
+body {
+  background:#F4F4F4  fixed no-repeat;//url(images/sheet_bg.jpg)
+color:#434343;
+  text-align:center;
+}
+#holder {
+  margin:20px auto;
+  border:solid #ddd;
+  border-width:5px 0;
+  border-radius:5px;
+  -moz-border-radius:5px;
+  -webkit-border-radius:5px;
+  padding:30px 0;
+  background:#fff;
+  text-align:left;
+}
+#content {
+  margin-left:30px;
+  width:520px;
+}
+#nav {
+  float:right;
+  margin:50px 20px 0 0;
+  width:200px;
+  display:inline;
+}
+
+
+
+/* ==================== | CONTENT COLUMN | ==================== */
+
+#content {
+  font-size:14px;
+}
+#content h1, #content h2, #content h3, #content h4 {
+  margin:1.5em 0 0.5em 0;
+  font-weight:normal;
+  color:#860404;
+}
+#content h1 {
+  position:relative;
+  height:50px;
+  border-bottom:1px solid #efefef;
+  font-family:georgia,'times new roman',times,serif;
+  font-size:30px;
+}
+#content h1 span {
+  position:absolute;
+  left:0;
+  margin:-15px 0 0 7px;
+  font-size:15px;
+  font-style:italic;
+  color:#888;
+}
+#content h2 {
+  font-family:arial,helvetica,sans-serif;
+  font-size:18px;
+}
+#content h3 {
+  font-size:16px;
+}
+#content h4 {
+  font-size:14px;
+}
+#content p, #content ul, #content ol, #content dd, #content table {
+  margin-bottom:1em;
+  line-height:22px;
+}
+#content ul ul {
+  margin:2px 0 0 0;
+  list-style-type:circle;
+}
+#content li {
+  margin:0 0 2px 28px;
+}
+#content ul li {
+  margin:0 0 2px 14px;
+  padding:0 0 0 14px;
+  list-style-type:none;
+  background:url(images/bullet.png) no-repeat 0 0.21em;
+}
+#content dd {
+  margin-left:0;
+}
+#content dt {
+  font-weight:normal;
+  margin-bottom:2px;
+}
+#content code {
+  background:#ffffe1;
+  font-family:monospace;
+}
+#content a {
+  border-bottom:2px solid #cfcdf0;
+  background-color:#f1ffe2;
+  color:#434343;
+  text-decoration:none;
+}
+#content a:visited {
+  background-color:#fbf0ff;
+}
+#content a:hover, #content a:focus, #content a:active {
+  border-color:#908dc0;
+  background-color:#e9ffd3;
+}
+a.image {
+  display:block;
+  margin:0;
+  width:150px;
+  border:2px solid #cae8b7 !important;
+  padding:1px !important;
+  background:transparent !important;
+}
+a.image:hover, a.image:focus, a.image:active {
+  border-color:#9ec883 !important;
+}
+a.image img {
+  border:none !important;
+}
+dl.options {
+  font-size:13px;
+}
+dl.options dt {
+  position:relative;
+  border-top:1px solid #efefef;
+  padding:2px 0;
+  background:#f8f8f8;
+}
+dl.options dt i {
+  position:absolute;
+  right:0;
+  font-size:12px;
+  color:#888888;
+}
+dl.options div.possible-values {
+  margin-bottom:4px;
+  font-size:11px;
+  color:#888888;
+}
+dl.options div.possible-values span {
+  margin-bottom:4px;
+  color:#434343;
+}
+dl.options div.signature {
+  padding-left:20px;
+}
+
+
+
+/* ==================== | NAVIGATION | ==================== */
+
+#nav h2 {
+  margin:1.93em 0 0.5em 0;
+  padding-left:6px;
+  font-family:georgia,'times new roman',times,serif;
+  font-size:15px;
+  font-weight:normal;
+  font-style:italic;
+  color:#888;
+}
+#nav ul, #nav li {
+  display:block;
+  list-style:none;
+}
+#nav ul, #nav p {
+  margin-bottom:1em;
+}
+#nav ul ul {
+  margin-bottom:0;
+}
+#nav li {
+  border-top:1px solid #e9d08e;
+}
+#nav li.first {
+  border:0;
+}
+#nav a {
+  display:block;
+  padding:5px 12px;
+  background:#f2d995;
+  zoom:1;
+}
+#nav a:hover, #nav a:focus, #nav a:active, #nav a.current {
+  color:#151515;
+  background:#fbebc1;
+}
+#nav li.first a {
+  border-radius:5px 5px 0 0;
+  -moz-border-radius:5px 5px 0 0;
+  -webkit-border-radius:5px 5px 0 0;
+}
+#nav li.last a {
+  border-radius:0 0 5px 5px;
+  -moz-border-radius:0 0 5px 5px;
+  -webkit-border-radius:0 0 5px 5px;
+}
+#nav ul ul a {
+  padding-left:24px;
+  background:#f9e09b;
+  border-radius:0 !important;
+  -moz-border-radius:0 !important;
+  -webkit-border-radius:0 !important;
+}
+#nav ul ul ul a {
+  padding-left:36px;
+  background:#ffe5a0;
+  border-radius:0 !important;
+  -moz-border-radius:0 !important;
+  -webkit-border-radius:0 !important;
+}
+
+
+
+/* ==================== | SHJS (syntax highlighter) | ==================== */
+
+div.code-block {
+  position:relative;
+  margin:0 0 1em 0;
+  border-left:4px solid #d9d9d9;
+  padding:3px 6px;
+  background:#f8f8f8;
+  zoom:1;
+}
+div.code-block textarea {
+  position:absolute;
+  margin:-2px 0 0 -2px;
+  overflow:auto;
+  border:1px solid;
+  border-color:#777 #ccc #f8f8f8 #ccc;
+  padding:1px;
+  background:#fff;
+  color:#000;
+  font-family:consolas,'lucida console',monaco,'courier new',courier,monospace,mono,serif;
+  font-size:13px;
+  font-weight:normal;
+  font-style:normal;
+  z-index:1000;
+}
+#content div.code-block a.view-plain, #content div.code-block a.view-plain:visited {
+  display:none;
+  position:absolute;
+  bottom:100%;
+  right:0;
+  border-bottom:1px dashed #d5d5d5;
+  padding:3px 4px;
+  text-align:right;
+  background:#fff;
+  color:#888888;
+  font:0.8em arial,helvetica,sans-serif;
+}
+#content div.code-block a.view-plain:hover {
+  background:#aaa;
+  color:#fff;
+}
+div.code-block pre {
+  display:block;
+  width:100%;
+  margin:0;
+  overflow:auto;
+  cursor:text;
+  color: #434343;
+  font-family:consolas,'lucida console',monaco,'courier new',courier,monospace,mono,serif;
+  font-size:13px;
+  font-weight:normal;
+  font-style:normal;
+}
+pre.sh_sourceCode .sh_keyword {
+  color: #aa0d91;
+  font-weight: normal;
+  font-style: normal;
+}
+pre.sh_sourceCode .sh_type {
+  color: #008000;
+  font-weight: normal;
+  font-style: normal;
+}
+pre.sh_sourceCode .sh_string {
+  color: #c80000;
+  font-weight: normal;
+  font-style: normal;
+}
+pre.sh_sourceCode .sh_regexp {
+  color: #008000;
+  font-weight: normal;
+  font-style: normal;
+}
+pre.sh_sourceCode .sh_specialchar {
+  color: #ff00ff;
+  font-weight: normal;
+  font-style: normal;
+}
+pre.sh_sourceCode .sh_comment {
+  color: #007400;
+  font-weight: normal;
+  font-style: normal;
+}
+pre.sh_sourceCode .sh_number {
+  color: #3200ff;
+  font-weight: normal;
+  font-style: normal;
+}
+pre.sh_sourceCode .sh_preproc {
+  color: #008200;
+  font-weight: normal;
+  font-style: normal;
+}
+pre.sh_sourceCode .sh_function {
+  color: #000000;
+  font-weight: normal;
+  font-style: normal;
+}
+pre.sh_sourceCode .sh_url {
+  color: #008000;
+  font-weight: normal;
+  font-style: normal;
+}
+pre.sh_sourceCode .sh_date {
+  color: #000000;
+  font-weight: bold;
+  font-style: normal;
+}
+pre.sh_sourceCode .sh_time {
+  color: #000000;
+  font-weight: bold;
+  font-style: normal;
+}
+pre.sh_sourceCode .sh_file {
+  color: #000000;
+  font-weight: bold;
+  font-style: normal;
+}
+pre.sh_sourceCode .sh_ip {
+  color: #008000;
+  font-weight: normal;
+  font-style: normal;
+}
+pre.sh_sourceCode .sh_name {
+  color: #008000;
+  font-weight: normal;
+  font-style: normal;
+}
+pre.sh_sourceCode .sh_variable {
+  color: #000000;
+  font-weight: bold;
+  font-style: normal;
+}
+pre.sh_sourceCode .sh_oldfile {
+  color: #ff00ff;
+  font-weight: normal;
+  font-style: normal;
+}
+pre.sh_sourceCode .sh_newfile {
+  color: #008000;
+  font-weight: normal;
+  font-style: normal;
+}
+pre.sh_sourceCode .sh_difflines {
+  color: #000000;
+  font-weight: bold;
+  font-style: normal;
+}
+pre.sh_sourceCode .sh_selector {
+  color: #000000;
+  font-weight: normal;
+  font-style: normal;
+}
+pre.sh_sourceCode .sh_property {
+  color: #c80000;
+  font-weight: normal;
+  font-style: normal;
+}
+pre.sh_sourceCode .sh_value {
+  color: #3200ff;
+  font-weight: normal;
+  font-style: normal;
+}
+
+</style>
+</head>
+<body>
+
+<div id="test2-2">test2-2</div>
+<div id="test2-3">test2-3</div>
+<div id="test2-4-1">test2-4-1</div>
+<div id="test2-4-2">test2-4-2</div>
+
+<div id="test2-5">test2-5</div>
+
+<div id="test2-12">test2-12</div>
+<div id="holder">
+
+  <div id="content">
+    <h1>Jmp cQuery Plugin <span>Demo Page</span></h1>
+
+    <h2 id="options">Options</h2>
+    <dl class="options">
+      <dt><strong>group</strong> <i>String</i></dt>
+      <dd>浮动层所在的组<div class="possible-values">默认值为: <span>'group'</span></div></dd>
+
+      <dt><strong>alignTo</strong> <i>String</i></dt>
+      <dd>浮动层初始位置的针对对象<div class="possible-values">可选的值为: <span>'target','cursor'</span></div></dd>
+
+      <dt><strong>followCursor</strong> <i>Boole</i></dt>
+      <dd>是否跟随鼠标滚动<div class="possible-values">可选的值为: <span>'true','false'</span></div></dd>
+
+      <dt><strong>allowTipHover</strong> <i>Boole</i></dt>
+      <dd>浮动层是否允许鼠标放上去<div class="possible-values">可选的值为: <span>true','false'</span></div></dd>
+
+
+      <dt><strong>showTimeout</strong> <i>Number</i></dt>
+      <dd>显示时的延时<div class="possible-values">默认的值为: <span>'500'</span></div></dd>
+
+
+      <dt><strong>hideTimeout</strong> <i>Number</i></dt>
+      <dd>隐藏时的延时<div class="possible-values">默认的值为: <span>'100'</span></div></dd>
+
+
+      <dt><strong>timeOnScreen</strong> <i>Number</i></dt>
+      <dd>在屏幕上可持续的事件，0表示无限期<div class="possible-values">默认的值为: <span>'0'</span></div></dd>
+
+
+
+      <dt><strong>hideTip</strong> <i>Boole</i></dt>
+      <dd>鼠标离开浮动层时是否隐藏浮动层<div class="possible-values">可选的值为: <span>'true','false'</span></div></dd>
+
+
+      <dt><strong>showArrow</strong> <i>Boole</i></dt>
+      <dd>是否显示箭头<div class="possible-values">可选的值为: <span>'true','false'</span></div></dd>
+
+
+      <dt><strong>boundaryShow</strong> <i>Boole</i></dt>
+      <dd>指定位置越界后是否依旧显示<div class="possible-values">可选的值为: <span>'true','false'</span></div></dd>
+
+
+
+      <dt><strong>position</strong> <i>String</i></dt>
+      <dd>位置<div class="possible-values">默认的值为: <span>'bottomLeft-topLeft'</span></div></dd>
+
+
+      <dt><strong>maxWidth</strong> <i>Number</i></dt>
+      <dd>最大宽度<div class="possible-values">默认的值为: <span>'260'</span></div></dd>
+
+
+      <dt><strong>minWidth</strong> <i>Number</i></dt>
+      <dd>最小宽度<div class="possible-values">默认的值为: <span>'50'</span></div></dd>
+
+
+
+
+      <dt><strong>type</strong> <i>String</i></dt>
+      <dd>浮动层的类型<div class="possible-values">默认的值为: <span>'jmp_alert'</span><div class="possible-values">可选的值为: <span>'jmp_alert','jmp_text','jmp_title','jmp_table','jmp_tab_list'</span></div></dd>
+
+
+
+
+      <dt><strong>template</strong> <i>String</i></dt>
+      <dd>浮动层的模板<div class="possible-values">默认的值为: <span>'#jmp_alert'</span><div class="possible-values">可选的值为: <span>'jmp_alert','jmp_text','jmp_title','jmp_table','jmp_tab_list'</span></div></dd>
+
+
+
+      <dt><strong>templateUrl</strong> <i>String</i></dt>
+      <dd>浮动层的模板服务器地址<div class="possible-values">默认的值为: <span>'/code_beta/weixj/cQuery/template/'</span></div></dd>
+
+
+      <dt><strong>dataUrl</strong> <i>String</i></dt>
+      <dd>浮动层的数据服务器地址<div class="possible-values">默认的值为: <span>'/code_beta/weixj/cQuery/data/'</span></div></dd>
+
+
+      <dt><strong>eventType</strong> <i>String</i></dt>
+      <dd>默认的事件类型<div class="possible-values">可选的值为: <span>'def','input','widget'</span></div></dd>
+
+
+
+      <dt><strong>events</strong> <i>Object</i></dt>
+      <dd>触发事件类型<div class="possible-values">默认选的值为: <span><br>{
+				  def:"mouseover,mouseout",<br>    
+				  // default show/hide events for an element<br>
+				  input:   "focus,blur",<br>
+				  // for all input elements<br>
+				  widget:  "focus|mouseover,blur|mouseout"<br>
+				  // select, checkbox, radio, button<br>
+				}
+				</span></div></dd>
+
+
+
+
+      <dt><strong>content</strong> <i>Object</i></dt>
+      <dd>默认的内容<div class="possible-values">默认选的值为: <span><br>  {
+					"txt":<br>  "今天是2010年上半年最后一个交易日，沪深股市在昨日暴跌阴影下继续下探，最终跌破2400点整数关口。统计数据显示，上证综指与深证成指今年来分别下跌26.82%和31.48%。"<br>  
+				}</span></div></dd>
+
+
+
+
+      <dt><strong>onBeforeShow</strong> <i>Function</i></dt>
+      <dd>显示前的函数，参数为当前浮动层元素<div class="possible-values">默认的值为: <span>'function(obj){}'</span></div></dd>
+      <dt><strong>onBeforeHide</strong> <i>Function</i></dt>
+      <dd>显示后的函数，参数为当前浮动层元素<div class="possible-values">默认的值为: <span>'function(obj){}'</span></div></dd>
+      <dt><strong>onShow</strong> <i>Function</i></dt>
+      <dd>隐藏前的函数，参数为当前浮动层元素<div class="possible-values">默认的值为: <span>'function(obj){}'</span></div></dd>
+      <dt><strong>onHide</strong> <i>Function</i></dt>
+      <dd>隐藏后的函数，参数为当前浮动层元素<div class="possible-values">默认的值为: <span>'function(obj){}'</span></div></dd>
+
+      <dt><strong>scroll</strong> <i>Boole</i></dt>
+      <dd>是否支持滚动条滚动事件<div class="possible-values">默认的值为: <span>'false'</span></div><div class="possible-values">可选的值为: <span>'true','false'</span></div></dd>
+
+      <dt><strong>resize</strong> <i>Boole</i></dt>
+      <dd>是否支浏览器缩放事件<div class="possible-values">默认的值为: <span>'false'</span></div><div class="possible-values">可选的值为: <span>'true','false'</span></div></dd>
+
+
+
+
+
+
+      <dt><strong>tip</strong> <i>String</i></dt>
+      <dd>浮动层最外层的类<div class="possible-values">默认的值为: <span>'tuna_jmpinfo'</span></div></dd>
+      <dt><strong>box</strong> <i>String</i></dt>
+      <dd>浮动层的类<div class="possible-values">默认的值为: <span>'base_jmp'</span></div></dd>
+      <dt><strong>tip</strong> <i>String</i></dt>
+      <dd>浮动层类型的类<div class="possible-values">默认的值为: <span>'jmp_alert'</span></div><div class="possible-values">可选的值为: <span>'jmp_alert_t','jmp_alert_b','jmp_alert_l','jmp_alert_r'</span></div></dd>
+
+      <dt><strong>boxArrow</strong> <i>String</i></dt>
+      <dd>箭头外层的类<div class="possible-values">默认的值为: <span>'base_jmp_t'</span></div><div class="possible-values">可选的值为: <span>'base_jmp_t','base_jmp_b','base_jmp_l','base_jmp_r'</span></div></dd>
+
+      <dt><strong>arrow</strong> <i>String</i></dt>
+      <dd>浮动层箭头的类<div class="possible-values">默认的值为: <span>'tri_t'</span></div><div class="possible-values">可选的值为: <span>'tri_t','tri_b','tri_l','tri_r'</span></div></dd>
+
+      <dt><strong>loading</strong> <i>String</i></dt>
+      <dd>浮动层加载时的类 -- 暂未实现<div class="possible-values">默认的值为: <span>'JT_loader'</span></div></dd>
+
+
+      <dt><strong>templs</strong> <i>Object</i></dt>
+      <dd>浮动层的模板<div class="possible-values">默认的值为: <span>{<br>
+				"tip":'&lt div id=${id} class=${tip}  group=${group} style="visibility:hidden;display:block;z-index:99;margin:0;left:-9999px;top:-9999px;overflow:hidden;position:absolute;max-width:${maxWidth}px;min-width:${minWidth}px;_width:expression((this.offsetWidth>${maxWidth})?\'${maxWidth}px\':true);"&gt &lt div class="${box} ${boxType} ${boxArrow}"&gt &ltb class="${arrow}"&gt&lt /b&gt &lt div class="${loading}"&gt &lt /div&gt ${content}&lt /div&gt &lt /div &gt'
+				}</span></div></dd>
+
+
+    </dl>
+    <h2 id="methods">Methods</h2>
+    <dl class="options">
+      <dt><strong>getTip</strong> <i>Function</i></dt>
+      <dd>获取页面元素对应的控件实例<div class="possible-values"><span>		/**<br>
+				*获取页面元素对应的控件实例<br>
+				* @param {Object} obj cQuery对象<br>
+				* @return {Object|null}  oJmp cQuery对象对应的jmp控件的实例<br>
+				*/<br>
+				getTip($("id"))
+				<br>	</span></div></dd>
+
+      <dt><strong>show</strong> <i>Function</i></dt>
+      <dd>执行该元素绑定的所有显示函数<div class="possible-values"><span>
+				show()
+				<br>	</span></div></dd>
+
+      <dt><strong>hide</strong> <i>Function</i></dt>
+      <dd>执行该元素绑定的所有隐藏函数<div class="possible-values"><span>
+				hide()
+				<br>	</span></div></dd>
+      <dt><strong>disable</strong> <i>Function</i></dt>
+      <dd>设置控件不可用<div class="possible-values"><span>
+				disable()
+				<br>	</span></div></dd>
+
+      <dt><strong>enable</strong> <i>Function</i></dt>
+      <dd>设置控件绑定<div class="possible-values"><span>
+				enable()
+				<br>	</span></div></dd>
+
+      <dt><strong>refresh</strong> <i>Function</i></dt>
+      <dd>修改参数<div class="possible-values"><span>
+				/**<br>
+				* @param {Object} opt 参数对象<br>
+				*/	<br>
+				refresh(opt)<br>
+				<br>	</span></div></dd>
+
+
+    </dl>
+
+
+
+  </div>
+</div>
+
+
+
+
+<footer>
+  <module>moduleA</module>
+  <version>2.0</version>
+  <title>title1</title>
+  <description>description1</description>
+</footer>
+
+
+
+<script>
+  var getIEOpacity = function(el){
+    var filter;
+    if(!!window.XDomainRequest){
+      filter = el.style.filter.match(/progid:DXImageTransform.Microsoft.Alpha\(.?opacity=(.*).?\)/i);
+    }else{
+      filter = el.style.filter.match(/alpha\(opacity=(.*)\)/i);
+    }
+    if(filter){
+      var value = parseFloat(filter[1]);
+      if (!isNaN(value)) {
+        return value ? value / 100 : 0;
+      }
+    }
+    return 1;
+  }
+  var camelize = function(attr){
+    return attr.replace(/\-(\w)/g, function(all, letter){
+      return letter.toUpperCase();
+    });
+  }
+  var getStyle = function(el, style){
+    if(!+"\v1"){
+      if(style == "opacity"){
+        return getIEOpacity(el)
+      }
+      return el.currentStyle[camelize(style)];
+    }else{
+      return document.defaultView.getComputedStyle(el, null).getPropertyValue(style)
+    }
+  }
+  $.ready(function () {
+    $.mod.load('autoScroll','1.0',function(){
+      var ins=$("#fixed").regMod('autoScroll','1.0',{
+        "options": {
+          "position":"rightmiddle"
+        },
+        "listeners":{
+          "click":function () {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+          }
+        }
+      });
+    });
+
+
+    $.mod.load('jmp','1.0',function(){
+      var ins=$(document).regMod('jmp','1.0',{cc:1});
+      var ins=$("#test2-1").regMod('jmp','1.0',{options:{
+        eventType:"input"
+      }});
+
+
+      $("#test2-2").regMod('jmp','1.0',{options:{eventType:"input",hideTip:false}});
+      var int2_3= $("#test2-3").regMod('jmp','1.0',{options:{eventType:"def"}});
+      window["tip2_3"] = int2_3.method('getTip',$("#test2-3"));
+
+
+
+      var ins2_4_1= $("#test2-4-1").regMod('jmp','1.0',{options:{eventType:"def"}});
+      window["tip2_4_1"] = ins2_4_1.method('getTip',$("#test2-4-1"));
+      var ins2_4_2= $("#test2-4-2").regMod('jmp','1.0',{options:{eventType:"def",group:"group2_4_2"}});
+      window["tip2_4_2"] = ins2_4_2.method('getTip',$("#test2-4-2"));
+
+
+      var ins2_5=$("#test2-5").regMod('jmp','1.0',{options:{
+        eventType:"def",
+        hideTip:false,
+        boundaryShow:false,
+        adjust: {
+          scroll: true,
+          resize: true
+        }
+      }});
+      var tip2_5 = ins2_5.method('getTip',$("#test2-5"));
+      tip2_5.show();
+
+
+      var ins=$("#test2-6").regMod('jmp','1.0',{options:{
+        type: "jmp_text",
+        /**浮动层的模板*/
+        template:"#jmp_text",
+        url:"jmp_text.data",
+        classNames:{
+          /**浮动层类型的类*/
+          boxType:'jmp_text'
+        }
+      }});
+      var ins=$("#test2-7").regMod('jmp','1.0',{options:{
+        type: "jmp_alert",
+        /**浮动层的模板*/
+        template:"#jmp_alert",
+        url:"jmp_alert.data",
+        classNames:{
+          /**浮动层类型的类*/
+          boxType:'jmp_alert'
+        }
+      }});
+      var ins=$("#test2-8").regMod('jmp','1.0',{options:{
+        type: "jmp_title",
+        /**浮动层的模板*/
+        template:"#jmp_title",
+        url:"jmp_title.data",
+        classNames:{
+          /**浮动层类型的类*/
+          boxType:'jmp_title'
+        }
+      }});
+      var ins=$("#test2-9").regMod('jmp','1.0',{options:{
+        type: "jmp_table",
+        /**浮动层的模板*/
+        template:"#jmp_table",
+        url:"jmp_table.data",
+        classNames:{
+          /**浮动层类型的类*/
+          boxType:'jmp_table'
+        }
+      }});
+      var ins=$("#test2-10").regMod('jmp','1.0',{options:{
+        type: "jmp_text",
+        /**浮动层的模板*/
+        template:"#jmp_tab_list",
+        url:"jmp_tab_list.data",
+        classNames:{
+          /**浮动层类型的类*/
+          boxType:'jmp_text'
+        }
+      }});
+      var ins=$("#test2-11").regMod('jmp','1.0',{options:{
+        showArrow:false
+      }});
+
+
+      var ins2_12=$("#test2-12").regMod('jmp','1.0',{options:{
+
+      }});
+      window["tip2_12"] = ins2_12.method('getTip',$("#test2-12"));
+
+      $("#test2-13").regMod('jmp','1.0',{
+        options:{
+          eventType:"input",
+          hideTip:true,
+          content:{
+            txt:"<img src='images/loading75.gif' data-role='jmp' data-params='{options:{hideTip:true,group:\"group3\"}}'/>"
+          },
+          template:"jmp_alert.html",
+          group:"group5"
+        }
+      });
+
+
+    });
+  });
+
+</script>
+</body>
+</html>
