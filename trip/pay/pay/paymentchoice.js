@@ -21,27 +21,28 @@ define(function(require, exports, module) {
   var $ = require('jquery'),
       formCheck = {
         reg:{
-          moneyReg: /^[0-9]{1}\d*(\.\d{1,2})?$/        // 数字金额正则验证，2位小数
+          // moneyReg: /^[0-9]{1}\d*(\.\d{1,2})?$/        // 数字金额正则验证，2位小数
+          moneyReg: /^[1-9]\d*$/     // 大于0的正整数
         },
         msg:{
-          moneyMsg: '清输入正确的金额，小数点2位',
+          moneyMsg: '请输入正确的金额，必须为大于0的整数',
           maxThan: '填写金额超出支付金额',
           submintMaxThan: '支付金额必须与订单总额一致',
-          submitCashOnce: '拆分支付只能选择一次现金支付，请重新拆分'
+          submitCashOnce: '拆分支付只能选择一次现金支付，请重新拆分',
         }
       },
       PAYTYPES = [{  // 支付方式和显示顺序对照
         rk: 0,
+        en:"CCard",
+        ch:"信用卡"
+      },{  // 支付方式和显示顺序对照
+        rk: 1,
         en:"Cash",
         ch:"现金"
       },{
-        rk: 1,
-        en:"CCard",
-        ch:"信用卡"
-      },{
         rk: 2,
         en:"ThirdPay",
-        ch:"第三方支付"
+        ch:"外网自助支付"
       },{
         rk: 3,
         en:"Other",
@@ -261,19 +262,33 @@ define(function(require, exports, module) {
      */
     this._checkSendData = function(_data){
       var cashNum = 0,
-          tempData;
-      // 金额校验
+          tempData,
+          amontCheck = true;
+
+      // 金额校验，是否都是大于0的整数
+      $.map( _data, function( _item ){
+        if ( _item.Amount <=0 || !formCheck.reg.moneyReg.test(_item.Amount) ) {
+          amontCheck = false;
+        }
+      });
+      if(!amontCheck){
+        self._errorTips(formCheck.msg.moneyMsg);
+        return [false]
+      };
+
+      // 金额总数校验
       if (tempLeft != 0 ){
         self._errorTips(formCheck.msg.submintMaxThan);
         return [false];
-      }
+      };
 
       // 只能选一个现金支付
       $.each(_data, function(_index, _item){
-        if(_item.PaymentType === '0'){
+        if(_item.PaymentType === 1){
           cashNum++;
         };
       });
+
       if( cashNum >= 2){
         self._errorTips(formCheck.msg.submitCashOnce);
         return [false];

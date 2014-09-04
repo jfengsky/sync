@@ -18,16 +18,16 @@ define(function(require, exports, module) {
       GVO = GV.app.order,
       PAYTYPES = [{  // 支付方式和显示顺序对照
         rk: 0,
+        en:"CCard",
+        ch:"信用卡"
+      },{  // 支付方式和显示顺序对照
+        rk: 1,
         en:"Cash",
         ch:"现金"
       },{
-        rk: 1,
-        en:"CCard",
-        ch:"信用卡"
-      },{
         rk: 2,
         en:"ThirdPay",
-        ch:"第三方支付"
+        ch:"外网自助支付"
       },{
         rk: 3,
         en:"Other",
@@ -64,7 +64,10 @@ define(function(require, exports, module) {
         paymentsIndex['chtype'] = self._typeFormat(_item.PaymentType);
         // paymentsIndex['paylink'] = GVO.vars.handles.getPayHtmlInfo + '&PaymentId=' + _item.PaymentId;
 
-        if( _item.PaymentType === 0 ){
+        // TODO 现金支付不显示填写信用卡信息
+        // 行用卡支付显示信用卡礼品卡信息
+
+        if( _item.PaymentType === 1 ){
 
           // IsEnableTicketPay = false 并且是现金支付，不显示支付链接
           if (!IsEnableTicketPay){
@@ -72,7 +75,7 @@ define(function(require, exports, module) {
           } else {
             tempData.Payments[_index]['linkText'] = isEdit + '礼品卡信息'
           }
-        } else if(_item.PaymentType === 1){
+        } else if(_item.PaymentType === 0){
 
           // IsEnableTicketPay = false 不显示礼品卡三个字
           if(!IsEnableTicketPay){
@@ -87,6 +90,21 @@ define(function(require, exports, module) {
         }
       })
       return tempData;
+    };
+
+    /**
+     * 错误提示
+     * @param {String} _str 提示话语
+     * @return
+     */
+    this._errorTips = function(_str){ // 错误提示
+      var tpl = '<p class="pay_tips" id="J_errTip">' + _str + '</p>';
+      $('#J_errTip').remove();
+      $('#J_paybox').after(tpl);
+      // if(!hasTips){
+      //   $('#J_paycnt').after(tpl);
+      // };
+      // hasTips = true;
     };
 
     /**
@@ -205,6 +223,7 @@ define(function(require, exports, module) {
     this._bind = function(_tplData){
       // 填写修改礼品卡信息
       $('#J_paybox').delegate('.pay_link', 'click', function(){
+        $('#J_errTip').remove();
         self._send({
           url: GVO.vars.handles.getPayHtmlInfo,
           data: {
@@ -230,9 +249,10 @@ define(function(require, exports, module) {
       // 确认提交按钮
       $('#J_submit').click(function(){
         // IsDirectFlight = 0 && BillNo= 0 不能点提交链接
-        if(GVO.vars.IsDirectFlight === '0' && !self._checkBillNo(_tplData)){
-
-          // TODO 不能提交提示
+        $('#J_errTip').remove();
+        if(GVO.vars.IsDirectFlight === 'True' && !self._checkBillNo(_tplData)){
+          self._errorTips('请录入所有信用卡信息');
+          // 不能提交提示
           return false;
         } else {
 
