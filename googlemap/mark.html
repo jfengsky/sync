@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head lang="en">
+    <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <title>创建一个标记点</title>
     <style type="text/css">
         html { height: 100% }
         body { height: 100%; margin: 0; padding: 0 }
         #map_canvas { height: 100% }
     </style>
-
 </head>
 <body onload="initialize()">
 <div id="map_canvas" style="width:600px; height:600px"></div>
@@ -31,6 +32,30 @@
         // 创建一个地图实例
         var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
+        /**
+         * setMap() 添加一个标记点
+         */
+//        var marker = new google.maps.Marker({
+//
+//            // 标记点位置
+//            position: lang,
+//
+//            title:"Hello World!"
+//        });
+//        marker.setMap(map);
+
+        /**
+         * maps.Marker 添加一个标记点
+         */
+        var marker = new google.maps.Marker({
+            position: lang,
+            map: map,
+            title: 'Hello World!'
+        });
+
+
+
+
     }
 
     function loadScript() {
@@ -45,5 +70,6 @@
 
 
 </script>
+
 </body>
 </html>
