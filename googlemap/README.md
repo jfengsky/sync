@@ -12,7 +12,7 @@ js:
     script.type = "text/javascript";
     
     // 注意最后的回掉函数 initialize
-    script.src = "http://ditu.google.cn/maps/api/js?key=Xk&sensor=TRUE_OR_FALSE&callback=initialize";
+    script.src = "http://ditu.google.cn/maps/api/js?v=3.exp&callback=initialize";
     document.body.appendChild(script);
     
     // 创建一个坐标
