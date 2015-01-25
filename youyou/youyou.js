@@ -11,19 +11,19 @@
   var QA = {
 
     /**
-     * [$ description]
-     * @param  {[type]} _id [description]
-     * @return {[type]}     [description]
+     * 获取id容器
+     * @param  {String} _id  id容器名
+     * @return {Object} id容器对象
      */
     $: function(_id) {
       return document.getElementById(_id)
     },
 
     /**
-     * [$Class description]
-     * @param  {[type]} id [description]
-     * @param  {[type]} el [description]
-     * @return {[type]}    [description]
+     * 获取id容器下的样式
+     * @param  {String} _id id容器名
+     * @param  {String} _el class容器
+     * @return {Object} class容器
      */
     $Class: function (_id, _el) {
       var elements = document.getElementById(_id);
@@ -40,16 +40,16 @@
     },
 
     /**
-     * [append description]
+     * 向容器最后写入内容
      * @param  {[type]} _data [description]
      * @return {[type]}       [description]
      */
-    append: function(_data) {
+    append: function(_el) {
 
     },
 
     /**
-     * [html description]
+     * 替换容器内容
      * @param  {[type]} _data [description]
      * @return {[type]}       [description]
      */
