@@ -8,6 +8,6 @@
   $time2 = explode ( ".", $time );  
   $time = $time2 [0];
 
-  $data = '{"sendTime":1422250366963,"resTime":'.$time.',"index":'.$index.',"question":"'.$question.'"}';
+  $data = '{"sendTime":1422250366963,"resTime":'.$time.',"index":'.$index.',"answer":"我太笨了，不知道你这个问题的答案，见笑了^-^","question":"'.$question.'"}';
   echo $callbackName.'('.$data.')';
 ?>
