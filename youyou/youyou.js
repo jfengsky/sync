@@ -47,6 +47,11 @@
       this.elements.parentNode.removeChild(this.elements);
     },
 
+
+    attr: function(''){
+
+    },
+
     /**
      * 设置/获取表单的值
      * @param  {[type]} _data [description]
@@ -93,6 +98,10 @@
         this.elements.attachEvent('on' + _type, _fn)
       }
       return this
+    },
+
+    delegate: function(_select, _type, _fn){
+      
     }
 
   };
@@ -204,11 +213,23 @@
      * @return {[type]} [description]
      */
     this._answerTpl = function(_answer, _resTime) {
-      return '<p class="vbk_ctrip">游游助手</p>' +
-        '<div>' +
-        '<div class="vbk_ctrip_info">' + _answer + '</div>' +
-        '</div>' +
-        '<p class="vbk_ctrip">' + _resTime + '</p>';
+      var listTpl = '',
+          answerContTpl = '';
+      if(typeof(_answer) === 'object'){
+        for(var i = 0; i < _answer.length; i++){
+          listTpl += '<p>' + (i + 1) + ',' + '<a href="javascript:void(0)">' + _answer[i] + '</a></p>';
+        };
+        answerContTpl = '<div class="ask_box">' + 
+                          '<p>相关问题：</p>' + listTpl +
+                        '</div>';
+      } else {
+        answerContTpl =  '<div>' +
+          '<div class="vbk_ctrip_info">' + _answer + '</div>' +
+          '</div>';
+      };
+
+      return '<p class="vbk_ctrip">游游助手</p>' + answerContTpl +'<p class="vbk_ctrip">' + _resTime + '</p>';
+
     };
 
     /**
@@ -262,9 +283,13 @@
 
           var index = _data.index,
             sendTime = self._formatDate(_data.sendTime),
-            answer = _data.answer,
+            answer = _data.answer.default,
             resTime = self._formatDate(_data.resTime);
           console.log(_data);
+
+          if(_data.answer.list.length){
+            answer = _data.answer.list
+          };
 
           // 移除发送中提示和错误提示
           $G('J_sing' + index).remove();
@@ -385,11 +410,18 @@
      * @return
      */
     this._bind = function() {
+
+      // 焦点是否在提问输入表单,用于判断按回车键提交问题
       $G('J_question').bind('focus', function() {
         questionFocus = true
       });
       $G('J_question').bind('blur', function() {
         questionFocus = false
+      })
+
+      // 相关问题点击直接发送请求的事件代理
+      $G('J_chatbox').bind('click', function(ev){
+        console.log(ev.target);
       })
     };
 
@@ -412,6 +444,7 @@
     this.init = function() {
 
       this._bind();
+
       // 发送按钮绑定提交事件
       this._sendButton();
 
