@@ -51,10 +51,17 @@
      * 设置/获取元素的属性
      * @param  {String}  _key    属性
      * @param  {String}  _value  值
-     * @return {Object} 返回该元素
+     * @return {Object/String} 返回该元素/属性的值
      */
     attr: function(_key, _value){
-
+      if(_value){
+        // 设置属性
+        this.elements.setAttribute(_key, _value)
+        return this
+      } else {
+        // 获取属性
+        return this.elements.getAttribute(_key)
+      }
     },
 
     /**
@@ -426,6 +433,7 @@
 
       // 相关问题点击直接发送请求的事件代理
       $G('J_chatbox').bind('click', function(ev){
+        console.log($G(ev.target).attr('href'));
         console.log(ev.target);
       })
     };
