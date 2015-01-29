@@ -47,8 +47,13 @@
       this.elements.parentNode.removeChild(this.elements);
     },
 
-
-    attr: function(''){
+    /**
+     * 设置/获取元素的属性
+     * @param  {String}  _key    属性
+     * @param  {String}  _value  值
+     * @return {Object} 返回该元素
+     */
+    attr: function(_key, _value){
 
     },
 
