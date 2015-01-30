@@ -53,8 +53,8 @@
      * @param  {String}  _value  值
      * @return {Object/String} 返回该元素/属性的值
      */
-    attr: function(_key, _value){
-      if(_value){
+    attr: function(_key, _value) {
+      if (_value) {
         // 设置属性
         this.elements.setAttribute(_key, _value)
         return this
@@ -97,6 +97,18 @@
       return this
     },
 
+    /**
+     * 把json对象转化为字符串
+     * @param  {Object} _obj  对象参数
+     * @return {String}       字符串
+     */
+    stringify: function(_obj) {
+      if (JSON) {
+        return JSON.stringify(_obj)
+      } else {
+        this.jsonToStr(_obj)
+      }
+    },
 
     /**
      * 绑定事件
@@ -112,8 +124,8 @@
       return this
     },
 
-    delegate: function(_select, _type, _fn){
-      
+    delegate: function(_select, _type, _fn) {
+
     }
 
   };
@@ -128,10 +140,38 @@
       questionIndex = 1,
 
       // api接口
+      // url = '/bookingnext/smartqa/search',
       url = '../data.php',
 
       // 焦点是否在提问输入框
       questionFocus = false;
+
+
+    // this._jsonToStr = function(_obj) {
+    //     var arr = [];
+    //     var fmt = function(s) {
+    //       if (typeof s == 'object' && s != null) {
+    //         return JsonToStr(s);
+    //       }
+    //       return /^(string)$/.test(typeof s) ? "'" + s + "'" : s;
+    //     }
+    //     for (var i in o) {
+    //       arr.push("'" + i + "':" + fmt(o[i]));
+    //       return '{' + arr.join(',') + '}';
+    //     }
+    //   };
+      /**
+       * 把json对象转化为字符串
+       * @param  {Object} _obj  对象参数
+       * @return {String}       字符串
+       */
+      this._stringify= function(_obj) {
+        if (JSON) {
+          return JSON.stringify(_obj)
+        } else {
+          // this._jsonToStr(_obj)
+        }
+      };
 
     /**
      * 格式化参数, jsonp专用
@@ -226,21 +266,21 @@
      */
     this._answerTpl = function(_answer, _resTime) {
       var listTpl = '',
-          answerContTpl = '';
-      if(typeof(_answer) === 'object'){
-        for(var i = 0; i < _answer.length; i++){
+        answerContTpl = '';
+      if (typeof(_answer) === 'object') {
+        for (var i = 0; i < _answer.length; i++) {
           listTpl += '<p>' + (i + 1) + ',' + '<a href="javascript:void(0)">' + _answer[i] + '</a></p>';
         };
-        answerContTpl = '<div class="ask_box">' + 
-                          '<p>相关问题：</p>' + listTpl +
-                        '</div>';
+        answerContTpl = '<div class="ask_box">' +
+          '<p>相关问题：</p>' + listTpl +
+          '</div>';
       } else {
-        answerContTpl =  '<div>' +
+        answerContTpl = '<div>' +
           '<div class="vbk_ctrip_info">' + _answer + '</div>' +
           '</div>';
       };
 
-      return '<p class="vbk_ctrip">游游助手</p>' + answerContTpl +'<p class="vbk_ctrip">' + _resTime + '</p>';
+      return '<p class="vbk_ctrip">游游助手</p>' + answerContTpl + '<p class="vbk_ctrip">' + _resTime + '</p>';
 
     };
 
@@ -249,14 +289,14 @@
      * @param  {[type]} _date [description]
      * @return {[type]}       [description]
      */
-    this._formatDate = function( _date ){
+    this._formatDate = function(_date) {
       var dateArr = [];
-          tempDate = new Date(_date),
-          dateArr[0] = tempDate.getHours(),
-          dateArr[1] = tempDate.getMinutes(),
-          dateArr[2] = tempDate.getSeconds();
-      for(var i = 0; i < 3; i++){
-        if(dateArr[i] < 10){
+      tempDate = new Date(_date),
+        dateArr[0] = tempDate.getHours(),
+        dateArr[1] = tempDate.getMinutes(),
+        dateArr[2] = tempDate.getSeconds();
+      for (var i = 0; i < 3; i++) {
+        if (dateArr[i] < 10) {
           dateArr[i] = '0' + dateArr[i]
         }
       };
@@ -284,22 +324,26 @@
      * @return
      */
     this._sendData = function(_options) {
+      var params = {
+        "M": 2,                   // 搜索模式，1精确模式，2模糊模式
+        "PID": 0,                 // 产品id, 没有传0
+        "K": _options.question,   // 问题字符串
+        "SQ": questionIndex       // 提问序列号
+      };
       this.jsonp({
         url: url,
         callback: 'callback',
-        data: {
-          q: _options.question,
-          index: questionIndex
+        data:{
+          "param":self._stringify(params)
         },
         success: function(_data) {
-
           var index = _data.index,
             sendTime = self._formatDate(_data.sendTime),
             answer = _data.answer.default,
             resTime = self._formatDate(_data.resTime);
           console.log(_data);
 
-          if(_data.answer.list.length){
+          if (_data.answer.list.length) {
             answer = _data.answer.list
           };
 
@@ -432,7 +476,7 @@
       })
 
       // 相关问题点击直接发送请求的事件代理
-      $G('J_chatbox').bind('click', function(ev){
+      $G('J_chatbox').bind('click', function(ev) {
         console.log($G(ev.target).attr('href'));
         console.log(ev.target);
       })
