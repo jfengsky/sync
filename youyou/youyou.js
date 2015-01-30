@@ -337,11 +337,11 @@
           "param":self._stringify(params)
         },
         success: function(_data) {
+          console.log(_data);
           var index = _data.index,
             sendTime = self._formatDate(_data.sendTime),
             answer = _data.answer.default,
             resTime = self._formatDate(_data.resTime);
-          console.log(_data);
 
           if (_data.answer.list.length) {
             answer = _data.answer.list
