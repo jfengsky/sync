@@ -141,7 +141,7 @@
 
       // api接口
       // url = '/bookingnext/smartqa/search',
-      url = '../data.php',
+      url = '/search',
 
       // 焦点是否在提问输入框
       questionFocus = false;
@@ -331,7 +331,7 @@
         "SQ": questionIndex       // 提问序列号
       };
       this.jsonp({
-        url: url,
+        url: 'http://localhost:3000' + url,
         callback: 'callback',
         data:{
           "param":self._stringify(params)
