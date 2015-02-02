@@ -143,6 +143,9 @@
       // url = '/bookingnext/smartqa/search',
       url = '/search',
 
+      // 反馈接口
+      feedBackUrl = '/bookingnext/smartqa/feedback',
+
       // 焦点是否在提问输入框
       questionFocus = false;
 
@@ -336,45 +339,80 @@
      * @param  {Array}     _kerword   关键字数组
      * @return {String}               高亮关键字的文本
      */
-    this._lightKeyword = function( _string, _kerword){
-      console.log(_string);
-      console.log(_kerword);
+    this._lightKeyword = function(_string, _kerword) {
       var tempString = '',
-          reg = '';
-      for(var i = 0, leg = _kerword.length; i < leg; i++){
-        reg = new RegExp(_kerword[i],'ig');
+        reg = '';
+      for (var i = 0, leg = _kerword.length; i < leg; i++) {
+        reg = new RegExp(_kerword[i], 'ig');
         tempString = _string.replace(reg, '<span class="red">' + _kerword[i] + '</span>');
       }
       return tempString
     };
 
     /**
-     * SR 显示: R [SN S] + 好用不好用(RID)
-     * @param  {[type]} _resTime             [description]
-     * @param  {[type]} _searchResult        [description]
-     * @param  {[type]} _searchResultKeyWord [description]
-     * @return {[type]}                      [description]
+     * 好用不好用区域
+     * @param  {Number} _index      答案序号
+     * @param  {Number} _rid        radio的值,用于传给后端
+     * @param  {Number} _nameIndex  radio组的序号
+     * @return {String}             
      */
-    this._fuzzyTpl = function(_resTime, _searchResult, _searchResultKeyWord){
-      var answerStr = '';
-      for(var i = 0; i < _searchResult.length; i++){
-        answerStr += '<div><div class="vbk_ctrip_info">' + this._lightKeyword(_searchResult[i].R, _searchResultKeyWord) + ' [' + _searchResult[i].SN + ', ' + _searchResult[i].S + ']' +'</div></div>'
-      };
-
-      return '<p class="vbk_ctrip">游游助手</p>' + answerStr + '<p class="vbk_ctrip">' + _resTime + '</p>';
+    this._feedBack = function(_index, _rid, _nameIndex) {
+      var tempName = 'feedback_' + _index + '_' + _nameIndex;
+      return '<div class="choose_box">' +
+          '<label><input data-type="feedback" type="radio" value="1" data-rid="' + _rid + '" name="' + tempName + '">好用</label>' +
+          '<label><input data-type="feedback" type="radio" value="2" data-rid="' + _rid + '" name="' + tempName + '">一般</label>' +
+          '<label><input data-type="feedback" type="radio" value="3" data-rid="' + _rid + '" name="' + tempName + '">不好用</label>' +
+        '</div>'
     };
 
     /**
-     * 模糊答案显示
+     * 相关问题答案
+     * RQ 显示: 序号 + Q (K用来点击传给后端)
+     * @param {Object} _data 相关问题数据
+     * @return {String}
+     */
+    this._relateAnswer = function( _data ){
+      var tempStr = '';
+      if(_data.length){
+        for(var i = 0, leg = _data.length; i < leg; i++){
+          tempStr +='<p>' + (i + 1) + ', <a href="javascript:void(0)" data-type="relatequest" data-k="' + _data[i].K + '">' + _data[i].Q + '</a><p>';
+        }
+      }
+      return '<div class="ask_box"><p>相关问题：</p>' + tempStr + '</div>'
+    };
+
+    /**
+     * 模糊答案显示模板 SR 显示: R [SN S] + 好用不好用(RID)
      * @param  {Number}   _index                  问题序号
      * @param  {String}   _resTime                回答时间
-     * @param  {Array}    _searchResult           答案数组
-     * @param  {Array}    _searchResultKeyWord    关键字数组
+     * @param  {Object}    _searchResult           答案数组
      * @return
      */
-    this._fuzzyAnswer = function(_index, _resTime, _searchResult, _searchResultKeyWord){
+    this._fuzzyTpl = function(_index, _resTime, _searchResult, _searchResultKeyWord) {
+      var answerStr = '', // 模糊匹配数据
+          relateStr = '', // 精准匹配数据
+          KeyWordArr = _searchResult.TK,
+          fuzzyAnswer = _searchResult.SR;
+
+      for (var i = 0; i < fuzzyAnswer.length; i++) {
+        answerStr += '<div><div class="vbk_ctrip_info">' + this._lightKeyword(fuzzyAnswer[i].R, KeyWordArr) + ' [' + fuzzyAnswer[i].SN + ', ' + fuzzyAnswer[i].S + ']' + this._feedBack(_index, fuzzyAnswer[i].RID, i) + '</div></div>'
+      };
+
+      relateStr = this._relateAnswer(_searchResult.RQ);
+
+      return '<p class="vbk_ctrip">游游助手</p>' + relateStr + answerStr + '<p class="vbk_ctrip">' + _resTime + '</p>';
+    };
+
+    /**
+     * 显示答案
+     * @param  {Number}   _index                  问题序号
+     * @param  {String}   _resTime                回答时间
+     * @param  {Object}   _searchResult           答案
+     * @return
+     */
+    this._showAnswer = function(_index, _resTime, _searchResult) {
       var answerCont = this._viewCont(_index, 'answer'),
-          answerTpl = this._fuzzyTpl(_resTime, _searchResult, _searchResultKeyWord);
+        answerTpl = this._fuzzyTpl(_index, _resTime, _searchResult);
       $G('J_chatbox').append(answerCont);
 
       $G('asw' + _index).html(answerTpl);
@@ -391,10 +429,10 @@
       var data = _data.data,
         index = data.SQ,
         sendTime = self._formatDate(data.RQT),
-        resTime = self._formatDate(data.RPT),
-        searchResult = data.SR,   // 模糊匹配的答案
-        aboutResult = data.RQ,    // 相关问题的答案
-        searchResultKeyWord = data.TK;  // 答案的关键字,用于高亮
+        resTime = self._formatDate(data.RPT);
+        // searchResult = data.SR, // 模糊匹配的答案
+        // aboutResult = data.RQ, // 相关问题的答案
+        // searchResultKeyWord = data.TK; // 答案的关键字,用于高亮
 
       // 移除发送中提示和错误提示
       $G('J_sing' + index).remove();
@@ -406,16 +444,16 @@
       // TODO 显示答案
       // 模糊问题
       //    SR 显示: R [SN S] + 好用不好用(RID)
-      if(searchResult.length){
-        self._fuzzyAnswer(index, resTime, searchResult, searchResultKeyWord);
-      }
-
+      // if (searchResult.length) {
+      //   self._showAnswer(index, resTime, searchResult, searchResultKeyWord);
+      // }
+      self._showAnswer(index, resTime, data);
 
 
       // 相关问题
       //    RQ 显示: 序号 + Q (K用来点击传给后端)
       // self._showAnswer(index, answer, resTime);
-      
+
 
       // 发送按钮变亮,可再次提交提问
       self._sending(false);
@@ -560,8 +598,16 @@
 
       // 相关问题点击直接发送请求的事件代理
       $G('J_chatbox').bind('click', function(ev) {
-        console.log($G(ev.target).attr('href'));
-        console.log(ev.target);
+        var targetType = $G(ev.target).attr('data-type');
+        if( targetType === 'feedback'){
+          // 反馈打分
+          this._sendFeedBack(ev.target);
+          console.log('反馈信息')
+        } else if( targetType === 'relatequest' ){
+          // 相关问题
+          console.log('相关问题')
+          this._sendRelateData(ev.target);
+        }
       })
     };
 
