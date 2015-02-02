@@ -160,18 +160,18 @@
     //       return '{' + arr.join(',') + '}';
     //     }
     //   };
-      /**
-       * 把json对象转化为字符串
-       * @param  {Object} _obj  对象参数
-       * @return {String}       字符串
-       */
-      this._stringify= function(_obj) {
-        if (JSON) {
-          return JSON.stringify(_obj)
-        } else {
-          // this._jsonToStr(_obj)
-        }
-      };
+    /**
+     * 把json对象转化为字符串
+     * @param  {Object} _obj  对象参数
+     * @return {String}       字符串
+     */
+    this._stringify = function(_obj) {
+      if (JSON) {
+        return JSON.stringify(_obj)
+      } else {
+        // this._jsonToStr(_obj)
+      }
+    };
 
     /**
      * 格式化参数, jsonp专用
@@ -264,43 +264,55 @@
      * [_answerTpl description]
      * @return {[type]} [description]
      */
-    this._answerTpl = function(_answer, _resTime) {
-      var listTpl = '',
-        answerContTpl = '';
-      if (typeof(_answer) === 'object') {
-        for (var i = 0; i < _answer.length; i++) {
-          listTpl += '<p>' + (i + 1) + ',' + '<a href="javascript:void(0)">' + _answer[i] + '</a></p>';
-        };
-        answerContTpl = '<div class="ask_box">' +
-          '<p>相关问题：</p>' + listTpl +
-          '</div>';
-      } else {
-        answerContTpl = '<div>' +
-          '<div class="vbk_ctrip_info">' + _answer + '</div>' +
-          '</div>';
-      };
+    // this._answerTpl = function(_answer, _resTime) {
+    //   var listTpl = '',
+    //     answerContTpl = '';
+    //   if (typeof(_answer) === 'object') {
+    //     for (var i = 0; i < _answer.length; i++) {
+    //       listTpl += '<p>' + (i + 1) + ',' + '<a href="javascript:void(0)">' + _answer[i] + '</a></p>';
+    //     };
+    //     answerContTpl = '<div class="ask_box">' +
+    //       '<p>相关问题：</p>' + listTpl +
+    //       '</div>';
+    //   } else {
+    //     answerContTpl = '<div>' +
+    //       '<div class="vbk_ctrip_info">' + _answer + '</div>' +
+    //       '</div>';
+    //   };
 
-      return '<p class="vbk_ctrip">游游助手</p>' + answerContTpl + '<p class="vbk_ctrip">' + _resTime + '</p>';
+    //   return '<p class="vbk_ctrip">游游助手</p>' + answerContTpl + '<p class="vbk_ctrip">' + _resTime + '</p>';
 
+    // };
+
+    /**
+     * 格式化时间
+     * @param  {Number} _date  毫秒时间
+     * @return {String}        返回YYYY-MM-DD hh:mm格式时间
+     */
+    this._formatDate = function(_date) {
+      var dateArr = [],
+        tempDate = new Date(_date);
+      dateArr[0] = tempDate.getFullYear();
+      dateArr[1] = tempDate.getMonth() + 1;
+      dateArr[2] = tempDate.getDate();
+
+      dateArr[3] = tempDate.getHours();
+      dateArr[4] = tempDate.getMinutes();
+      // dateArr[2] = tempDate.getSeconds();
+
+      return dateArr[0] + '-' + dateArr[1] + '-' + dateArr[2] + ' ' + dateArr[3] + ':' + dateArr[4]
     };
 
     /**
-     * 格式化时间,返回hh:mm:ss格式
-     * @param  {[type]} _date [description]
-     * @return {[type]}       [description]
+     * 网络错误或者返回错误的提示
+     * @return
      */
-    this._formatDate = function(_date) {
-      var dateArr = [];
-      tempDate = new Date(_date),
-        dateArr[0] = tempDate.getHours(),
-        dateArr[1] = tempDate.getMinutes(),
-        dateArr[2] = tempDate.getSeconds();
-      for (var i = 0; i < 3; i++) {
-        if (dateArr[i] < 10) {
-          dateArr[i] = '0' + dateArr[i]
-        }
-      };
-      return dateArr.join(':')
+    this._dataError = function() {
+      $G('J_sing' + questionIndex).hide();
+      $G('J_serr' + questionIndex).show();
+
+      // 发送按钮变亮,可再次提交提问
+      self._sending(false);
     };
 
     /**
@@ -309,12 +321,109 @@
      * @param  {String} _resTime 回答的时间
      * @return
      */
-    this._showAnswer = function(_index, _answer, _resTime) {
-      var answerCont = this._viewCont(_index, 'answer'),
-        answerInfo = this._answerTpl(_answer, _resTime);
+    // this._showAnswer = function(_index, _answer, _resTime) {
+    //   var answerCont = this._viewCont(_index, 'answer'),
+    //     answerInfo = this._answerTpl(_answer, _resTime);
 
+    //   $G('J_chatbox').append(answerCont);
+    //   $G('asw' + _index).html(answerInfo);
+
+    // };
+
+    /**
+     * 高亮关键字
+     * @param  {String}    _string    文本
+     * @param  {Array}     _kerword   关键字数组
+     * @return {String}               高亮关键字的文本
+     */
+    this._lightKeyword = function( _string, _kerword){
+      console.log(_string);
+      console.log(_kerword);
+      var tempString = '',
+          reg = '';
+      for(var i = 0, leg = _kerword.length; i < leg; i++){
+        reg = new RegExp(_kerword[i],'ig');
+        tempString = _string.replace(reg, '<span class="red">' + _kerword[i] + '</span>');
+      }
+      return tempString
+    };
+
+    /**
+     * SR 显示: R [SN S] + 好用不好用(RID)
+     * @param  {[type]} _resTime             [description]
+     * @param  {[type]} _searchResult        [description]
+     * @param  {[type]} _searchResultKeyWord [description]
+     * @return {[type]}                      [description]
+     */
+    this._fuzzyTpl = function(_resTime, _searchResult, _searchResultKeyWord){
+      var answerStr = '';
+      for(var i = 0; i < _searchResult.length; i++){
+        answerStr += '<div><div class="vbk_ctrip_info">' + this._lightKeyword(_searchResult[i].R, _searchResultKeyWord) + ' [' + _searchResult[i].SN + ', ' + _searchResult[i].S + ']' +'</div></div>'
+      };
+
+      return '<p class="vbk_ctrip">游游助手</p>' + answerStr + '<p class="vbk_ctrip">' + _resTime + '</p>';
+    };
+
+    /**
+     * 模糊答案显示
+     * @param  {Number}   _index                  问题序号
+     * @param  {String}   _resTime                回答时间
+     * @param  {Array}    _searchResult           答案数组
+     * @param  {Array}    _searchResultKeyWord    关键字数组
+     * @return
+     */
+    this._fuzzyAnswer = function(_index, _resTime, _searchResult, _searchResultKeyWord){
+      var answerCont = this._viewCont(_index, 'answer'),
+          answerTpl = this._fuzzyTpl(_resTime, _searchResult, _searchResultKeyWord);
       $G('J_chatbox').append(answerCont);
-      $G('asw' + _index).html(answerInfo);
+
+      $G('asw' + _index).html(answerTpl);
+
+    };
+
+    /**
+     * 显示后端返回的答案
+     * @param {Object} _data 返回的数据
+     * @return
+     */
+    this._answers = function(_data) {
+      console.log(_data);
+      var data = _data.data,
+        index = data.SQ,
+        sendTime = self._formatDate(data.RQT),
+        resTime = self._formatDate(data.RPT),
+        searchResult = data.SR,   // 模糊匹配的答案
+        aboutResult = data.RQ,    // 相关问题的答案
+        searchResultKeyWord = data.TK;  // 答案的关键字,用于高亮
+
+      // 移除发送中提示和错误提示
+      $G('J_sing' + index).remove();
+      $G('J_serr' + index).remove();
+
+      // 写入发送时间
+      $G('J_stime' + index).html(sendTime);
+
+      // TODO 显示答案
+      // 模糊问题
+      //    SR 显示: R [SN S] + 好用不好用(RID)
+      if(searchResult.length){
+        self._fuzzyAnswer(index, resTime, searchResult, searchResultKeyWord);
+      }
+
+
+
+      // 相关问题
+      //    RQ 显示: 序号 + Q (K用来点击传给后端)
+      // self._showAnswer(index, answer, resTime);
+      
+
+      // 发送按钮变亮,可再次提交提问
+      self._sending(false);
+
+      // 滚动到底部
+      window.scrollTo(0, 9999);
+
+      questionIndex++
 
     };
 
@@ -325,53 +434,26 @@
      */
     this._sendData = function(_options) {
       var params = {
-        "M": 2,                   // 搜索模式，1精确模式，2模糊模式
-        "PID": 0,                 // 产品id, 没有传0
-        "K": _options.question,   // 问题字符串
-        "SQ": questionIndex       // 提问序列号
+        "M": 2, // 搜索模式，1精确模式，2模糊模式
+        "PID": 0, // 产品id, 没有传0
+        "K": _options.question, // 问题字符串
+        "SQ": questionIndex // 提问序列号
       };
       this.jsonp({
         url: 'http://localhost:3000' + url,
         callback: 'callback',
-        data:{
-          "param":self._stringify(params)
+        data: {
+          "param": self._stringify(params)
         },
         success: function(_data) {
-          console.log(_data);
-          var index = _data.index,
-            sendTime = self._formatDate(_data.sendTime),
-            answer = _data.answer.default,
-            resTime = self._formatDate(_data.resTime);
-
-          if (_data.answer.list.length) {
-            answer = _data.answer.list
-          };
-
-          // 移除发送中提示和错误提示
-          $G('J_sing' + index).remove();
-          $G('J_serr' + index).remove();
-
-          // 写入发送时间
-          $G('J_stime' + index).html(sendTime)
-
-          // TODO 显示回答
-          self._showAnswer(index, answer, resTime);
-
-
-          // 发送按钮变亮,可再次提交提问
-          self._sending(false);
-
-          // 滚动到底部
-          window.scrollTo(0, 9999);
-
-          questionIndex++
+          if (_data.errno === 0 && _options.callback) {
+            _options.callback(_data)
+          } else {
+            self._dataError()
+          }
         },
         fail: function() {
-          $G('J_sing' + questionIndex).hide();
-          $G('J_serr' + questionIndex).show();
-
-          // 发送按钮变亮,可再次提交提问
-          self._sending(false);
+          self._dataError()
         },
         timeout: 2000
       })
@@ -456,7 +538,8 @@
 
         // 发送提问给后端,请求数据
         self._sendData({
-          question: tempQuestion
+          question: tempQuestion,
+          callback: self._answers
         });
       }
     };
