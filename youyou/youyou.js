@@ -98,6 +98,20 @@
     },
 
     /**
+     * 获取节点里的文本
+     * @return {String}
+     */
+    text: function() {
+      var str = '',
+        el = this.elements.childNodes || this.elements;
+      for (var j = 0; j < el.length; j++) {
+        str += el[j].nodeType != 1 ?
+          el[j].nodeValue : text(el[j].childNodes);
+      }
+      return str
+    },
+
+    /**
      * 把json对象转化为字符串
      * @param  {Object} _obj  对象参数
      * @return {String}       字符串
@@ -122,10 +136,6 @@
         this.elements.attachEvent('on' + _type, _fn)
       }
       return this
-    },
-
-    delegate: function(_select, _type, _fn) {
-
     }
 
   };
@@ -354,14 +364,14 @@
      * @param  {Number} _index      答案序号
      * @param  {Number} _rid        radio的值,用于传给后端
      * @param  {Number} _nameIndex  radio组的序号
-     * @return {String}             
+     * @return {String}
      */
     this._feedBack = function(_index, _rid, _nameIndex) {
       var tempName = 'feedback_' + _index + '_' + _nameIndex;
       return '<div class="choose_box">' +
-          '<label><input data-type="feedback" type="radio" value="1" data-rid="' + _rid + '" name="' + tempName + '">好用</label>' +
-          '<label><input data-type="feedback" type="radio" value="2" data-rid="' + _rid + '" name="' + tempName + '">一般</label>' +
-          '<label><input data-type="feedback" type="radio" value="3" data-rid="' + _rid + '" name="' + tempName + '">不好用</label>' +
+        '<label><input data-type="feedback" type="radio" value="1" data-rid="' + _rid + '" name="' + tempName + '">好用</label>' +
+        '<label><input data-type="feedback" type="radio" value="2" data-rid="' + _rid + '" name="' + tempName + '">一般</label>' +
+        '<label><input data-type="feedback" type="radio" value="3" data-rid="' + _rid + '" name="' + tempName + '">不好用</label>' +
         '</div>'
     };
 
@@ -371,11 +381,11 @@
      * @param {Object} _data 相关问题数据
      * @return {String}
      */
-    this._relateAnswer = function( _data ){
+    this._relateAnswer = function(_data) {
       var tempStr = '';
-      if(_data.length){
-        for(var i = 0, leg = _data.length; i < leg; i++){
-          tempStr +='<p>' + (i + 1) + ', <a href="javascript:void(0)" data-type="relatequest" data-k="' + _data[i].K + '">' + _data[i].Q + '</a><p>';
+      if (_data.length) {
+        for (var i = 0, leg = _data.length; i < leg; i++) {
+          tempStr += '<p>' + (i + 1) + ', <a href="javascript:void(0)" data-type="relatequest" data-k="' + _data[i].K + '">' + _data[i].Q + '</a><p>';
         }
       }
       return '<div class="ask_box"><p>相关问题：</p>' + tempStr + '</div>'
@@ -390,9 +400,9 @@
      */
     this._fuzzyTpl = function(_index, _resTime, _searchResult, _searchResultKeyWord) {
       var answerStr = '', // 模糊匹配数据
-          relateStr = '', // 精准匹配数据
-          KeyWordArr = _searchResult.TK,
-          fuzzyAnswer = _searchResult.SR;
+        relateStr = '', // 精准匹配数据
+        KeyWordArr = _searchResult.TK,
+        fuzzyAnswer = _searchResult.SR;
 
       for (var i = 0; i < fuzzyAnswer.length; i++) {
         answerStr += '<div><div class="vbk_ctrip_info">' + this._lightKeyword(fuzzyAnswer[i].R, KeyWordArr) + ' [' + fuzzyAnswer[i].SN + ', ' + fuzzyAnswer[i].S + ']' + this._feedBack(_index, fuzzyAnswer[i].RID, i) + '</div></div>'
@@ -430,9 +440,9 @@
         index = data.SQ,
         sendTime = self._formatDate(data.RQT),
         resTime = self._formatDate(data.RPT);
-        // searchResult = data.SR, // 模糊匹配的答案
-        // aboutResult = data.RQ, // 相关问题的答案
-        // searchResultKeyWord = data.TK; // 答案的关键字,用于高亮
+      // searchResult = data.SR, // 模糊匹配的答案
+      // aboutResult = data.RQ, // 相关问题的答案
+      // searchResultKeyWord = data.TK; // 答案的关键字,用于高亮
 
       // 移除发送中提示和错误提示
       $G('J_sing' + index).remove();
@@ -471,27 +481,25 @@
      * @return
      */
     this._sendData = function(_options) {
-      var params = {
-        "M": 2, // 搜索模式，1精确模式，2模糊模式
-        "PID": 0, // 产品id, 没有传0
-        "K": _options.question, // 问题字符串
-        "SQ": questionIndex // 提问序列号
-      };
       this.jsonp({
-        url: 'http://localhost:3000' + url,
+        url: _options.url,
         callback: 'callback',
         data: {
-          "param": self._stringify(params)
+          "param": self._stringify(_options.param)
         },
         success: function(_data) {
           if (_data.errno === 0 && _options.callback) {
             _options.callback(_data)
           } else {
-            self._dataError()
+            if (_options.error) {
+              _options.error()
+            }
           }
         },
         fail: function() {
-          self._dataError()
+          if (_options.error) {
+            _options.error()
+          }
         },
         timeout: 2000
       })
@@ -561,6 +569,54 @@
     };
 
     /**
+     * 点击相关问题的操作
+     * @param  {Object} _obj radio按钮
+     * @return
+     */
+    this._sendRelateData = function(_obj) {
+
+      // 相关问题需要把K传给后端而不是问题字符串
+      var sendKey = $G(_obj).attr('data-k'),
+        questionChar = $G(_obj).text();
+
+      // 显示用户提问
+      self._showQuestion(questionChar);
+
+      // 发送按钮变灰色,不能立刻再次提交
+      self._sending(true);
+
+      this._sendData({
+        url: 'http://localhost:3000' + url,
+        param: {
+          "M": 1, // 搜索模式，1精确模式，2模糊模式
+          "PID": 0, // 产品id, 没有传0
+          "K": sendKey, // 问题字符串
+          "SQ": questionIndex // 提问序列号
+        },
+        callback: self._answers,
+        error: self._dataError
+      });
+    };
+
+    /**
+     * 点击反馈radio后的操作
+     * @param  {Object} _obj radio按钮
+     * @return
+     */
+    this._sendFeedBack = function(_obj) {
+      var radioRid = $G(_obj).attr('data-rid') - 0,
+        radioVal = $G(_obj).val() - 0;
+      this._sendData({
+        url: feedBackUrl,
+        param: {
+          "RID": radioRid,
+          "FR": radioVal,
+          "EID": "", // TODO 员工OP的ID
+        }
+      });
+    };
+
+    /**
      * 点击发送按钮后执行的操作
      * @return
      */
@@ -576,8 +632,15 @@
 
         // 发送提问给后端,请求数据
         self._sendData({
-          question: tempQuestion,
-          callback: self._answers
+          url: 'http://localhost:3000' + url,
+          param: {
+            "M": 2, // 搜索模式，1精确模式，2模糊模式
+            "PID": 0, // 产品id, 没有传0
+            "K": tempQuestion, // 问题字符串
+            "SQ": questionIndex // 提问序列号
+          },
+          callback: self._answers,
+          error: self._dataError
         });
       }
     };
@@ -599,14 +662,12 @@
       // 相关问题点击直接发送请求的事件代理
       $G('J_chatbox').bind('click', function(ev) {
         var targetType = $G(ev.target).attr('data-type');
-        if( targetType === 'feedback'){
+        if (targetType === 'feedback') {
           // 反馈打分
-          this._sendFeedBack(ev.target);
-          console.log('反馈信息')
-        } else if( targetType === 'relatequest' ){
+          self._sendFeedBack(ev.target);
+        } else if (targetType === 'relatequest') {
           // 相关问题
-          console.log('相关问题')
-          this._sendRelateData(ev.target);
+          self._sendRelateData(ev.target);
         }
       })
     };
