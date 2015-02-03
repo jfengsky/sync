@@ -11,11 +11,16 @@
 
   function _$(id) {
     if (typeof(id) === 'string') {
-      this.elements = document.getElementById(id);
+      if (id !== 'body') {
+        this.elements = document.getElementById(id);
+      } else {
+        this.elements = document.getElementsByTagName('body')[0];
+      }
+
     } else if (typeof(id) === 'object') {
       this.elements = id
     }
-  }
+  };
 
   _$.prototype = {
 
@@ -150,29 +155,40 @@
       questionIndex = 1,
 
       // api接口
-      // url = '/bookingnext/smartqa/search',
-      url = '/search',
+      // SEARCHURL = '/bookingnext/smartqa/search',
+      SEARCHURL = 'http://localhost:3000/search',
 
       // 反馈接口
-      feedBackUrl = '/bookingnext/smartqa/feedback',
+      FEEDBACKURL = '/bookingnext/smartqa/feedback',
 
       // 焦点是否在提问输入框
-      questionFocus = false;
+      questionFocus = false,
+
+      // 嵌入版游游助手css是否已经载入
+      cssHasLoad = false,
+      SMALLYOUYOUURL = '../pc/youyou.css',
+
+      // 是否是嵌入版(小窗口)的游游助手
+      isSmallYouyou = false,
+
+      // 问题类型,用于是否显示评分 1:精确模式;2:模糊模式
+      questionType = 2;
 
 
-    // this._jsonToStr = function(_obj) {
-    //     var arr = [];
-    //     var fmt = function(s) {
-    //       if (typeof s == 'object' && s != null) {
-    //         return JsonToStr(s);
-    //       }
-    //       return /^(string)$/.test(typeof s) ? "'" + s + "'" : s;
-    //     }
-    //     for (var i in o) {
-    //       arr.push("'" + i + "':" + fmt(o[i]));
-    //       return '{' + arr.join(',') + '}';
-    //     }
-    //   };
+    /**
+     * 异步载入css
+     * @param  {String} _href css地址
+     * @return
+     */
+    this._loadCss = function(_href) {
+      var head = document.getElementsByTagName('head')[0],
+        styleTag = document.createElement('link');
+      styleTag.setAttribute('type', 'text/css');
+      styleTag.setAttribute('rel', 'stylesheet');
+      styleTag.setAttribute('href', _href);
+      head.appendChild(styleTag);
+    };
+
     /**
      * 把json对象转化为字符串
      * @param  {Object} _obj  对象参数
@@ -257,6 +273,44 @@
     };
 
 
+    this._smallWinTpl = '<div class="youyou_title"><h1>游游助手<i id="J_youyouboxclose">x</i></h1></div>' +
+      '<div class="body-search"><div class="box" id="J_chatbox">' +
+      '<div id="chat0">' +
+      '<p class="vbk_ctrip">游游助手</p>' +
+      '<div class="basefix">' +
+      '<div class="left_box yellow_bg">' +
+      '您好，我是机器人游游，很高兴为您复您。' +
+      '<div class="choose_box">' +
+      '<label>' +
+      '<input type="radio">好用' +
+      '</label>' +
+      '<label>' +
+      '<input type="radio">一般' +
+      '</label>' +
+      '<label>' +
+      '<input type="radio">不好用' +
+      '</label>' +
+      '</div>' +
+      '</div>' +
+      '</div>' +
+      // '<p class="vbk_ctrip">2014-10-23  19:43</p>' +
+      '</div>' +
+      '</div></div>' +
+      '<div class="output"><input type="text" placeholder="请输入文字" id="J_question"><a href="javascript:void(0)" class="send" id="J_send">发送</a><a href="javascript:void(0)" class="vbk_send" id="J_sending" style="display:none;opacity:0.4">发送</a></div>';
+
+    /**
+     * [_smallquesTpl description]
+     * @param  {[type]} _question [description]
+     * @param  {[type]} _index    [description]
+     * @return {[type]}           [description]
+     */
+    this._smallquesTpl = function(_question, _index) {
+      return '<div class="basefix">' +
+        '<span class="J_sing" id="J_sing' + _index + '">发送中... </span>' +
+        '<div class="right_box">' + _question + '</div>' +
+        '</div>';
+    };
+
     /**
      * 用户提问显示模板
      * @param  {String} _question  提问的问题
@@ -272,30 +326,6 @@
         '<p class="vbk_client_box" id="J_stime' + _index + '"></p>' +
         '</div>';
     };
-
-    /**
-     * [_answerTpl description]
-     * @return {[type]} [description]
-     */
-    // this._answerTpl = function(_answer, _resTime) {
-    //   var listTpl = '',
-    //     answerContTpl = '';
-    //   if (typeof(_answer) === 'object') {
-    //     for (var i = 0; i < _answer.length; i++) {
-    //       listTpl += '<p>' + (i + 1) + ',' + '<a href="javascript:void(0)">' + _answer[i] + '</a></p>';
-    //     };
-    //     answerContTpl = '<div class="ask_box">' +
-    //       '<p>相关问题：</p>' + listTpl +
-    //       '</div>';
-    //   } else {
-    //     answerContTpl = '<div>' +
-    //       '<div class="vbk_ctrip_info">' + _answer + '</div>' +
-    //       '</div>';
-    //   };
-
-    //   return '<p class="vbk_ctrip">游游助手</p>' + answerContTpl + '<p class="vbk_ctrip">' + _resTime + '</p>';
-
-    // };
 
     /**
      * 格式化时间
@@ -329,21 +359,6 @@
     };
 
     /**
-     * 显示回答
-     * @param  {String} _answer  系统的回答
-     * @param  {String} _resTime 回答的时间
-     * @return
-     */
-    // this._showAnswer = function(_index, _answer, _resTime) {
-    //   var answerCont = this._viewCont(_index, 'answer'),
-    //     answerInfo = this._answerTpl(_answer, _resTime);
-
-    //   $G('J_chatbox').append(answerCont);
-    //   $G('asw' + _index).html(answerInfo);
-
-    // };
-
-    /**
      * 高亮关键字
      * @param  {String}    _string    文本
      * @param  {Array}     _kerword   关键字数组
@@ -360,7 +375,7 @@
     };
 
     /**
-     * 好用不好用区域
+     * 评分区域模板
      * @param  {Number} _index      答案序号
      * @param  {Number} _rid        radio的值,用于传给后端
      * @param  {Number} _nameIndex  radio组的序号
@@ -383,7 +398,7 @@
      */
     this._relateAnswer = function(_data) {
       var tempStr = '';
-      if (_data.length) {
+      if (_data && _data.length) {
         for (var i = 0, leg = _data.length; i < leg; i++) {
           tempStr += '<p>' + (i + 1) + ', <a href="javascript:void(0)" data-type="relatequest" data-k="' + _data[i].K + '">' + _data[i].Q + '</a><p>';
         }
@@ -402,15 +417,31 @@
       var answerStr = '', // 模糊匹配数据
         relateStr = '', // 精准匹配数据
         KeyWordArr = _searchResult.TK,
-        fuzzyAnswer = _searchResult.SR;
+        fuzzyAnswer = _searchResult.SR,
+        lightClass = '',
+        feedbackTpl = '';
 
       for (var i = 0; i < fuzzyAnswer.length; i++) {
-        answerStr += '<div><div class="vbk_ctrip_info">' + this._lightKeyword(fuzzyAnswer[i].R, KeyWordArr) + ' [' + fuzzyAnswer[i].SN + ', ' + fuzzyAnswer[i].S + ']' + this._feedBack(_index, fuzzyAnswer[i].RID, i) + '</div></div>'
+
+        // 模糊搜索的第一个答案要高亮
+        if(i === 0 && questionType === 2){
+          lightClass = 'yellow_bg';
+        } else {
+          lightClass = '';
+        };
+
+        if(questionType === 2){
+          feedbackTpl = this._feedBack(_index, fuzzyAnswer[i].RID, i);
+        } else {
+          feedbackTpl = '';
+        }
+
+        answerStr += '<div><div class="vbk_ctrip_info ' + lightClass + '">' + this._lightKeyword(fuzzyAnswer[i].R, KeyWordArr) + ' [' + fuzzyAnswer[i].SN + ', ' + fuzzyAnswer[i].S + ']' + feedbackTpl + '</div></div>'
       };
 
       relateStr = this._relateAnswer(_searchResult.RQ);
 
-      return '<p class="vbk_ctrip">游游助手</p>' + relateStr + answerStr + '<p class="vbk_ctrip">' + _resTime + '</p>';
+      return '<p class="vbk_ctrip">游游助手</p>' + answerStr + relateStr + '<p class="vbk_ctrip">' + _resTime + '</p>';
     };
 
     /**
@@ -438,11 +469,8 @@
       console.log(_data);
       var data = _data.data,
         index = data.SQ,
-        sendTime = self._formatDate(data.RQT),
-        resTime = self._formatDate(data.RPT);
-      // searchResult = data.SR, // 模糊匹配的答案
-      // aboutResult = data.RQ, // 相关问题的答案
-      // searchResultKeyWord = data.TK; // 答案的关键字,用于高亮
+        sendTime = self._formatDate(data.RQT - 0),
+        resTime = self._formatDate(data.RPT - 0);
 
       // 移除发送中提示和错误提示
       $G('J_sing' + index).remove();
@@ -451,19 +479,8 @@
       // 写入发送时间
       $G('J_stime' + index).html(sendTime);
 
-      // TODO 显示答案
-      // 模糊问题
-      //    SR 显示: R [SN S] + 好用不好用(RID)
-      // if (searchResult.length) {
-      //   self._showAnswer(index, resTime, searchResult, searchResultKeyWord);
-      // }
+      // 显示答案
       self._showAnswer(index, resTime, data);
-
-
-      // 相关问题
-      //    RQ 显示: 序号 + Q (K用来点击传给后端)
-      // self._showAnswer(index, answer, resTime);
-
 
       // 发送按钮变亮,可再次提交提问
       self._sending(false);
@@ -542,11 +559,16 @@
      * @return
      */
     this._showQuestion = function(_question) {
-      var tpl = this._viewCont(questionIndex, 'question');
+      // 容器模板
+      var tpl = this._viewCont(questionIndex, 'question'),
+        chatTpl = this._quesTpl(_question, questionIndex);
+      if (isSmallYouyou) {
+        chatTpl = this._smallquesTpl(_question, questionIndex);;
+      };
 
       $G('J_chatbox').append(tpl);
 
-      $G('chat' + questionIndex).html(this._quesTpl(_question, questionIndex));
+      $G('chat' + questionIndex).html(chatTpl);
 
       // 滚动到底部
       window.scrollTo(0, 9999);
@@ -579,6 +601,9 @@
       var sendKey = $G(_obj).attr('data-k'),
         questionChar = $G(_obj).text();
 
+      // 精确模式
+      questionType = 1;
+
       // 显示用户提问
       self._showQuestion(questionChar);
 
@@ -586,7 +611,7 @@
       self._sending(true);
 
       this._sendData({
-        url: 'http://localhost:3000' + url,
+        url: SEARCHURL,
         param: {
           "M": 1, // 搜索模式，1精确模式，2模糊模式
           "PID": 0, // 产品id, 没有传0
@@ -607,7 +632,7 @@
       var radioRid = $G(_obj).attr('data-rid') - 0,
         radioVal = $G(_obj).val() - 0;
       this._sendData({
-        url: feedBackUrl,
+        url: FEEDBACKURL,
         param: {
           "RID": radioRid,
           "FR": radioVal,
@@ -622,6 +647,10 @@
      */
     this._sendEvent = function() {
       var tempQuestion = $G('J_question').val();
+
+      // 模糊模式
+      questionType = 2;
+
       if (self.checkString(tempQuestion)) {
 
         // 显示用户提问
@@ -632,11 +661,11 @@
 
         // 发送提问给后端,请求数据
         self._sendData({
-          url: 'http://localhost:3000' + url,
+          url: SEARCHURL,
           param: {
             "M": 2, // 搜索模式，1精确模式，2模糊模式
             "PID": 0, // 产品id, 没有传0
-            "K": tempQuestion, // 问题字符串
+            "K": escape(tempQuestion), // 问题字符串
             "SQ": questionIndex // 提问序列号
           },
           callback: self._answers,
@@ -688,13 +717,64 @@
 
     };
 
+    /**
+     * 嵌入版本的初始化
+     *
+     */
+    this._boxInit = function() {
+
+      // 点击游游助手按钮
+      $G('J_youyou').bind('click', function() {
+        var isShow = $G(this).attr('data-show');
+
+        if (!cssHasLoad) {
+          // 异步载入css文件
+          self._loadCss(SMALLYOUYOUURL);
+
+          // 创建窗口容器
+          var content = document.createElement('div');
+          content.setAttribute('class', 'youyou_box');
+          content.setAttribute('id', 'J_youyou_box');
+          $G('body').append(content);
+          $G('J_youyou_box').html(self._smallWinTpl);
+
+          // 绑定事件
+          self._bind();
+          self._sendButton();
+
+          // 标记为已显示
+          $G(this).attr('data-show', 'true');
+          cssHasLoad = true;
+        };
+
+        if (isShow === 'true') {
+          $G('J_youyou_box').hide();
+          $G(this).attr('data-show', 'false');
+        } else {
+          $G('J_youyou_box').show();
+          $G(this).attr('data-show', 'true');
+        }
+
+      })
+    };
+
     this.init = function() {
 
-      this._bind();
+      // 判断页面是单页面版还是嵌入版,页面是否存在游游助手按钮
+      if ($G('J_youyou').elements) {
+        isSmallYouyou = true
+      };
 
-      // 发送按钮绑定提交事件
-      this._sendButton();
+      if (isSmallYouyou) {
 
+        this._boxInit();
+
+      } else {
+        this._bind();
+
+        // 发送按钮绑定提交事件
+        this._sendButton();
+      }
 
     };
   };
