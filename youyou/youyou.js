@@ -117,6 +117,40 @@
     },
 
     /**
+     * 判断元素是否含有样式
+     * @param  {String}  _classname  样式名
+     * @return {Boolean}
+     */
+    hasClass: function(_classname) {
+      return this.elements.className.match(new RegExp('(\\s|^)' + _classname + '(\\s|$)')) ? true : false;
+    },
+
+    /**
+     * 添加class
+     * @param  {String}  _classname  样式名
+     * @return {Object} 返回该元素
+     */
+    addClass: function(_classname) {
+      if (!$G(this.elements).hasClass(_classname)) {
+        this.elements.className += ' ' + _classname
+      };
+      return this
+    },
+
+    /**
+     * 移除classname
+     * @param  {String}  _classname  样式名
+     * @return {Object} 返回该元素
+     */
+    removeClass: function(_classname) {
+      var reg = new RegExp('(\\s|^)' + _classname + '(\\s|$)');
+      if ($G(this.elements).hasClass(_classname)) {
+        this.elements.className = this.elements.className.replace(reg, ' ')
+      };
+      return this
+    },
+
+    /**
      * 把json对象转化为字符串
      * @param  {Object} _obj  对象参数
      * @return {String}       字符串
@@ -309,7 +343,7 @@
      */
     this._smallquesTpl = function(_question, _index) {
       return '<div class="basefix">' +
-        '<span class="J_sing" id="J_sing' + _index + '">发送中... </span>' +
+        // '<span class="J_sing" id="J_sing' + _index + '">发送中... </span>' +
         '<div class="right_box">' + _question + '</div>' +
         '</div>';
     };
@@ -322,7 +356,7 @@
      */
     this._quesTpl = function(_question, _index) {
       return '<div class="vbk_client_box">' +
-        '<span class="J_sing" id="J_sing' + _index + '">发送中... </span>' +
+        // '<span class="J_sing" id="J_sing' + _index + '">发送中... </span>' +
         '<span class="J_serr" id="J_serr' + _index + '" style="display:none">发送失败,请点击重新发送 </span>' +
         '<p class="vbk_client_pass">' + _question + '</p>' +
         '</div>' +
@@ -354,11 +388,11 @@
      * @return
      */
     this._dataError = function() {
-      $G('J_sing' + questionIndex).hide();
+      // $G('J_sing' + questionIndex).hide();
       $G('J_serr' + questionIndex).show();
 
       // 发送按钮变亮,可再次提交提问
-      self._sending(false);
+      self._sending(true);
     };
 
     /**
@@ -481,7 +515,7 @@
         resTime = self._formatDate(data.RPT - 0);
 
       // 移除发送中提示和错误提示
-      $G('J_sing' + index).remove();
+      // $G('J_sing' + index).remove();
       $G('J_serr' + index).remove();
 
       // 写入发送时间
@@ -490,8 +524,8 @@
       // 显示答案
       self._showAnswer(index, resTime, data);
 
-      // 发送按钮变亮,可再次提交提问
-      self._sending(false);
+      // 清空输入框内容,初始化发送按钮
+      self._sending(true);
 
       // 滚动到底部
       window.scrollTo(0, 9999);
@@ -537,12 +571,11 @@
      */
     this._sending = function(_bool) {
       if (_bool) {
-        $G('J_send').hide();
-        $G('J_sending').show();
+        $G('J_send').addClass('yy_halfalpha');
+        $G('J_send').html('发送');
         $G('J_question').val('');
       } else {
-        $G('J_send').show();
-        $G('J_sending').hide();
+        $G('J_send').removeClass('yy_halfalpha');
       }
     };
 
@@ -617,7 +650,7 @@
 
       // 发送按钮变灰色,不能立刻再次提交
       self._sending(true);
-
+      $G('J_send').html('发送中...');
       this._sendData({
         url: SEARCHURL,
         param: {
@@ -655,31 +688,33 @@
      */
     this._sendEvent = function() {
       var tempQuestion = $G('J_question').val();
+      if (!$G('J_send').hasClass('yy_halfalpha') ) {
+        // 模糊模式
+        questionType = 2;
 
-      // 模糊模式
-      questionType = 2;
+        if (self.checkString(tempQuestion)) {
 
-      if (self.checkString(tempQuestion)) {
+          // 显示用户提问
+          self._showQuestion(tempQuestion);
 
-        // 显示用户提问
-        self._showQuestion(tempQuestion);
+          // 发送按钮变灰色,不能立刻再次提交
+          self._sending(true);
+          $G('J_send').html('发送中...');
+          // 发送提问给后端,请求数据
+          self._sendData({
+            url: SEARCHURL,
+            param: {
+              "M": 2, // 搜索模式，1精确模式，2模糊模式
+              "PID": productId, // 产品id, 没有传0
+              "K": escape(tempQuestion), // 问题字符串
+              "SQ": questionIndex // 提问序列号
+            },
+            callback: self._answers,
+            error: self._dataError
+          });
+        }
+      };
 
-        // 发送按钮变灰色,不能立刻再次提交
-        self._sending(true);
-
-        // 发送提问给后端,请求数据
-        self._sendData({
-          url: SEARCHURL,
-          param: {
-            "M": 2, // 搜索模式，1精确模式，2模糊模式
-            "PID": productId, // 产品id, 没有传0
-            "K": escape(tempQuestion), // 问题字符串
-            "SQ": questionIndex // 提问序列号
-          },
-          callback: self._answers,
-          error: self._dataError
-        });
-      }
     };
 
     /**
@@ -738,12 +773,12 @@
 
       // TODO 回车按钮也绑定提交事件
       $G(document).bind('keyup', function(ev) {
-        if(questionFocus && ev.keyCode !== 13){
+        if (questionFocus && ev.keyCode !== 13) {
           var queStr = $G('J_question').val();
-          if(queStr.length > 0){
-            $G('J_send').style.opacity = 1;
+          if (queStr.length > 0) {
+            $G('J_send').removeClass('yy_halfalpha')
           } else {
-
+            $G('J_send').addClass('yy_halfalpha')
           }
         };
 
