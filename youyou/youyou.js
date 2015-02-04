@@ -191,8 +191,8 @@
       questionIndex = 1,
 
       // api接口
-      // SEARCHURL = 'http://localhost:3000/search',
-      SEARCHURL = 'http://vacations.fat30.qa.nt.ctripcorp.com/bookingnext/smartqa/search',
+      SEARCHURL = 'http://localhost:3000/search',
+      // SEARCHURL = 'http://vacations.fat30.qa.nt.ctripcorp.com/bookingnext/smartqa/search',
 
       // 反馈接口
       // FEEDBACKURL = '/bookingnext/smartqa/feedback',
@@ -314,7 +314,7 @@
 
 
     this._smallWinTpl = '<div class="youyou_title"><h1>游游助手<i id="J_youyouboxclose">x</i></h1></div>' +
-      '<div class="body-search"><div class="box" id="J_chatbox">' +
+      '<div class="body-search" id="J_bodysearch"><div class="box" id="J_chatbox">' +
       '<div id="chat0">' +
       '<p class="vbk_ctrip">游游助手</p>' +
       '<div class="basefix">' +
@@ -368,6 +368,19 @@
     };
 
     /**
+     * 滚动到底部
+     * @return
+     */
+    this._scrollBottom = function(){
+      var scrollCnt = document.getElementById('J_bodysearch');
+      if(scrollCnt){
+        scrollCnt.scrollTop = 9999;
+      } else {
+        window.scrollTo(0, 9999);
+      };
+    };
+
+    /**
      * 格式化时间
      * @param  {Number} _date  毫秒时间
      * @return {String}        返回YYYY-MM-DD hh:mm格式时间
@@ -405,11 +418,11 @@
      * @return {String}               高亮关键字的文本
      */
     this._lightKeyword = function(_string, _kerword) {
-      var tempString = '',
+      var tempString = _string,
         reg = '';
       for (var i = 0, leg = _kerword.length; i < leg; i++) {
         reg = new RegExp(_kerword[i], 'ig');
-        tempString = _string.replace(reg, '<span class="red">' + _kerword[i] + '</span>');
+        tempString = tempString.replace(reg, '<span class="red">' + _kerword[i] + '</span>');
       }
       return tempString
     };
@@ -505,6 +518,8 @@
 
     };
 
+
+
     /**
      * 显示后端返回的答案
      * @param {Object} _data 返回的数据
@@ -531,7 +546,7 @@
       self._sending(true);
 
       // 滚动到底部
-      window.scrollTo(0, 9999);
+      self._scrollBottom();
 
       questionIndex++
 
@@ -615,7 +630,7 @@
       $G('chat' + questionIndex).html(chatTpl);
 
       // 滚动到底部
-      window.scrollTo(0, 9999);
+      this._scrollBottom();
     };
 
     /**
