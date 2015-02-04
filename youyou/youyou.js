@@ -169,10 +169,12 @@
      * @param {Function} _fn  事件回调
      */
     bind: function(_type, _fn) {
-      if (document.addEventListener) {
-        this.elements.addEventListener(_type, _fn, false)
-      } else if (document.attachEvent) {
-        this.elements.attachEvent('on' + _type, _fn)
+      if (this.elements) {
+        if (document.addEventListener) {
+          this.elements.addEventListener(_type, _fn, false)
+        } else if (document.attachEvent) {
+          this.elements.attachEvent('on' + _type, _fn)
+        }
       }
       return this
     }
@@ -189,11 +191,12 @@
       questionIndex = 1,
 
       // api接口
-      // SEARCHURL = '/bookingnext/smartqa/search',
-      SEARCHURL = 'http://localhost:3000/search',
+      // SEARCHURL = 'http://localhost:3000/search',
+      SEARCHURL = 'http://vacations.fat30.qa.nt.ctripcorp.com/bookingnext/smartqa/search',
 
       // 反馈接口
-      FEEDBACKURL = '/bookingnext/smartqa/feedback',
+      // FEEDBACKURL = '/bookingnext/smartqa/feedback',
+      FEEDBACKURL = 'http://vacations.fat30.qa.nt.ctripcorp.com/bookingnext/smartqa/feedback',
 
       // 焦点是否在提问输入框
       questionFocus = false,
@@ -333,7 +336,7 @@
       // '<p class="vbk_ctrip">2014-10-23  19:43</p>' +
       '</div>' +
       '</div></div>' +
-      '<div class="output"><input type="text" placeholder="请输入文字" id="J_question"><a href="javascript:void(0)" class="send" id="J_send">发送</a><a href="javascript:void(0)" class="vbk_send" id="J_sending" style="display:none;opacity:0.4">发送</a></div>';
+      '<div class="output"><input type="text" placeholder="请输入文字" id="J_question"><a href="javascript:void(0)" class="send yy_halfalpha" id="J_send">发送</a></div>';
 
     /**
      * [_smallquesTpl description]
@@ -341,12 +344,12 @@
      * @param  {[type]} _index    [description]
      * @return {[type]}           [description]
      */
-    this._smallquesTpl = function(_question, _index) {
-      return '<div class="basefix">' +
-        // '<span class="J_sing" id="J_sing' + _index + '">发送中... </span>' +
-        '<div class="right_box">' + _question + '</div>' +
-        '</div>';
-    };
+    // this._smallquesTpl = function(_question, _index) {
+    //   return '<div class="basefix">' +
+    //     // '<span class="J_sing" id="J_sing' + _index + '">发送中... </span>' +
+    //     '<div class="right_box">' + _question + '</div>' +
+    //     '</div>';
+    // };
 
     /**
      * 用户提问显示模板
@@ -603,9 +606,9 @@
       // 容器模板
       var tpl = this._viewCont(questionIndex, 'question'),
         chatTpl = this._quesTpl(_question, questionIndex);
-      if (isSmallYouyou) {
-        chatTpl = this._smallquesTpl(_question, questionIndex);;
-      };
+      // if (isSmallYouyou) {
+      //   chatTpl = this._smallquesTpl(_question, questionIndex);;
+      // };
 
       $G('J_chatbox').append(tpl);
 
@@ -677,8 +680,10 @@
         param: {
           "RID": radioRid,
           "FR": radioVal,
-          "EID": "", // TODO 员工OP的ID
-        }
+          "EID": "" // TODO 员工OP的ID
+        },
+        callback: null,
+        error: null
       });
     };
 
@@ -688,7 +693,7 @@
      */
     this._sendEvent = function() {
       var tempQuestion = $G('J_question').val();
-      if (!$G('J_send').hasClass('yy_halfalpha') ) {
+      if (!$G('J_send').hasClass('yy_halfalpha')) {
         // 模糊模式
         questionType = 2;
 

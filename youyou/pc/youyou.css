@@ -43,3 +43,16 @@ display:none;
 .choose_box{ margin-top:10px;}
 .choose_box label{ margin-right:10px;}
 .choose_box label input{ vertical-align:middle; margin-right:5px;}
+
+.vbk_client_box { font-size:12px; color:#a3a6b6; text-align:right; }
+.vbk_client_pass { display:inline-block; background-color:#f0f3f7; color:#464c6c; padding:15px; position:relative; border-radius:16px; margin:7px 0px 15px 0; }
+.vbk_ctrip_info { margin:7px 26px 15px 0; background-color:#f0f3f7; border-radius:16px; padding:15px; position:relative; display:inline-block; }
+.vbk_ctrip_info a{ color:#3d9ce0;}
+
+.ask_box{margin: 0px 26px 15px 0;
+border-radius: 16px;
+background-color: #f0f3f7; padding:15px;position: relative;
+display: inline-block;}
+.ask_box a{ color:#3d9ce0;}
+
+.yy_halfalpha{opacity:0.4}
