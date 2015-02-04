@@ -22,6 +22,11 @@
         <header>
             <h1>游游助手</h1>
         </header>
+        <div style="margin-top: 15px; z-index: 999999; position: fixed; right: 10px;">
+            <a href="javascript:void(0)" id="J_bindproduct" style="color:#fff;">[绑定产品]</a>
+            <div id="J_unbindproductcnt" style="color:#fff; display: none">[<span id="J_pkgid"></span> <a href="javascript:void(0)" id="J_unbindproduct" style="color:#fff;">取消绑定</a>]
+        </div>
+    </div>
     </div>
     <div class="bg_box"></div>
     <div class="body body-search">
@@ -50,8 +55,8 @@
     </div>
     <footer class="vbk_search_footer">
         <input type="text" placeholder="请输入文字" id="J_question">
-        <a href="javascript:void(0)" class="vbk_send" id="J_send">发送</a>
-        <a href="javascript:void(0)" class="vbk_send" id="J_sending" style="display:none;opacity:0.4">发送</a>
+        <a href="javascript:void(0)" class="vbk_send" id="J_send" data-send="false" style="opacity:0.4">发送</a>
+        <!-- <a href="javascript:void(0)" class="vbk_send" id="J_sending" style="display:none;opacity:0.4">发送</a> -->
     </footer>
     <script src="../youyou.js"></script>
 </body>

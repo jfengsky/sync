@@ -172,7 +172,10 @@
       isSmallYouyou = false,
 
       // 问题类型,用于是否显示评分 1:精确模式;2:模糊模式
-      questionType = 2;
+      questionType = 2,
+
+      // 产品id
+      productId = 0;
 
 
     /**
@@ -401,9 +404,11 @@
       if (_data && _data.length) {
         for (var i = 0, leg = _data.length; i < leg; i++) {
           tempStr += '<p>' + (i + 1) + ', <a href="javascript:void(0)" data-type="relatequest" data-k="' + _data[i].K + '">' + _data[i].Q + '</a><p>';
-        }
+        };
+        return '<div class="ask_box"><p>相关问题：</p>' + tempStr + '</div>'
+      } else {
+        return ''
       }
-      return '<div class="ask_box"><p>相关问题：</p>' + tempStr + '</div>'
     };
 
     /**
@@ -420,28 +425,31 @@
         fuzzyAnswer = _searchResult.SR,
         lightClass = '',
         feedbackTpl = '';
+      if (fuzzyAnswer && fuzzyAnswer.length) {
+        for (var i = 0; i < fuzzyAnswer.length; i++) {
 
-      for (var i = 0; i < fuzzyAnswer.length; i++) {
+          // 模糊搜索的第一个答案要高亮
+          if (i === 0 && questionType === 2) {
+            lightClass = 'yellow_bg';
+          } else {
+            lightClass = '';
+          };
 
-        // 模糊搜索的第一个答案要高亮
-        if(i === 0 && questionType === 2){
-          lightClass = 'yellow_bg';
-        } else {
-          lightClass = '';
+          if (questionType === 2) {
+            feedbackTpl = this._feedBack(_index, fuzzyAnswer[i].RID, i);
+          } else {
+            feedbackTpl = '';
+          }
+
+          answerStr += '<div><div class="vbk_ctrip_info ' + lightClass + '">' + this._lightKeyword(fuzzyAnswer[i].R, KeyWordArr) + ' [' + fuzzyAnswer[i].SN + ', ' + fuzzyAnswer[i].S + ']' + feedbackTpl + '</div></div>'
         };
 
-        if(questionType === 2){
-          feedbackTpl = this._feedBack(_index, fuzzyAnswer[i].RID, i);
-        } else {
-          feedbackTpl = '';
-        }
+        relateStr = this._relateAnswer(_searchResult.RQ);
 
-        answerStr += '<div><div class="vbk_ctrip_info ' + lightClass + '">' + this._lightKeyword(fuzzyAnswer[i].R, KeyWordArr) + ' [' + fuzzyAnswer[i].SN + ', ' + fuzzyAnswer[i].S + ']' + feedbackTpl + '</div></div>'
-      };
-
-      relateStr = this._relateAnswer(_searchResult.RQ);
-
-      return '<p class="vbk_ctrip">游游助手</p>' + answerStr + relateStr + '<p class="vbk_ctrip">' + _resTime + '</p>';
+        return '<p class="vbk_ctrip">游游助手</p>' + answerStr + relateStr + '<p class="vbk_ctrip">' + _resTime + '</p>';
+      } else {
+        return ''
+      }
     };
 
     /**
@@ -614,7 +622,7 @@
         url: SEARCHURL,
         param: {
           "M": 1, // 搜索模式，1精确模式，2模糊模式
-          "PID": 0, // 产品id, 没有传0
+          "PID": productId, // 产品id, 没有传0
           "K": sendKey, // 问题字符串
           "SQ": questionIndex // 提问序列号
         },
@@ -664,7 +672,7 @@
           url: SEARCHURL,
           param: {
             "M": 2, // 搜索模式，1精确模式，2模糊模式
-            "PID": 0, // 产品id, 没有传0
+            "PID": productId, // 产品id, 没有传0
             "K": escape(tempQuestion), // 问题字符串
             "SQ": questionIndex // 提问序列号
           },
@@ -698,7 +706,27 @@
           // 相关问题
           self._sendRelateData(ev.target);
         }
-      })
+      });
+
+      // 绑定产品id
+      $G('J_bindproduct').bind('click', function() {
+        productId = prompt('请输入需要绑定的产品Id') || 0;
+        if (productId !== 0) {
+          $G(this).hide();
+          $G('J_pkgid').html(productId);
+          $G('J_unbindproductcnt').show();
+          productId = parseInt(productId) || 0;
+        }
+      });
+
+      // 取消绑定产品id
+      $G('J_unbindproduct').bind('click', function() {
+        productId = 0;
+        $G('J_unbindproductcnt').hide();
+        $G('J_bindproduct').show();
+        $G('J_pkgid').html('');
+      });
+
     };
 
     /**
@@ -710,9 +738,18 @@
 
       // TODO 回车按钮也绑定提交事件
       $G(document).bind('keyup', function(ev) {
+        if(questionFocus && ev.keyCode !== 13){
+          var queStr = $G('J_question').val();
+          if(queStr.length > 0){
+            $G('J_send').style.opacity = 1;
+          } else {
+
+          }
+        };
+
         if (questionFocus && ev.keyCode === 13) {
           self._sendEvent();
-        }
+        };
       })
 
     };
