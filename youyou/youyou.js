@@ -191,8 +191,8 @@
       questionIndex = 1,
 
       // api接口
-      SEARCHURL = 'http://localhost:3000/search',
-      // SEARCHURL = 'http://vacations.fat30.qa.nt.ctripcorp.com/bookingnext/smartqa/search',
+      // SEARCHURL = 'http://localhost:3000/search',
+      SEARCHURL = 'http://vacations.fat30.qa.nt.ctripcorp.com/bookingnext/smartqa/search',
 
       // 反馈接口
       // FEEDBACKURL = '/bookingnext/smartqa/feedback',
@@ -371,12 +371,12 @@
      * 滚动到底部
      * @return
      */
-    this._scrollBottom = function(){
+    this._scrollBottom = function() {
       var scrollCnt = document.getElementById('J_bodysearch');
-      if(scrollCnt){
-        scrollCnt.scrollTop = 9999;
+      if (scrollCnt) {
+        scrollCnt.scrollTop = 9999
       } else {
-        window.scrollTo(0, 9999);
+        window.scrollTo(0, 9999)
       };
     };
 
@@ -462,6 +462,18 @@
     };
 
     /**
+     * 当没有答案的回答
+     * @return
+     */
+    this._emptyAnswer = function(_resTime) {
+      return '<p class="vbk_ctrip">游游助手</p>' +
+        '<div>' +
+        '<div class="vbk_ctrip_info">我太笨了，不知道你这个问题的答案，见笑了^-^</div>' +
+        '</div>' +
+        '<p class="vbk_ctrip">' + _resTime + '</p>'
+    };
+
+    /**
      * 模糊答案显示模板 SR 显示: R [SN S] + 好用不好用(RID)
      * @param  {Number}   _index                  问题序号
      * @param  {String}   _resTime                回答时间
@@ -504,6 +516,7 @@
 
     /**
      * 显示答案
+     * 
      * @param  {Number}   _index                  问题序号
      * @param  {String}   _resTime                回答时间
      * @param  {Object}   _searchResult           答案
@@ -514,7 +527,12 @@
         answerTpl = this._fuzzyTpl(_index, _resTime, _searchResult);
       $G('J_chatbox').append(answerCont);
 
-      $G('asw' + _index).html(answerTpl);
+      // 如果RQ和SR都为null 则显示 "我太笨了，不知道你这个问题的答案，见笑了^-^"
+      if (!_searchResult.RQ && !_searchResult.SR) {
+        $G('asw' + _index).html(self._emptyAnswer(_resTime));
+      } else {
+        $G('asw' + _index).html(answerTpl);
+      }
 
     };
 
@@ -578,7 +596,7 @@
             _options.error()
           }
         },
-        timeout: 2000
+        timeout: 10000
       })
     };
 
