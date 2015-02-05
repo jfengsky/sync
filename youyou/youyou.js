@@ -477,7 +477,8 @@
      * 模糊答案显示模板 SR 显示: R [SN S] + 好用不好用(RID)
      * @param  {Number}   _index                  问题序号
      * @param  {String}   _resTime                回答时间
-     * @param  {Object}    _searchResult           答案数组
+     * @param  {Object}   _searchResult           答案数组
+     * @param  {Array}    _searchResultKeyWord    关键词数组,用于高亮
      * @return
      */
     this._fuzzyTpl = function(_index, _resTime, _searchResult, _searchResultKeyWord) {
@@ -516,7 +517,7 @@
 
     /**
      * 显示答案
-     * 
+     *
      * @param  {Number}   _index                  问题序号
      * @param  {String}   _resTime                回答时间
      * @param  {Object}   _searchResult           答案
@@ -845,6 +846,7 @@
           var content = document.createElement('div');
           content.setAttribute('class', 'youyou_box');
           content.setAttribute('id', 'J_youyou_box');
+          content.setAttribute('style', 'position:fixed;bottom:0;right:0');
           $G('body').append(content);
           $G('J_youyou_box').html(self._smallWinTpl);
 
