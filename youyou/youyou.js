@@ -5,16 +5,17 @@
  */
 
 (function(window, undefined) {
-  var $G = function(id) {
-    return new _$(id);
-  };
+  var doc = document,
+    $G = function(id) {
+      return new _$(id);
+    };
 
   function _$(id) {
     if (typeof(id) === 'string') {
       if (id !== 'body') {
-        this.elements = document.getElementById(id);
+        this.elements = doc.getElementById(id);
       } else {
-        this.elements = document.getElementsByTagName('body')[0];
+        this.elements = doc.getElementsByTagName('body')[0];
       }
 
     } else if (typeof(id) === 'object') {
@@ -170,9 +171,9 @@
      */
     bind: function(_type, _fn) {
       if (this.elements) {
-        if (document.addEventListener) {
+        if (doc.addEventListener) {
           this.elements.addEventListener(_type, _fn, false)
-        } else if (document.attachEvent) {
+        } else if (doc.attachEvent) {
           this.elements.attachEvent('on' + _type, _fn)
         }
       }
@@ -203,6 +204,8 @@
 
       // 嵌入版游游助手css是否已经载入
       cssHasLoad = false,
+
+      // 如果被其它页面引用，这个地址可能要变化
       SMALLYOUYOUURL = '../pc/youyou.css',
 
       // 是否是嵌入版(小窗口)的游游助手
@@ -221,8 +224,8 @@
      * @return
      */
     this._loadCss = function(_href) {
-      var head = document.getElementsByTagName('head')[0],
-        styleTag = document.createElement('link');
+      var head = doc.getElementsByTagName('head')[0],
+        styleTag = doc.createElement('link');
       styleTag.setAttribute('type', 'text/css');
       styleTag.setAttribute('rel', 'stylesheet');
       styleTag.setAttribute('href', _href);
@@ -283,10 +286,10 @@
 
       //创建 script 标签并加入到页面中
       var callbackName = ('jsonp' + new Date().getTime());
-      var oHead = document.getElementsByTagName('head')[0];
+      var oHead = doc.getElementsByTagName('head')[0];
       _options.data[_options.callback] = callbackName;
       var params = this._formatParams(_options.data);
-      var oS = document.createElement('script');
+      var oS = doc.createElement('script');
       oHead.appendChild(oS);
 
       //创建jsonp回调函数
@@ -372,7 +375,7 @@
      * @return
      */
     this._scrollBottom = function() {
-      var scrollCnt = document.getElementById('J_bodysearch');
+      var scrollCnt = doc.getElementById('J_bodysearch');
       if (scrollCnt) {
         scrollCnt.scrollTop = 9999
       } else {
@@ -623,7 +626,7 @@
      * @return {Object} 提问模板容器
      */
     this._viewCont = function(_index, _type) {
-      var content = document.createElement('div');
+      var content = doc.createElement('div');
       if (_type === 'question') {
         content.setAttribute('id', 'chat' + _index);
       } else {
@@ -811,7 +814,7 @@
       $G('J_send').bind('click', this._sendEvent);
 
       // TODO 回车按钮也绑定提交事件
-      $G(document).bind('keyup', function(ev) {
+      $G(doc).bind('keyup', function(ev) {
         if (questionFocus && ev.keyCode !== 13) {
           var queStr = $G('J_question').val();
           if (queStr.length > 0) {
@@ -835,7 +838,7 @@
     this._boxInit = function() {
 
       // 点击游游助手按钮
-      $G('J_youyou').bind('click', function() {
+      $G('youyou').bind('click', function() {
         var isShow = $G(this).attr('data-show');
 
         if (!cssHasLoad) {
@@ -843,7 +846,7 @@
           self._loadCss(SMALLYOUYOUURL);
 
           // 创建窗口容器
-          var content = document.createElement('div');
+          var content = doc.createElement('div');
           content.setAttribute('class', 'youyou_box');
           content.setAttribute('id', 'J_youyou_box');
           content.setAttribute('style', 'position:fixed;bottom:0;right:0');
@@ -870,10 +873,10 @@
       })
     };
 
-    this.init = function() {
+    this.init = function( _options ) {
 
       // 判断页面是单页面版还是嵌入版,页面是否存在游游助手按钮
-      if ($G('J_youyou').elements) {
+      if ($G('youyou').elements) {
         isSmallYouyou = true
       };
 
@@ -891,6 +894,7 @@
     };
   };
 
+  window.QA = QA;
   new QA().init();
 
 })(window);
