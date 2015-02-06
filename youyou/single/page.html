@@ -3,11 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <title>游游助手</title>
-  <link rel="stylesheet" type="text/css" href="../pc/youyou.css" />
 </head>
 <body>
-  <input type="button" value="游游助手" id="J_youyou">
+  <input type="button" value="游游助手" id="youyou">
   <div class="" style="height:2000px; width: 100%;">填充高度</div>
   <script src="../youyou.js"></script>
+  <script>
+    new QA().init({
+      pageType: 'offline',
+      searchUrl: 'http://localhost:3000/search',
+      // searchUrl: 'http://vacations.fat30.qa.nt.ctripcorp.com/bookingnext/smartqa/search',
+      feedBackUrl: 'http://vacations.fat30.qa.nt.ctripcorp.com/bookingnext/smartqa/feedback',
+      cssUrl: 'http://webresource.fws.qa.nt.ctripcorp.com/ResVacationOnline/R8/css/vacation_v2/youyou_pc.css'
+    });
+    </script>
 </body>
 </html>

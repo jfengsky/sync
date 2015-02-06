@@ -193,11 +193,11 @@
 
       // api接口
       // SEARCHURL = 'http://localhost:3000/search',
-      SEARCHURL = 'http://vacations.fat30.qa.nt.ctripcorp.com/bookingnext/smartqa/search',
+      SEARCHURL = '',
 
       // 反馈接口
       // FEEDBACKURL = '/bookingnext/smartqa/feedback',
-      FEEDBACKURL = 'http://vacations.fat30.qa.nt.ctripcorp.com/bookingnext/smartqa/feedback',
+      FEEDBACKURL = '',
 
       // 焦点是否在提问输入框
       questionFocus = false,
@@ -206,7 +206,7 @@
       cssHasLoad = false,
 
       // 如果被其它页面引用，这个地址可能要变化
-      SMALLYOUYOUURL = '../pc/youyou.css',
+      SMALLYOUYOUURL = '',
 
       // 是否是嵌入版(小窗口)的游游助手
       isSmallYouyou = false,
@@ -215,7 +215,10 @@
       questionType = 2,
 
       // 产品id
-      productId = 0;
+      productId = 0,
+
+      // 员工OP的id
+      opId = '';
 
 
     /**
@@ -717,7 +720,7 @@
         param: {
           "RID": radioRid,
           "FR": radioVal,
-          "EID": "" // TODO 员工OP的ID
+          "EID": opId // TODO 员工OP的ID
         },
         callback: null,
         error: null
@@ -831,6 +834,39 @@
 
     };
 
+
+    this._offlineClick = function() {
+      var youyouButton = $G('youyou'),
+          isShow = youyouButton.attr('data-show');
+
+      if (isShow === 'true') {
+        $G('J_youyou_box').hide();
+        youyouButton.attr('data-show', 'false');
+      } else if (isShow === 'false') {
+        $G('J_youyou_box').show();
+        youyouButton.attr('data-show', 'true');
+      } else {
+        // 异步载入css文件
+        self._loadCss(SMALLYOUYOUURL);
+
+        // 创建窗口容器
+        var content = doc.createElement('div');
+        content.setAttribute('class', 'youyou_box');
+        content.setAttribute('id', 'J_youyou_box');
+        content.setAttribute('style', 'position:fixed;bottom:0;right:60px;z-index:1000');
+        $G('body').append(content);
+        $G('J_youyou_box').html(self._smallWinTpl);
+
+        // 绑定事件
+        self._bind();
+        self._sendButton();
+
+        // 标记为已显示
+        youyouButton.attr('data-show', 'true');
+        cssHasLoad = true;
+      }
+    };
+
     /**
      * 嵌入版本的初始化
      *
@@ -838,45 +874,32 @@
     this._boxInit = function() {
 
       // 点击游游助手按钮
-      $G('youyou').bind('click', function() {
-        var isShow = $G(this).attr('data-show');
+      this._offlineClick();
+      $G('youyou').bind('click', this._offlineClick);
 
-        if (!cssHasLoad) {
-          // 异步载入css文件
-          self._loadCss(SMALLYOUYOUURL);
-
-          // 创建窗口容器
-          var content = doc.createElement('div');
-          content.setAttribute('class', 'youyou_box');
-          content.setAttribute('id', 'J_youyou_box');
-          content.setAttribute('style', 'position:fixed;bottom:0;right:0');
-          $G('body').append(content);
-          $G('J_youyou_box').html(self._smallWinTpl);
-
-          // 绑定事件
-          self._bind();
-          self._sendButton();
-
-          // 标记为已显示
-          $G(this).attr('data-show', 'true');
-          cssHasLoad = true;
-        };
-
-        if (isShow === 'true') {
-          $G('J_youyou_box').hide();
-          $G(this).attr('data-show', 'false');
-        } else {
-          $G('J_youyou_box').show();
-          $G(this).attr('data-show', 'true');
-        }
-
+      // 关闭游游助手窗口按钮
+      $G('J_youyouboxclose').bind('click', function(){
+        $G('J_youyou_box').hide();
+        $G('youyou').attr('data-show', 'false');
       })
     };
 
-    this.init = function( _options ) {
+    this.init = function(_options) {
+
+      SEARCHURL = _options.searchUrl;
+
+      FEEDBACKURL = _options.feedBackUrl;
+
+      SMALLYOUYOUURL = _options.cssUrl;
+
+      productId = _options.productId || 0;
+
+      opId = _options.EID || '';
+
+
 
       // 判断页面是单页面版还是嵌入版,页面是否存在游游助手按钮
-      if ($G('youyou').elements) {
+      if (_options.pageType === 'offline') {
         isSmallYouyou = true
       };
 
@@ -895,6 +918,5 @@
   };
 
   window.QA = QA;
-  new QA().init();
 
 })(window);
