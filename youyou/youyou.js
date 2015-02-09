@@ -459,7 +459,7 @@
       var tempStr = '';
       if (_data && _data.length) {
         for (var i = 0, leg = _data.length; i < leg; i++) {
-          tempStr += '<p>' + (i + 1) + ', <a href="javascript:void(0)" data-type="relatequest" data-k="' + _data[i].K + '">' + _data[i].Q + '</a><p>';
+          tempStr += '<p>' + (i + 1) + ', <a href="javascript:void(0)" data-type="relatequest" data-k=\'' + _data[i].K + '\'>' + _data[i].Q + '</a><p>';
         };
         return '<div class="ask_box"><p>相关问题：</p>' + tempStr + '</div>'
       } else {
