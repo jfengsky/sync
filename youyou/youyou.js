@@ -326,17 +326,6 @@
       '<div class="basefix">' +
       '<div class="left_box yellow_bg">' +
       '您好，我是机器人游游，很高兴为您复您。' +
-      '<div class="choose_box">' +
-      '<label>' +
-      '<input type="radio">好用' +
-      '</label>' +
-      '<label>' +
-      '<input type="radio">一般' +
-      '</label>' +
-      '<label>' +
-      '<input type="radio">不好用' +
-      '</label>' +
-      '</div>' +
       '</div>' +
       '</div>' +
       // '<p class="vbk_ctrip">2014-10-23  19:43</p>' +
@@ -603,7 +592,7 @@
             _options.error()
           }
         },
-        timeout: 10000
+        timeout: 20000
       })
     };
 
@@ -886,6 +875,8 @@
 
     this.init = function(_options) {
 
+      console.log(_options);
+
       SEARCHURL = _options.searchUrl;
 
       FEEDBACKURL = _options.feedBackUrl;
@@ -895,7 +886,6 @@
       productId = _options.productId || 0;
 
       opId = _options.EID || '';
-
 
 
       // 判断页面是单页面版还是嵌入版,页面是否存在游游助手按钮

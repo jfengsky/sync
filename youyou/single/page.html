@@ -9,13 +9,18 @@
   <div class="" style="height:2000px; width: 100%;">填充高度</div>
   <script src="../youyou.js"></script>
   <script>
-    new QA().init({
-      pageType: 'offline',
-      searchUrl: 'http://localhost:3000/search',
-      // searchUrl: 'http://vacations.fat30.qa.nt.ctripcorp.com/bookingnext/smartqa/search',
-      feedBackUrl: 'http://vacations.fat30.qa.nt.ctripcorp.com/bookingnext/smartqa/feedback',
-      cssUrl: 'http://webresource.fws.qa.nt.ctripcorp.com/ResVacationOnline/R8/css/vacation_v2/youyou_pc.css'
-    });
+    $('#youyou').bind('click', function(){
+                new QA().init({
+                    pageType: 'offline',
+                    searchUrl: 'http://localhost:3000/search',
+                    // searchUrl: '/bookingnext/smartqa/search',
+                    feedBackUrl: '/bookingnext/smartqa/feedback',
+                    cssUrl: 'http://webresource.fws.qa.nt.ctripcorp.com/ResVacationOnline/R8/css/vacation_v2/youyou_pc.css',
+                    productId: '2222',
+                    EID: '1111'
+                });
+                $('#youyou').unbind('click');
+        });
     </script>
 </body>
 </html>
