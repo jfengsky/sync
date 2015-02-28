@@ -1,14 +1,20 @@
-function initialize(tabId){
-  chrome.tabs.executeScript(tabId, {file: "jquery-2.1.3.min.js", allFrames: true});
-  chrome.tabs.executeScript(tabId, {file: "func.js", allFrames: true});
-}
-
-// 当标签被选中时向当前标签页面注入脚本
-chrome.tabs.onSelectionChanged.addListener(function(tabId, selectInfo) {
-  initialize(tabId);
-});
-
-// 当标签被刷新时向当前标签页面注入脚本
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  initialize(tabId);
+chrome.extension.onMessage.addListener(function(objRequest, _, sendResponse){
+  // 将信息能过Ajax发送到服务器
+  // 需要传4个值, appid orderid countryid 和 url
+  // 其中appid从页面获取,存到内存里
+  // orderid需要op填写,存到内存里
+  // countryid 永远为1
+  // url 从页面中获取
+  
+  $.ajax({
+    url: 'http://order.visa.fat29.qa.nt.ctripcorp.com/Visa-Order-OrderProcess/VisaAutoComplete/VisaAutoCompleteApi.aspx?countryid=1&visaorderid=1',
+    type: 'get',
+    data: objRequest,
+    dataType: 'json',
+    success:function( _data ){
+      console.log(_data);
+      var str = JSON.stringify(_data);
+      chrome.tabs.executeScript(null, {code: "renderData("+ str +")", allFrames: true});
+    }
+  });
 });

@@ -3,26 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
+  <link rel="stylesheet" href="bootstrap.min.css">
   <script src="jquery-2.1.3.min.js"></script>
   <style>
-  #J_bind{
-    height: 30px;
-    width: 40px;
-  }
-  .btn{
+  body{
+    padding: 10px;
     width: 200px;
-    height: 50px;
-    text-align: center;
-    line-height: 50px;
-    border: 1px solid #ccc;
   }
   </style>
 </head>
 <body>
-  <div class="btn" id="J_bind1">click here</div>
-  <div id="J_status">
-    表单写入中...
+  <div class="form-group" id="J_orderid_group">
+    <label for="J_orderid" class="control-label">填写orderId:</label>
+    <input type="text" class="form-control" id="J_orderid" placeholder="">
   </div>
+  <div class="btn btn-primary btn-block" id="J_bind1">填写表单</div>
   <script src="popup.js"></script>
 </body>
 </html>
