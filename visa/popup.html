@@ -8,16 +8,19 @@
   <style>
   body{
     padding: 10px;
-    width: 200px;
+    width: 264px;
   }
   </style>
 </head>
 <body>
-  <div class="form-group" id="J_orderid_group">
-    <label for="J_orderid" class="control-label">填写orderId:</label>
-    <input type="text" class="form-control" id="J_orderid" placeholder="">
-  </div>
-  <div class="btn btn-primary btn-block" id="J_bind1">填写表单</div>
+  <form class="form-inline">
+    <div class="form-group" id="J_orderid_group" style="display:inline-block">
+      <label for="J_orderid" class="control-label">填写orderId:</label>
+      <input type="text" class="form-control" id="J_orderid" placeholder=""> 
+    </div>
+    <button type="button" class="btn btn-default" id="J_clear_orderid">清除ID</button>
+  </form>
+  <div class="btn btn-primary btn-block" id="J_bind1">自动填写表单</div>
   <script src="popup.js"></script>
 </body>
 </html>
