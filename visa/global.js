@@ -1,5 +1,12 @@
+/**
+ * Description: 全局脚本文件
+ * Author: jiangfeng<jiang.f@ctrip.com>
+ * Date: 2015-03-1 8:59
+ *
+ */
+
 // 数据写入提示框
-var tipsTpl = '<div id="J_autowritetips" style="font-size: 12px;position:fixed;color:#666;bottom:6px;right:6px;border:1px solid #ccc; background:#fff; padding:10px; line-height:24px;width: 200px;text-align:center;z-index:10000">开始自动写入数据</div>';
+var tipsTpl = '<div id="J_autowritetips" style="font-size: 12px;position:fixed;color:#666;bottom:6px;right:6px;border:1px solid #ccc; background:#fff; padding:10px; line-height:24px;width: 200px;text-align:center;z-index:10000"></div>';
 
 // 数据写入完毕的文字提示
 var writeFinshMsg = '<span style="color:#06f;font-weight:bold">数据自动写入完毕!</span>';
@@ -18,10 +25,82 @@ function getQuery(_href, _name) {
 };
 
 /**
+ * 自动填写各种不适用的复选框选择效果
+ * @param  {String} _name  表单意义
+ * @param  {Object} _item  接口返回的数据
+ * @return
+ */
+function autoNotApplyCheckbox(_name, _item) {
+  if (_item.ColumnName === _name) {
+    if (_item.Value === 'True' && !$('#' + _item.FormId).prop('checked')) {
+      $('#' + _item.FormId).click();
+    }
+  };
+};
+
+/**
+ * 自动选择表单
+ * 注意这里根据option的value来做判断
+ * @param  {String} _name  表单意义
+ * @param  {Object} _item  接口返回的数据
+ * @return
+ */
+function autoSelectValue(_name, _item) {
+  if (_item.ColumnName === _name) {
+    $.map($('#' + _item.FormId).find('option'), function(__item) {
+      console.log($(__item).attr('value'));
+      console.log('----');
+      console.log(_item.Value);
+      if ($(__item).attr('value') === _item.Value) {
+        $(__item).prop('selected', true);
+      }
+    });
+  };
+};
+
+/**
+ * 自动选择表单
+ * 注意这里根据option的text来做判断
+ * @param  {String} _name  表单意义
+ * @param  {Object} _item  接口返回的数据
+ * @return
+ */
+function autoSelectText(_name, _item) {
+  if (_item.ColumnName === _name) {
+    $.map($('select#' + _item.FormId).find('option'), function(__item) {
+      if ($(__item).text() === _item.Value) {
+        $(__item).prop('selected', true);
+      }
+    });
+  };
+};
+
+/**
+ * 隐藏下一步按钮和显示右下填写进度提示
+ * @return
+ */
+function hideNext() {
+  $('fieldset.submits').hide();
+  if (!$('#J_autowritetips').length) {
+    $('body').append(tipsTpl);
+    $('#J_autowritetips').text('开始自动写入数据');
+  }
+};
+
+/**
+ * 自动写入完毕,显示下一步按钮
+ * @return
+ */
+function showNext() {
+  $('fieldset.submits').show();
+  $('#J_autowritetips').html(writeFinshMsg);
+};
+
+/**
  * 第三页表单填写逻辑
  * @param {[type]} _data [description]
  */
-function AddressPhone_Page(_data){
+function AddressPhone_Page(_data) {
 
 }
 
@@ -40,12 +119,12 @@ function renderData(_data) {
       Personal1_Page(_data);
       break;
 
-    // 第二页
+      // 第二页
     case 'Personal2':
       Personal2_Page(_data);
       break;
 
-    // 第三页
+      // 第三页
     case 'AddressPhone':
       AddressPhone_Page(_data);
       break;

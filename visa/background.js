@@ -1,3 +1,10 @@
+/**
+ * Description: 插件背景脚本
+ * Author: jiangfeng <jiang.f@ctrip.com>
+ * Date: 2015-03-2 15:59
+ *
+ */
+
 // var tempTabId = null;
 // chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 //   tempTabId = tabId;
@@ -6,6 +13,8 @@
 //   tempTabId = tabId;
 // });
 
+
+// 由于公司不支持https, 所以只能用后台脚本绕过这个限制去请求数据,然后发送到前台
 chrome.extension.onMessage.addListener(function(objRequest, _, sendResponse) {
   // 将信息能过Ajax发送到服务器
   // 需要传4个值, appid orderid countryid 和 url

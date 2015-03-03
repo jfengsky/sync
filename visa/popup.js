@@ -1,3 +1,10 @@
+/**
+ * Description: 插件按钮脚本
+ * Author: jiangfeng<jiang.f@ctrip.com>
+ * Date: 2015-02-16 15:59
+ *
+ */
+
 $(function() {
 
   // 初始化orderid的值, 从localStorage获取

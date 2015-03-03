@@ -1,4 +1,11 @@
 /**
+ * Description: 第一页自动写入脚本文件
+ * Author: jiangfeng<jiang.f@ctrip.com>
+ * Date: 2015-02-16 15:59
+ *
+ */
+
+/**
  * 把数字月份转化为英文简写月份以便selected选择
  * @param  {Number} _month 数字月份
  * @return {String}        英文简写月份
@@ -56,10 +63,9 @@ function Personal1_Page(_data) {
     telcodeFinish = false;
 
   // 隐藏下一步按钮
-  $('fieldset.submits').hide();
-  if (!$('#J_autowritetips').length) {
-    $('body').append(tipsTpl);
-  }
+  hideNext();
+
+  // 遍历数据开始自动写入操作
   $.map(_data.Pages[0].Values, function(_item) {
 
     // text类型表单直接写值
@@ -69,11 +75,7 @@ function Personal1_Page(_data) {
     }
 
     // 全名不适用的
-    if (_item.ColumnName === '全名不适用的') {
-      if (_item.Value === 'True' && !$('#' + _item.FormId).prop('checked')) {
-        $('#' + _item.FormId).click();
-      }
-    };
+    autoNotApplyCheckbox('全名不适用的', _item);
 
     // 其它名字radio
     if (_item.ColumnName === '是否拥有曾用名') {
@@ -113,7 +115,6 @@ function Personal1_Page(_data) {
           $('#' + _item.FormId).click();
         }
       }, 2000);
-      // $('#' + _item.FormId).click();
       $('#J_autowritetips').text(_item.ColumnName);
       if (_item.Value === 'True') {
         telcodeFinish = false;
@@ -131,15 +132,12 @@ function Personal1_Page(_data) {
               }
             });
 
-            // 显示下一步按钮
-            // $('fieldset.submits').show();
             telcodeFinish = true;
           }
         }, 1000);
       } else {
         telcodeFinish = true;
       }
-
     };
 
     // 性别
@@ -148,13 +146,7 @@ function Personal1_Page(_data) {
     };
 
     // 婚姻
-    if (_item.ColumnName === '婚姻状况') {
-      $.map($('#' + _item.FormId).find('option'), function(__item) {
-        if ($(__item).attr('value') === _item.Value) {
-          $(__item).prop('selected', true);
-        }
-      });
-    };
+    autoSelectValue('婚姻状况', _item);
 
     // 生日 - 日
     if (_item.ColumnName === '出生日期-日') {
@@ -175,11 +167,7 @@ function Personal1_Page(_data) {
     };
 
     // 出生地-州省不适用的
-    if (_item.ColumnName === '出生地-州省不适用的') {
-      if (_item.Value === 'True' && !$('#' + _item.FormId).prop('checked')) {
-        $('#' + _item.FormId).click();
-      }
-    };
+    autoNotApplyCheckbox('出生地-州省不适用的', _item);
 
     // 出生 - 国家
     if (_item.ColumnName === '出生地-国家[英文]') {
@@ -192,14 +180,11 @@ function Personal1_Page(_data) {
   });
 
   var intervalShowNext = setInterval(function() {
-    var tempParam = null;
     if (otherNameFinish && telcodeFinish) {
       clearInterval(intervalShowNext);
-      tempParam = {};
+
       // 填写完成,显示下一步按钮
-      $('fieldset.submits').show();
-      $('#J_autowritetips').html(writeFinshMsg);
+      showNext();
     }
   }, 1000);
-
 };

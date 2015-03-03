@@ -12,7 +12,8 @@
       "jquery-2.1.3.min.js",
       "global.js",
       "page/personal1.js",
-      "page/personal2.js"
+      "page/personal2.js",
+      "page/addressphone.js"
     ]
   }],
   "browser_action": {
