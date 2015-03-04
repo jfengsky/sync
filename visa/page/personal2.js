@@ -19,7 +19,7 @@ function Personal2_Page(_data) {
 
     // 国籍
     if (_item.ColumnName === '所属国籍[英文]') {
-      $.map($('select#' + _item.FormId).find('option'), function(__item) {
+      $.map($('#' + _item.FormId).find('option'), function(__item) {
 
         // 要转成大写进行比较
         if ($(__item).text() === _item.Value.toLocaleUpperCase()) {
@@ -42,13 +42,7 @@ function Personal2_Page(_data) {
             // 选择其它国籍
             // 这里需要重新遍历返回的值
             $.map(_data.Pages[0].Values, function(_NationItem) {
-              if (_NationItem.ColumnName === '其他国籍[英文]') {
-                $.map($('#' + _NationItem.FormId).find('option'), function(__item) {
-                  if ($(__item).attr('value') === _NationItem.Value) {
-                    $(__item).prop('selected', true);
-                  }
-                });
-              };
+              autoSelectValue('其他国籍[英文]', _NationItem);
 
               // 其它国籍护照
               if (_NationItem.ColumnName === '是否拥有其他国籍护照') {

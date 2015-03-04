@@ -13,7 +13,8 @@
       "global.js",
       "page/personal1.js",
       "page/personal2.js",
-      "page/addressphone.js"
+      "page/addressphone.js",
+      "page/pptvisa.js"
     ]
   }],
   "browser_action": {

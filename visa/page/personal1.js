@@ -6,52 +6,6 @@
  */
 
 /**
- * 把数字月份转化为英文简写月份以便selected选择
- * @param  {Number} _month 数字月份
- * @return {String}        英文简写月份
- */
-function formatMonth(_month) {
-  switch (_month) {
-    case 1:
-      return 'JAN';
-      break;
-    case 2:
-      return 'FEB';
-      break;
-    case 3:
-      return 'MAR';
-      break;
-    case 4:
-      return 'APR';
-      break;
-    case 5:
-      return 'MAY';
-      break;
-    case 6:
-      return 'JUN';
-      break;
-    case 7:
-      return 'JUL';
-      break;
-    case 8:
-      return 'AUG';
-      break;
-    case 9:
-      return 'SEP';
-      break;
-    case 10:
-      return 'OCT';
-      break;
-    case 11:
-      return 'NOV';
-      break;
-    case 12:
-      return 'DEC';
-      break;
-  }
-};
-
-/**
  * 第一页表单填写逻辑
  * TODO 还缺少telecode 和 City数据
  * @param
@@ -67,6 +21,38 @@ function Personal1_Page(_data) {
 
   // 遍历数据开始自动写入操作
   $.map(_data.Pages[0].Values, function(_item) {
+
+    // var $inputDom = $('#' + _item.FormId),
+    //     tagName,
+    //     tagType;
+    // if ($inputDom.length) {
+    //   tagName = $inputDom.get(0).tagName;
+    //   tagType = $inputDom.attr('type');
+
+    //   // 判断表单类型, input 表单和 select表单
+    //   if(tagName === 'INPUT'){
+
+    //     if(tagType === 'text'){
+    //       // text类型的表单直接写入值
+          
+    //     } else if(tagType === 'radio'){
+    //       // radio类型的选中
+          
+    //     } else if (tagType === 'checkbox'){
+    //       // checkbox类型的选中
+          
+    //     }
+    //   } else if (tagName === 'SELECT') {
+
+    //   }
+
+    //   console.log($inputDom);
+    //   console.log($inputDom.get(0).tagName);
+    //   console.log($inputDom.attr('type'));
+    //   console.log('-------');
+    // }
+
+
 
     // text类型表单直接写值
     if (_item.ColumnName === '名字[拼音]' || _item.ColumnName === '姓氏[拼音]' || _item.ColumnName === '全名[中文]' || _item.ColumnName === '出生日期-年' || _item.ColumnName === '出生地-州省[英文]' || _item.ColumnName === '出生地-城市') {

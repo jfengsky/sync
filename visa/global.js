@@ -12,6 +12,52 @@ var tipsTpl = '<div id="J_autowritetips" style="font-size: 12px;position:fixed;c
 var writeFinshMsg = '<span style="color:#06f;font-weight:bold">数据自动写入完毕!</span>';
 
 /**
+ * 把数字月份转化为英文简写月份以便selected选择
+ * @param  {Number} _month 数字月份
+ * @return {String}        英文简写月份
+ */
+function formatMonth(_month) {
+  switch (_month) {
+    case 1:
+      return 'JAN';
+      break;
+    case 2:
+      return 'FEB';
+      break;
+    case 3:
+      return 'MAR';
+      break;
+    case 4:
+      return 'APR';
+      break;
+    case 5:
+      return 'MAY';
+      break;
+    case 6:
+      return 'JUN';
+      break;
+    case 7:
+      return 'JUL';
+      break;
+    case 8:
+      return 'AUG';
+      break;
+    case 9:
+      return 'SEP';
+      break;
+    case 10:
+      return 'OCT';
+      break;
+    case 11:
+      return 'NOV';
+      break;
+    case 12:
+      return 'DEC';
+      break;
+  }
+};
+
+/**
  * 获取地址栏参数
  * @param  {String} _href 地址
  * @param  {String} _name 参数名
@@ -48,9 +94,6 @@ function autoNotApplyCheckbox(_name, _item) {
 function autoSelectValue(_name, _item) {
   if (_item.ColumnName === _name) {
     $.map($('#' + _item.FormId).find('option'), function(__item) {
-      console.log($(__item).attr('value'));
-      console.log('----');
-      console.log(_item.Value);
       if ($(__item).attr('value') === _item.Value) {
         $(__item).prop('selected', true);
       }
@@ -128,6 +171,16 @@ function renderData(_data) {
     case 'AddressPhone':
       AddressPhone_Page(_data);
       break;
+
+      // 第四页
+    case 'PptVisa':
+      PptVisa_Page(_data);
+      break;
+
+      // 第五页
+    case 'Travel':
+      Travel_Page(_data);
+      break;
   }
 
 };
@@ -141,8 +194,9 @@ function writeVal(_orderId) {
   var tempParam = {},
     sendParam = {},
     appId = $('#ctl00_lblAppID').text() || '';
-  sendParam.visaOrderId = _orderId;
-  sendParam.url = location.href;
+  sendParam.visaorderid = _orderId;
+  sendParam.countryid = 1;
+  sendParam.pageurl = location.href;
   sendParam.appId = appId;
   tempParam.type = 'getData';
   tempParam.sendParam = sendParam;

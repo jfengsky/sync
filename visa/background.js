@@ -24,7 +24,7 @@ chrome.extension.onMessage.addListener(function(objRequest, _, sendResponse) {
   // url 从页面中获取
   if (objRequest.type === 'getData') {
     $.ajax({
-      // url: 'http://order.visa.fat29.qa.nt.ctripcorp.com/Visa-Order-OrderProcess/VisaAutoComplete/VisaAutoCompleteApi.aspx?countryid=1&visaorderid=1',
+      // url: 'http://order.visa.fat29.qa.nt.ctripcorp.com/Visa-Order-OrderProcess/VisaAutoComplete/VisaAutoCompleteApi.aspx',
       url: 'http://localhost:3001/VisaAutoCompleteApi',
       type: 'get',
       data: objRequest.sendParam,
