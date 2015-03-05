@@ -57,6 +57,21 @@ function formatMonth(_month) {
   }
 };
 
+
+function writeStep(_type, _str) {
+  var writeType = '';
+
+  if(_type === 'text'){
+    writeType = '正在填写:'
+  } else if(_type === 'loading') {
+    writeType = '加载隐藏表单:'
+  } else {
+    writeType = '正在选择:'
+  };
+  $('#J_autowritetips').text(writeType + _str);
+};
+
+
 /**
  * 获取地址栏参数
  * @param  {String} _href 地址
