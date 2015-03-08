@@ -196,6 +196,16 @@ function renderData(_data) {
     case 'Travel':
       Travel_Page(_data);
       break;
+
+    // 第六页
+    case 'TravelCompanions':
+      TravelCompanions_Page(_data);
+      break;
+
+    // 第七页
+    case 'PreviousUSTravel':
+      PreviousUSTravel_Page(_data);
+      break;
   }
 
 };
