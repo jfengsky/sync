@@ -11,7 +11,6 @@
  * @param
  */
 function Personal1_Page(_data) {
-
   var canShowNext = false,
     otherNameFinish = false,
     telcodeFinish = false;
