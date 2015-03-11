@@ -138,7 +138,7 @@ function autoSelectText(_name, _item) {
  * @return
  */
 function hideNext() {
-  $('fieldset.submits').hide();
+  // $('fieldset.submits').hide();
   if (!$('#J_autowritetips').length) {
     $('body').append(tipsTpl);
     $('#J_autowritetips').text('开始自动写入数据');
@@ -150,7 +150,7 @@ function hideNext() {
  * @return
  */
 function showNext() {
-  $('fieldset.submits').show();
+  // $('fieldset.submits').show();
   $('#J_autowritetips').html(writeFinshMsg);
 };
 
