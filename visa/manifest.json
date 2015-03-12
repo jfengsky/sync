@@ -17,7 +17,8 @@
       "page/pptvisa.js",
       "page/travel.js",
       "page/travelcompanions.js",
-      "page/previousustravel.js"
+      "page/previousustravel.js",
+      "page/uscontact.js"
     ]
   }],
   "browser_action": {

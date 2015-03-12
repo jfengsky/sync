@@ -206,6 +206,23 @@ function renderData(_data) {
     case 'PreviousUSTravel':
       PreviousUSTravel_Page(_data);
       break;
+
+    // 第八页
+    case 'USContact':
+      USContact_page(_data);
+      break;
+
+    // 第九页
+    case 'Relatives':
+      Relatives_page(_data);
+      break;
+
+    case 'Spouse':
+      Spouse_page(_data);
+      break;
+    case 'WorkEducation1':
+      WorkEducation1_page(_data);
+      break;
   }
 
 };

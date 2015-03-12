@@ -176,7 +176,7 @@ function Travel_Page(_data) {
                         }
 
                       } else {
-                        console.log(__item.ColumnName + 'id没找到');
+                        // console.log(__item.ColumnName + 'id没找到');
                       }
 
 
@@ -226,7 +226,7 @@ function Travel_Page(_data) {
 
       }
     } else {
-      console.log(_item.ColumnName + 'id没找到');
+      // console.log(_item.ColumnName + 'id没找到');
     }
 
 
