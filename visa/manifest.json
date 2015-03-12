@@ -18,7 +18,8 @@
       "page/travel.js",
       "page/travelcompanions.js",
       "page/previousustravel.js",
-      "page/uscontact.js"
+      "page/uscontact.js",
+      "page/relatives.js"
     ]
   }],
   "browser_action": {

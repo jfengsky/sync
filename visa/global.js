@@ -216,7 +216,6 @@ function renderData(_data) {
     case 'Relatives':
       Relatives_page(_data);
       break;
-
     case 'Spouse':
       Spouse_page(_data);
       break;
