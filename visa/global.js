@@ -219,8 +219,11 @@ function renderData(_data) {
     case 'Spouse':
       Spouse_page(_data);
       break;
-    case 'WorkEducation1':
+    case 'WorkEducation2':
       WorkEducation1_page(_data);
+      break;
+    case 'WorkEducation2':
+      WorkEducation2_page(_data);
       break;
   }
 

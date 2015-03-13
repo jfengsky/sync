@@ -19,7 +19,9 @@
       "page/travelcompanions.js",
       "page/previousustravel.js",
       "page/uscontact.js",
-      "page/relatives.js"
+      "page/relatives.js",
+      "page/spouse.js",
+      "page/workeducation1.js"
     ]
   }],
   "browser_action": {
