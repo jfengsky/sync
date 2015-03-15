@@ -10,12 +10,10 @@ function WorkEducation1_page(_data) {
 
   // 隐藏下一步按钮
   hideNext();
-
   $.map(_data.Pages[0].Values, function(_item) {
-
     if (_item.ColumnName === '当前主要职业') {
       if (!$('#ctl00_SiteContentPlaceHolder_FormView1_ddlPresentOccupation').val()) {
-        $('#J_autowritetips').text('选择 Primary Occupation 之后页面会刷新, 刷新后请再次点击 自动填写表单按钮');
+        $('#J_autowritetips').text('选择 Primary Occupation 之后页面会被刷新, 刷新后请再次点击 自动填写表单按钮');
         setTimeout(function() {
           $.map($('#' + _item.FormId).find('option'), function(__optionItem) {
             if ($(__optionItem).attr('value') === _item.Value) {
@@ -35,18 +33,19 @@ function WorkEducation1_page(_data) {
         $('#' + _item.FormId).val(_item.Value);
         $('#J_autowritetips').text(_item.ColumnName);
       }
+      canShowNext = true
     }
 
 
   });
 
-  // var intervalShowNext = setInterval(function() {
-  //   if (canShowNext) {
-  //     clearInterval(intervalShowNext);
+  var intervalShowNext = setInterval(function() {
+    if (canShowNext) {
+      clearInterval(intervalShowNext);
 
-  //     // 填写完成,显示下一步按钮
-  //     showNext();
-  //   }
-  // }, 1000);
+      // 填写完成,显示下一步按钮
+      showNext();
+    }
+  }, 1000);
 
 }

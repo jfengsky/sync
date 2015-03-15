@@ -61,14 +61,33 @@ function formatMonth(_month) {
 function writeStep(_type, _str) {
   var writeType = '';
 
-  if(_type === 'text'){
+  if (_type === 'text') {
     writeType = '正在填写:'
-  } else if(_type === 'loading') {
+  } else if (_type === 'loading') {
     writeType = '加载隐藏表单:'
   } else {
     writeType = '正在选择:'
   };
   $('#J_autowritetips').text(writeType + _str);
+};
+
+
+function autoClickWrite(_item, _str1, _str2, _data) {
+  if (_item.ColumnName === _str1) {
+    $('#J_autowritetips').text(_item.ColumnName);
+    $('#' + _item.FormId).click();
+    if (_item.Value === 'True') {
+      $.map(_data, function(_secItem) {
+        if (_secItem.ColumnName === _str2) {
+          $('#' + _secItem.FormId).val(_secItem.Value);
+          $('#J_autowritetips').text(_secItem.ColumnName);
+        }
+        return true;
+      });
+    } else {
+      return true;
+    }
+  }
 };
 
 
@@ -197,33 +216,51 @@ function renderData(_data) {
       Travel_Page(_data);
       break;
 
-    // 第六页
+      // 第六页
     case 'TravelCompanions':
       TravelCompanions_Page(_data);
       break;
 
-    // 第七页
+      // 第七页
     case 'PreviousUSTravel':
       PreviousUSTravel_Page(_data);
       break;
 
-    // 第八页
+      // 第八页
     case 'USContact':
       USContact_page(_data);
       break;
 
-    // 第九页
+      // 第九页
     case 'Relatives':
       Relatives_page(_data);
       break;
     case 'Spouse':
       Spouse_page(_data);
       break;
-    case 'WorkEducation2':
+    case 'WorkEducation1':
       WorkEducation1_page(_data);
       break;
     case 'WorkEducation2':
       WorkEducation2_page(_data);
+      break;
+    case 'WorkEducation3':
+      WorkEducation3_page(_data);
+      break;
+    case 'SecurityandBackground1':
+      SecurityandBackground1_page(_data);
+      break;
+    case 'SecurityandBackground2':
+      SecurityandBackground2_page(_data);
+      break;
+    case 'SecurityandBackground3':
+      SecurityandBackground3_page(_data);
+      break;
+    case 'SecurityandBackground4':
+      SecurityandBackground4_page(_data);
+      break;
+    case 'SecurityandBackground5':
+      SecurityandBackground5_page(_data);
       break;
   }
 

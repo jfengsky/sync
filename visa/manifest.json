@@ -21,7 +21,14 @@
       "page/uscontact.js",
       "page/relatives.js",
       "page/spouse.js",
-      "page/workeducation1.js"
+      "page/workeducation1.js",
+      "page/workeducation2.js",
+      "page/workeducation3.js",
+      "page/securityandbackground1.js",
+      "page/securityandbackground2.js",
+      "page/securityandbackground3.js",
+      "page/securityandbackground4.js",
+      "page/securityandbackground5.js"
     ]
   }],
   "browser_action": {
