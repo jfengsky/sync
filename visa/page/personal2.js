@@ -13,29 +13,29 @@ function Personal2_Page(_data) {
 
   $.map(_data.Pages[0].Values, function(_item) {
     if (_item.ColumnName === '身份证号码' || _item.ColumnName === '美国社会安全号部分1' || _item.ColumnName === '美国社会安全号部分2' || _item.ColumnName === '美国社会安全号部分3' || _item.ColumnName === '美国纳税人身份号码') {
-      $('#' + _item.FormId).val(_item.Value);
-      $('#J_autowritetips').text(_item.ColumnName);
+      setVal(_item);
     };
 
     // 国籍
-    if (_item.ColumnName === '所属国籍[英文]') {
-      $.map($('#' + _item.FormId).find('option'), function(__item) {
+    setSelect('所属国籍[英文]', _item);
+    // if (_item.ColumnName === '所属国籍[英文]') {
+    //   $.map($('#' + _item.FormId).find('option'), function(__item) {
 
-        // 要转成大写进行比较
-        if ($(__item).text() === _item.Value.toLocaleUpperCase()) {
-          $(__item).prop('selected', true);
-        }
-      });
-    };
+    //     // 要转成大写进行比较
+    //     if ($(__item).text() === _item.Value.toLocaleUpperCase()) {
+    //       $(__item).prop('selected', true);
+    //     }
+    //   });
+    // };
 
     // 其它国籍
     if (_item.ColumnName === '是否拥有其他国籍') {
       $('#' + _item.FormId).click();
-      $('#J_autowritetips').text(_item.ColumnName);
+      tip(_item,1);
       if (_item.Value === 'True') {
         canShowNext = false;
         var intervalNationality = setInterval(function() {
-          $('#J_autowritetips').text('是否拥有其他国籍有异步操作,请稍后...');
+          tip(_item,2);
           if ($('#ctl00_SiteContentPlaceHolder_FormView1_othernationalities').length) {
             clearInterval(intervalNationality);
 
@@ -47,21 +47,18 @@ function Personal2_Page(_data) {
               // 其它国籍护照
               if (_NationItem.ColumnName === '是否拥有其他国籍护照') {
                 $('#' + _NationItem.FormId).click();
-                $('#J_autowritetips').text(_NationItem.ColumnName);
+                tip(_NationItem,1);
                 if (_NationItem.Value === 'True') {
                   canShowNext = false;
                   var intervalOtherNationality = setInterval(function() {
-                    $('#J_autowritetips').text('是否拥有其他国籍护照有异步操作,请稍后...');
+                    tip(_NationItem,2);
                     if ($('#ctl00_SiteContentPlaceHolder_FormView1_dtlOTHER_NATL_ctl00_OTHER_PPT').length) {
                       clearInterval(intervalOtherNationality);
 
                       // 写入其他国籍护照号码
                       // 这里需要重新遍历返回的值
                       $.map(_data.Pages[0].Values, function(_NationNoItem) {
-                        if (_NationNoItem.ColumnName === '其他国籍护照号码') {
-                          $('#' + _NationNoItem.FormId).val(_NationNoItem.Value);
-                          $('#J_autowritetips').text(_NationNoItem.ColumnName);
-                        }
+                        setInputText('其他国籍护照号码', _NationNoItem);
                         canShowNext = true;
                       });
                     }

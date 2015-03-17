@@ -57,6 +57,80 @@ function formatMonth(_month) {
   }
 };
 
+/**
+ * 写入表单提示进度
+ * @param  {Object} _item  所有数据
+ * @param  {Number} _type  类型 undefine: text表单,  1: checkbox radio select, 2: 隐藏表单
+ * @return
+ */
+function tip(_item, _type) {
+  var writeType = '';
+
+  if (!_type) {
+    writeType = '正在填写:' + _item.ColumnName
+  } else if (_type === 1) {
+    writeType = '正在选择:' + _item.ColumnName
+  } else if (_type === 2) {
+    writeType = _item.ColumnName + ' 正在加载隐藏表单,请稍后...'
+  }
+  $('#J_autowritetips').text(writeType);
+};
+
+/**
+ * 写入text 表单的值
+ * @param {[type]} _item [description]
+ */
+function setVal(_item) {
+  tip(_item);
+  $('#' + _item.FormId).val(_item.Value);
+};
+
+/**
+ * 加入判断的,写入text表单的值
+ * @param {String} _name 
+ * @param {String} _item 
+ */
+function setInputText(_name, _item){
+  if(_item.ColumnName === _name){
+    setVal(_item);
+  }
+};
+
+
+/**
+ * 写入select的值
+ * @param {[type]} _item [description]
+ * @param {[type]} _type [description]
+ */
+function setSelect(_name, _item, _type) {
+  if (_item.ColumnName === _name) {
+    if (!_type) {
+      $.map($('#' + _item.FormId).find('option'), function(__item) {
+        if ($(__item).attr('value') === _item.Value) {
+          tip(__item, 1);
+          $(__item).prop('selected', true);
+        }
+      });
+    } else if (_type === 'number') {
+      $.map($('#' + _item.FormId).find('option'), function(__item) {
+        if ($(__item).attr('value') - 0 === _item.Value - 0) {
+          tip(_item, 1);
+          $(__item).prop('selected', true);
+        }
+      });
+    } else if (_type === 'month') {
+      $.map($('#' + _item.FormId).find('option'), function(__item) {
+        if ($(__item).attr('value') === formatMonth(_item.Value - 0)) {
+          tip(_item, 1);
+          $(__item).prop('selected', true);
+        }
+      });
+    }
+
+
+  };
+}
+
 
 function writeStep(_type, _str) {
   var writeType = '';
@@ -64,7 +138,7 @@ function writeStep(_type, _str) {
   if (_type === 'text') {
     writeType = '正在填写:'
   } else if (_type === 'loading') {
-    writeType = '加载隐藏表单:'
+    writeType = '正在加载隐藏表单,请稍后...'
   } else {
     writeType = '正在选择:'
   };
@@ -129,6 +203,7 @@ function autoSelectValue(_name, _item) {
   if (_item.ColumnName === _name) {
     $.map($('#' + _item.FormId).find('option'), function(__item) {
       if ($(__item).attr('value') === _item.Value) {
+        tip(__item, 1);
         $(__item).prop('selected', true);
       }
     });
