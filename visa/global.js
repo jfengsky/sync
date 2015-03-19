@@ -57,6 +57,7 @@ function formatMonth(_month) {
   }
 };
 
+
 /**
  * 写入表单提示进度
  * @param  {Object} _item  所有数据
@@ -131,6 +132,21 @@ function setSelect(_name, _item, _type) {
   };
 }
 
+/**
+ * js模拟触发点击事件
+ * @param  {String} _id 按钮id
+ * @return
+ */
+function clickEvent(_id) {
+  var ev = document.createEvent("HTMLEvents");
+  ev.initEvent("click", false, true);
+  $(_id).get(0).dispatchEvent(ev);
+}
+
+/**
+ * js模拟下拉选择跳转事件
+ * @param {[type]} _item [description]
+ */
 function setSelectChange(_item) {
   $.map($('#' + _item.FormId).find('option'), function(__optionItem) {
     if ($(__optionItem).attr('value') === _item.Value) {
@@ -321,6 +337,12 @@ function renderData(_data) {
       // 第九页
     case 'Relatives':
       Relatives_page(_data);
+      break;
+    case 'DeceasedSpouse':
+      DeceasedSpouse_page(_data);
+      break;
+    case 'PrevSpouse':
+      PrevSpouse_page(_data);
       break;
     case 'Spouse':
       Spouse_page(_data);

@@ -21,6 +21,8 @@
       "page/uscontact.js",
       "page/relatives.js",
       "page/spouse.js",
+      "page/deceasedspouse.js",
+      "page/prevspouse.js",
       "page/workeducation1.js",
       "page/workeducation2.js",
       "page/workeducation3.js",
