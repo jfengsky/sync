@@ -62,11 +62,13 @@ function Spouse_page(_data) {
               }
 
               autoNotApplyCheckbox('配偶的联系地址省份未知的', _secItem);
-              autoNotApplyCheckbox('配偶的联系地址邮编未知的', _secItem);
+              if(_secItem.ColumnName === '配偶的联系地址邮编未知的'){
+                autoNotApplyCheckbox('配偶的联系地址邮编未知的', _secItem);
+              }
 
               autoSelectValue('配偶的联系地址国家[英文]', _secItem);
 
-              canShowNext = true
+              canShowNext = true;
             });
           }
         }, 1000);

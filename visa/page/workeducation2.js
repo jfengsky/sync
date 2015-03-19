@@ -87,6 +87,7 @@ function WorkEducation2_page(_data) {
                     setSelect('以往单位' + tempIndex + '工作结束日期-日', _secItem, 'number');
                     setSelect('以往单位' + tempIndex + '工作结束日期-月', _secItem, 'number');
 
+                    setSelect('以往单位' + tempIndex + '国家/地区[英文]', _secItem);
 
                     autoNotApplyCheckbox('以往单位' + tempIndex + '州/省份不适用', _secItem);
                     autoNotApplyCheckbox('以往单位' + tempIndex + '邮政区域/邮政编码不适用', _secItem);

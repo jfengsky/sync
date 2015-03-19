@@ -9,7 +9,23 @@ function PreviousUSTravel_Page(_data) {
     hasBeenInUS = false,
     hasBeenVisa = false,
     hasBeenVisaRefuse = false,
-    immigrant = false;
+    immigrant = false,
+    canWriteStay = false;
+
+
+  var hasToUSArr = [],
+    toUsTimes = 1;
+
+
+  $('#J_autowritetips').text('检查在美国停留过的次数...');
+  $.map(_data.Pages[0].Values, function(_item) {
+    var tempEmp = /\d(停留时间单位)/g.exec(_item.ColumnName);
+    if (tempEmp) {
+      hasToUSArr.push(tempEmp[0])
+    };
+  });
+
+  toUsTimes = hasToUSArr.length;
 
   // 隐藏下一步按钮
   hideNext();
@@ -24,47 +40,71 @@ function PreviousUSTravel_Page(_data) {
           tip(_item, 2);
           if ($('#ctl00_SiteContentPlaceHolder_FormView1_add1').length) {
             clearInterval(interval1);
-            $.map(_data.Pages[0].Values, function(_secItem) {
-
-              setSelect('以往赴美1抵达日期-日', _secItem, 'number');
-              setSelect('以往赴美1抵达日期-月', _secItem, 'number');
-
-
-              if (_secItem.ColumnName === '以往赴美1抵达日期-年' || _secItem.ColumnName === '以往赴美1时长') {
-                setVal(_secItem);
-              }
-              setSelect('以往赴美1停留时间单位', _secItem);
-
-              // 您是否持有或者曾经持有美国驾驶执照？
-              if (_secItem.ColumnName === '您是否持有或者曾经持有美国驾驶执照？') {
-                tip(_item, 1);
-                if (_secItem.Value === 'True') {
-                  $('#' + _secItem.FormId).click();
-
-                  var interval21 = setInterval(function() {
-                    if ($('#ctl00_SiteContentPlaceHolder_FormView1_dtlUS_DRIVER_LICENSE_ctl00_tbxUS_DRIVER_LICENSE').length) {
-                      clearInterval(interval21);
-
-                      $.map(_data.Pages[0].Values, function(_thirdItem) {
-
-                        setInputText('驾驶执照的号码', _thirdItem)
-
-                        autoNotApplyCheckbox('不知道驾驶执照的号码', _thirdItem);
-
-                        autoSelectValue('驾驶执照的州', _thirdItem);
-                        hasBeenInUS = true;
-                      });
-                    }
-                  }, 1000);
-
-                } else {
-                  $('#' + _secItem.FormId).click();
-                  hasBeenInUS = true;
+            if (toUsTimes > 1) {
+              $('#J_autowritetips').text('添加在美停留次数...');
+              clickEvent("#ctl00_SiteContentPlaceHolder_FormView1_dtlPREV_US_VISIT_ctl00_InsertButtonPREV_US_VISIT");
+              var interval11 = setInterval(function() {
+                if ($('#ctl00_SiteContentPlaceHolder_FormView1_dtlPREV_US_VISIT_ctl01_ddlPREV_US_VISIT_DTEDay').length) {
+                  clearInterval(interval11);
+                  canWriteStay = true;
                 }
+              }, 1000);
+            } else {
+              canWriteStay = true;
+            }
+
+            // 点击次数完成,开始写入数据
+            var interval12 = setInterval(function() {
+              if (canWriteStay) {
+                clearInterval(interval12);
+                for (var tempIndex = 1; tempIndex <= toUsTimes; tempIndex++) {
+                  $.map(_data.Pages[0].Values, function(_secItem) {
+                    if (_secItem.ColumnName === '以往赴美' + tempIndex + '抵达日期-年' || _secItem.ColumnName === '以往赴美' + tempIndex + '时长') {
+                      setVal(_secItem);
+                    }
+                    setSelect('以往赴美' + tempIndex + '抵达日期-日', _secItem, 'number');
+                    setSelect('以往赴美' + tempIndex + '抵达日期-月', _secItem, 'number');
+                    setSelect('以往赴美' + tempIndex + '停留时间单位', _secItem);
+                  })
+                };
+
+                $.map(_data.Pages[0].Values, function(_secItem) {
+
+                  // 您是否持有或者曾经持有美国驾驶执照？
+                  if (_secItem.ColumnName === '您是否持有或者曾经持有美国驾驶执照？') {
+                    tip(_item, 1);
+                    if (_secItem.Value === 'True') {
+                      $('#' + _secItem.FormId).click();
+
+                      var interval21 = setInterval(function() {
+                        if ($('#ctl00_SiteContentPlaceHolder_FormView1_dtlUS_DRIVER_LICENSE_ctl00_tbxUS_DRIVER_LICENSE').length) {
+                          clearInterval(interval21);
+
+                          $.map(_data.Pages[0].Values, function(_thirdItem) {
+
+                            setInputText('驾驶执照的号码', _thirdItem)
+
+                            autoNotApplyCheckbox('不知道驾驶执照的号码', _thirdItem);
+
+                            autoSelectValue('驾驶执照的州', _thirdItem);
+                            hasBeenInUS = true;
+                          });
+                        }
+                      }, 1000);
+
+                    } else {
+                      $('#' + _secItem.FormId).click();
+                      hasBeenInUS = true;
+                    }
+                  }
+                });
+
+
+
               }
+            }, 2000);
 
 
-            });
           }
         }, 1000);
       } else {
@@ -99,7 +139,7 @@ function PreviousUSTravel_Page(_data) {
                   autoNotApplyCheckbox('签证号码（未知）', _secItem);
 
                   if (_secItem.ColumnName === '您此次是否申请同类签证' || _secItem.ColumnName === '您现在申请签证的所在国家或地点同于您上个签证颁发所在国或地点吗? 此国家或地点是您主要居住地吗?' || _secItem.ColumnName === '您是否留取过十指指纹？') {
-                    tip(_secItem,1);
+                    tip(_secItem, 1);
                     $('#' + _secItem.FormId).click();
                   }
 

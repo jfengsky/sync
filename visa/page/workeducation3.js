@@ -101,7 +101,7 @@ function WorkEducation3_page(_data) {
           $('#' + _item.FormId).click();
           if (_item.Value === 'True') {
             var interval7 = setInterval(function() {
-              if ($('#ctl00_SiteContentPlaceHolder_FormView1_dtlORGANIZATIONS_ctl00_tbxORGANIZATION_NAME').length) {
+              if ($('#ctl00_SiteContentPlaceHolder_FormView1_tbxSPECIALIZED_SKILLS_EXPL').length) {
                 clearInterval(interval7);
                 $.map(_data.Pages[0].Values, function(_secItem) {
                   if (_secItem.ColumnName === '您是否具有特殊技能或接受过特殊培训，例如有关枪械、炸药、 核装置、 生物或化学方面的经验？说明[英文]') {
@@ -163,7 +163,7 @@ function WorkEducation3_page(_data) {
           $('#' + _item.FormId).click();
           if (_item.Value === 'True') {
             var interval11 = setInterval(function() {
-              if ($('#ctl00_SiteContentPlaceHolder_FormView1_dtlORGANIZATIONS_ctl00_tbxORGANIZATION_NAME').length) {
+              if ($('#ctl00_SiteContentPlaceHolder_FormView1_tbxINSURGENT_ORG_EXPL').length) {
                 clearInterval(interval11);
                 $.map(_data.Pages[0].Values, function(_secItem) {
                   if (_secItem.ColumnName === '你是否曾经服务于或参与过准军事性单位、治安团体、造反组织、游击队或暴动组织，或曾经是其成员之一？说明[英文]') {
