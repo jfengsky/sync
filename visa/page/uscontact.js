@@ -15,16 +15,16 @@ function USContact_page(_data) {
 
   $.map(_data.Pages[0].Values, function(_item) {
     if (_item.ColumnName === '在美国的联系人—姓氏[英文]' || _item.ColumnName === '在美国的联系人—名字[英文]' || _item.ColumnName === '在美国的联系组织名称[英文]') {
-      $('#' + _item.FormId).val(_item.Value);
-      $('#J_autowritetips').text(_item.ColumnName);
+      setVal(_item);
     }
 
     // 无在美联系人 与 无在美国的联系组织 只能二选一
     if (_item.ColumnName === '无在美联系人') {
-      $('#J_autowritetips').text(_item.ColumnName);
+      tip(_item, 1);
       if (_item.Value === 'True') {
         $('#' + _item.FormId).click();
         var intervalContactPerson = setInterval(function() {
+          tip(_item, 2);
           if ($('#ctl00_SiteContentPlaceHolder_FormView1_tbxUS_POC_SURNAME').prop('disabled')) {
             clearInterval(intervalContactPerson);
             iScontactPerson = true
@@ -42,7 +42,7 @@ function USContact_page(_data) {
           clearInterval(intervalOrg);
           $.map(_data.Pages[0].Values, function(_secItem) {
             if (_secItem.ColumnName === '无在美国的联系组织') {
-              $('#J_autowritetips').text(_secItem.ColumnName);
+              tip(_secItem);
               if (_secItem.Value === 'True') {
                 $('#' + _secItem.FormId).click();
                 var intervalContactOrg = setInterval(function() {
@@ -65,8 +65,7 @@ function USContact_page(_data) {
       var intervalRelationship = setInterval(function() {
         if (iScontactPerson && iScontactOrgnize) {
           clearInterval(intervalRelationship);
-          $('#J_autowritetips').text(_item.ColumnName);
-
+          tip(_item);
           $.map($('#' + _item.FormId).find('option'), function(__optionItem) {
             if ($(__optionItem).attr('value') === _item.Value) {
               // js去触发select的change事件
@@ -84,8 +83,7 @@ function USContact_page(_data) {
               // 美国城市 ID 不对
               $.map(_data.Pages[0].Values, function(_secItem) {
                 if (_secItem.ColumnName === '美国街道地址（第一行）[英文]' || _secItem.ColumnName === '美国街道地址（第二行）[英文]' || _secItem.ColumnName === '美国城市[英文]' || _secItem.ColumnName === '美国邮政编码（如果知道的话）' || _secItem.ColumnName === '美国电话号码' || _secItem.ColumnName === '美国电子邮件地址') {
-                  $('#' + _secItem.FormId).val(_secItem.Value);
-                  $('#J_autowritetips').text(_secItem.ColumnName);
+                  setVal(_secItem);
                 }
 
                 // TODO 美国州,英文有错误

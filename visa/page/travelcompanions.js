@@ -15,24 +15,21 @@ function TravelCompanions_Page(_data) {
     if (_item.ColumnName === '是否有人与您同行？') {
       if (_item.Value === "True") {
         $inputDom.click();
-        $('#J_autowritetips').text(_item.ColumnName);
+        tip(_item, 1);
         var intervalPerson = setInterval(function() {
           if ($('#ctl00_SiteContentPlaceHolder_FormView1_grouptravel').length) {
             clearInterval(intervalPerson);
             $.map(_data.Pages[0].Values, function(_secItem) {
               if (_secItem.ColumnName === '您是否作为一个团队或者组织的成员去旅行？') {
                 $('#' + _secItem.FormId).click();
-                  $('#J_autowritetips').text(_secItem.ColumnName);
+                tip(_secItem);
                 if (_secItem.Value === 'True') {
 
                   var interValGroup = setInterval(function() {
                     if ($('#ctl00_SiteContentPlaceHolder_FormView1_tbxGroupName').length) {
                       clearInterval(interValGroup);
                       $.map(_data.Pages[0].Values, function(_thirdItem) {
-                        if (_thirdItem.ColumnName === '输入您旅行团队的名称[英文]') {
-                          $('#J_autowritetips').text(_thirdItem.ColumnName);
-                          $('#' + _thirdItem.FormId).val(_thirdItem.Value);
-                        }
+                        setInputText('输入您旅行团队的名称[英文]', _thirdItem);
                       });
                       personTravelFinsh = true;
                     }
@@ -44,8 +41,7 @@ function TravelCompanions_Page(_data) {
                       clearInterval(interValGroup);
                       $.map(_data.Pages[0].Values, function(_thirdItem) {
                         if (_thirdItem.ColumnName === '随行人员的姓氏[英文]' || _thirdItem.ColumnName === '随行人员的名字[英文]') {
-                          $('#J_autowritetips').text(_thirdItem.ColumnName);
-                          $('#' + _thirdItem.FormId).val(_thirdItem.Value);
+                          setVal(_thirdItem);
                         };
 
                         // TODO 这里后端给的id有错误

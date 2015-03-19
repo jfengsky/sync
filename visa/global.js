@@ -87,11 +87,11 @@ function setVal(_item) {
 
 /**
  * 加入判断的,写入text表单的值
- * @param {String} _name 
- * @param {String} _item 
+ * @param {String} _name
+ * @param {String} _item
  */
-function setInputText(_name, _item){
-  if(_item.ColumnName === _name){
+function setInputText(_name, _item) {
+  if (_item.ColumnName === _name) {
     setVal(_item);
   }
 };
@@ -107,7 +107,7 @@ function setSelect(_name, _item, _type) {
     if (!_type) {
       $.map($('#' + _item.FormId).find('option'), function(__item) {
         if ($(__item).attr('value') === _item.Value) {
-          tip(__item, 1);
+          tip(_item, 1);
           $(__item).prop('selected', true);
         }
       });
@@ -131,6 +131,17 @@ function setSelect(_name, _item, _type) {
   };
 }
 
+function setSelectChange(_item) {
+  $.map($('#' + _item.FormId).find('option'), function(__optionItem) {
+    if ($(__optionItem).attr('value') === _item.Value) {
+      // js去触发select的change事件
+      var ev = document.createEvent("HTMLEvents");
+      $(__optionItem).prop('selected', true);
+      ev.initEvent("change", false, true);
+      $('#' + _item.FormId).get(0).dispatchEvent(ev);
+    }
+  });
+}
 
 function writeStep(_type, _str) {
   var writeType = '';
@@ -203,7 +214,7 @@ function autoSelectValue(_name, _item) {
   if (_item.ColumnName === _name) {
     $.map($('#' + _item.FormId).find('option'), function(__item) {
       if ($(__item).attr('value') === _item.Value) {
-        tip(__item, 1);
+        tip(_item, 1);
         $(__item).prop('selected', true);
       }
     });
@@ -227,6 +238,12 @@ function autoSelectText(_name, _item) {
   };
 };
 
+function debug(_data) {
+  $.map(_data.Pages[0].Values, function(_item) {
+    console.log(_item.ColumnName + ': ' + _item.Value);
+  });
+}
+
 /**
  * 隐藏下一步按钮和显示右下填写进度提示
  * @return
@@ -236,7 +253,7 @@ function hideNext() {
   if (!$('#J_autowritetips').length) {
     $('body').append(tipsTpl);
     $('#J_autowritetips').text('开始自动写入数据');
-  }
+  };
 };
 
 /**
@@ -246,15 +263,10 @@ function hideNext() {
 function showNext() {
   // $('fieldset.submits').show();
   $('#J_autowritetips').html(writeFinshMsg);
+
+  // 打印所有表单的属性和值,便于调试
 };
 
-/**
- * 第三页表单填写逻辑
- * @param {[type]} _data [description]
- */
-function AddressPhone_Page(_data) {
-
-}
 
 /**
  * 写入数据
