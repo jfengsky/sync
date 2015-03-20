@@ -17,11 +17,6 @@ function WorkEducation2_page(_data) {
     // 教育次数,默认为1
     eduTimes = 1,
 
-
-    // 检查有多少工作和教育经历
-    employerArr = [],
-    eduArr = [],
-
     canWriteEmployer = false,
 
     canWriteEdu = false;
@@ -29,19 +24,15 @@ function WorkEducation2_page(_data) {
 
   $('#J_autowritetips').text('检查工作和教育经历次数...');
   $.map(_data.Pages[0].Values, function(_item) {
-    var tempEmp = /\d(职务名称\[英文\])/g.exec(_item.ColumnName),
-      tempEdu = /\d(课程\[英文\])/g.exec(_item.ColumnName);
-    if (tempEmp) {
-      employerArr.push(tempEmp[0])
-    };
 
-    if (tempEdu) {
-      eduArr.push(tempEdu[0])
+    if(_item.ColumnName === '以往工作个数'){
+      empTimes = _item.Value
+    }
+
+    if(_item.ColumnName === '以往学校个数'){
+      eduTimes = _item.Value
     }
   });
-
-  empTimes = employerArr.length;
-  eduTimes = eduArr.length;
 
 
   // 隐藏下一步按钮
