@@ -71,7 +71,7 @@ function PreviousUSTravel_Page(_data) {
                 $.map(_data.Pages[0].Values, function(_secItem) {
 
                   // 您是否持有或者曾经持有美国驾驶执照？
-                  if (_secItem.ColumnName === '您是否持有或者曾经持有美国驾驶执照？') {
+                  if (_secItem.ColumnName === '您是否持有或者曾经持有美国驾照？') {
                     tip(_item, 1);
                     if (_secItem.Value === 'True') {
                       $('#' + _secItem.FormId).click();
@@ -117,7 +117,7 @@ function PreviousUSTravel_Page(_data) {
     var intervalVisa = setInterval(function() {
       if (hasBeenInUS) {
         clearInterval(intervalVisa);
-        if (_item.ColumnName === '您是否持有或者曾经持有美国驾照？') {
+        if (_item.ColumnName === '您是否曾经获得过美国签证？') {
           tip(_item);
           if (_item.Value === 'True') {
             $inputDom.click();

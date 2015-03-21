@@ -8,7 +8,8 @@
 function Relatives_page(_data) {
   var canShowNext = false,
     isFatherStatus = false,
-    isMotherStatus = false;
+    isMotherStatus = false,
+    isOtherStatus = false;
 
   // 隐藏下一步按钮
   hideNext();
@@ -109,15 +110,26 @@ function Relatives_page(_data) {
 
                   autoSelectValue('亲属与您的关系', _thirdItem);
                   autoSelectValue('亲属在美国的移民或非移民身份', _thirdItem);
-                  canShowNext = true;
+                  isOtherStatus = true;
                 });
               }
             }, 1000);
           } else {
-            canShowNext = true
+            isOtherStatus = true
           }
         }
       }, 2000);
+    }
+
+    if (_item.ColumnName === '您在美国是否还有其他亲属？') {
+      var interval4 = setInterval(function() {
+        if (isOtherStatus) {
+          clearInterval(interval4);
+          tip(_item, 1);
+          $('#' + _item.FormId).click();
+        }
+      }, 2000);
+
     }
 
 

@@ -61,7 +61,7 @@ function PrevSpouse_page(_data) {
 
 
             // TODO 缺少离婚所在国家
-            setSelect('前配偶离婚国家[英文]', _secItem);
+            setSelect('前配偶-婚姻终止-所在的国家[英文]', _secItem);
 
             canShowNext = true;
           });

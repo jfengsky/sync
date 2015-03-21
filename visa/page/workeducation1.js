@@ -35,7 +35,8 @@ function WorkEducation1_page(_data) {
           $('#' + _secItem.FormId).val(_secItem.Value);
           $('#J_autowritetips').text(_secItem.ColumnName);
         }
-
+        setSelect('当前工作单位或学校的国家/地区[英文]', _secItem);
+        
         setTimeout(function() {
           autoNotApplyCheckbox('当前工作单位或学校的州/省份不适用', _secItem);
           autoNotApplyCheckbox('当前工作单位或学校的邮政区域/邮政编码不适用', _secItem);
