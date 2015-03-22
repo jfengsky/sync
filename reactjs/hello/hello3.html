@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="http://cdn.staticfile.org/twitter-bootstrap/3.3.0/css/bootstrap.min.css">
+  <script src="http://cdn.staticfile.org/react/0.12.0-rc1/react.js"></script>
+  <script src="http://cdn.staticfile.org/react/0.12.0-rc1/JSXTransformer.js"></script>
+  <script src="http://cdn.staticfile.org/jquery/2.1.1-rc2/jquery.min.js"></script>
+</head>
+<body>
+
+<script type="text/jsx" >
+var data = [
+  {author: "Pete Hunt", text: "This is one comment"},
+  {author: "Jordan Walke", text: "This is *another* comment"}
+];
+
+
+var Comment = React.createClass({
+  render: function(){
+    return (
+      <div className="comment">
+        <h2 className="commentAuthor">
+          {this.props.author}
+        </h2>
+        {this.props.children}
+      </div>
+    )
+  }
+});
+
+var CommentList = React.createClass({
+  render: function(){
+    var commentNodes = this.props.data.map(function(_comment){
+      return (
+        <Comment author={_comment.author}>
+          {_comment.text}
+        </Comment>
+      )
+    });
+
+    return (
+      <div className="commentlist">
+      {commentNodes}
+      </div>
+    )
+  }
+});
+
+var CommentForm = React.createClass({
+  render: function(){
+    return(
+      <div className="commentform">
+      hello CommentForm
+      </div>
+    );
+  }
+});
+
+var CommentBox = React.createClass({
+  render: function(){
+    return (
+      <div className="commentbox">
+      <h1>comments</h1>
+      <CommentList data={this.props.data}/>
+      <CommentForm />
+      </div>
+    );
+  }
+});
+
+React.render(
+  <CommentBox data={data} pollInterval={2000}/>,
+  document.body
+);
+
+</script>
+</body>
+</html>
