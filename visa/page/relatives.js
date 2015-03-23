@@ -15,6 +15,9 @@ function Relatives_page(_data) {
   hideNext();
 
   $.map(_data.Pages[0].Values, function(_item) {
+    var next1 = false,
+        next2 = false;
+
 
     // TODO 母亲的年id不正确
     if (_item.ColumnName === '父亲姓氏[英文]' || _item.ColumnName === '父亲名字[英文]' || _item.ColumnName === '父亲出生日期-年' || _item.ColumnName === '母亲姓氏[英文]' || _item.ColumnName === '母亲名字[英文]' || _item.ColumnName === '母亲出生日期-年') {
@@ -40,11 +43,25 @@ function Relatives_page(_data) {
       });
     }
 
+    // 这里都有异步请求
+    // if(_item.ColumnName === '父亲姓氏不知道'){
+    //   autoNotApplyCheckbox('父亲姓氏不知道', _item);
+    //   if(_item.Value === 'True'){
+    //     var interval31 = setInterval(function(){
+    //       if($('#ctl00_SiteContentPlaceHolder_FormView1_tbxFATHER_SURNAME').prop('disabled')){
+    //         clearInterval(interval31);
+    //         next1 = true;
+    //       }
+    //     }, 1000);
+    //   } else {
+    //     next1 = true;
+    //   }
+    // }
+    
     autoNotApplyCheckbox('父亲姓氏不知道', _item);
     autoNotApplyCheckbox('父亲名字不知道', _item);
     autoNotApplyCheckbox('父亲出生日期不知道', _item);
 
-    // TODO 遗漏了母亲姓氏不知道
     autoNotApplyCheckbox('母亲姓氏不知道', _item);
     autoNotApplyCheckbox('母亲名字不知道', _item);
     autoNotApplyCheckbox('母亲出生日期不知道', _item);
