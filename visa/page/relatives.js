@@ -127,6 +127,7 @@ function Relatives_page(_data) {
           clearInterval(interval4);
           tip(_item, 1);
           $('#' + _item.FormId).click();
+          canShowNext = true;
         }
       }, 2000);
 

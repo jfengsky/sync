@@ -148,15 +148,20 @@ function clickEvent(_id) {
  * @param {[type]} _item [description]
  */
 function setSelectChange(_item) {
-  $.map($('#' + _item.FormId).find('option'), function(__optionItem) {
-    if ($(__optionItem).attr('value') === _item.Value) {
-      // js去触发select的change事件
-      var ev = document.createEvent("HTMLEvents");
-      $(__optionItem).prop('selected', true);
-      ev.initEvent("change", false, true);
-      $('#' + _item.FormId).get(0).dispatchEvent(ev);
-    }
-  });
+  var $select = $('#' + _item.FormId);
+  // 首选判断当前值是否与给的值相同,如果不同则重新选择进行跳转
+  if ($select.val() !== _item.Value) {
+    $.map($select.find('option'), function(__optionItem) {
+      if ($(__optionItem).attr('value') === _item.Value) {
+        // js去触发select的change事件
+        var ev = document.createEvent("HTMLEvents");
+        $(__optionItem).prop('selected', true);
+        ev.initEvent("change", false, true);
+        $select.get(0).dispatchEvent(ev);
+      }
+    });
+  }
+
 }
 
 function writeStep(_type, _str) {

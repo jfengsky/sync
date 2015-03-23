@@ -110,7 +110,7 @@ function Travel_Page(_data) {
                   }
 
                   // TODO 后端没有给这个数据
-                  autoNotApplyCheckbox('承担您旅行费用者的电子邮件地址', _secItem);
+                  autoNotApplyCheckbox('承担您旅行费用者的电子邮件地址不适用的', _secItem);
                   setSelect('承担您旅行费用者与您关系[英文]', _secItem);
 
                   if (_secItem.ColumnName === '承担您旅行费用者地址是否与您家庭或右击地址相同') {

@@ -10,22 +10,19 @@ function PreviousUSTravel_Page(_data) {
     hasBeenVisa = false,
     hasBeenVisaRefuse = false,
     immigrant = false,
-    canWriteStay = false;
+    canWriteStay = false,
 
 
-  var hasToUSArr = [],
     toUsTimes = 1;
 
 
   $('#J_autowritetips').text('检查在美国停留过的次数...');
   $.map(_data.Pages[0].Values, function(_item) {
-    var tempEmp = /\d(停留时间单位)/g.exec(_item.ColumnName);
-    if (tempEmp) {
-      hasToUSArr.push(tempEmp[0])
-    };
+    if (_item.ColumnName === '以往赴美次数'){
+      toUsTimes = _item.Value - 0;
+    }
   });
 
-  toUsTimes = hasToUSArr.length;
 
   // 隐藏下一步按钮
   hideNext();
@@ -84,7 +81,7 @@ function PreviousUSTravel_Page(_data) {
 
                             setInputText('驾驶执照的号码', _thirdItem)
 
-                            autoNotApplyCheckbox('不知道驾驶执照的号码', _thirdItem);
+                            autoNotApplyCheckbox('驾驶执照的号码未知的', _thirdItem);
 
                             autoSelectValue('驾驶执照的州', _thirdItem);
                             hasBeenInUS = true;

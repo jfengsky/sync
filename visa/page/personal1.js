@@ -113,7 +113,7 @@ function Personal1_Page(_data) {
               if ($('#ctl00_SiteContentPlaceHolder_FormView1_tbxOtherMaritalStatus').length) {
                 clearInterval(interval1);
                 $.map(_data.Pages[0].Values, function(_secItem) {
-                  setInputText('婚姻其它原因说明', _secItem);
+                  setInputText('婚姻状态其他-解释[英文]', _secItem);
                   mariFinish = true
                 });
               }
