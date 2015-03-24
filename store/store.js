@@ -39,6 +39,9 @@ var kinds = [{
 
 var data = [];
 
+// id序号, 从localstorage获取
+var idIndex = 1;
+
 /**
  * 获取中文职业名称
  * @param  {Number} _value 序号
@@ -77,9 +80,9 @@ function kindPercent(_item, _totalArr) {
     totalNum = totalNum + _item
   });
   if (_totalArr[_item.value]) {
-    tempPec = ((_totalArr[_item.value] / totalNum).toFixed(2) - 0) * 100;
+    tempPec = ((_totalArr[_item.value] / totalNum).toFixed(4)) * 100;
   }
-  return tempPec
+  return tempPec.toFixed(2)
 };
 
 /**
@@ -88,9 +91,20 @@ function kindPercent(_item, _totalArr) {
  * @param  {[type]} winArr [description]
  * @return {[type]}        [description]
  */
-function winPercent(_item, winArr){
-
-}
+function winPercent(_item, _winArr, _totalArr){
+  var tempPec = 0;
+  _totalArr.forEach(function(_totalItem){
+    if(_totalItem){
+      _winArr.forEach(function(_winItem){
+        if(_winItem){
+          tempPec = ((_winArr[_item.value] / _totalArr[_item.value]).toFixed(4)) * 100;
+          return false
+        }
+      });
+    }
+  });
+  return tempPec
+};
 
 function totalFormat(_data) {
   var totalArr = [],
@@ -109,16 +123,14 @@ function totalFormat(_data) {
     }
   });
 
-  console.log(totalArr);
-  console.log(winArr);
-
   kinds.forEach(function(_item, _index) {
     var tempKindPercent = kindPercent(_item, totalArr);
+    // console.log(winPercent(_item, winArr, totalArr));
     if (tempKindPercent > 0) {
       tempArr.push({
         'cname': _item.cname,
         'kindPercent': kindPercent(_item, totalArr),
-        'winPercent': winPercent(_item, winArr)
+        'winPercent': winPercent(_item, winArr, totalArr)
       });
     }
 
@@ -136,6 +148,7 @@ function formController($scope) {
   $scope.historyData = historyData;
   $scope.addTodo = function(myForm) {
     data.push({
+      "id": idIndex,
       "time": new Date().getTime(),
       "player": myForm.player.$modelValue,
       "enimy": myForm.enimy.$modelValue,
@@ -144,6 +157,7 @@ function formController($scope) {
     });
 
     historyData.push({
+      "id": idIndex,
       "time": formatDate(new Date().getTime()),
       "player": getCname(myForm.player.$modelValue),
       "enimy": getCname(myForm.enimy.$modelValue),
@@ -153,5 +167,9 @@ function formController($scope) {
     });
     // totalFormat(data);
     $scope.totalData = totalFormat(data);
+    idIndex++;
+  };
+  $scope.delhistory = function(_id){
+    console.log(_id);
   };
 }

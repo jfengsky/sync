@@ -9,8 +9,8 @@ function Travel_Page(_data) {
 
   var purposeHasSel = false,
     hasTravelPlanFinish = false,
-    tripPayFinish = false;
-
+    tripPayFinish = false,
+    emailcheckboxFinish = false;
   // 隐藏下一步按钮
   hideNext();
 
@@ -101,7 +101,7 @@ function Travel_Page(_data) {
           var interval31 = setInterval(function() {
             tip(_item, 2);
             if (_item.Value === 'O') {
-
+              
               if ($('#ctl00_SiteContentPlaceHolder_FormView1_tbxPayerSurname').length) {
                 clearInterval(interval31);
                 $.map(_data.Pages[0].Values, function(_secItem) {
@@ -109,33 +109,51 @@ function Travel_Page(_data) {
                     setVal(_secItem);
                   }
 
-                  // TODO 后端没有给这个数据
-                  autoNotApplyCheckbox('承担您旅行费用者的电子邮件地址不适用的', _secItem);
-                  setSelect('承担您旅行费用者与您关系[英文]', _secItem);
-
-                  if (_secItem.ColumnName === '承担您旅行费用者地址是否与您家庭或右击地址相同') {
-                    tip(_secItem, 1);
-                    $('#' + _secItem.FormId).click();
-                    if (_secItem.Value === 'False') {
-                      var interval33 = setInterval(function() {
-                        tip(_secItem, 2);
-                        if ($('#ctl00_SiteContentPlaceHolder_FormView1_tbxPayerStreetAddress1').length) {
-                          clearInterval(interval33);
-                          $.map(_data.Pages[0].Values, function(_thirdItem) {
-                            if (_thirdItem.ColumnName === '承担您旅行费用者街道地址（第一行）[英文]' || _thirdItem.ColumnName === '承担您旅行费用者街道地址（第二行）[英文]' || _thirdItem.ColumnName === '承担您旅行费用城市[英文]' || _thirdItem.ColumnName === '承担您旅行费用州/省份[英文]' || _thirdItem.ColumnName === '承担您旅行费用邮政编码') {
-                              setVal(_thirdItem);
-                            }
-                            autoNotApplyCheckbox('承担您旅行费用州/省份不适用的', _thirdItem);
-                            autoNotApplyCheckbox('承担您旅行费用邮政编码不适用的', _thirdItem);
-                            setSelect('承担您旅行费用国家[英文]', _thirdItem);
-                            tripPayFinish = true;
-                          });
+                  // 后端没有给这个数据 这个有异步请求,会把下面的请求挤掉
+                  if (_secItem.ColumnName === '承担您旅行费用者的电子邮件地址不适用的') {
+                    autoNotApplyCheckbox('承担您旅行费用者的电子邮件地址不适用的', _secItem);
+                    if (_secItem.Value === 'True') {
+                      var interval311 = setInterval(function() {
+                        if ($('#ctl00_SiteContentPlaceHolder_FormView1_tbxPAYER_EMAIL_ADDR').prop('disabled')) {
+                          emailcheckboxFinish = true;
+                          clearInterval(interval311);
                         }
                       }, 1000);
                     } else {
-                      tripPayFinish = true;
+                      emailcheckboxFinish = true
                     }
+                  }
 
+                  // autoNotApplyCheckbox('承担您旅行费用者的电子邮件地址不适用的', _secItem);
+                  setSelect('承担您旅行费用者与您关系[英文]', _secItem);
+                  if (_secItem.ColumnName === '承担您旅行费用者地址是否与您家庭或右击地址相同') {
+                    var interval41 = setInterval(function() {
+                      tip(_secItem);
+                      if (emailcheckboxFinish) {
+                        clearInterval(interval41);
+                        tip(_secItem, 1);
+                        $('#' + _secItem.FormId).click();
+                        if (_secItem.Value === 'False') {
+                          var interval33 = setInterval(function() {
+                            tip(_secItem, 2);
+                            if ($('#ctl00_SiteContentPlaceHolder_FormView1_tbxPayerStreetAddress1').length) {
+                              clearInterval(interval33);
+                              $.map(_data.Pages[0].Values, function(_thirdItem) {
+                                if (_thirdItem.ColumnName === '承担您旅行费用者街道地址（第一行）[英文]' || _thirdItem.ColumnName === '承担您旅行费用者街道地址（第二行）[英文]' || _thirdItem.ColumnName === '承担您旅行费用城市[英文]' || _thirdItem.ColumnName === '承担您旅行费用州/省份[英文]' || _thirdItem.ColumnName === '承担您旅行费用邮政编码') {
+                                  setVal(_thirdItem);
+                                }
+                                autoNotApplyCheckbox('承担您旅行费用州/省份不适用的', _thirdItem);
+                                autoNotApplyCheckbox('承担您旅行费用邮政编码不适用的', _thirdItem);
+                                setSelect('承担您旅行费用国家[英文]', _thirdItem);
+                                tripPayFinish = true;
+                              });
+                            }
+                          }, 1000);
+                        } else {
+                          tripPayFinish = true;
+                        }
+                      }
+                    }, 1000);
                   }
 
                 });

@@ -219,6 +219,7 @@ function getQuery(_href, _name) {
 function autoNotApplyCheckbox(_name, _item) {
   if (_item.ColumnName === _name) {
     if (_item.Value === 'True' && !$('#' + _item.FormId).prop('checked')) {
+      tip(_item, 1);
       $('#' + _item.FormId).click();
     }
   };

@@ -18,7 +18,7 @@
 <body>
   <div class="main" ng-controller="formController">
     <div id="control" class="panel panel-default" >
-    <div class="panel-heading">比赛结果</div>
+    <div class="panel-heading">对战结果</div>
     <form ng-submit="addTodo(myForm)" name="myForm">
     <div class="panel-heading">你的职业</div>
       <div class="checkbox">
@@ -120,6 +120,7 @@
       <div class="panel-heading">对战历史</div>
       <table class="table table-condensed table-hover table-bordered text-center">
       <tr>
+        <th class="text-center">序号</th>
         <th class="text-center">时间</th>
         <th class="text-center">你的职业</th>
         <th class="text-center">对战职业</th>
@@ -128,12 +129,13 @@
         <th class="text-center">操作</th>
       </tr>
       <tr class="{{item.style}}" ng-repeat="item in historyData">
+        <td>{{$index + 1}}</td>
         <td>{{item.time}}</td>
         <td>{{item.player}}</td>
         <td>{{item.enimy}}</td>
         <td>{{item.start}}</td>
         <td>{{item.result}}</td>
-        <td>删除 修改</td>
+        <td><span ng-click="delhistory(item.id)">删除<span></td>
       </tr>
       </table
     </div>

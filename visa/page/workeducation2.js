@@ -25,11 +25,11 @@ function WorkEducation2_page(_data) {
   $('#J_autowritetips').text('检查工作和教育经历次数...');
   $.map(_data.Pages[0].Values, function(_item) {
 
-    if(_item.ColumnName === '以往工作个数'){
+    if (_item.ColumnName === '以往工作个数') {
       empTimes = _item.Value
     }
 
-    if(_item.ColumnName === '以往学校个数'){
+    if (_item.ColumnName === '以往学校个数') {
       eduTimes = _item.Value
     }
   });
@@ -153,14 +153,12 @@ function WorkEducation2_page(_data) {
 
                         autoNotApplyCheckbox('以往教育机构' + tempIndex + '州/省份不适用', _secItem);
                         autoNotApplyCheckbox('以往教育机构' + tempIndex + '邮政区域/邮政编码不适用', _secItem);
-                        
-                        if(tempIndex === eduTimes){
-                          eduClick = true;
-                        } else {
-                          return false;
-                        }
-
+                        // console.log(tempIndex);
+                        eduClick = true;
                       });
+                      // if (tempIndex === eduTimes) {
+                      //   eduClick = true;
+                      // }
                     }
                   }
                 }, 2000);
