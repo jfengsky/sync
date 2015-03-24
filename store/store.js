@@ -91,12 +91,12 @@ function kindPercent(_item, _totalArr) {
  * @param  {[type]} winArr [description]
  * @return {[type]}        [description]
  */
-function winPercent(_item, _winArr, _totalArr){
+function winPercent(_item, _winArr, _totalArr) {
   var tempPec = 0;
-  _totalArr.forEach(function(_totalItem){
-    if(_totalItem){
-      _winArr.forEach(function(_winItem){
-        if(_winItem){
+  _totalArr.forEach(function(_totalItem) {
+    if (_totalItem) {
+      _winArr.forEach(function(_winItem) {
+        if (_winItem) {
           tempPec = ((_winArr[_item.value] / _totalArr[_item.value]).toFixed(4)) * 100;
           return false
         }
@@ -138,6 +138,57 @@ function totalFormat(_data) {
   return tempArr
 }
 
+function AllKindsWinArr(_kind, _data) {
+  var totalArr = [],
+    tempArr = [];
+
+  kinds.forEach(function(_item, _index) {
+    var tempArr = [];
+    kinds.forEach(function(_secItem, _secIndex) {
+      tempArr[_secIndex] = {
+        'total': 0,
+        'win': 0
+      };
+    });
+    totalArr[_index] = tempArr;
+  });
+
+  // console.log(totalArr)
+
+  _data.forEach(function(_item) {
+    totalArr[_kind.value][_item.enimy]['total'] ++;
+    if (_item.result) {
+      totalArr[_kind.value][_item.player]['win'] ++;
+    }
+  });
+  console.log(totalArr)
+
+
+  // totalArr.forEach(function(_item){
+  //   var tempPec = 0;
+  //   if(_item){
+  //     tempPec = (winArr[_kind.value] / _item).toFixed(4) * 100
+  //   };
+  //   tempArr.push(tempPec);
+  // });
+
+  return tempArr
+}
+
+function kindsWinFormat(_data) {
+  var tempArr = [];
+
+  kinds.forEach(function(_item, _index) {
+    tempArr.push({
+      'cname': _item.cname,
+      'kindswin': AllKindsWinArr(_item, _data)
+    });
+  });
+  // console.log(tempArr);
+  return tempArr
+}
+
+
 // 显示职业列表
 function formController($scope) {
   var historyData = [];
@@ -146,6 +197,7 @@ function formController($scope) {
   $scope.kinds = kinds;
   $scope.data = data;
   $scope.historyData = historyData;
+  $scope.kindswin = [];
   $scope.addTodo = function(myForm) {
     data.push({
       "id": idIndex,
@@ -167,9 +219,16 @@ function formController($scope) {
     });
     // totalFormat(data);
     $scope.totalData = totalFormat(data);
+    // $scope.kindswin = kindsWinFormat(data);
     idIndex++;
   };
-  $scope.delhistory = function(_id){
-    console.log(_id);
+  $scope.delhistory = function(_id) {
+    data.forEach(function(_item, _index) {
+      if(_item.id === _id) {
+        data.splice(_index, 1);
+      }
+    });
+
+    $scope.totalData = totalFormat(data);
   };
 }

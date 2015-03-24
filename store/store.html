@@ -86,35 +86,20 @@
         </tr>
       </table>
     </div>
-    <div class="panel panel-default">
+    
+    <!-- <div class="panel panel-default">
       <div class="panel-heading">各职业胜率</div>
       <table class="table table-condensed table-hover table-bordered text-center">
         <tr>
           <th></th>
-          <th>圣骑士</th>
-          <th>法师</th>
-          <th>战士</th>
+          <th class="text-center" ng-repeat="item in kinds">{{item.cname}}</th>
         </tr>
-        <tr>
-          <th>圣骑士</th>
-          <th></th>
-          <th></th>
-          <th></th>
-        </tr>
-        <tr>
-          <th>法师</th>
-          <th></th>
-          <th></th>
-          <th></th>
-        </tr>
-        <tr>
-          <th>战士</th>
-          <th></th>
-          <th></th>
-          <th></th>
+        <tr ng-repeat="item in kindswin">
+          <th>{{item.cname}}</th>
+          <td ng-repeat="secItem in item.kindswin track by $index">{{secItem}}%</td>
         </tr>
       </table>
-    </div>
+    </div> -->
 
     <div id="history" class="panel panel-default">
       <div class="panel-heading">对战历史</div>
