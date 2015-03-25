@@ -1,0 +1,24 @@
+<h5>添加类型</h5>
+<form class="form-inline">
+  <div class="form-group">
+    <input type="text" class="form-control" ng-model="ProfessName" id="exampleInputName2" placeholder="exp ..">
+  </div>
+  <div class="form-group">
+    <select ng-model="ProfessType" class="form-control">
+      <option value="{{item.id}}" ng-repeat="item in profess">{{item.ename}}</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-default" ng-click="addProfessional()">add</button>
+</form>
+<table class="table table-bordered">
+  <tr>
+    <th>#</th>
+    <th>name</th>
+    <th>edit</th>
+  </tr>
+  <tr>
+    <td>a</td>
+    <td>b</td>
+    <td>edit del</td>
+  </tr>
+</table>

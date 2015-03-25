@@ -1,0 +1,37 @@
+var PROFESSIONAL = [{
+  'cname': '战士',
+  'ename': 'warrior',
+  'id': 0
+}, {
+  'cname': '萨满',
+  'ename': 'shaman',
+  'id': 1
+}, {
+  'cname': '盗贼',
+  'ename': 'rogue',
+  'id': 2
+}, {
+  'cname': '圣骑士',
+  'ename': 'paladin',
+  'id': 3
+}, {
+  'cname': '猎人',
+  'ename': 'hunter',
+  'id': 4
+}, {
+  'cname': '德鲁伊',
+  'ename': 'druid',
+  'id': 5
+}, {
+  'cname': '术士',
+  'ename': 'warlock',
+  'id': 6
+}, {
+  'cname': '法师',
+  'ename': 'mage',
+  'id': 7
+}, {
+  'cname': '牧师',
+  'ename': 'priest',
+  'id': 8
+}];

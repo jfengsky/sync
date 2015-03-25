@@ -37,9 +37,15 @@ function PrevSpouse_page(_data) {
         if (hasCityFinish) {
           clearInterval(interval2);
           $.map(_data.Pages[0].Values, function(_secItem) {
+
+            // 这个暂时默认为1
+            if (_secItem.ColumnName === '前配偶数量'){
+              $('#' + _item.FormId).val(1);
+            };
+
             if (_secItem.ColumnName === '前配偶数量' || _secItem.ColumnName === '前配偶姓氏[英文]' || _secItem.ColumnName === '前配偶名字[英文]' || _secItem.ColumnName === '前配偶出生日期-年' || _secItem.ColumnName === '前配偶结婚日期-年' || _secItem.ColumnName === '前配偶婚姻终止日期-年' || _secItem.ColumnName === '前配偶婚姻怎样终止的[英文]') {
               setVal(_secItem);
-            }
+            };
 
             if(_secItem.ColumnName === '前配偶出生城市[英文]' && canWriteCityValue){
               setVal(_secItem);

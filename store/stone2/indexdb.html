@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>IndexedDB</title>
+    <script src="http://cdn.staticfile.org/jquery/2.1.1-rc2/jquery.min.js"></script>
+    <script src="indexDB.js"></script>
+</head>
+<body>
+    
+    <div>添加数据库: 
+        <input type="text" name="" id="addName" placeholder="数据库名" value="Stone"> 
+        <input type="text" name="" id="DBver" placeholder="版本" value="1"> 
+        <input type="button" id="addBtn" value="click">
+    </div>
+    
+    <div> 添加表
+        <input type="text" name="" id="tableName" placeholder="表名" value="defaultProfess">
+        <input type="button" id="addtable" value="click">
+    </div>
+    
+    <div>添加字段
+        <input type="text" name="" id="perfes1" placeholder="字段名1" value="cname">
+        <input type="text" name="" id="perfes2" placeholder="字段名2" value="ename">
+        <input type="button" id="addperfes" value="click">
+    </div>
+    
+    <div>添加数据
+        <input type="text" name="" id="data1" placeholder="数据1" value="cname1">
+        <input type="text" name="" id="data2" placeholder="数据2" value="ename1">
+        <input type="button" id="addData" value="click">
+    </div>
+    
+    <div>
+        <input type="button" value="读取数据" id="getDB">
+    </div>
+    
+    <div>删除数据
+        <input type="text" name="" id="dataId" value="1">
+        <input type="button" value="click" id="delData">
+    </div>
+
+    <div>删除数据库: 
+        <input type="text" name="" id="delName"> 
+        <input type="button" id="delBtn" value="click">
+    </div>
+
+<script>
+
+var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
+// var IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction;
+$('#delBtn').click(function(){
+    var request = indexedDB.deleteDatabase($('#delName').val());
+});
+
+$('#delData').click(function(){
+    var db;
+    var request = indexedDB.open($('#addName').val());
+    request.onsuccess = function (evt) {
+        db = evt.target.result;
+        var transaction = db.transaction($('#tableName').val(), 'readwrite');
+        var objectStore = transaction.objectStore($('#tableName').val());
+        var request = objectStore.delete($('#dataId').val() - 0);
+        request.onsuccess = function(evt) {  
+            console.log('delsuccess')
+            db.close();
+        };
+    }
+});
+
+$('#addBtn').click(function(){
+    var request = indexedDB.open($('#addName').val(), $('#DBver').val() - 0);
+    request.onsuccess = function (evt) {
+        console.log('request.onsuccess');
+    };
+    request.onerror = function (evt) {
+        console.log("IndexedDB error: " + evt.target.errorCode);
+    };
+});
+
+$('#addtable').click(function(){
+    var request = indexedDB.open($('#addName').val(), $('#DBver').val() - 0);
+    request.onupgradeneeded = function (evt) {
+        var objectStore = evt.currentTarget.result.createObjectStore($('#tableName').val(), { keyPath: "id", autoIncrement: true });
+    }
+});
+
+$('#addperfes').click(function(){
+    var db;
+    var request = indexedDB.open($('#addName').val(), $('#DBver').val() - 0);
+    var peopleData = [
+        { cname: "杰克", ename: "jack" },
+        { cname: "斯洛", ename: "slow" }
+    ];
+    request.onupgradeneeded = function (evt) {
+        var objectStore = evt.currentTarget.result.createObjectStore($('#tableName').val(), { keyPath: "id", autoIncrement: true });
+        objectStore.createIndex($('#perfes1').val(), $('#perfes1').val(), { unique: false });
+        objectStore.createIndex($('#perfes2').val(), $('#perfes2').val(), { unique: false });
+        for (i in peopleData) {
+            objectStore.add(peopleData[i]);
+        }
+    }
+});
+
+$('#addData').click(function(){
+    var db;
+    var request = indexedDB.open($('#addName').val());
+    request.onsuccess = function (evt) {
+        db = evt.target.result;
+        var transaction = db.transaction($('#tableName').val(), 'readwrite');
+        var objectStore = transaction.objectStore($('#tableName').val());
+
+        var wirteDb = {}
+        wirteDb[$('#perfes1').val()] = $('#data1').val();
+        wirteDb[$('#perfes2').val()] = $('#data2').val();
+
+        var request = objectStore.add(wirteDb);
+        request.onsuccess = function (evt) {
+            console.log('write finish');
+            db.close();
+        };
+    }
+});
+
+
+
+
+$('#getDB').click(function(){
+    var db;
+    var request = indexedDB.open($('#addName').val());
+    // request.onupgradeneeded = function() {
+    request.onsuccess = function (evt) {
+        db = evt.target.result;
+        var transaction = db.transaction($('#tableName').val(), 'readwrite');
+        var objectStore = transaction.objectStore($('#tableName').val());
+
+        var request = objectStore.openCursor();
+        request.onsuccess = function(evt) {
+            var cursor = evt.target.result;
+            if (cursor) {
+                console.log(cursor.value);
+                cursor.continue();
+            }
+            db.close();
+        }                                                      
+    };
+});
+</script>
+</body>
+</html>
