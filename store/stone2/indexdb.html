@@ -47,104 +47,154 @@
 
 <script>
 
-var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
-// var IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction;
-$('#delBtn').click(function(){
-    var request = indexedDB.deleteDatabase($('#delName').val());
-});
-
-$('#delData').click(function(){
-    var db;
-    var request = indexedDB.open($('#addName').val());
-    request.onsuccess = function (evt) {
-        db = evt.target.result;
-        var transaction = db.transaction($('#tableName').val(), 'readwrite');
-        var objectStore = transaction.objectStore($('#tableName').val());
-        var request = objectStore.delete($('#dataId').val() - 0);
-        request.onsuccess = function(evt) {  
-            console.log('delsuccess')
-            db.close();
-        };
-    }
-});
 
 $('#addBtn').click(function(){
-    var request = indexedDB.open($('#addName').val(), $('#DBver').val() - 0);
-    request.onsuccess = function (evt) {
-        console.log('request.onsuccess');
-    };
-    request.onerror = function (evt) {
-        console.log("IndexedDB error: " + evt.target.errorCode);
-    };
+    Idb.createDB({
+        DBname: 'Stone',
+        DBver: 1,
+        callback: function( _data ){
+            console.log(_data);
+        }
+    });
+});
+
+$('#delBtn').click(function(){
+    Idb.deleteDB('Stone');
 });
 
 $('#addtable').click(function(){
-    var request = indexedDB.open($('#addName').val(), $('#DBver').val() - 0);
-    request.onupgradeneeded = function (evt) {
-        var objectStore = evt.currentTarget.result.createObjectStore($('#tableName').val(), { keyPath: "id", autoIncrement: true });
-    }
+    Idb.createTable({
+        DBname: 'Stone',
+        DBver: 2,
+        tableName: 'profess'
+    });
 });
 
+
 $('#addperfes').click(function(){
-    var db;
-    var request = indexedDB.open($('#addName').val(), $('#DBver').val() - 0);
-    var peopleData = [
-        { cname: "杰克", ename: "jack" },
-        { cname: "斯洛", ename: "slow" }
-    ];
-    request.onupgradeneeded = function (evt) {
-        var objectStore = evt.currentTarget.result.createObjectStore($('#tableName').val(), { keyPath: "id", autoIncrement: true });
-        objectStore.createIndex($('#perfes1').val(), $('#perfes1').val(), { unique: false });
-        objectStore.createIndex($('#perfes2').val(), $('#perfes2').val(), { unique: false });
-        for (i in peopleData) {
-            objectStore.add(peopleData[i]);
-        }
-    }
+    Idb.createData({
+        DBname: 'Stone',
+        DBver: 2,
+        tableName: 'profess',
+        perfer: [{
+            key: 'a',
+            path: 'b'
+        },{
+            key: 'c',
+            path: 'd'
+        }],
+        callback: function(){}
+    });
 });
 
 $('#addData').click(function(){
-    var db;
-    var request = indexedDB.open($('#addName').val());
-    request.onsuccess = function (evt) {
-        db = evt.target.result;
-        var transaction = db.transaction($('#tableName').val(), 'readwrite');
-        var objectStore = transaction.objectStore($('#tableName').val());
-
-        var wirteDb = {}
-        wirteDb[$('#perfes1').val()] = $('#data1').val();
-        wirteDb[$('#perfes2').val()] = $('#data2').val();
-
-        var request = objectStore.add(wirteDb);
-        request.onsuccess = function (evt) {
-            console.log('write finish');
-            db.close();
-        };
-    }
+    Idb.addData({
+        DBname: 'Stone',
+        tableName: 'profess',
+        data: [{
+            a: 'abc',
+            c: 'def'
+        }],
+        callback: function(){}
+    });
 });
+// var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
+// $('#delBtn').click(function(){
+//     var request = indexedDB.deleteDatabase($('#delName').val());
+// });
+
+// $('#delData').click(function(){
+//     var db;
+//     var request = indexedDB.open($('#addName').val());
+//     request.onsuccess = function (evt) {
+//         db = evt.target.result;
+//         var transaction = db.transaction($('#tableName').val(), 'readwrite');
+//         var objectStore = transaction.objectStore($('#tableName').val());
+//         var request = objectStore.delete($('#dataId').val() - 0);
+//         request.onsuccess = function(evt) {  
+//             console.log('delsuccess')
+//             db.close();
+//         };
+//     }
+// });
+
+// $('#addBtn').click(function(){
+//     var request = indexedDB.open($('#addName').val(), $('#DBver').val() - 0);
+//     request.onsuccess = function (evt) {
+//         console.log('request.onsuccess');
+//     };
+//     request.onerror = function (evt) {
+//         console.log("IndexedDB error: " + evt.target.errorCode);
+//     };
+// });
+
+// $('#addtable').click(function(){
+//     var request = indexedDB.open($('#addName').val(), $('#DBver').val() - 0);
+//     request.onupgradeneeded = function (evt) {
+//         var objectStore = evt.currentTarget.result.createObjectStore($('#tableName').val(), { keyPath: "id", autoIncrement: true });
+//     }
+// });
+
+// $('#addperfes').click(function(){
+//     var db;
+//     var request = indexedDB.open($('#addName').val(), $('#DBver').val() - 0);
+//     var peopleData = [
+//         { cname: "杰克", ename: "jack" },
+//         { cname: "斯洛", ename: "slow" }
+//     ];
+//     request.onupgradeneeded = function (evt) {
+//         var objectStore = evt.currentTarget.result.createObjectStore($('#tableName').val(), { keyPath: "id", autoIncrement: true });
+//         objectStore.createIndex($('#perfes1').val(), $('#perfes1').val(), { unique: false });
+//         objectStore.createIndex($('#perfes2').val(), $('#perfes2').val(), { unique: false });
+//         for (i in peopleData) {
+//             objectStore.add(peopleData[i]);
+//         }
+//     }
+// });
+
+// $('#addData').click(function(){
+//     var db;
+//     var request = indexedDB.open($('#addName').val());
+//     request.onsuccess = function (evt) {
+//         db = evt.target.result;
+//         var transaction = db.transaction($('#tableName').val(), 'readwrite');
+//         var objectStore = transaction.objectStore($('#tableName').val());
+
+//         var wirteDb = {}
+//         wirteDb[$('#perfes1').val()] = $('#data1').val();
+//         wirteDb[$('#perfes2').val()] = $('#data2').val();
+
+//         var request = objectStore.add(wirteDb);
+//         request.onsuccess = function (evt) {
+//             console.log('write finish');
+//             db.close();
+//         };
+//     }
+// });
 
 
 
 
-$('#getDB').click(function(){
-    var db;
-    var request = indexedDB.open($('#addName').val());
-    // request.onupgradeneeded = function() {
-    request.onsuccess = function (evt) {
-        db = evt.target.result;
-        var transaction = db.transaction($('#tableName').val(), 'readwrite');
-        var objectStore = transaction.objectStore($('#tableName').val());
+// $('#getDB').click(function(){
+//     var db;
+//     var request = indexedDB.open($('#addName').val());
+//     // request.onupgradeneeded = function() {
+//     request.onsuccess = function (evt) {
+//         db = evt.target.result;
+//         var transaction = db.transaction($('#tableName').val(), 'readwrite');
+//         var objectStore = transaction.objectStore($('#tableName').val());
 
-        var request = objectStore.openCursor();
-        request.onsuccess = function(evt) {
-            var cursor = evt.target.result;
-            if (cursor) {
-                console.log(cursor.value);
-                cursor.continue();
-            }
-            db.close();
-        }                                                      
-    };
-});
+//         var request = objectStore.openCursor();
+//         request.onsuccess = function(evt) {
+//             var cursor = evt.target.result;
+//             if (cursor) {
+//                 console.log(cursor.value);
+//                 cursor.continue();
+//             }
+//             db.close();
+//         }                                                      
+//     };
+// });
 </script>
 </body>
 </html>
