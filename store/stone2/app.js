@@ -1,4 +1,4 @@
-var stoneApp = angular.module('stoneApp', ['ngRoute', 'stoneEdit', 'default', 'add']);
+var stoneApp = angular.module('stoneApp', ['ngRoute', 'stoneEdit', 'default', 'stoneAdd']);
 
 stoneApp.config(function($routeProvider) {
   $routeProvider.when('/default', {

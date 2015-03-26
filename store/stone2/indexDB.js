@@ -4,6 +4,23 @@
   window.Idb = {
 
     /**
+     * 检查数据库是否存在
+     * @param  {String} _name  数据库名
+     * @return {Boolean}
+     */
+    // checkDB: function(_name){
+    //   console.log(_name);
+    //   var request = indexedDB.open(_name);
+    //   request.onsuccess = function(ev){
+    //     console.log('success');
+    //     console.log(ev);
+    //   };
+    //   request.onerror = function(ev){
+    //     console.log('error');
+    //     console.log(ev);
+    //   };
+    // },
+    /**
      * 创建数据库
      * @param  {Object} _options 参数
      *   {
@@ -30,6 +47,17 @@
     deleteDB: function(_name) {
       indexedDB.deleteDatabase(_name);
     },
+
+    /**
+     * 检查表是否存在
+     * @param  {[type]} _options [description]
+     * @return {[type]}          [description]
+     */
+    // checkTable: function(_options){
+    //   var db,
+    //     request = indexedDB.open(_options.DBname);
+    // },
+
     /**
      * 创建表
      * @param  @param  {Object} _options 参数

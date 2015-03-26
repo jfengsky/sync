@@ -8,15 +8,18 @@
 </head>
 <body>
     
+
     <div>添加数据库: 
         <input type="text" name="" id="addName" placeholder="数据库名" value="Stone"> 
         <input type="text" name="" id="DBver" placeholder="版本" value="1"> 
         <input type="button" id="addBtn" value="click">
+        <!-- <input type="button" id="checkdatabase" value="检查数据库是否存在"> -->
     </div>
     
     <div> 添加表
         <input type="text" name="" id="tableName" placeholder="表名" value="defaultProfess">
         <input type="button" id="addtable" value="click">
+        <input type="button" id="checktable" value="检查表是否存在">
     </div>
     
     <div>添加字段
@@ -47,6 +50,9 @@
 
 <script>
 
+// $('#checkdatabase').click(function(){
+//     Idb.checkDB($('#addName').val());
+// });
 
 $('#addBtn').click(function(){
     Idb.createDB({
@@ -59,8 +65,15 @@ $('#addBtn').click(function(){
 });
 
 $('#delBtn').click(function(){
-    Idb.deleteDB('Stone');
+    Idb.deleteDB('stone');
 });
+
+// $('#checktable').click(function(){
+//     Idb.checkTable({
+//         DBname: 'Stone',
+//         tableName: 'profess'
+//     });
+// });
 
 $('#addtable').click(function(){
     Idb.createTable({
@@ -113,7 +126,7 @@ $('#delData').click(function(){
 
 $('#getDB').click(function(){
     Idb.getData({
-        DBname: 'Stone',
+        DBname: 'stone',
         tableName: 'profess',
         id: 1,
         callback: function(_data){

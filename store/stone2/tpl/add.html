@@ -1,3 +1,49 @@
-<p>
-  {{add.console}}
-<p>
+<h5>添加结果</h5>
+<form class="form-inline" name="addForm" ng-submit="addResult(addForm)">
+  
+  <div class="panel panel-default">
+    <div class="panel-heading">你的职业</div>
+    <div class="panel-body">
+      <label ng-repeat="item in profess">
+        <input type="radio" name="player" ng-value="{{item.id}}.{{item.belong}}" ng-model="$parent.player" required> {{item.cname}}
+      </label>
+    </div>
+  </div>
+  
+  <div class="panel panel-default">
+    <div class="panel-heading">对手职业</div>
+    <div class="panel-body">
+      <label ng-repeat="item in profess">
+        <input type="radio" name="enimy" ng-value="{{item.id}}.{{item.belong}}" ng-model="$parent.enimy" required> {{item.cname}}
+      </label>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">起手先后</div>
+    <div class="panel-body" >
+      <label>
+        <input type="radio" name="start" ng-model="start" ng-value="1" required> 先
+      </label>
+      <label>
+        <input type="radio" name="start" ng-model="start" ng-value="0" required> 后
+      </label>
+    </div>
+  </div>
+  
+  <div class="panel panel-default">
+    <div class="panel-heading">对战结果</div>
+    <div class="panel-body" >
+      <label>
+        <input type="radio" name="result" ng-model="result" ng-value="1" required> 赢
+      </label>
+      <label>
+        <input type="radio" name="result" ng-model="result" ng-value="0" required> 输
+      </label>
+    </div>
+  </div>
+
+  <div class="checkbox" >
+    <button type="submit" class="btn btn-primary" ng-disabled="addForm.$invalid">提交</button>
+  </div>
+</form>
