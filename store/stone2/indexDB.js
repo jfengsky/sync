@@ -53,16 +53,15 @@
      *     DBver: 2,
      *     tableName: 'profess',
      *     perfer: [{
-     *       key: 'a',
-     *       path: 'b'
+     *       key: 'key1'
      *     },{
-     *       key: '',
-     *       path: ''
-     *     },{...},{...}],
-     *     //data: [],
+     *       key: 'key2'
+     *     }{
+     *       key: 'key3'
+     *     }],
      *     callback: function(){}
      *   }
-     * @return {[type]} [description]
+     * @return 
      */
     createData: function(_options) {
       var request = indexedDB.open(_options.DBname, _options.DBver),
@@ -74,10 +73,11 @@
         });
 
         for (var i = 0; i < perfer.length; i++) {
-          objectStore.createIndex(perfer[i].key, perfer[i].path, {
+          objectStore.createIndex(perfer[i].key, perfer[i].key, {
             unique: false
           });
         };
+
         if (_options.callback) {
           _options.callback(evt)
         }
@@ -86,11 +86,23 @@
 
     /**
      * 添加数据
-     * @param {[type]} _options [description]
+     * @param  {Object} _options 参数
+     *   {
+     *     DBname: 'Stone',
+     *     tableName: 'profess',
+     *     data: [{
+     *       key1: 'key11',
+     *       key2: 'key22',
+     *       key3: 'key33'
+     *     }],
+     *     callback: function(){}
+     *   }
+     * @param
      */
     addData: function(_options) {
       var db,
         request = indexedDB.open(_options.DBname);
+
       request.onsuccess = function(evt) {
         var transaction,
           objectStore,
@@ -101,27 +113,84 @@
         transaction = db.transaction(_options.tableName, 'readwrite');
         objectStore = transaction.objectStore(_options.tableName);
         for (var i = 0; i < data.length; i++) {
-          for ( var key in data[i] ){
+          for (var key in data[i]) {
             wirteDb[key] = data[i][key]
           }
         };
         req = objectStore.add(wirteDb);
         req.onsuccess = function(evt) {
           if (_options.callback) {
-            _options.callback(evt)
-          }
-          db.close();
+            _options.callback(evt);
+            db.close();
+          };
         };
       }
     },
 
     /**
      * 删除数据
-     * @param  {[type]} _options [description]
-     * @return {[type]}          [description]
+     * @param  {Object} _options 参数
+     *   {
+     *     DBname: 'Stone',
+     *     tableName: 'profess',
+     *     id: 1,
+     *     callback: function(){}
+     *   }
+     * @return
      */
     deleteData: function(_options) {
+      var db,
+        request = indexedDB.open(_options.DBname);
+      request.onsuccess = function(evt) {
+        var transaction,
+          objectStore,
+          req;
+        db = evt.target.result;
+        transaction = db.transaction(_options.tableName, 'readwrite');
+        objectStore = transaction.objectStore(_options.tableName);
+        req = objectStore.delete(_options.id);
+        req.onsuccess = function(evt) {
+          if (_options.callback) {
+            _options.callback(evt);
+            db.close();
+          }
+        }
+      }
+    },
 
+    /**
+     * 获取所有数据
+     * @param  {Object} _options 参数
+     *   {
+     *     DBname: 'Stone',
+     *     tableName: 'profess',
+     *     callback: function(){}
+     *   }
+     * @return
+     */
+    getData: function(_options) {
+      var db,
+        request = indexedDB.open(_options.DBname);
+      request.onsuccess = function(evt) {
+        var transaction,
+          objectStore,
+          req,
+          tempData = [];
+        db = evt.target.result;
+        transaction = db.transaction(_options.tableName, 'readwrite');
+        objectStore = transaction.objectStore(_options.tableName);
+        req = objectStore.openCursor();
+        req.onsuccess = function(evt) {
+          var cursor = evt.target.result;
+          if (cursor) {
+            tempData.push(cursor.value);
+            cursor.continue();
+          } else {
+            _options.callback(tempData);
+            db.close();
+          };
+        }
+      }
     }
   };
 })();
