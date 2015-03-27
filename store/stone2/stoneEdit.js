@@ -1,7 +1,7 @@
 angular.module('stoneEdit', []).controller('editCtrl', ['$scope',
   function($scope) {
 
-    $scope.ProfessType = 0;
+    $scope.ProfessType = PROFESSIONAL[0].cname;
     $scope.profess = PROFESSIONAL;
     $scope.specProfess = [];
 
@@ -25,7 +25,7 @@ angular.module('stoneEdit', []).controller('editCtrl', ['$scope',
       var tempData = [];
       var newProfess = {
         cname: $scope.ProfessName,
-        belong: $scope.ProfessType - 0
+        belong: $scope.ProfessType
       };
       tempData.push(newProfess);
 

@@ -52,6 +52,18 @@
       tableName: Stone.resultTable,
       perfer: [{
         key: Stone.resultTime
+      },{
+        key: 'start'
+      },{
+        key: 'result'
+      },{
+        key: 'playProfess'
+      },{
+        key: 'playBelong'
+      },{
+        key: 'enimyProfess'
+      },{
+        key: 'enimyBelong'
       }],
       callback: function() {
         // console.log('table has create');

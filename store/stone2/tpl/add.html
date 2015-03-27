@@ -5,7 +5,8 @@
     <div class="panel-heading">你的职业</div>
     <div class="panel-body">
       <label ng-repeat="item in profess">
-        <input type="radio" name="player" ng-value="{{item.id}}.{{item.belong}}" ng-model="$parent.player" required> {{item.cname}}
+        <input type="radio" name="player" value="{{item.cname}}.{{item.belong}}" ng-model="$parent.player" required>
+          {{item.cname}}
       </label>
     </div>
   </div>
@@ -14,7 +15,7 @@
     <div class="panel-heading">对手职业</div>
     <div class="panel-body">
       <label ng-repeat="item in profess">
-        <input type="radio" name="enimy" ng-value="{{item.id}}.{{item.belong}}" ng-model="$parent.enimy" required> {{item.cname}}
+        <input type="radio" name="enimy" value="{{item.cname}}.{{item.belong}}" ng-model="$parent.enimy" required> {{item.cname}}
       </label>
     </div>
   </div>

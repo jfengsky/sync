@@ -1,4 +1,4 @@
-var stoneApp = angular.module('stoneApp', ['ngRoute', 'stoneEdit', 'default', 'stoneAdd']);
+var stoneApp = angular.module('stoneApp', ['ngRoute', 'stoneEdit', 'default', 'stoneAdd','stonelist']);
 
 stoneApp.config(function($routeProvider) {
   $routeProvider.when('/default', {
@@ -10,6 +10,9 @@ stoneApp.config(function($routeProvider) {
   }).when('/edit', {
     templateUrl: 'tpl/edit.html',
     controller: 'editCtrl'
+  }).when('/list',{
+    templateUrl: 'tpl/list.html',
+    controller: 'listCtrl'
   }).otherwise({
     redirectTo: '/default'
   })

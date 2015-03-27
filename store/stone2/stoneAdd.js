@@ -20,23 +20,15 @@ angular.module('stoneAdd', []).controller('addCtrl', ['$scope',
     $scope.addResult = function(addForm) {
       var playProfessArr = addForm.player.$modelValue.toString().split('.'),
         enimyProfessArr = addForm.enimy.$modelValue.toString().split('.');
-      // {
-      //   time: new Date().getTime(),
-      //   start: addForm.start.$modelValue,
-      //   result: addForm.result.$modelValue,
-      //   playProfess: playProfessArr[0],
-      //   playBelong: playProfessArr[1],
-      //   enimyProfess: enimyProfessArr[0],
-      //   enimyBelong: enimyProfessArr[1]
-      // }
+
       ResultData.push({
         time: new Date().getTime(),
         start: addForm.start.$modelValue,
         result: addForm.result.$modelValue,
-        playProfess: playProfessArr[0] - 0,
-        playBelong: playProfessArr[1] - 0,
-        enimyProfess: enimyProfessArr[0] - 0,
-        enimyBelong: enimyProfessArr[1] - 0
+        playProfess: playProfessArr[0],
+        playBelong: playProfessArr[1],
+        enimyProfess: enimyProfessArr[0],
+        enimyBelong: enimyProfessArr[1]
       });
 
       // 把该数据写入数据库
@@ -45,7 +37,7 @@ angular.module('stoneAdd', []).controller('addCtrl', ['$scope',
         tableName: Stone.resultTable,
         data: ResultData,
         callback: function() {
-          location.hash = '#/default'
+          location.hash = '#/list'
         }
       });
     }
