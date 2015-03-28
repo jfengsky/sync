@@ -1,3 +1,23 @@
-<p>
-    {{list.console}}
-<p>
+<div class="panel panel-default">
+    <div class="panel-heading">对战历史</div>
+    <table class="table table-condensed table-hover table-bordered text-center">
+        <tr>
+            <th class="text-center">序号</th>
+            <th class="text-center">时间</th>
+            <th class="text-center">你的职业</th>
+            <th class="text-center">对手职业</th>
+            <th class="text-center">起手</th>
+            <th class="text-center">结果</th>
+            <th class="text-center">操作</th>
+        </tr>
+        <tr class="{{item.style}}" ng-repeat="item in historyData">
+            <td>{{$index + 1}}</td>
+            <td>{{item.time | date:"MM-dd HH:mm"}}</td>
+            <td>{{item.playProfess}} ({{item.playBelong}})</td>
+            <td>{{item.enimyProfess}} ({{item.enimyBelong}})</td>
+            <td>{{item.start | start}}</td>
+            <td>{{item.result | matchResult}}</td>
+            <td><span ng-click="delhistory(item.id)">删除</span></td>
+        </tr>
+    </table>
+</div>
