@@ -37,17 +37,8 @@
     'id': 8
   }];
 
-  window.formatData = {
-
-    /**
-     * 把事件转化为 YYYY-MM-DD HH-MM 格式
-     * @param  {Number} _minSec  毫秒时间
-     * @return {String}          新的时间格式
-     */
-    //formatTime: function(_minSec){
-    //  var tempDate = new Date(_minSec);
-    //  return tempDate.getFullYear() + '-' + (tempDate.getMonth() + 1) + '-' + tempDate.getDate() + ' ' + tempDate.getHours() + ':' + tempDate.getMinutes()
-    //}
-  }
+  // window.formatData = {
+    
+  // }
 })();
 

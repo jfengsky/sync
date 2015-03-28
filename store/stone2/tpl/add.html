@@ -1,12 +1,10 @@
-<h5>添加结果</h5>
 <form class="form-inline" name="addForm" ng-submit="addResult(addForm)">
   
   <div class="panel panel-default">
     <div class="panel-heading">你的职业</div>
     <div class="panel-body">
       <label ng-repeat="item in profess">
-        <input type="radio" name="player" value="{{item.cname}}.{{item.belong}}" ng-model="$parent.player" required>
-          {{item.cname}}
+      <input type="radio" name="player" value="{{item.cname}}.{{item.belong}}" ng-model="$parent.player" required> <span class="playname">{{item.cname}}</span>
       </label>
     </div>
   </div>
@@ -15,7 +13,7 @@
     <div class="panel-heading">对手职业</div>
     <div class="panel-body">
       <label ng-repeat="item in profess">
-        <input type="radio" name="enimy" value="{{item.cname}}.{{item.belong}}" ng-model="$parent.enimy" required> {{item.cname}}
+        <input type="radio" name="enimy" value="{{item.cname}}.{{item.belong}}" ng-model="$parent.enimy" required> <span class="playname">{{item.cname}}</span>
       </label>
     </div>
   </div>
@@ -24,10 +22,10 @@
     <div class="panel-heading">起手先后</div>
     <div class="panel-body" >
       <label>
-        <input type="radio" name="start" ng-model="start" ng-value="1" required> 先
+        <input type="radio" name="start" ng-model="start" ng-value="1" required> <span class="playname">先</span>
       </label>
       <label>
-        <input type="radio" name="start" ng-model="start" ng-value="0" required> 后
+        <input type="radio" name="start" ng-model="start" ng-value="0" required> <span class="playname">后</span>
       </label>
     </div>
   </div>
@@ -36,10 +34,10 @@
     <div class="panel-heading">对战结果</div>
     <div class="panel-body" >
       <label>
-        <input type="radio" name="result" ng-model="result" ng-value="1" required> 赢
+        <input type="radio" name="result" ng-model="result" ng-value="1" required> <span class="playname">赢</span>
       </label>
       <label>
-        <input type="radio" name="result" ng-model="result" ng-value="0" required> 输
+        <input type="radio" name="result" ng-model="result" ng-value="0" required> <span class="playname">输</span>
       </label>
     </div>
   </div>

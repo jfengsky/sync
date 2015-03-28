@@ -89,7 +89,7 @@
      *     }],
      *     callback: function(){}
      *   }
-     * @return 
+     * @return
      */
     createData: function(_options) {
       var request = indexedDB.open(_options.DBname, _options.DBver),
@@ -219,6 +219,22 @@
           };
         }
       }
+    },
+
+    /**
+     * 获取对战结果数据
+     * @param  {[type]} _options [description]
+     * @return {[type]}          [description]
+     */
+    getResult: function(_options) {
+      this.getData({
+        DBname: Stone.DBName,
+        tableName: Stone.resultTable,
+        callback: function(_data) {
+          _options.callback(_data);
+        }
+      });
     }
+
   };
 })();

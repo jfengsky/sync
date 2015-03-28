@@ -15,6 +15,7 @@
   <script src="stoneAdd.js"></script>
   <script src="indexDB.js"></script>
   <script src="initDB.js"></script>
+  <script src="professrank.js"></script>
   <script src="app.js"></script>
   <style>
     .main{
@@ -24,20 +25,40 @@
       width: 30%;
       margin:0;
       padding: 1%;
+      position: relative;
+    }
+    label input[type="radio"]{
+    }
+    label input[type="radio"]:after{      position: absolute;
+      left: 0;
+      top: 0;
+      display: block;
+      content: '';
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+    }
+    label input[type="radio"]:checked:after{
+      background-color: #5cb85c;
+    }
+    .playname{
+      position: absolute;
+    }
+    .progress{
+      margin: 0;
     }
   </style>
 </head>
 <body>
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
-      <span class="navbar-brand">统计</span>
+      <a href="#/default" class="navbar-brand">天梯战斗统计</a>
       <a href="#/edit" class="btn btn-default navbar-btn navbar-right" aria-label="Left Align">
         <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-        编辑
       </a>
       <a href="#/add" class="btn btn-primary navbar-btn navbar-right" aria-label="Left Align" style="margin-right: 10px">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-        添加
+        添加战斗
       </a>
 
     </div>

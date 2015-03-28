@@ -1,3 +1,7 @@
+/**
+ * 添加战斗结果
+ * @return
+ */
 angular.module('stoneAdd', []).controller('addCtrl', ['$scope',
   function($scope) {
     var professData = PROFESSIONAL;

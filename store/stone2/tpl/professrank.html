@@ -1,0 +1,23 @@
+<div class="panel panel-default">
+    <div class="panel-heading">基本职业排行</div>
+    <table class="table table-condensed table-hover table-bordered text-center">
+        <tr>
+            <th class="text-center">#</th>
+            <th class="text-center">职业</th>
+            <th class="text-center">百分比</th>
+            <th class="text-center">胜率</th>
+        </tr>
+        <tr ng-repeat="item in professData">
+            <td>{{$index + 1}}</td>
+            <td>{{item.cname}}</td>
+            <td>
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{{item.percent}}%;">
+                    {{item.percent}}%
+                </div>
+                </div>
+            </td>
+            <td>{{item.winpec}}%</td>
+        </tr>
+    </table>
+</div>

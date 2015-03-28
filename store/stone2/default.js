@@ -1,3 +1,7 @@
+/**
+ * 首页
+ * @return {[type]}         [description]
+ */
 angular.module('default', []).controller('defaultCtrl', ['$scope',
   function($scope) {
     // 获取自定义职业数据
@@ -10,11 +14,12 @@ angular.module('default', []).controller('defaultCtrl', ['$scope',
     });
     
     // 获取结果数据
-    Idb.getData({
-      DBname: Stone.DBName,
-      tableName: Stone.resultTable,
-      callback: function(_data) {
+    Idb.getResult({
+      callback: function(_data){
         console.log(_data);
+        // $scope.$apply(function(){
+        //   $scope.historyData = _data;
+        // });
       }
     });
   }

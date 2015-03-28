@@ -1,3 +1,7 @@
+/**
+ * 编辑自定义职业
+ * @return {[type]}         [description]
+ */
 angular.module('stoneEdit', []).controller('editCtrl', ['$scope',
   function($scope) {
 
