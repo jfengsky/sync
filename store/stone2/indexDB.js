@@ -234,6 +234,25 @@
           _options.callback(_data);
         }
       });
+    },
+
+    /**
+     * 获取所有比赛结果
+     * @return {[type]} [description]
+     */
+    getMatchResult: function(){
+
+      // 存入所有对战结果
+      var matchArray = [],
+
+          // 胜利结果
+          winArray = [];
+
+      return {
+        matchArray: matchArray,
+        winArray: winArray
+      }
+
     }
 
   };

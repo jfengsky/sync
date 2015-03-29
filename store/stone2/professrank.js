@@ -77,9 +77,9 @@ angular.module('professrank', []).controller('professrankCtrl', ['$scope',
         });
 
         // 清0
-        professWinList.forEach(function(_item){
-          if(_item.percent)
-          professListPec.push(_item);
+        professWinList.forEach(function(_item) {
+          if (_item.percent)
+            professListPec.push(_item);
         });
         $scope.$apply(function() {
           $scope.professData = professListPec;
