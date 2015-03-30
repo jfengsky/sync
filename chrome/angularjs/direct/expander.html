@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html ng-app="expanderApp">
+<head>
+    <meta charset="UTF-8">
+    <title>angularjs directive</title>
+    <script src="../node_modules/angular/angular.js"></script>
+    <script src="../node_modules/angular-route/angular-route.js"></script>
+    <script src="expander.js"></script>
+</head>
+<body>
+<div ng-controller="SomeController">
+    <expander class="expander" expander-title="title">
+        {{text}}
+    </expander>
+</div>
+</body>
+</html>
