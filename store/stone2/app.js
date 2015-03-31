@@ -2,7 +2,7 @@
  * 全局路由
  * @type {[type]}
  */
-var stoneApp = angular.module('stoneApp', ['ngRoute', 'stoneEdit', 'default', 'stoneAdd', 'stonelist', 'myFilter', 'professrank']);
+var stoneApp = angular.module('stoneApp', ['ngRoute', 'stoneEdit', 'default', 'stoneAdd', 'stonelist', 'myFilter', 'professrank', 'specialrank']);
 
 stoneApp.config(function($routeProvider) {
   $routeProvider.when('/default', {
@@ -30,6 +30,11 @@ stoneApp.config(function($routeProvider) {
     // 基本职业排行
     templateUrl: 'tpl/professrank.html',
     controller: 'professrankCtrl'
+  }).when('/specprofessrank',{
+
+    // 自定义职业排行
+    templateUrl: 'tpl/specrank.html',
+    controller: 'specrankCtrl'
   }).otherwise({
     redirectTo: '/default'
   })

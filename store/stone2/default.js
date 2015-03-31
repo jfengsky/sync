@@ -25,6 +25,17 @@ angular.module('default', []).controller('defaultCtrl', ['$scope',
     
     var temp = Idb.getMatchResult(function(_obj){
       console.log(_obj);
+      var totalMatch = 0,
+          totalWin = 0;
+      _obj.matchArray.forEach(function(_item){
+        totalMatch = totalMatch + _item;
+      });
+      _obj.winArray.forEach(function(_item){
+        totalWin = totalWin + _item;
+      });
+      $scope.$apply(function(){
+        $scope.winPercent = ((totalWin/totalMatch) * 100).toFixed(2);
+      });
     });
 
   }
