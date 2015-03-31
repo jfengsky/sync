@@ -240,18 +240,62 @@
      * 获取所有比赛结果
      * @return {[type]} [description]
      */
-    getMatchResult: function(){
+    getMatchResult: function(fn) {
 
       // 存入所有对战结果
       var matchArray = [],
 
-          // 胜利结果
-          winArray = [];
+        // 胜利结果
+        winArray = [];
 
-      return {
-        matchArray: matchArray,
-        winArray: winArray
-      }
+      // 获取结果
+      this.getResult({
+        callback: function(_data) {
+          PROFESSIONAL.forEach(function(_item, _index) {
+            matchArray[_index] = 0;
+            winArray[_index] = 0;
+          });
+
+          _data.forEach(function(_item) {
+            var tempName = '';
+            if (_item.enimyBelong) {
+              // 自定义职业
+              tempName = _item.enimyBelong;
+            } else {
+              // 基本职业
+              tempName = _item.enimyProfess;
+            };
+
+            // 把胜的结果累加进数组
+            if (_item.result) {
+              PROFESSIONAL.forEach(function(_proName) {
+                if (_proName.cname === tempName) {
+                  winArray[_proName.id] ++
+                }
+              });
+            }
+
+            // 把所有对方职业累加进数组
+            PROFESSIONAL.forEach(function(_proName) {
+              if (_proName.cname === tempName) {
+                matchArray[_proName.id] ++
+              }
+            });
+          });
+
+          if (fn) {
+            fn({
+              matchArray: matchArray,
+              winArray: winArray
+            })
+          }
+        }
+      });
+
+      // return {
+      //   matchArray: matchArray,
+      //   winArray: winArray
+      // }
 
     }
 
