@@ -37,6 +37,43 @@ React.render(
 
 var MyComponent = React.createClass({
   handleClick: function(){
-    
+    React.findDOMNode(this.refs.myTextInput).focus()
+  },
+  render: function(){
+    return (
+      <div>
+        <input type="text" ref="myTextInput" />
+        <input type="button" value="click" onClick={this.handleClick} />
+      </div>
+    )
   }
 });
+
+React.render(
+  <MyComponent />,
+  document.getElementById('example3')
+);
+
+
+
+var LikeButton = React.createClass({
+  getInitialState: function() {
+    return {liked: false};
+  },
+  handleClick: function(event) {
+    this.setState({liked: !this.state.liked});
+  },
+  render: function() {
+    var text = this.state.liked ? 'like' : 'haven\'t liked';
+    return (
+      <p onClick={this.handleClick}>
+        You {text} this. Click to toggle.
+      </p>
+    );
+  }
+});
+
+React.render(
+  <LikeButton />,
+  document.getElementById('example4')
+);
