@@ -15,14 +15,15 @@ angular.module('specialrank', []).controller('specrankCtrl', ['$scope',
 
         // 自定义职业
         var specialCareerList = _data,
-          specialCareerArray = [];
+          specialCareerArray = [],
+          specialCareerWinArray = [];
 
         // 根据id初始化碰到的职业数组,有就为0,没有为null
         specialCareerList.forEach(function(_item) {
           specialCareerArray[_item.id] = 0;
+          specialCareerWinArray[_item.id] = 0;
         });
 
-        console.log(specialCareerArray);
 
         // 获取结果数据
         Idb.getResult({
@@ -42,7 +43,11 @@ angular.module('specialrank', []).controller('specrankCtrl', ['$scope',
               if(tempCareerId){
                 specialCareerArray[tempCareerId]++
               }
+              if(tempCareerId && _item.result){
+                specialCareerWinArray[tempCareerId]++
+              }
             });
+
 
             // 计算总对战数
             specialCareerArray.forEach(function(_item){
@@ -51,6 +56,9 @@ angular.module('specialrank', []).controller('specrankCtrl', ['$scope',
 
             specialCareerList.forEach(function(_listItem){
               _listItem.percent = ((specialCareerArray[_listItem.id] / totalMatch) * 100 ).toFixed(2);
+
+              _listItem.winPercent =((specialCareerWinArray[_listItem.id] / specialCareerArray[_listItem.id]) * 100 ).toFixed(2);
+
             });
             $scope.$apply(function(){
               $scope.careerData = specialCareerList;
