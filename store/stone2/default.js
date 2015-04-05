@@ -2,6 +2,7 @@
  * 首页
  * @return {[type]}         [description]
  */
+
 angular.module('default', []).controller('defaultCtrl', ['$scope',
   function($scope) {
     // 获取自定义职业数据
@@ -22,6 +23,9 @@ angular.module('default', []).controller('defaultCtrl', ['$scope',
     //     // });
     //   }
     // });
+    
+    // console.log($scope.$stateParams);
+    // console.log($stateProvider);
     
     var temp = Idb.getMatchResult(function(_obj){
       console.log(_obj);
