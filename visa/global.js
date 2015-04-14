@@ -377,6 +377,9 @@ function renderData(_data) {
     case 'SecurityandBackground5':
       SecurityandBackground5_page(_data);
       break;
+    case 'SignCertify':
+      SignCertify_page(_data);
+      break;
   }
 
 };

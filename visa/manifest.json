@@ -30,7 +30,8 @@
       "page/securityandbackground2.js",
       "page/securityandbackground3.js",
       "page/securityandbackground4.js",
-      "page/securityandbackground5.js"
+      "page/securityandbackground5.js",
+      "page/signcertify.js"
     ]
   }],
   "browser_action": {
