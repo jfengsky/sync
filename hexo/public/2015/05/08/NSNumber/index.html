@@ -3,17 +3,32 @@
 <head>
   <meta charset="utf-8">
   
-  <title>新的开始 | 枫之舞</title>
+  <title>NSNumber | 枫之舞</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="利用github新搭的blog,以后就用这个了~~">
+  <meta name="description" content="NSNumber对象的一些方法总结// 创建一个基本的NSNumber对象
+NSNumber *numberInt = [NSNumber numberWithInt: 10];   // 创建和初始化类方法
+NSNumber *numberFloat = [[NSNumber alloc] initWithFloat: 10.8]; // 初始化实例方法
+
+// 还原成基本数据类型
+int ba">
 <meta property="og:type" content="article">
-<meta property="og:title" content="新的开始">
-<meta property="og:url" content="http://www.ieake.com/2015/04/08/新的开始/index.html">
+<meta property="og:title" content="NSNumber">
+<meta property="og:url" content="http://www.ieake.com/2015/05/08/NSNumber/index.html">
 <meta property="og:site_name" content="枫之舞">
-<meta property="og:description" content="利用github新搭的blog,以后就用这个了~~">
+<meta property="og:description" content="NSNumber对象的一些方法总结// 创建一个基本的NSNumber对象
+NSNumber *numberInt = [NSNumber numberWithInt: 10];   // 创建和初始化类方法
+NSNumber *numberFloat = [[NSNumber alloc] initWithFloat: 10.8]; // 初始化实例方法
+
+// 还原成基本数据类型
+int ba">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="新的开始">
-<meta name="twitter:description" content="利用github新搭的blog,以后就用这个了~~">
+<meta name="twitter:title" content="NSNumber">
+<meta name="twitter:description" content="NSNumber对象的一些方法总结// 创建一个基本的NSNumber对象
+NSNumber *numberInt = [NSNumber numberWithInt: 10];   // 创建和初始化类方法
+NSNumber *numberFloat = [[NSNumber alloc] initWithFloat: 10.8]; // 初始化实例方法
+
+// 还原成基本数据类型
+int ba">
   
     <link rel="alternative" href="/atom.xml" title="枫之舞" type="application/atom+xml">
   
@@ -64,16 +79,12 @@
 </header>
       <div class="outer">
         <section id="main">
-        <article id="post-新的开始" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-NSNumber" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/04/08/新的开始/" class="article-date">
-  <time datetime="2015-04-08T12:14:06.000Z" itemprop="datePublished">2015-04-08</time>
+    <a href="/2015/05/08/NSNumber/" class="article-date">
+  <time datetime="2015-05-08T13:08:55.000Z" itemprop="datePublished">2015-05-08</time>
 </a>
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/日志/">日志</a>
-  </div>
-
   </div>
   <div class="article-inner">
     
@@ -82,7 +93,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      新的开始
+      NSNumber
     </h1>
   
 
@@ -90,12 +101,32 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>利用github新搭的blog,以后就用这个了~~</p>
+        <h3 id="NSNumber对象的一些方法总结">NSNumber对象的一些方法总结</h3><pre><code><span class="comment">// 创建一个基本的NSNumber对象</span>
+<span class="built_in">NSNumber</span> *numberInt = [<span class="built_in">NSNumber</span> numberWithInt: <span class="number">10</span>];   <span class="comment">// 创建和初始化类方法</span>
+<span class="built_in">NSNumber</span> *numberFloat = [[<span class="built_in">NSNumber</span> alloc] initWithFloat: <span class="number">10.8</span>]; <span class="comment">// 初始化实例方法</span>
 
+<span class="comment">// 还原成基本数据类型</span>
+<span class="keyword">int</span> basicInt = [numberInt intValue];
+<span class="keyword">float</span> baseFloat = [numberFloat floatValue];
+
+<span class="comment">// 比较两个对象是否相等</span>
+<span class="keyword">if</span> ([numberInt isEqualToNumber: numberFloat] == <span class="literal">YES</span>) {
+  <span class="built_in">NSLog</span>(<span class="string">@"相等"</span>);
+} <span class="keyword">else</span> {
+  <span class="built_in">NSLog</span>(<span class="string">@"不等"</span>);
+}
+
+<span class="comment">// 比较两个对象的大小</span>
+<span class="keyword">if</span> ( [numberInt compare:numberFloat] == <span class="built_in">NSOrderedAscending</span>) {  
+  <span class="built_in">NSLog</span>(<span class="string">@"左边的数字小"</span>);  
+} <span class="keyword">else</span> {  
+  <span class="built_in">NSLog</span>(<span class="string">@"左边的数字大"</span>);  
+}
+</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/04/08/新的开始/" data-id="ci90z4bq80001k2vmbwjzn8d9" class="article-share-link">Share</a>
+      <a data-url="http://www.ieake.com/2015/05/08/NSNumber/" data-id="ci9flhq1y0000mgfnzcokwc8d" class="article-share-link">Share</a>
       
       
     </footer>
@@ -104,15 +135,11 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/04/08/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Hello hexo
-        
-      </div>
-    </a>
   
+    <a href="/2015/04/08/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello hexo</div>
+    </a>
   
   <div id="disqus_thread"></div>
   <script type="text/javascript">

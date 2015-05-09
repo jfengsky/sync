@@ -66,6 +66,63 @@
         <section id="main">
         
   
+    <article id="post-NSNumber" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/05/08/NSNumber/" class="article-date">
+  <time datetime="2015-05-08T13:08:55.000Z" itemprop="datePublished">2015-05-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/05/08/NSNumber/">NSNumber</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="NSNumber对象的一些方法总结">NSNumber对象的一些方法总结</h3><pre><code><span class="comment">// 创建一个基本的NSNumber对象</span>
+<span class="built_in">NSNumber</span> *numberInt = [<span class="built_in">NSNumber</span> numberWithInt: <span class="number">10</span>];   <span class="comment">// 创建和初始化类方法</span>
+<span class="built_in">NSNumber</span> *numberFloat = [[<span class="built_in">NSNumber</span> alloc] initWithFloat: <span class="number">10.8</span>]; <span class="comment">// 初始化实例方法</span>
+
+<span class="comment">// 还原成基本数据类型</span>
+<span class="keyword">int</span> basicInt = [numberInt intValue];
+<span class="keyword">float</span> baseFloat = [numberFloat floatValue];
+
+<span class="comment">// 比较两个对象是否相等</span>
+<span class="keyword">if</span> ([numberInt isEqualToNumber: numberFloat] == <span class="literal">YES</span>) {
+  <span class="built_in">NSLog</span>(<span class="string">@"相等"</span>);
+} <span class="keyword">else</span> {
+  <span class="built_in">NSLog</span>(<span class="string">@"不等"</span>);
+}
+
+<span class="comment">// 比较两个对象的大小</span>
+<span class="keyword">if</span> ( [numberInt compare:numberFloat] == <span class="built_in">NSOrderedAscending</span>) {  
+  <span class="built_in">NSLog</span>(<span class="string">@"左边的数字小"</span>);  
+} <span class="keyword">else</span> {  
+  <span class="built_in">NSLog</span>(<span class="string">@"左边的数字大"</span>);  
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.ieake.com/2015/05/08/NSNumber/" data-id="ci9flhq1y0000mgfnzcokwc8d" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/04/08/hello-world/" class="article-date">
@@ -101,7 +158,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/04/08/hello-world/" data-id="ci90oas4s0000wxvmzimzpidw" class="article-share-link">Share</a>
+      <a data-url="http://www.ieake.com/2015/04/08/hello-world/" data-id="ci90z4bp90000k2vmjlz0pwvc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -142,7 +199,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/04/08/新的开始/" data-id="ci90oas5z0001wxvm58v4ulpl" class="article-share-link">Share</a>
+      <a data-url="http://www.ieake.com/2015/04/08/新的开始/" data-id="ci90z4bq80001k2vmbwjzn8d9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -175,7 +232,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -185,6 +242,10 @@
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/05/08/NSNumber/">NSNumber</a>
+          </li>
         
           <li>
             <a href="/2015/04/08/hello-world/">Hello hexo</a>
