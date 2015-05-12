@@ -3,17 +3,47 @@
 <head>
   <meta charset="utf-8">
   
-  <title>枫之舞</title>
+  <title>NSString | 枫之舞</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="www.ieake.com">
-<meta property="og:type" content="website">
-<meta property="og:title" content="枫之舞">
-<meta property="og:url" content="http://www.ieake.com/index.html">
+  <meta name="description" content="NSString对象的一些方法总结
+NSString对象一旦被创建就不可以修改.如果需要一个可以更改的字符串对象,需要创建NSMutableString实例
+
+/*
+ *  创建字符串
+ */
+// 创建一个字符串常量
+NSString *string1 = @&quot;这是一个字符串常量&quot;;
+
+// 创建一个空的字符串
+NSString *string2 = [[NSString alloc] init">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NSString">
+<meta property="og:url" content="http://www.ieake.com/2015/05/11/NSString/index.html">
 <meta property="og:site_name" content="枫之舞">
-<meta property="og:description" content="www.ieake.com">
+<meta property="og:description" content="NSString对象的一些方法总结
+NSString对象一旦被创建就不可以修改.如果需要一个可以更改的字符串对象,需要创建NSMutableString实例
+
+/*
+ *  创建字符串
+ */
+// 创建一个字符串常量
+NSString *string1 = @&quot;这是一个字符串常量&quot;;
+
+// 创建一个空的字符串
+NSString *string2 = [[NSString alloc] init">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="枫之舞">
-<meta name="twitter:description" content="www.ieake.com">
+<meta name="twitter:title" content="NSString">
+<meta name="twitter:description" content="NSString对象的一些方法总结
+NSString对象一旦被创建就不可以修改.如果需要一个可以更改的字符串对象,需要创建NSMutableString实例
+
+/*
+ *  创建字符串
+ */
+// 创建一个字符串常量
+NSString *string1 = @&quot;这是一个字符串常量&quot;;
+
+// 创建一个空的字符串
+NSString *string2 = [[NSString alloc] init">
   
     <link rel="alternative" href="/atom.xml" title="枫之舞" type="application/atom+xml">
   
@@ -64,9 +94,7 @@
 </header>
       <div class="outer">
         <section id="main">
-        
-  
-    <article id="post-NSString" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-NSString" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/05/11/NSString/" class="article-date">
   <time datetime="2015-05-11T14:05:06.000Z" itemprop="datePublished">2015-05-11</time>
@@ -79,8 +107,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/05/11/NSString/">NSString</a>
+    <h1 class="article-title" itemprop="name">
+      NSString
     </h1>
   
 
@@ -192,154 +220,33 @@ range<span class="variable">.length</span> = <span class="number">3</span>;
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-NSNumber" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/05/08/NSNumber/" class="article-date">
-  <time datetime="2015-05-08T13:08:55.000Z" itemprop="datePublished">2015-05-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/05/08/NSNumber/">NSNumber</a>
-    </h1>
+    <a href="/2015/05/08/NSNumber/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">NSNumber</div>
+    </a>
   
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'ieake';
       
-        <h3 id="NSNumber对象的一些方法总结">NSNumber对象的一些方法总结</h3><pre><code><span class="comment">// 创建一个基本的NSNumber对象</span>
-<span class="built_in">NSNumber</span> *numberInt = [<span class="built_in">NSNumber</span> numberWithInt: <span class="number">10</span>];   <span class="comment">// 创建和初始化类方法</span>
-<span class="built_in">NSNumber</span> *numberFloat = [[<span class="built_in">NSNumber</span> alloc] initWithFloat: <span class="number">10.8</span>]; <span class="comment">// 初始化实例方法</span>
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</nav>
 
-<span class="comment">// 还原成基本数据类型</span>
-<span class="keyword">int</span> basicInt = [numberInt intValue];
-<span class="keyword">float</span> baseFloat = [numberFloat floatValue];
-
-<span class="comment">// 比较两个对象是否相等</span>
-<span class="keyword">if</span> ([numberInt isEqualToNumber: numberFloat] == <span class="literal">YES</span>) {
-  <span class="built_in">NSLog</span>(<span class="string">@"相等"</span>);
-} <span class="keyword">else</span> {
-  <span class="built_in">NSLog</span>(<span class="string">@"不等"</span>);
-}
-
-<span class="comment">// 比较两个对象的大小</span>
-<span class="keyword">if</span> ( [numberInt compare:numberFloat] == <span class="built_in">NSOrderedAscending</span>) {  
-  <span class="built_in">NSLog</span>(<span class="string">@"左边的数字小"</span>);  
-} <span class="keyword">else</span> {  
-  <span class="built_in">NSLog</span>(<span class="string">@"左边的数字大"</span>);  
-}
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/05/08/NSNumber/" data-id="ci9flhq1y0000mgfnzcokwc8d" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
 
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/04/08/hello-world/" class="article-date">
-  <time datetime="2015-04-08T13:21:59.000Z" itemprop="datePublished">2015-04-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/04/08/hello-world/">Hello hexo</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/04/08/hello-world/" data-id="ci90z4bp90000k2vmjlz0pwvc" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-新的开始" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/04/08/新的开始/" class="article-date">
-  <time datetime="2015-04-08T12:14:06.000Z" itemprop="datePublished">2015-04-08</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/日志/">日志</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/04/08/新的开始/">新的开始</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>利用github新搭的blog,以后就用这个了~~</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/04/08/新的开始/" data-id="ci90z4bq80001k2vmbwjzn8d9" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-  
 
         </section>
         
