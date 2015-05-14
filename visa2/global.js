@@ -6,10 +6,21 @@
  */
 
 // 数据写入提示框
-var tipsTpl = '<div id="J_autowritetips" style="font-size: 12px;position:fixed;color:#666;bottom:6px;right:6px;border:1px solid #ccc; background:#fff; padding:10px; line-height:24px;width: 200px;text-align:center;z-index:10000"></div>';
+var tipsTpl = '<div id="J_maskoverlay" style="font-size: 12px;position:fixed;color:#666;top:10%;left:50%;margin-left:-160px;border:1px solid #ccc; background:#fff; padding:10px; line-height:24px;width: 300px;text-align:center;z-index:10000"><a href="javascript:void(0)" id="J_maskclose" style="font-size:18px;position:absolute;right:5px;top:0">X</a><div id="J_autowritetips"></div></div>';
 
 // 数据写入完毕的文字提示
 var writeFinshMsg = '<span style="color:#06f;font-weight:bold">数据自动写入完毕!</span>';
+
+/**
+ * 显示提示蒙版
+ * @return
+ */
+function showMask(){
+  var docHeight = $(document).height();
+  $('body').append('<div id="J_visamask" style="width:100%; height: ' + docHeight + 'px; background-color:#333; opacity:0.4;position:absolute;left:0;top:0;z-index:1000"></div>');
+  $('body').append(tipsTpl);
+}
+
 
 /**
  * 把数字月份转化为英文简写月份以便selected选择

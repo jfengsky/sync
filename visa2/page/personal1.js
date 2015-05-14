@@ -10,6 +10,13 @@
  * TODO 还缺少telecode 和 City数据
  * @param
  */
+
+$(function() {
+  console.log('showMask');
+  showMask();
+});
+
+
 function Personal1_Page(_data) {
   var canShowNext = false,
     otherNameFinish = false,

@@ -14,7 +14,7 @@ $(function() {
   };
 
   // 点击填写表单按钮
-  $('#J_bind1').bind('click', function() {
+  $('#J_autoWrite').bind('click', function() {
     var tempOrderId = $('#J_orderid').val();
     if (!tempOrderId) {
       $('#J_orderid_group').addClass('has-warning')
