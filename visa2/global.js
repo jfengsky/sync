@@ -5,11 +5,29 @@
  *
  */
 
+var version = "2.0.1";
+
+var tempOrderId,          // 签证id
+    isAutoWrite;  // 是否可自动填写
+
+
+
 // 数据写入提示框
-var tipsTpl = '<div id="J_maskoverlay" style="font-size: 12px;position:fixed;color:#666;top:10%;left:50%;margin-left:-160px;border:1px solid #ccc; background:#fff; padding:10px; line-height:24px;width: 300px;text-align:center;z-index:10000"><a href="javascript:void(0)" id="J_maskclose" style="font-size:18px;position:absolute;right:5px;top:0">X</a><div id="J_autowritetips"></div></div>';
+var tipsTpl = '<div id="J_maskoverlay" style="font-size: 12px;position:fixed;color:#666;top:10%;left:50%;margin-left:-160px;border:1px solid #ccc; background:#fff; padding:10px; line-height:24px;width: 300px;text-align:center;z-index:10000"><a href="javascript:void(0)" id="J_maskclose" style="font-size:18px;position:absolute;right:5px;top:0;text-decoration:none">X</a><div id="J_autowritetips"></div></div>';
 
 // 数据写入完毕的文字提示
 var writeFinshMsg = '<span style="color:#06f;font-weight:bold">数据自动写入完毕!</span>';
+
+/**
+ * 隐藏提示蒙版
+ * @return
+ */
+function hideMask(){
+  $('#J_maskclose').bind('click', function(){
+    $("#J_visamask").remove();
+    $('#J_maskoverlay').remove();
+  })
+}
 
 /**
  * 显示提示蒙版
@@ -19,7 +37,9 @@ function showMask(){
   var docHeight = $(document).height();
   $('body').append('<div id="J_visamask" style="width:100%; height: ' + docHeight + 'px; background-color:#333; opacity:0.4;position:absolute;left:0;top:0;z-index:1000"></div>');
   $('body').append(tipsTpl);
+  hideMask();
 }
+
 
 
 /**
@@ -284,7 +304,8 @@ function debug(_data) {
 function hideNext() {
   // $('fieldset.submits').hide();
   if (!$('#J_autowritetips').length) {
-    $('body').append(tipsTpl);
+    // $('body').append(tipsTpl);
+    showMask();
     $('#J_autowritetips').text('开始自动写入数据');
   };
 };
@@ -408,9 +429,36 @@ function writeVal(_orderId) {
   sendParam.countryid = 1;
   sendParam.pageurl = location.href;
   sendParam.appId = appId;
+  sendParam.ver = version;
   tempParam.type = 'getData';
   tempParam.sendParam = sendParam;
   chrome.extension.sendMessage(tempParam, function(d) {
     console.log(d); // 将返回信息打印到控制台里
   });
 };
+
+function autoInit(_orderId, _autowrite){
+  var hasWarn = !$.trim($('#ctl00_SiteContentPlaceHolder_FormView1_ValidationSummary').text()).length;
+  tempOrderId = _orderId;
+  isAutoWrite = _autowrite;
+  if(!_orderId){
+
+    // TODO 只有填写页面才进行自动填写
+    alert('缺少签证订单id,无法自动填写!');
+  } else if(hasWarn && isAutoWrite === 'true') {
+    writeVal(tempOrderId);
+  }
+
+
+};
+
+// domready后自动填写
+$(function(){
+
+  // 去background.js获取签证id和自动填写状态
+  var tempParam = {};
+  tempParam.type = 'getIdAndAuto';
+  chrome.extension.sendMessage(tempParam, function(d) {
+    console.log(d); // 将返回信息打印到控制台里
+  });
+})

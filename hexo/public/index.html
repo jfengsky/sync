@@ -66,10 +66,10 @@
         <section id="main">
         
   
-    <article id="post-NSString" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-NSSet和NSMutableSet" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/05/11/NSString/" class="article-date">
-  <time datetime="2015-05-11T14:05:06.000Z" itemprop="datePublished">2015-05-11</time>
+    <a href="/2015/05/16/NSSet和NSMutableSet/" class="article-date">
+  <time datetime="2015-05-16T13:26:21.000Z" itemprop="datePublished">2015-05-16</time>
 </a>
     
   </div>
@@ -80,7 +80,340 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/05/11/NSString/">NSString</a>
+      <a class="article-title" href="/2015/05/16/NSSet和NSMutableSet/">NSSet和NSMutableSet</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="NSSet">NSSet</h3><pre><code><span class="comment">// 集合的创建</span>
+<span class="built_in">NSSet</span> *set1 = [<span class="built_in">NSSet</span> setWithObjects:<span class="string">@"1"</span>,<span class="string">@"2"</span>, <span class="literal">nil</span>];
+<span class="built_in">NSSet</span> *set2 = [[<span class="built_in">NSSet</span> alloc] initWithObjects:<span class="string">@"2"</span>,<span class="string">@"3"</span>,<span class="string">@"4"</span>,<span class="string">@"5"</span>, <span class="literal">nil</span>];
+<span class="built_in">NSArray</span> *array1 = [<span class="built_in">NSArray</span> arrayWithObjects:<span class="string">@"7"</span>,<span class="string">@"8"</span>, <span class="string">@"10"</span>,<span class="string">@"11"</span>, <span class="literal">nil</span>];
+<span class="built_in">NSSet</span> *set3 = [<span class="built_in">NSSet</span> setWithArray:array1];
+<span class="built_in">NSSet</span> *set4 = [<span class="built_in">NSSet</span> setWithSet:set2];
+<span class="built_in">NSLog</span>(<span class="string">@"set1: %@"</span>, set1);
+<span class="built_in">NSLog</span>(<span class="string">@"set2: %@"</span>, set2);
+<span class="built_in">NSLog</span>(<span class="string">@"set3: %@"</span>, set3);
+<span class="built_in">NSLog</span>(<span class="string">@"set4: %@"</span>, set4);
+
+<span class="comment">// 集合中元素的个数</span>
+<span class="keyword">int</span> count = [set2 count];
+<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, count);
+
+<span class="comment">// 将集合返回一个数组</span>
+<span class="built_in">NSArray</span> *objects = [set1 allObjects];
+<span class="built_in">NSLog</span>(<span class="string">@"objects : %@"</span>, objects);
+
+<span class="comment">// 获取集合中任意一个对象</span>
+<span class="keyword">id</span> object = [set2 anyObject];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, object);
+
+<span class="comment">// 集合是否包含某个元素</span>
+<span class="built_in">BOOL</span> isContain = [set2 containsObject:<span class="string">@"3"</span>];
+<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, isContain);
+
+<span class="comment">// 集合间是否存在交集</span>
+<span class="built_in">BOOL</span> isIntersect = [set1 intersectsSet:set2];
+<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, isIntersect);
+
+<span class="comment">// 集合是否另一个集合匹配</span>
+<span class="built_in">BOOL</span> isEqual = [set1 isEqualToSet:set2];
+<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, isEqual);
+
+<span class="comment">// 集合是否是另一个集合的子集</span>
+<span class="built_in">BOOL</span> isSub = [set1 isSubsetOfSet:set2];
+<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, isSub);
+
+<span class="comment">// 追加新的集合</span>
+<span class="built_in">NSSet</span> *set5 = [<span class="built_in">NSSet</span> setWithObjects:<span class="string">@"one"</span>, <span class="literal">nil</span>];
+<span class="built_in">NSSet</span> *appSet1 = [set5 setByAddingObject:<span class="string">@"two"</span>];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, appSet1);
+
+<span class="built_in">NSSet</span> *appSet2 = [set5 setByAddingObjectsFromSet: set1];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, appSet2);
+
+<span class="built_in">NSSet</span> *appSet3 = [set5 setByAddingObjectsFromArray:array1];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, appSet3);
+</code></pre><h3 id="NSMutableSet">NSMutableSet</h3><pre><code>NSMutableSet *<span class="built_in">set</span>6 = [NSMutableSet <span class="built_in">set</span>WithObjects:@<span class="string">"1"</span>, @<span class="string">"2"</span>, @<span class="string">"a"</span> , nil];
+NSMutableSet *<span class="built_in">set</span>7 = [NSMutableSet <span class="built_in">set</span>WithObjects:@<span class="string">"1"</span>, @<span class="string">"3"</span>, @<span class="string">"a"</span> , nil];
+
+// 减去相同的元素
+ [<span class="built_in">set</span>6 minusSet:<span class="built_in">set</span>7];
+
+// 取得两个集合的交集
+ [<span class="built_in">set</span>6 intersectSet:<span class="built_in">set</span>7];
+
+// 两个集合的并集
+ [<span class="built_in">set</span>6 unionSet:<span class="built_in">set</span>7];
+
+// 删除指定的对象
+[<span class="built_in">set</span>6 removeObject:@<span class="string">"2"</span>];
+
+NSLog(@<span class="string">"set6: %@"</span>, <span class="built_in">set</span>6);
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.ieake.com/2015/05/16/NSSet和NSMutableSet/" data-id="ci9r2ic910006l3fnhx2i78pe" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-NSDictionary和NSMutableDictionary" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/05/15/NSDictionary和NSMutableDictionary/" class="article-date">
+  <time datetime="2015-05-15T12:56:35.000Z" itemprop="datePublished">2015-05-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/05/15/NSDictionary和NSMutableDictionary/">NSDictionary和NSMutableDictionary</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="NSDictionary的一些方法总结">NSDictionary的一些方法总结</h3><pre><code><span class="built_in">NSDictionary</span> *dic1 = [<span class="built_in">NSDictionary</span> dictionaryWithObject:<span class="string">@"value"</span> forKey:<span class="string">@"k1"</span>];
+<span class="built_in">NSDictionary</span> *dic2 = [<span class="built_in">NSDictionary</span> dictionaryWithObjectsAndKeys:<span class="string">@"v1"</span>,<span class="string">@"k1"</span>,<span class="string">@"v2"</span>,<span class="string">@"k2"</span>,<span class="string">@"v3"</span>,<span class="string">@"k3"</span>, <span class="literal">nil</span>];
+<span class="built_in">NSDictionary</span> *dic3 = [<span class="built_in">NSDictionary</span> dictionaryWithDictionary:dic1];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, dic1);
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, dic2);
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, dic3);
+
+<span class="comment">// 获取字典的数量</span>
+<span class="keyword">int</span> count = [dic2 count];
+<span class="built_in">NSLog</span>(<span class="string">@"count : %d"</span>, count);
+
+<span class="comment">// 获取字典的value</span>
+<span class="built_in">NSString</span> *string1 = [dic2 objectForKey:<span class="string">@"k3"</span>];
+<span class="built_in">NSLog</span>(<span class="string">@"value: %@"</span>, string1);
+
+<span class="comment">// 获取字典的所有key</span>
+<span class="built_in">NSArray</span> *keyArray = [dic2 allKeys];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, keyArray);
+
+<span class="comment">// 获取字典的所有value</span>
+<span class="built_in">NSArray</span> *valueArray = [dic2 allValues];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, valueArray);
+</code></pre><h3 id="NSMutableDictionary的一些方法总结">NSMutableDictionary的一些方法总结</h3><ul>
+<li>NSMutableDictionary继承自NSDictionary</li>
+</ul>
+<pre><code><span class="built_in">NSMutableDictionary</span> *mutableDic1 = [[<span class="built_in">NSMutableDictionary</span> alloc] initWithObjectsAndKeys:<span class="string">@"v1"</span>,<span class="string">@"k1"</span>,<span class="string">@"v2"</span>,<span class="string">@"k2"</span>,<span class="string">@"v3"</span>,<span class="string">@"k3"</span>,<span class="string">@"v4"</span>,<span class="string">@"k4"</span>, <span class="literal">nil</span>];
+<span class="built_in">NSLog</span>(<span class="string">@"mutableDict1: %@"</span>, mutableDic1);
+
+<span class="comment">// 可变字典加入元素</span>
+<span class="built_in">NSDictionary</span> *dic4 = [<span class="built_in">NSDictionary</span> dictionaryWithObject:<span class="string">@"v5"</span> forKey:<span class="string">@"k5"</span>];
+[mutableDic1 addEntriesFromDictionary:dic4];
+<span class="built_in">NSLog</span>(<span class="string">@"mutableDict1: %@"</span>, mutableDic1);
+
+<span class="comment">// 可变字典中直接添加新的</span>
+[mutableDic1 setValue:<span class="string">@"object"</span> forKey:<span class="string">@"key"</span>];
+<span class="built_in">NSLog</span>(<span class="string">@"mutableDict1: %@"</span>, mutableDic1);
+
+<span class="comment">// 创建一个空的可变字典</span>
+<span class="built_in">NSMutableDictionary</span> *mutableDic2 = [<span class="built_in">NSMutableDictionary</span> dictionary];
+[mutableDic2 setDictionary:mutableDic1];
+<span class="built_in">NSLog</span>(<span class="string">@"mutableDict2: %@"</span>, mutableDic2);
+
+<span class="comment">// 根据指定的key</span>
+[mutableDic2 removeObjectForKey:<span class="string">@"k4"</span>];
+<span class="built_in">NSLog</span>(<span class="string">@"mutableDict2: %@"</span>, mutableDic2);
+
+<span class="comment">// 删除一组key</span>
+<span class="built_in">NSArray</span> *keys = [<span class="built_in">NSArray</span> arrayWithObjects:<span class="string">@"k1"</span>,<span class="string">@"k2"</span>, <span class="literal">nil</span>];
+[mutableDic2 removeObjectsForKeys:keys];
+<span class="built_in">NSLog</span>(<span class="string">@"mutableDict2: %@"</span>, mutableDic2);
+
+<span class="comment">// 删除所有的内容</span>
+[mutableDic2 removeAllObjects];
+</code></pre><h3 id="遍历字典">遍历字典</h3><pre><code><span class="keyword">for</span> (int index = <span class="number">0</span>; index &lt; [mutableDic1 count]; index++) {
+  <span class="type">NSString</span> *<span class="class"><span class="keyword">object</span> =</span> [mutableDic1 objectForKey:[[mutableDic1 allKeys] objectAtIndex:index]];
+  <span class="type">NSLog</span>(@<span class="string">"object: %@"</span>, <span class="class"><span class="keyword">object</span>);</span>
+}
+
+<span class="comment">// 快速枚举</span>
+<span class="keyword">for</span> (id key in mutableDic1) {
+  <span class="type">NSString</span> *<span class="class"><span class="keyword">object</span> =</span> [mutableDic1 objectForKey:key];
+  <span class="type">NSLog</span>(@<span class="string">"object: %@"</span>, <span class="class"><span class="keyword">object</span>);</span>
+}
+
+<span class="comment">// 使用枚举类型</span>
+<span class="type">NSEnumerator</span> *enumerator = [mutableDic1 keyEnumerator];
+id key = [enumerator nextObject];
+<span class="keyword">while</span> (key = [enumerator nextObject]) {
+  id <span class="class"><span class="keyword">object</span> =</span> [mutableDic1 objectForKey:key];
+  <span class="type">NSLog</span>(@<span class="string">"%@"</span>, <span class="class"><span class="keyword">object</span>);</span>   
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.ieake.com/2015/05/15/NSDictionary和NSMutableDictionary/" data-id="ci9r2ic9c0008l3fnqphbvqo7" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-NSArray和NSMutableArray" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/05/15/NSArray和NSMutableArray/" class="article-date">
+  <time datetime="2015-05-15T00:22:44.000Z" itemprop="datePublished">2015-05-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/05/15/NSArray和NSMutableArray/">NSArray和NSMutableArray</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="NSArray的一些方法总结">NSArray的一些方法总结</h3><pre><code><span class="comment">// 数组的创建</span>
+<span class="built_in">NSArray</span> *array1 = [<span class="built_in">NSArray</span> arrayWithObject:<span class="string">@"one"</span>];
+<span class="built_in">NSArray</span> *array2 = [<span class="built_in">NSArray</span> arrayWithObjects:<span class="string">@"one"</span>, <span class="string">@"two"</span>, <span class="string">@"three"</span>, <span class="string">@"four"</span>, <span class="string">@"five"</span>,<span class="literal">nil</span>];
+<span class="built_in">NSArray</span> *array3 = [<span class="built_in">NSArray</span> arrayWithArray:array2];
+<span class="built_in">NSLog</span>(<span class="string">@"array1 : %@"</span>, array1);
+<span class="built_in">NSLog</span>(<span class="string">@"array2 : %@"</span>, array2);
+<span class="built_in">NSLog</span>(<span class="string">@"array3 : %@"</span>, array3);
+<span class="built_in">NSArray</span> *array4 = [[<span class="built_in">NSArray</span> alloc] initWithArray:array1];
+
+<span class="comment">// 获取数组中元素的个数</span>
+<span class="keyword">int</span> count = [array2 count];
+<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, count);   <span class="comment">// =&gt; 5</span>
+
+<span class="built_in">NSString</span> *string1 = [array2 objectAtIndex:<span class="number">1</span>];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, string1);  <span class="comment">// =&gt; two</span>
+
+<span class="comment">// 追加对象,返回一个新的数组</span>
+<span class="built_in">NSArray</span> *array5 = [array2 arrayByAddingObject:<span class="string">@"six"</span>];
+<span class="built_in">NSLog</span>(<span class="string">@"array5 : %@"</span>, array5);
+
+<span class="comment">// 用指定的字符串把数组中的元素连接起来</span>
+<span class="built_in">NSString</span> *string2 = [array5 componentsJoinedByString:<span class="string">@"|"</span>];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, string2);
+
+<span class="comment">// 判断数组中是否存在一个指定的对象</span>
+<span class="built_in">BOOL</span> isContain = [array5 containsObject:<span class="string">@"three"</span>];
+<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, isContain);
+
+<span class="comment">// 根据指定的对象返回索引下标</span>
+<span class="built_in">NSInteger</span> index = [array5 indexOfObject:<span class="string">@"three"</span>];
+<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, index);
+
+<span class="comment">// 返回数组中的最后一个元素</span>
+<span class="built_in">NSString</span> *lastObject = [array5 lastObject];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, lastObject);
+</code></pre><h3 id="NSMutableArray的一些方法总结">NSMutableArray的一些方法总结</h3><ul>
+<li>NSMutableArray继承自NSArray</li>
+</ul>
+<pre><code><span class="comment">// 可变数组</span>
+<span class="built_in">NSMutableArray</span> *mArray1 = [<span class="built_in">NSMutableArray</span> array];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mArray1);
+
+<span class="comment">// 创建一个有5个元素的可变数组</span>
+<span class="built_in">NSMutableArray</span> *mArray2 = [<span class="built_in">NSMutableArray</span> arrayWithCapacity:<span class="number">5</span>];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mArray2);
+
+<span class="built_in">NSMutableArray</span> *mArray3 = [<span class="built_in">NSMutableArray</span> arrayWithObjects:<span class="string">@"one"</span>, <span class="string">@"two"</span>, <span class="literal">nil</span>];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mArray3);
+
+<span class="comment">//添加元素</span>
+[mArray3 addObject:<span class="string">@"three"</span>];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mArray3);
+
+<span class="comment">// 插入元素</span>
+[mArray3 insertObject:<span class="string">@"four"</span> atIndex:<span class="number">3</span>];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mArray3);
+
+<span class="comment">// 移除最后一个元素</span>
+[mArray3 removeLastObject];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mArray3);
+
+<span class="comment">// 移除指定元素</span>
+[mArray3 removeObject:<span class="string">@"two"</span>];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mArray3);
+
+<span class="comment">// 根据索引下标删除</span>
+[mArray3 removeObjectAtIndex:<span class="number">1</span>];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mArray3);
+
+[mArray3 addObject:<span class="string">@"six"</span>];
+[mArray3 addObject:<span class="string">@"seven"</span>];
+[mArray3 addObject:<span class="string">@"eight"</span>];
+
+<span class="comment">// 根据数组删除</span>
+<span class="built_in">NSArray</span> *deleteArray = [<span class="built_in">NSArray</span> arrayWithObjects:<span class="string">@"seven"</span>,<span class="string">@"eight"</span>,<span class="literal">nil</span>];
+[mArray3 removeObjectsInArray:deleteArray];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mArray3);
+
+<span class="comment">// 替换指定下标的元素</span>
+[mArray3 replaceObjectAtIndex:<span class="number">1</span> withObject:<span class="string">@"replace"</span>];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mArray3);
+</code></pre><h3 id="遍历数组">遍历数组</h3><pre><code><span class="keyword">for</span> (<span class="built_in">NSString</span> *tempString <span class="keyword">in</span> array5) {
+  <span class="built_in">NSLog</span>(<span class="string">@"found: %@"</span>, tempString);
+}
+
+<span class="comment">// 当不确定数组的元素的类型时,可以选择用id</span>
+<span class="keyword">for</span> (<span class="keyword">id</span> tempString <span class="keyword">in</span> array5) {
+  <span class="built_in">NSLog</span>(<span class="string">@"id found: %@"</span>, tempString);
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.ieake.com/2015/05/15/NSArray和NSMutableArray/" data-id="ci9r2ic7o0000l3fnaj0z2pbk" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-NSString" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/05/14/NSString/" class="article-date">
+  <time datetime="2015-05-14T12:55:32.000Z" itemprop="datePublished">2015-05-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/05/14/NSString/">NSString</a>
     </h1>
   
 
@@ -182,11 +515,38 @@ range<span class="variable">.length</span> = <span class="number">3</span>;
 <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, addString1);
 <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, addString2);
 <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, addString3);
+
+<span class="comment">/**
+ * 查找字符串
+ */</span>
+<span class="built_in">NSString</span> *link = <span class="string">@"abcdefgtargetxyz"</span>;
+<span class="built_in">NSRange</span> range1 = [link rangeOfString:<span class="string">@"target"</span>];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, <span class="built_in">NSStringFromRange</span>(range1));
+<span class="keyword">if</span>(range1<span class="variable">.location</span> != <span class="built_in">NSNotFound</span>) {
+    <span class="built_in">NSLog</span>(<span class="string">@"founded"</span>);
+}
+
+<span class="comment">/**
+ * 可变字符串
+ */</span>
+
+<span class="comment">// 插入</span>
+<span class="built_in">NSMutableString</span> *mutableString1 = [[<span class="built_in">NSMutableString</span> alloc] initWithFormat:<span class="string">@"abc"</span>];
+[mutableString1 insertString:<span class="string">@"..xyz.."</span> atIndex:<span class="number">1</span>];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mutableString1);
+
+<span class="comment">// 替换</span>
+[mutableString1 replaceCharactersInRange:<span class="built_in">NSMakeRange</span>(<span class="number">1</span>, <span class="number">2</span>) withString:<span class="string">@"efg"</span>];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mutableString1);
+
+<span class="comment">// 删除</span>
+[mutableString1 deleteCharactersInRange:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, <span class="number">3</span>)];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mutableString1);
 </code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/05/11/NSString/" data-id="ci9ihhrkh0000w9fnyn4d5pcw" class="article-share-link">Share</a>
+      <a data-url="http://www.ieake.com/2015/05/14/NSString/" data-id="ci9r2ic900005l3fnvlw6xx1y" class="article-share-link">Share</a>
       
       
     </footer>
@@ -243,7 +603,7 @@ range<span class="variable">.length</span> = <span class="number">3</span>;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/05/08/NSNumber/" data-id="ci9flhq1y0000mgfnzcokwc8d" class="article-share-link">Share</a>
+      <a data-url="http://www.ieake.com/2015/05/08/NSNumber/" data-id="ci9r2ic930007l3fnvg8gvlnx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -288,7 +648,7 @@ range<span class="variable">.length</span> = <span class="number">3</span>;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/04/08/hello-world/" data-id="ci90z4bp90000k2vmjlz0pwvc" class="article-share-link">Share</a>
+      <a data-url="http://www.ieake.com/2015/04/08/hello-world/" data-id="ci9r2ic8y0004l3fnkqb33n9s" class="article-share-link">Share</a>
       
       
     </footer>
@@ -329,7 +689,7 @@ range<span class="variable">.length</span> = <span class="number">3</span>;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/04/08/新的开始/" data-id="ci90z4bq80001k2vmbwjzn8d9" class="article-share-link">Share</a>
+      <a data-url="http://www.ieake.com/2015/04/08/新的开始/" data-id="ci9r2ic8t0001l3fn3qsvhfqb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -362,7 +722,7 @@ range<span class="variable">.length</span> = <span class="number">3</span>;
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -374,19 +734,23 @@ range<span class="variable">.length</span> = <span class="number">3</span>;
       <ul>
         
           <li>
-            <a href="/2015/05/11/NSString/">NSString</a>
+            <a href="/2015/05/16/NSSet和NSMutableSet/">NSSet和NSMutableSet</a>
+          </li>
+        
+          <li>
+            <a href="/2015/05/15/NSDictionary和NSMutableDictionary/">NSDictionary和NSMutableDictionary</a>
+          </li>
+        
+          <li>
+            <a href="/2015/05/15/NSArray和NSMutableArray/">NSArray和NSMutableArray</a>
+          </li>
+        
+          <li>
+            <a href="/2015/05/14/NSString/">NSString</a>
           </li>
         
           <li>
             <a href="/2015/05/08/NSNumber/">NSNumber</a>
-          </li>
-        
-          <li>
-            <a href="/2015/04/08/hello-world/">Hello hexo</a>
-          </li>
-        
-          <li>
-            <a href="/2015/04/08/新的开始/">新的开始</a>
           </li>
         
       </ul>

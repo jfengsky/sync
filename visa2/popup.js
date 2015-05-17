@@ -13,6 +13,17 @@ $(function() {
     $('#J_orderid').val(localstorageOrderId)
   };
 
+  var tempBool = false;
+  if(localStorage.getItem('autoWrite') === 'false'){
+    tempBool = false
+  } else if(localStorage.getItem('autoWrite') === 'true'){
+    tempBool = true
+  };
+  $('#J_readyauto').prop('checked', tempBool);
+  $("#J_readyauto").bind('click', function(){
+    localStorage.setItem('autoWrite', $('#J_readyauto').prop('checked'));
+  })
+
   // 点击填写表单按钮
   $('#J_autoWrite').bind('click', function() {
     var tempOrderId = $('#J_orderid').val();
@@ -47,5 +58,15 @@ $(function() {
   $('#J_clear_orderid').bind('click', function() {
     $('#J_orderid').val('').focus();
     localStorage.removeItem('orderId');
+  });
+
+  // 保存id
+  $('#J_save_orderid').bind('click', function(){
+    var tempOrderId = $('#J_orderid').val();
+    if(tempOrderId) {
+      localStorage.setItem('orderId',$('#J_orderid').val());
+    } else {
+      $('#J_orderid_group').addClass('has-warning')
+    }
   });
 });

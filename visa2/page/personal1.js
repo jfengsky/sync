@@ -11,12 +11,6 @@
  * @param
  */
 
-$(function() {
-  console.log('showMask');
-  showMask();
-});
-
-
 function Personal1_Page(_data) {
   var canShowNext = false,
     otherNameFinish = false,

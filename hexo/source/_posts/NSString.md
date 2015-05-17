@@ -97,4 +97,29 @@ title: "NSString"
     NSLog(@"%@", addString2);
     NSLog(@"%@", addString3);
         
+    /**
+     * 查找字符串
+     */
+    NSString *link = @"abcdefgtargetxyz";
+    NSRange range1 = [link rangeOfString:@"target"];
+    NSLog(@"%@", NSStringFromRange(range1));
+    if(range1.location != NSNotFound) {
+        NSLog(@"founded");
+    }
     
+    /**
+     * 可变字符串
+     */
+    
+    // 插入
+    NSMutableString *mutableString1 = [[NSMutableString alloc] initWithFormat:@"abc"];
+    [mutableString1 insertString:@"..xyz.." atIndex:1];
+    NSLog(@"%@", mutableString1);
+    
+    // 替换
+    [mutableString1 replaceCharactersInRange:NSMakeRange(1, 2) withString:@"efg"];
+    NSLog(@"%@", mutableString1);
+    
+    // 删除
+    [mutableString1 deleteCharactersInRange:NSMakeRange(0, 3)];
+    NSLog(@"%@", mutableString1);

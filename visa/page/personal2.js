@@ -4,6 +4,7 @@
  * Date: 2015-03-2 15:59
  *
  */
+
 function Personal2_Page(_data) {
 
   var canShowNext = false;

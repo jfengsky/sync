@@ -18,7 +18,7 @@ NSString *string1 = @&quot;这是一个字符串常量&quot;;
 NSString *string2 = [[NSString alloc] init">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NSString">
-<meta property="og:url" content="http://www.ieake.com/2015/05/11/NSString/index.html">
+<meta property="og:url" content="http://www.ieake.com/2015/05/14/NSString/index.html">
 <meta property="og:site_name" content="枫之舞">
 <meta property="og:description" content="NSString对象的一些方法总结
 NSString对象一旦被创建就不可以修改.如果需要一个可以更改的字符串对象,需要创建NSMutableString实例
@@ -96,8 +96,8 @@ NSString *string2 = [[NSString alloc] init">
         <section id="main">
         <article id="post-NSString" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/05/11/NSString/" class="article-date">
-  <time datetime="2015-05-11T14:05:06.000Z" itemprop="datePublished">2015-05-11</time>
+    <a href="/2015/05/14/NSString/" class="article-date">
+  <time datetime="2015-05-14T12:55:32.000Z" itemprop="datePublished">2015-05-14</time>
 </a>
     
   </div>
@@ -210,11 +210,38 @@ range<span class="variable">.length</span> = <span class="number">3</span>;
 <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, addString1);
 <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, addString2);
 <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, addString3);
+
+<span class="comment">/**
+ * 查找字符串
+ */</span>
+<span class="built_in">NSString</span> *link = <span class="string">@"abcdefgtargetxyz"</span>;
+<span class="built_in">NSRange</span> range1 = [link rangeOfString:<span class="string">@"target"</span>];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, <span class="built_in">NSStringFromRange</span>(range1));
+<span class="keyword">if</span>(range1<span class="variable">.location</span> != <span class="built_in">NSNotFound</span>) {
+    <span class="built_in">NSLog</span>(<span class="string">@"founded"</span>);
+}
+
+<span class="comment">/**
+ * 可变字符串
+ */</span>
+
+<span class="comment">// 插入</span>
+<span class="built_in">NSMutableString</span> *mutableString1 = [[<span class="built_in">NSMutableString</span> alloc] initWithFormat:<span class="string">@"abc"</span>];
+[mutableString1 insertString:<span class="string">@"..xyz.."</span> atIndex:<span class="number">1</span>];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mutableString1);
+
+<span class="comment">// 替换</span>
+[mutableString1 replaceCharactersInRange:<span class="built_in">NSMakeRange</span>(<span class="number">1</span>, <span class="number">2</span>) withString:<span class="string">@"efg"</span>];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mutableString1);
+
+<span class="comment">// 删除</span>
+[mutableString1 deleteCharactersInRange:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, <span class="number">3</span>)];
+<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mutableString1);
 </code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/05/11/NSString/" data-id="ci9ihhrkh0000w9fnyn4d5pcw" class="article-share-link">Share</a>
+      <a data-url="http://www.ieake.com/2015/05/14/NSString/" data-id="ci9r2ic900005l3fnvlw6xx1y" class="article-share-link">Share</a>
       
       
     </footer>
@@ -222,6 +249,15 @@ range<span class="variable">.length</span> = <span class="number">3</span>;
   
     
 <nav id="article-nav">
+  
+    <a href="/2015/05/15/NSArray和NSMutableArray/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          NSArray和NSMutableArray
+        
+      </div>
+    </a>
   
   
     <a href="/2015/05/08/NSNumber/" id="article-nav-older" class="article-nav-link-wrap">
@@ -269,7 +305,7 @@ range<span class="variable">.length</span> = <span class="number">3</span>;
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -281,19 +317,23 @@ range<span class="variable">.length</span> = <span class="number">3</span>;
       <ul>
         
           <li>
-            <a href="/2015/05/11/NSString/">NSString</a>
+            <a href="/2015/05/16/NSSet和NSMutableSet/">NSSet和NSMutableSet</a>
+          </li>
+        
+          <li>
+            <a href="/2015/05/15/NSDictionary和NSMutableDictionary/">NSDictionary和NSMutableDictionary</a>
+          </li>
+        
+          <li>
+            <a href="/2015/05/15/NSArray和NSMutableArray/">NSArray和NSMutableArray</a>
+          </li>
+        
+          <li>
+            <a href="/2015/05/14/NSString/">NSString</a>
           </li>
         
           <li>
             <a href="/2015/05/08/NSNumber/">NSNumber</a>
-          </li>
-        
-          <li>
-            <a href="/2015/04/08/hello-world/">Hello hexo</a>
-          </li>
-        
-          <li>
-            <a href="/2015/04/08/新的开始/">新的开始</a>
           </li>
         
       </ul>

@@ -13,9 +13,9 @@
 //   tempTabId = tabId;
 // });
 
-
 // 由于公司不支持https, 所以只能用后台脚本绕过这个限制去请求数据,然后发送到前台
 chrome.extension.onMessage.addListener(function(objRequest, _, sendResponse) {
+
   // 将信息能过Ajax发送到服务器
   // 需要传4个值, appid orderid countryid 和 url
   // 其中appid从页面获取,存到内存里
@@ -41,6 +41,13 @@ chrome.extension.onMessage.addListener(function(objRequest, _, sendResponse) {
         // });
       }
     });
-  } 
+  } else if (objRequest.type === 'getIdAndAuto') {
+    var orderId = localStorage.getItem('orderId'),
+      isAuto = localStorage.getItem('autoWrite');
+    chrome.tabs.executeScript(null, {
+      code: "autoInit(" + orderId + "," + isAuto + ")",
+      allFrames: true
+    });
+  }
 
 });
