@@ -22,6 +22,7 @@ chrome.extension.onMessage.addListener(function(objRequest, _, sendResponse) {
   // orderid需要op填写,存到内存里
   // countryid 永远为1
   // url 从页面中获取
+  var startGetTime = new Date().getTime();
   if (objRequest.type === 'getData') {
     $.ajax({
       // url: 'http://order.visa.ctripcorp.com/Visa-Order-OrderProcess/VisaAutoComplete/VisaAutoCompleteApi.aspx',
@@ -31,9 +32,11 @@ chrome.extension.onMessage.addListener(function(objRequest, _, sendResponse) {
       data: objRequest.sendParam,
       dataType: 'json',
       success: function(_data) {
+        var endGetTime = new Date().getTime();
+
         var str = JSON.stringify(_data);
         chrome.tabs.executeScript(null, {
-          code: "renderData(" + str + ")",
+          code: "renderData(" + str + ',' + (endGetTime - startGetTime) + ")",
           allFrames: true
         });
         // chrome.tabs.sendMessage(tempTabId,{"msg":"send to tab"}, function(response){

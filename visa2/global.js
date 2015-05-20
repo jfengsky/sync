@@ -7,8 +7,8 @@
 
 var version = "2.0.1";
 
-var tempOrderId,          // 签证id
-    isAutoWrite;  // 是否可自动填写
+var tempOrderId, // 签证id
+  isAutoWrite; // 是否可自动填写
 
 
 
@@ -22,8 +22,8 @@ var writeFinshMsg = '<span style="color:#06f;font-weight:bold">数据自动写�
  * 隐藏提示蒙版
  * @return
  */
-function hideMask(){
-  $('#J_maskclose').bind('click', function(){
+function hideMask() {
+  $('#J_maskclose').bind('click', function() {
     $("#J_visamask").remove();
     $('#J_maskoverlay').remove();
   })
@@ -33,10 +33,13 @@ function hideMask(){
  * 显示提示蒙版
  * @return
  */
-function showMask(){
+function showMask() {
   var docHeight = $(document).height();
   $('body').append('<div id="J_visamask" style="width:100%; height: ' + docHeight + 'px; background-color:#333; opacity:0.4;position:absolute;left:0;top:0;z-index:1000"></div>');
   $('body').append(tipsTpl);
+
+
+
   hideMask();
 }
 
@@ -327,9 +330,13 @@ function showNext() {
  * @param  {Object} _data 异步获取的数据
  * @return
  */
-function renderData(_data) {
+function renderData(_data, _times) {
   var pageName = getQuery(_data.Pages[0].PageUrl, 'node');
-
+  console.log('请求填写数据总耗时:' + _times + 'ms');
+  if(_data.errmessage){
+    alert(_data.errmessage);
+    return false
+  }
   switch (pageName) {
 
     // 第一页
@@ -439,24 +446,90 @@ function writeVal(_orderId) {
 
 function autoInit(_orderId, _autowrite){
   var hasWarn = !$.trim($('#ctl00_SiteContentPlaceHolder_FormView1_ValidationSummary').text()).length;
+  var pageName = getQuery(location.href, 'node');
   tempOrderId = _orderId;
   isAutoWrite = _autowrite;
-  if(!_orderId){
+  if (!_orderId) {
 
     // TODO 只有填写页面才进行自动填写
     alert('缺少签证订单id,无法自动填写!');
-  } else if(hasWarn && isAutoWrite === 'true') {
+  } else if (hasWarn && isAutoWrite && pageName && pageName != 'SecureQuestion') {
     writeVal(tempOrderId);
   }
 
 
 };
 
+function loadTimes() {
+  var timing = performance.timing;
+  var loadTime = timing.loadEventEnd - timing.navigationStart; //过早获取时,loadEventEnd有时会是0
+  if (loadTime <= 0) {
+    // 未加载完，延迟200ms后继续times方法，直到成功
+    setTimeout(function() {
+      loadTimes()
+    }, 200);
+    return;
+  }
+  var readyStart = timing.fetchStart - timing.navigationStart;
+  var redirectTime = timing.redirectEnd - timing.redirectStart;
+  var appcacheTime = timing.domainLookupStart - timing.fetchStart;
+  var unloadEventTime = timing.unloadEventEnd - timing.unloadEventStart;
+  var lookupDomainTime = timing.domainLookupEnd - timing.domainLookupStart;
+  var connectTime = timing.connectEnd - timing.connectStart;
+  var requestTime = timing.responseEnd - timing.requestStart;
+  var initDomTreeTime = timing.domInteractive - timing.responseEnd;
+  var domReadyTime = timing.domComplete - timing.domInteractive; //过早获取时,domComplete有时会是0
+  var loadEventTime = timing.loadEventEnd - timing.loadEventStart;
+
+  // 为console.table方法准备对象，包含耗时的描述和消耗的时间
+  var allTimes = [{
+    "描述": "准备新页面时间耗时",
+    "时间(ms)": readyStart
+  }, {
+    "描述": "redirect 重定向耗时",
+    "时间(ms)": redirectTime
+  }, {
+    "描述": "Appcache 耗时",
+    "时间(ms)": appcacheTime
+  }, {
+    "描述": "unload 前文档耗时",
+    "时间(ms)": unloadEventTime
+  }, {
+    "描述": "DNS 查询耗时",
+    "时间(ms)": lookupDomainTime
+  }, {
+    "描述": "TCP连接耗时",
+    "时间(ms)": connectTime
+  }, {
+    "描述": "request请求耗时",
+    "时间(ms)": requestTime
+  }, {
+    "描述": "请求完毕至DOM加载",
+    "时间(ms)": initDomTreeTime
+  }, {
+    "描述": "解释dom树耗时",
+    "时间(ms)": domReadyTime
+  }, {
+    "描述": "load事件耗时",
+    "时间(ms)": loadEventTime
+  }, {
+    "描述": "打开页面总耗时",
+    "时间(ms)": loadTime
+  }];
+  console.table(allTimes);
+}
+
 // domready后自动填写
-$(function(){
+$(function() {
+
+  // 控制台打印页面加载时间
+  loadTimes();
 
   // 去background.js获取签证id和自动填写状态
   var tempParam = {};
+
+  // 判断页面是否是填写页
+
   tempParam.type = 'getIdAndAuto';
   chrome.extension.sendMessage(tempParam, function(d) {
     console.log(d); // 将返回信息打印到控制台里
