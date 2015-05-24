@@ -5,7 +5,7 @@
  *
  */
 
-var version = "2.0.1";
+var version = 100000;
 
 var tempOrderId, // 签证id
   isAutoWrite; // 是否可自动填写
@@ -333,8 +333,8 @@ function showNext() {
 function renderData(_data, _times) {
   var pageName = getQuery(_data.Pages[0].PageUrl, 'node');
   console.log('请求填写数据总耗时:' + _times + 'ms');
-  if(_data.errmessage){
-    alert(_data.errmessage);
+  if (_data.ErrorMsg) {
+    alert(_data.ErrorMsg);
     return false
   }
   switch (pageName) {
@@ -444,16 +444,14 @@ function writeVal(_orderId) {
   });
 };
 
-function autoInit(_orderId, _autowrite){
+function autoInit(_orderId, _autowrite) {
   var hasWarn = !$.trim($('#ctl00_SiteContentPlaceHolder_FormView1_ValidationSummary').text()).length;
-  var pageName = getQuery(location.href, 'node');
   tempOrderId = _orderId;
   isAutoWrite = _autowrite;
   if (!_orderId) {
-
-    // TODO 只有填写页面才进行自动填写
+    // 只有填写页面才进行自动填写
     alert('缺少签证订单id,无法自动填写!');
-  } else if (hasWarn && isAutoWrite && pageName && pageName != 'SecureQuestion') {
+  } else if (hasWarn && isAutoWrite) {
     writeVal(tempOrderId);
   }
 
@@ -529,9 +527,11 @@ $(function() {
   var tempParam = {};
 
   // 判断页面是否是填写页
-
-  tempParam.type = 'getIdAndAuto';
-  chrome.extension.sendMessage(tempParam, function(d) {
-    console.log(d); // 将返回信息打印到控制台里
-  });
+  var pageName = getQuery(location.href, 'node');
+  if (pageName && pageName != 'SecureQuestion') {
+    tempParam.type = 'getIdAndAuto';
+    chrome.extension.sendMessage(tempParam, function(d) {
+      console.log(d); // 将返回信息打印到控制台里
+    });
+  }
 })

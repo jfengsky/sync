@@ -12,15 +12,20 @@ function WorkEducation3_page(_data) {
     professionalClick = false,
     skillClick = false,
     militaryClick = false,
-    servedClick = false;
+    servedClick = false,
+    language21 = false;
+  language22 = false;
+  language23 = false;
+  language24 = false,
+    isAllDown = false;
   // 隐藏下一步按钮
   hideNext();
   $.map(_data.Pages[0].Values, function(_item) {
 
-    if (_item.ColumnName === '语言名字[英文]') {
-      $('#' + _item.FormId).val(_item.Value);
-      $('#J_autowritetips').text(_item.ColumnName);
-    }
+    // if (_item.ColumnName === '语言名字[英文]') {
+    //   $('#' + _item.FormId).val(_item.Value);
+    //   $('#J_autowritetips').text(_item.ColumnName);
+    // }
 
     if (_item.ColumnName === '您是否属于一个宗族或者部落？') {
       $('#J_autowritetips').text(_item.ColumnName);
@@ -183,13 +188,116 @@ function WorkEducation3_page(_data) {
 
   });
 
-  var intervalShowNext = setInterval(function() {
+  var interval200 = setInterval(function() {
     if (servedClick) {
+      clearInterval(interval200);
+      // 循环添加语言 首先判断2, 3, 4 ,5
+      $.map(_data.Pages[0].Values, function(_languageItem) {
+        if (_languageItem.ColumnName === '语言2名字[英文]') {
+          if (!_languageItem.Value) {
+            language21 = true
+          } else {
+            clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlLANGUAGES_ctl00_InsertButtonLANGUAGE');
+            var interval21 = setInterval(function() {
+              $('#J_autowritetips').text('检查语言2');
+              if ($('#ctl00_SiteContentPlaceHolder_FormView1_dtlLANGUAGES_ctl01_tbxLANGUAGE_NAME').length) {
+                clearInterval(interval21);
+                language21 = true
+              }
+            });
+          }
+        };
+
+        if (_languageItem.ColumnName === '语言3名字[英文]') {
+          if (_languageItem.Value) {
+            var interval22 = setInterval(function() {
+              if (language21) {
+                clearInterval(interval22);
+                clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlLANGUAGES_ctl00_InsertButtonLANGUAGE');
+                var interval23 = setInterval(function() {
+                  if ($('#ctl00_SiteContentPlaceHolder_FormView1_dtlLANGUAGES_ctl02_tbxLANGUAGE_NAME').length) {
+                    $('#J_autowritetips').text('检查语言3');
+                    clearInterval(interval23);
+                    language22 = true
+                  }
+                });
+              }
+            }, 1000);
+          } else {
+            language22 = true
+          }
+
+        };
+
+        if (_languageItem.ColumnName === '语言4名字[英文]') {
+          if (_languageItem.Value) {
+            var interval24 = setInterval(function() {
+              if (language22) {
+                clearInterval(interval24);
+                clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlLANGUAGES_ctl00_InsertButtonLANGUAGE');
+                var interval25 = setInterval(function() {
+                  if ($('#ctl00_SiteContentPlaceHolder_FormView1_dtlLANGUAGES_ctl03_tbxLANGUAGE_NAME').length) {
+                    $('#J_autowritetips').text('检查语言4');
+                    clearInterval(interval25);
+                    language23 = true
+                  }
+                });
+              }
+            }, 1000);
+          } else {
+            language23 = true
+          }
+
+        }
+
+        if (_languageItem.ColumnName === '语言5名字[英文]') {
+          if (_languageItem.Value) {
+            var interval26 = setInterval(function() {
+              if (language23) {
+                clearInterval(interval26);
+                clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlLANGUAGES_ctl00_InsertButtonLANGUAGE');
+                var interval27 = setInterval(function() {
+                  if ($('#ctl00_SiteContentPlaceHolder_FormView1_dtlLANGUAGES_ctl04_tbxLANGUAGE_NAME').length) {
+                    $('#J_autowritetips').text('检查语言5');
+                    clearInterval(interval27);
+                    language24 = true
+                  }
+                });
+              }
+            }, 1000);
+          } else {
+            language24 = true
+          }
+
+        };
+
+        var interval28 = setInterval(function() {
+          if (language24) {
+            clearInterval(interval28);
+            $.map(_data.Pages[0].Values, function(_languageWriteItem) {
+              if (_languageWriteItem.ColumnName === '语言名字[英文]' || _languageWriteItem.ColumnName === '语言2名字[英文]' || _languageWriteItem.ColumnName === '语言3名字[英文]' || _languageWriteItem.ColumnName === '语言4名字[英文]' || _languageWriteItem.ColumnName === '语言5名字[英文]') {
+                setVal(_languageWriteItem);
+                isAllDown = true
+              }
+            });
+          }
+        });
+
+      })
+
+    }
+  }, 1000);
+
+
+
+  var intervalShowNext = setInterval(function() {
+    if (isAllDown) {
       clearInterval(intervalShowNext);
 
       // 填写完成,显示下一步按钮
       showNext();
     }
   }, 1000);
+
 
 }
