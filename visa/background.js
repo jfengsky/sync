@@ -26,7 +26,7 @@ chrome.extension.onMessage.addListener(function(objRequest, _, sendResponse) {
   if (objRequest.type === 'getData') {
     $.ajax({
       // url: 'http://order.visa.ctripcorp.com/Visa-Order-OrderProcess/VisaAutoComplete/VisaAutoCompleteApi.aspx',
-      // url: 'http://order.visa.fat6.qa.nt.ctripcorp.com/Visa-Order-OrderProcess/VisaAutoComplete/VisaAutoCompleteApi.aspx',
+      // url: 'http://order.visa.uat.qa.nt.ctripcorp.com/Visa-Order-OrderProcess/VisaAutoComplete/VisaAutoCompleteApi.aspx',
       url: 'http://localhost:3001/VisaAutoCompleteApi',
       type: 'get',
       data: objRequest.sendParam,

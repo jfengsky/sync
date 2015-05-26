@@ -13,10 +13,17 @@ function WorkEducation3_page(_data) {
     skillClick = false,
     militaryClick = false,
     servedClick = false,
-    language21 = false;
-  language22 = false;
-  language23 = false;
-  language24 = false,
+    language21 = false,
+    language22 = false,
+    language23 = false,
+    language24 = false,
+
+    visitCountry2 = false,
+    visitCountry3 = false,
+    visitCountry4 = false,
+    visitCountry5 = false,
+    visitCountry6 = false,
+
     isAllDown = false;
   // 隐藏下一步按钮
   hideNext();
@@ -199,7 +206,7 @@ function WorkEducation3_page(_data) {
           } else {
             clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlLANGUAGES_ctl00_InsertButtonLANGUAGE');
             var interval21 = setInterval(function() {
-              $('#J_autowritetips').text('检查语言2');
+              $('#J_autowritetips').text('正在添加语言2隐藏表单');
               if ($('#ctl00_SiteContentPlaceHolder_FormView1_dtlLANGUAGES_ctl01_tbxLANGUAGE_NAME').length) {
                 clearInterval(interval21);
                 language21 = true
@@ -216,7 +223,7 @@ function WorkEducation3_page(_data) {
                 clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlLANGUAGES_ctl00_InsertButtonLANGUAGE');
                 var interval23 = setInterval(function() {
                   if ($('#ctl00_SiteContentPlaceHolder_FormView1_dtlLANGUAGES_ctl02_tbxLANGUAGE_NAME').length) {
-                    $('#J_autowritetips').text('检查语言3');
+                    $('#J_autowritetips').text('正在添加语言3隐藏表单');
                     clearInterval(interval23);
                     language22 = true
                   }
@@ -237,7 +244,7 @@ function WorkEducation3_page(_data) {
                 clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlLANGUAGES_ctl00_InsertButtonLANGUAGE');
                 var interval25 = setInterval(function() {
                   if ($('#ctl00_SiteContentPlaceHolder_FormView1_dtlLANGUAGES_ctl03_tbxLANGUAGE_NAME').length) {
-                    $('#J_autowritetips').text('检查语言4');
+                    $('#J_autowritetips').text('正在添加语言4隐藏表单');
                     clearInterval(interval25);
                     language23 = true
                   }
@@ -258,7 +265,7 @@ function WorkEducation3_page(_data) {
                 clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlLANGUAGES_ctl00_InsertButtonLANGUAGE');
                 var interval27 = setInterval(function() {
                   if ($('#ctl00_SiteContentPlaceHolder_FormView1_dtlLANGUAGES_ctl04_tbxLANGUAGE_NAME').length) {
-                    $('#J_autowritetips').text('检查语言5');
+                    $('#J_autowritetips').text('正在添加语言5隐藏表单');
                     clearInterval(interval27);
                     language24 = true
                   }
@@ -277,7 +284,7 @@ function WorkEducation3_page(_data) {
             $.map(_data.Pages[0].Values, function(_languageWriteItem) {
               if (_languageWriteItem.ColumnName === '语言名字[英文]' || _languageWriteItem.ColumnName === '语言2名字[英文]' || _languageWriteItem.ColumnName === '语言3名字[英文]' || _languageWriteItem.ColumnName === '语言4名字[英文]' || _languageWriteItem.ColumnName === '语言5名字[英文]') {
                 setVal(_languageWriteItem);
-                isAllDown = true
+                visitCountry2 = true
               }
             });
           }
@@ -290,10 +297,107 @@ function WorkEducation3_page(_data) {
 
 
 
+  // 请列出您访问过的国家[英文]
+  var interval300 = setInterval(function() {
+    if(visitCountry2){
+      clearInterval(interval300);
+      $.map(_data.Pages[0].Values, function(_CountryItem) {
+        if (_CountryItem.ColumnName === '请列出您访问过的国家2[英文]') {
+          if(_CountryItem.Value){
+            clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlCountriesVisited_ctl00_InsertButtonCountriesVisited');
+            $('#J_autowritetips').text('添加您访问过的国家2[英文]隐藏表单');
+            var interval71 = setInterval(function(){
+              if($('#ctl00_SiteContentPlaceHolder_FormView1_dtlCountriesVisited_ctl01_ddlCOUNTRIES_VISITED').length){
+                clearInterval(interval71);
+                visitCountry3 = true
+              }
+            }, 1000);
+          } else {
+            visitCountry3 = true
+          }
+        };
+
+        if (_CountryItem.ColumnName === '请列出您访问过的国家3[英文]') {
+          if(_CountryItem.Value){
+            var interval72 = setInterval(function(){
+              if(visitCountry3){
+                clearInterval(interval72);
+                clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlCountriesVisited_ctl00_InsertButtonCountriesVisited');
+                $('#J_autowritetips').text('添加您访问过的国家3[英文]隐藏表单');
+                var interval721 = setInterval(function(){
+                  if($('#ctl00_SiteContentPlaceHolder_FormView1_dtlCountriesVisited_ctl02_ddlCOUNTRIES_VISITED').length){
+                    clearInterval(interval721);
+                    visitCountry4 = true
+                  }
+                }, 1000);
+              }
+            });
+          } else {
+            visitCountry4 = true
+          }
+        };
+
+        if (_CountryItem.ColumnName === '请列出您访问过的国家4[英文]') {
+          if(_CountryItem.Value){
+            var interval73 = setInterval(function(){
+              if(visitCountry4){
+                clearInterval(interval73);
+                clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlCountriesVisited_ctl00_InsertButtonCountriesVisited');
+                $('#J_autowritetips').text('添加您访问过的国家4[英文]隐藏表单');
+                var interval731 = setInterval(function(){
+                  if($('#ctl00_SiteContentPlaceHolder_FormView1_dtlCountriesVisited_ctl03_ddlCOUNTRIES_VISITED').length){
+                    clearInterval(interval731);
+                    visitCountry5 = true
+                  }
+                }, 1000);
+              }
+            });
+          } else {
+            visitCountry5 = true
+          }
+        };
+
+        if (_CountryItem.ColumnName === '请列出您访问过的国家5[英文]') {
+          if(_CountryItem.Value){
+            var interval74 = setInterval(function(){
+              if(visitCountry5){
+                clearInterval(interval74);
+                clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlCountriesVisited_ctl00_InsertButtonCountriesVisited');
+                $('#J_autowritetips').text('添加您访问过的国家5[英文]隐藏表单');
+                var interval741 = setInterval(function(){
+                  if($('#ctl00_SiteContentPlaceHolder_FormView1_dtlCountriesVisited_ctl04_ddlCOUNTRIES_VISITED').length){
+                    clearInterval(interval741);
+                    visitCountry6 = true
+                  }
+                }, 1000);
+              }
+            });
+          } else {
+            visitCountry6 = true
+          }
+        };
+
+      });
+    }
+  }, 1000);
+  
+  var interval8 = setInterval(function(){
+    if(visitCountry6){
+      clearInterval(interval8);
+      $.map(_data.Pages[0].Values, function(_item) {
+        if(_item.ColumnName === '请列出您访问过的国家2[英文]' || _item.ColumnName === '请列出您访问过的国家3[英文]' || _item.ColumnName === '请列出您访问过的国家4[英文]' || _item.ColumnName === '请列出您访问过的国家5[英文]'){
+          autoSelectValue(_item.ColumnName, _item);
+        }
+        isAllDown = true;
+      });
+    }
+  }, 2000)
+
+
+
   var intervalShowNext = setInterval(function() {
     if (isAllDown) {
       clearInterval(intervalShowNext);
-
       // 填写完成,显示下一步按钮
       showNext();
     }

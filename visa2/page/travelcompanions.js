@@ -9,13 +9,18 @@ function TravelCompanions_Page(_data) {
     personTravelFinsh = false,
     morePerson = false,
     isEnd = false,
-    travellerNum = 5,
+    travellerNum = 1,
     travellerClickFinish = false,
     allFinish = false;
   // 隐藏下一步按钮
   hideNext();
 
   // 获取随心人员个数
+  $.map(_data.Pages[0].Values, function(_item) {
+    if(_item.ColumnName === '随行人员数量'){
+      travellerNum = _item.Value - 0 || 1
+    }
+  });
 
   $.map(_data.Pages[0].Values, function(_item) {
     var $inputDom = $('#' + _item.FormId);

@@ -10,7 +10,17 @@ function Travel_Page(_data) {
   var purposeHasSel = false,
     hasTravelPlanFinish = false,
     tripPayFinish = false,
-    emailcheckboxFinish = false;
+    emailcheckboxFinish = false,
+
+    isClickVisitPlace2 = false,
+
+    isClickVisitPlace3 = false,
+
+    isClickVisitPlace4 = false,
+
+    isClickVisitPlace5 = false,
+
+    showFinish = false;
   // 隐藏下一步按钮
   hideNext();
 
@@ -50,6 +60,7 @@ function Travel_Page(_data) {
                   setSelect('离开美国日期-日', _secItem, 'number');
                   setSelect('离开美国日期-月', _secItem, 'number');
                   setSelect('在美停留期间的住址-州[英文]', _secItem);
+
 
                   hasTravelPlanFinish = true;
                 });
@@ -101,7 +112,7 @@ function Travel_Page(_data) {
           var interval31 = setInterval(function() {
             tip(_item, 2);
             if (_item.Value === 'O') {
-              
+
               if ($('#ctl00_SiteContentPlaceHolder_FormView1_tbxPayerSurname').length) {
                 clearInterval(interval31);
                 $.map(_data.Pages[0].Values, function(_secItem) {
@@ -182,9 +193,106 @@ function Travel_Page(_data) {
 
   });
 
+  var interval6 = setInterval(function() {
+    if (tripPayFinish) {
+      clearInterval(interval6);
+      // 循环填写在美期间计划访问的地点
+      $.map(_data.Pages[0].Values, function(_item) {
+        if (_item.ColumnName === '请提供您在美期间计划访问的地点名称2[英文]') {
+          if (_item.Value) {
+            clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlTravelLoc_ctl00_InsertButtonTravelLoc');
+            $('#J_autowritetips').text('添加在美期间计划访问的地点名称2[英文]隐藏表单');
+            var interval61 = setInterval(function() {
+              if ($('#ctl00_SiteContentPlaceHolder_FormView1_dtlTravelLoc_ctl01_tbxSPECTRAVEL_LOCATION').length) {
+                clearInterval(interval61);
+                isClickVisitPlace2 = true
+
+              }
+            }, 1000);
+          } else {
+            isClickVisitPlace2 = true
+          }
+        };
+
+        if (_item.ColumnName === '请提供您在美期间计划访问的地点名称3[英文]') {
+          if (_item.Value) {
+            var interval62 = setInterval(function() {
+              if(isClickVisitPlace2){
+                clearInterval(interval62);
+                clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlTravelLoc_ctl00_InsertButtonTravelLoc');
+                $('#J_autowritetips').text('添加在美期间计划访问的地点名称3[英文]隐藏表单');
+                var interval621 = setInterval(function(){
+                  if($('#ctl00_SiteContentPlaceHolder_FormView1_dtlTravelLoc_ctl02_tbxSPECTRAVEL_LOCATION').length){
+                    clearInterval(interval621);
+                    isClickVisitPlace3 = true
+                  }
+                }, 1000);
+              }
+            }, 1000);
+          } else {
+            isClickVisitPlace3 = true
+          }
+        };
+
+        if (_item.ColumnName === '请提供您在美期间计划访问的地点名称4[英文]') {
+          if (_item.Value) {
+            var interval63 = setInterval(function() {
+              if(isClickVisitPlace3){
+                clearInterval(interval63);
+                clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlTravelLoc_ctl00_InsertButtonTravelLoc');
+                $('#J_autowritetips').text('添加在美期间计划访问的地点名称4[英文]隐藏表单');
+                var interval631 = setInterval(function(){
+                  if($('#ctl00_SiteContentPlaceHolder_FormView1_dtlTravelLoc_ctl03_tbxSPECTRAVEL_LOCATION').length){
+                    clearInterval(interval631);
+                    isClickVisitPlace4 = true
+                  }
+                }, 1000);
+              }
+            }, 1000);
+          } else {
+            isClickVisitPlace4 = true
+          }
+        };
+
+        if (_item.ColumnName === '请提供您在美期间计划访问的地点名称5[英文]') {
+          if (_item.Value) {
+            var interval64 = setInterval(function() {
+              if(isClickVisitPlace4){
+                clearInterval(interval64);
+                clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlTravelLoc_ctl00_InsertButtonTravelLoc');
+                $('#J_autowritetips').text('添加在美期间计划访问的地点名称5[英文]隐藏表单');
+                var interval641 = setInterval(function(){
+                  if($('#ctl00_SiteContentPlaceHolder_FormView1_dtlTravelLoc_ctl04_tbxSPECTRAVEL_LOCATION').length){
+                    clearInterval(interval641);
+                    isClickVisitPlace5 = true
+                  }
+                }, 1000);
+              }
+            }, 1000);
+          } else {
+            isClickVisitPlace5 = true
+          }
+        }
+      });
+    }
+  }, 1000);
+
+  var interval7 = setInterval(function(){
+    if(isClickVisitPlace5){
+      clearInterval(interval7);
+      $.map(_data.Pages[0].Values, function(_item) {
+        if(_item.ColumnName === '请提供您在美期间计划访问的地点名称[英文]' || _item.ColumnName === '请提供您在美期间计划访问的地点名称2[英文]' || _item.ColumnName === '请提供您在美期间计划访问的地点名称3[英文]' || _item.ColumnName === '请提供您在美期间计划访问的地点名称4[英文]' || _item.ColumnName === '请提供您在美期间计划访问的地点名称5[英文]'){
+          setVal(_thirdItem);
+        }
+      });
+      showFinish = true
+    }
+  }, 1000);
+
+
   // 填写完成,显示下一步按钮
   var intervalShowNext = setInterval(function() {
-    if (tripPayFinish) {
+    if (showFinish) {
       clearInterval(intervalShowNext);
 
       // 填写完成,显示下一步按钮
