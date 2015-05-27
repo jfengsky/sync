@@ -282,7 +282,7 @@ function Travel_Page(_data) {
       clearInterval(interval7);
       $.map(_data.Pages[0].Values, function(_item) {
         if(_item.ColumnName === '请提供您在美期间计划访问的地点名称[英文]' || _item.ColumnName === '请提供您在美期间计划访问的地点名称2[英文]' || _item.ColumnName === '请提供您在美期间计划访问的地点名称3[英文]' || _item.ColumnName === '请提供您在美期间计划访问的地点名称4[英文]' || _item.ColumnName === '请提供您在美期间计划访问的地点名称5[英文]'){
-          setVal(_thirdItem);
+          setVal(_item);
         }
       });
       showFinish = true
