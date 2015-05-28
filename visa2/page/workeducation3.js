@@ -201,9 +201,7 @@ function WorkEducation3_page(_data) {
       // 循环添加语言 首先判断2, 3, 4 ,5
       $.map(_data.Pages[0].Values, function(_languageItem) {
         if (_languageItem.ColumnName === '语言2名字[英文]') {
-          if (!_languageItem.Value) {
-            language21 = true
-          } else {
+          if (_languageItem.Value) {
             clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlLANGUAGES_ctl00_InsertButtonLANGUAGE');
             var interval21 = setInterval(function() {
               $('#J_autowritetips').text('正在添加语言2隐藏表单');
@@ -211,15 +209,17 @@ function WorkEducation3_page(_data) {
                 clearInterval(interval21);
                 language21 = true
               }
-            });
+            }, 1000);
+          } else {
+            language21 = true
           }
         };
 
         if (_languageItem.ColumnName === '语言3名字[英文]') {
-          if (_languageItem.Value) {
-            var interval22 = setInterval(function() {
-              if (language21) {
-                clearInterval(interval22);
+          var interval22 = setInterval(function() {
+            if (language21) {
+              clearInterval(interval22);
+              if (_languageItem.Value) {
                 clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlLANGUAGES_ctl00_InsertButtonLANGUAGE');
                 var interval23 = setInterval(function() {
                   if ($('#ctl00_SiteContentPlaceHolder_FormView1_dtlLANGUAGES_ctl02_tbxLANGUAGE_NAME').length) {
@@ -227,20 +227,21 @@ function WorkEducation3_page(_data) {
                     clearInterval(interval23);
                     language22 = true
                   }
-                });
+                }, 1000);
+              } else {
+                language22 = true
               }
-            }, 1000);
-          } else {
-            language22 = true
-          }
 
+            }
+          }, 1000);
         };
 
         if (_languageItem.ColumnName === '语言4名字[英文]') {
-          if (_languageItem.Value) {
-            var interval24 = setInterval(function() {
-              if (language22) {
-                clearInterval(interval24);
+
+          var interval24 = setInterval(function() {
+            if (language22) {
+              clearInterval(interval24);
+              if (_languageItem.Value) {
                 clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlLANGUAGES_ctl00_InsertButtonLANGUAGE');
                 var interval25 = setInterval(function() {
                   if ($('#ctl00_SiteContentPlaceHolder_FormView1_dtlLANGUAGES_ctl03_tbxLANGUAGE_NAME').length) {
@@ -248,20 +249,22 @@ function WorkEducation3_page(_data) {
                     clearInterval(interval25);
                     language23 = true
                   }
-                });
+                }, 1000);
+              } else {
+                language23 = true
               }
-            }, 1000);
-          } else {
-            language23 = true
-          }
+            }
+          }, 1000);
+
 
         }
 
         if (_languageItem.ColumnName === '语言5名字[英文]') {
-          if (_languageItem.Value) {
-            var interval26 = setInterval(function() {
-              if (language23) {
-                clearInterval(interval26);
+
+          var interval26 = setInterval(function() {
+            if (language23) {
+              clearInterval(interval26);
+              if (_languageItem.Value) {
                 clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlLANGUAGES_ctl00_InsertButtonLANGUAGE');
                 var interval27 = setInterval(function() {
                   if ($('#ctl00_SiteContentPlaceHolder_FormView1_dtlLANGUAGES_ctl04_tbxLANGUAGE_NAME').length) {
@@ -269,12 +272,13 @@ function WorkEducation3_page(_data) {
                     clearInterval(interval27);
                     language24 = true
                   }
-                });
+                }, 1000);
+              } else {
+                language24 = true
               }
-            }, 1000);
-          } else {
-            language24 = true
-          }
+            }
+          }, 1000);
+
 
         };
 
@@ -288,7 +292,7 @@ function WorkEducation3_page(_data) {
               }
             });
           }
-        });
+        }, 1000);
 
       })
 
@@ -299,15 +303,16 @@ function WorkEducation3_page(_data) {
 
   // 请列出您访问过的国家[英文]
   var interval300 = setInterval(function() {
-    if(visitCountry2){
+    if (visitCountry2) {
       clearInterval(interval300);
+      $('#J_autowritetips').text('添加您访问过的国家');
       $.map(_data.Pages[0].Values, function(_CountryItem) {
         if (_CountryItem.ColumnName === '请列出您访问过的国家2[英文]') {
-          if(_CountryItem.Value){
+          if (_CountryItem.Value) {
             clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlCountriesVisited_ctl00_InsertButtonCountriesVisited');
             $('#J_autowritetips').text('添加您访问过的国家2[英文]隐藏表单');
-            var interval71 = setInterval(function(){
-              if($('#ctl00_SiteContentPlaceHolder_FormView1_dtlCountriesVisited_ctl01_ddlCOUNTRIES_VISITED').length){
+            var interval71 = setInterval(function() {
+              if ($('#ctl00_SiteContentPlaceHolder_FormView1_dtlCountriesVisited_ctl01_ddlCOUNTRIES_VISITED').length) {
                 clearInterval(interval71);
                 visitCountry3 = true
               }
@@ -318,74 +323,80 @@ function WorkEducation3_page(_data) {
         };
 
         if (_CountryItem.ColumnName === '请列出您访问过的国家3[英文]') {
-          if(_CountryItem.Value){
-            var interval72 = setInterval(function(){
-              if(visitCountry3){
-                clearInterval(interval72);
-                clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlCountriesVisited_ctl00_InsertButtonCountriesVisited');
+
+          var interval72 = setInterval(function() {
+            if (visitCountry3) {
+              clearInterval(interval72);
+              if (_CountryItem.Value) {
+                clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlCountriesVisited_ctl01_InsertButtonCountriesVisited');
                 $('#J_autowritetips').text('添加您访问过的国家3[英文]隐藏表单');
-                var interval721 = setInterval(function(){
-                  if($('#ctl00_SiteContentPlaceHolder_FormView1_dtlCountriesVisited_ctl02_ddlCOUNTRIES_VISITED').length){
+                var interval721 = setInterval(function() {
+                  if ($('#ctl00_SiteContentPlaceHolder_FormView1_dtlCountriesVisited_ctl02_ddlCOUNTRIES_VISITED').length) {
                     clearInterval(interval721);
                     visitCountry4 = true
                   }
                 }, 1000);
+              } else {
+                visitCountry4 = true
               }
-            });
-          } else {
-            visitCountry4 = true
-          }
+            }
+          });
+
         };
 
         if (_CountryItem.ColumnName === '请列出您访问过的国家4[英文]') {
-          if(_CountryItem.Value){
-            var interval73 = setInterval(function(){
-              if(visitCountry4){
-                clearInterval(interval73);
-                clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlCountriesVisited_ctl00_InsertButtonCountriesVisited');
+
+          var interval73 = setInterval(function() {
+            if (visitCountry4) {
+              clearInterval(interval73);
+              if (_CountryItem.Value) {
+                clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlCountriesVisited_ctl02_InsertButtonCountriesVisited');
                 $('#J_autowritetips').text('添加您访问过的国家4[英文]隐藏表单');
-                var interval731 = setInterval(function(){
-                  if($('#ctl00_SiteContentPlaceHolder_FormView1_dtlCountriesVisited_ctl03_ddlCOUNTRIES_VISITED').length){
+                var interval731 = setInterval(function() {
+                  if ($('#ctl00_SiteContentPlaceHolder_FormView1_dtlCountriesVisited_ctl03_ddlCOUNTRIES_VISITED').length) {
                     clearInterval(interval731);
                     visitCountry5 = true
                   }
                 }, 1000);
+              } else {
+                visitCountry5 = true
               }
-            });
-          } else {
-            visitCountry5 = true
-          }
+            }
+          }, 1000);
+
         };
 
         if (_CountryItem.ColumnName === '请列出您访问过的国家5[英文]') {
-          if(_CountryItem.Value){
-            var interval74 = setInterval(function(){
-              if(visitCountry5){
-                clearInterval(interval74);
-                clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlCountriesVisited_ctl00_InsertButtonCountriesVisited');
+
+          var interval74 = setInterval(function() {
+            if (visitCountry5) {
+              clearInterval(interval74);
+              if (_CountryItem.Value) {
+                clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dtlCountriesVisited_ctl03_InsertButtonCountriesVisited');
                 $('#J_autowritetips').text('添加您访问过的国家5[英文]隐藏表单');
-                var interval741 = setInterval(function(){
-                  if($('#ctl00_SiteContentPlaceHolder_FormView1_dtlCountriesVisited_ctl04_ddlCOUNTRIES_VISITED').length){
+                var interval741 = setInterval(function() {
+                  if ($('#ctl00_SiteContentPlaceHolder_FormView1_dtlCountriesVisited_ctl04_ddlCOUNTRIES_VISITED').length) {
                     clearInterval(interval741);
                     visitCountry6 = true
                   }
                 }, 1000);
+              } else {
+                visitCountry6 = true
               }
-            });
-          } else {
-            visitCountry6 = true
-          }
+            }
+          }, 1000);
+
         };
 
       });
     }
   }, 1000);
-  
-  var interval8 = setInterval(function(){
-    if(visitCountry6){
+
+  var interval8 = setInterval(function() {
+    if (visitCountry6) {
       clearInterval(interval8);
       $.map(_data.Pages[0].Values, function(_item) {
-        if(_item.ColumnName === '请列出您访问过的国家2[英文]' || _item.ColumnName === '请列出您访问过的国家3[英文]' || _item.ColumnName === '请列出您访问过的国家4[英文]' || _item.ColumnName === '请列出您访问过的国家5[英文]'){
+        if (_item.ColumnName === '请列出您访问过的国家2[英文]' || _item.ColumnName === '请列出您访问过的国家3[英文]' || _item.ColumnName === '请列出您访问过的国家4[英文]' || _item.ColumnName === '请列出您访问过的国家5[英文]') {
           autoSelectValue(_item.ColumnName, _item);
         }
         isAllDown = true;

@@ -113,7 +113,7 @@ function TravelCompanions_Page(_data) {
                           clickEvent('#ctl00_SiteContentPlaceHolder_FormView1_dlTravelCompanions_ctl00_InsertButtonPrincipalPOT');
                           $('#J_autowritetips').text('正在添加随行人员5');
                           var interval5 = setInterval(function(){
-                            if($('#ctl00_SiteContentPlaceHolder_FormView1_dlTravelCompanions_ctl03_tbxSurname').length){
+                            if($('#ctl00_SiteContentPlaceHolder_FormView1_dlTravelCompanions_ctl04_tbxSurname').length){
                               clearInterval(interval5);
                               travellerClickFinish = true;
                             }
@@ -155,7 +155,7 @@ function TravelCompanions_Page(_data) {
         autoSelectValue('随行人员2和您的关系', _personItem);
         autoSelectValue('随行人员3和您的关系', _personItem);
         autoSelectValue('随行人员4和您的关系', _personItem);
-        autoSelectValue('随行人员5和您的关系', _personItem);
+        // autoSelectValue('随行人员5和您的关系', _personItem);
       });
       allFinish = true
     }
