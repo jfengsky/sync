@@ -155,7 +155,7 @@ function TravelCompanions_Page(_data) {
         autoSelectValue('随行人员2和您的关系', _personItem);
         autoSelectValue('随行人员3和您的关系', _personItem);
         autoSelectValue('随行人员4和您的关系', _personItem);
-        // autoSelectValue('随行人员5和您的关系', _personItem);
+        autoSelectValue('随行人员5和您的关系', _personItem);
       });
       allFinish = true
     }

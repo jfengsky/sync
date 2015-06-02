@@ -331,95 +331,98 @@ function showNext() {
  * @return
  */
 function renderData(_data, _times) {
-  var pageName = getQuery(_data.Pages[0].PageUrl, 'node');
+  var pageName;
   console.log('请求填写数据总耗时:' + _times + 'ms');
   if (_data.ErrorMsg) {
     alert(_data.ErrorMsg);
     return false
+  } else {
+    pageName = getQuery(_data.Pages[0].PageUrl, 'node');
+    switch (pageName) {
+
+      // 第一页
+      case 'Personal1':
+        Personal1_Page(_data);
+        break;
+
+        // 第二页
+      case 'Personal2':
+        Personal2_Page(_data);
+        break;
+
+        // 第三页
+      case 'AddressPhone':
+        AddressPhone_Page(_data);
+        break;
+
+        // 第四页
+      case 'PptVisa':
+        PptVisa_Page(_data);
+        break;
+
+        // 第五页
+      case 'Travel':
+        Travel_Page(_data);
+        break;
+
+        // 第六页
+      case 'TravelCompanions':
+        TravelCompanions_Page(_data);
+        break;
+
+        // 第七页
+      case 'PreviousUSTravel':
+        PreviousUSTravel_Page(_data);
+        break;
+
+        // 第八页
+      case 'USContact':
+        USContact_page(_data);
+        break;
+
+        // 第九页
+      case 'Relatives':
+        Relatives_page(_data);
+        break;
+      case 'DeceasedSpouse':
+        DeceasedSpouse_page(_data);
+        break;
+      case 'PrevSpouse':
+        PrevSpouse_page(_data);
+        break;
+      case 'Spouse':
+        Spouse_page(_data);
+        break;
+      case 'WorkEducation1':
+        WorkEducation1_page(_data);
+        break;
+      case 'WorkEducation2':
+        WorkEducation2_page(_data);
+        break;
+      case 'WorkEducation3':
+        WorkEducation3_page(_data);
+        break;
+      case 'SecurityandBackground1':
+        SecurityandBackground1_page(_data);
+        break;
+      case 'SecurityandBackground2':
+        SecurityandBackground2_page(_data);
+        break;
+      case 'SecurityandBackground3':
+        SecurityandBackground3_page(_data);
+        break;
+      case 'SecurityandBackground4':
+        SecurityandBackground4_page(_data);
+        break;
+      case 'SecurityandBackground5':
+        SecurityandBackground5_page(_data);
+        break;
+      case 'SignCertify':
+        SignCertify_page(_data);
+        break;
+    }
   }
-  switch (pageName) {
 
-    // 第一页
-    case 'Personal1':
-      Personal1_Page(_data);
-      break;
-
-      // 第二页
-    case 'Personal2':
-      Personal2_Page(_data);
-      break;
-
-      // 第三页
-    case 'AddressPhone':
-      AddressPhone_Page(_data);
-      break;
-
-      // 第四页
-    case 'PptVisa':
-      PptVisa_Page(_data);
-      break;
-
-      // 第五页
-    case 'Travel':
-      Travel_Page(_data);
-      break;
-
-      // 第六页
-    case 'TravelCompanions':
-      TravelCompanions_Page(_data);
-      break;
-
-      // 第七页
-    case 'PreviousUSTravel':
-      PreviousUSTravel_Page(_data);
-      break;
-
-      // 第八页
-    case 'USContact':
-      USContact_page(_data);
-      break;
-
-      // 第九页
-    case 'Relatives':
-      Relatives_page(_data);
-      break;
-    case 'DeceasedSpouse':
-      DeceasedSpouse_page(_data);
-      break;
-    case 'PrevSpouse':
-      PrevSpouse_page(_data);
-      break;
-    case 'Spouse':
-      Spouse_page(_data);
-      break;
-    case 'WorkEducation1':
-      WorkEducation1_page(_data);
-      break;
-    case 'WorkEducation2':
-      WorkEducation2_page(_data);
-      break;
-    case 'WorkEducation3':
-      WorkEducation3_page(_data);
-      break;
-    case 'SecurityandBackground1':
-      SecurityandBackground1_page(_data);
-      break;
-    case 'SecurityandBackground2':
-      SecurityandBackground2_page(_data);
-      break;
-    case 'SecurityandBackground3':
-      SecurityandBackground3_page(_data);
-      break;
-    case 'SecurityandBackground4':
-      SecurityandBackground4_page(_data);
-      break;
-    case 'SecurityandBackground5':
-      SecurityandBackground5_page(_data);
-      break;
-    case 'SignCertify':
-      SignCertify_page(_data);
-      break;
-  }
 
 };
 
