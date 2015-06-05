@@ -425,7 +425,9 @@ function renderData(_data, _times) {
 
 
 };
-
+$('body').delegate('#J_errclose', 'click', function(){
+    $('#J_erroverlay').remove();
+  })
 /**
  * 点击填写表单后的操作
  * @param  {Number} _orderId  订单id号
@@ -453,7 +455,8 @@ function autoInit(_orderId, _autowrite) {
   isAutoWrite = _autowrite;
   if (!_orderId) {
     // 只有填写页面才进行自动填写
-    alert('缺少签证订单id,无法自动填写!');
+    $('body').append('<div id="J_erroverlay" style="color:#f60;font-size: 12px;position:fixed;top:10px;right:10px;border:1px solid #f60; background:#fff; padding:10px; line-height:24px;width: 200px;text-align:center;z-index:10000"><a href="javascript:void(0)" id="J_errclose" style="font-size:14px;position:absolute;right:5px;top:0;text-decoration:none;color:#f60;">X</a>缺少签证订单id,无法自动填写!</div>');
+    // alert('缺少签证订单id,无法自动填写!');
   } else if (hasWarn && isAutoWrite) {
     writeVal(tempOrderId);
   }
