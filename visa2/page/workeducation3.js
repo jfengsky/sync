@@ -45,13 +45,17 @@ function WorkEducation3_page(_data) {
               if (_secItem.ColumnName === '宗族或者部落名称[英文]') {
                 $('#' + _secItem.FormId).val(_secItem.Value);
                 $('#J_autowritetips').text(_secItem.ColumnName);
-                clanClick = true;
+                setTimeout(function(){
+                  clanClick = true;
+                }, 2000);
               }
             });
           }
         }, 1000);
       } else {
-        clanClick = true;
+        setTimeout(function(){
+          clanClick = true;
+        }, 2000);
       }
     };
 
@@ -67,13 +71,17 @@ function WorkEducation3_page(_data) {
                 clearInterval(interval3);
                 $.map(_data.Pages[0].Values, function(_secItem) {
                   autoSelectValue('请列出您访问过的国家[英文]', _secItem);
-                  clicktravelOtherCountry = true;
+                  setTimeout(function(){
+                    clicktravelOtherCountry = true;
+                  },2000);
 
                 });
               }
             }, 1000);
           } else {
-            clicktravelOtherCountry = true;
+            setTimeout(function(){
+              clicktravelOtherCountry = true;
+            },2000);
           }
         }
       }, 2000);
@@ -93,13 +101,17 @@ function WorkEducation3_page(_data) {
                   if (_secItem.ColumnName === '机构名称[英文]') {
                     $('#' + _secItem.FormId).val(_secItem.Value);
                     $('#J_autowritetips').text(_secItem.ColumnName);
-                    professionalClick = true;
+                    setTimeout(function(){
+                      professionalClick = true;
+                    },2000);
                   }
                 });
               }
             }, 1000);
           } else {
-            professionalClick = true;
+            setTimeout(function(){
+              professionalClick = true;
+            },2000);
           }
         }
       }, 2000);
@@ -119,14 +131,17 @@ function WorkEducation3_page(_data) {
                   if (_secItem.ColumnName === '您是否具有特殊技能或接受过特殊培训，例如有关枪械、炸药、 核装置、 生物或化学方面的经验？说明[英文]') {
                     $('#' + _secItem.FormId).val(_secItem.Value);
                     $('#J_autowritetips').text(_secItem.ColumnName);
-                    professionalClick = true;
                   }
-                  skillClick = true;
+                  setTimeout(function(){
+                    skillClick = true;
+                  }, 2000);
                 });
               }
             }, 1000);
           } else {
-            skillClick = true
+            setTimeout(function(){
+              skillClick = true;
+            }, 2000);
           }
         }
       }, 2000)
@@ -156,12 +171,16 @@ function WorkEducation3_page(_data) {
                     });
                   };
                   autoSelectValue('服役国家/地区名称[英文]', _secItem);
-                  militaryClick = true;
+                  setTimeout(function(){
+                    militaryClick = true;
+                  }, 2000);
                 });
               }
             }, 1000);
           } else {
-            militaryClick = true
+            setTimeout(function(){
+              militaryClick = true;
+            }, 2000);
           }
         }
       }, 2000);
@@ -182,12 +201,16 @@ function WorkEducation3_page(_data) {
                     $('#' + _secItem.FormId).val(_secItem.Value);
                     $('#J_autowritetips').text(_secItem.ColumnName);
                   }
-                  servedClick = true;
+                  setTimeout(function(){
+                    servedClick = true;
+                  }, 2000);
                 });
               }
             }, 1000);
           } else {
-            servedClick = true
+            setTimeout(function(){
+              servedClick = true;
+            }, 2000);
           }
         }
       }, 2000);
@@ -196,7 +219,7 @@ function WorkEducation3_page(_data) {
   });
 
   var interval200 = setInterval(function() {
-    if (servedClick) {
+    if (clanClick && clicktravelOtherCountry && professionalClick && skillClick && militaryClick && servedClick) {
       clearInterval(interval200);
       // 循环添加语言 首先判断2, 3, 4 ,5
       $.map(_data.Pages[0].Values, function(_languageItem) {
