@@ -310,7 +310,9 @@ function WorkEducation3_page(_data) {
             clearInterval(interval28);
             $.map(_data.Pages[0].Values, function(_languageWriteItem) {
               if (_languageWriteItem.ColumnName === '语言名字[英文]' || _languageWriteItem.ColumnName === '语言2名字[英文]' || _languageWriteItem.ColumnName === '语言3名字[英文]' || _languageWriteItem.ColumnName === '语言4名字[英文]' || _languageWriteItem.ColumnName === '语言5名字[英文]') {
-                setVal(_languageWriteItem);
+                // setVal(_languageWriteItem);
+                $('#' + _languageWriteItem.FormId).val(_languageWriteItem.Value);
+                $('#J_autowritetips').text('正在一次性填写所有语言');
                 visitCountry2 = true
               }
             });
