@@ -66,10 +66,10 @@
         <section id="main">
         
   
-    <article id="post-NSSet和NSMutableSet" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-swift-Tuples-元祖-类型" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/05/16/NSSet和NSMutableSet/" class="article-date">
-  <time datetime="2015-05-16T13:26:21.000Z" itemprop="datePublished">2015-05-16</time>
+    <a href="/2015/06/18/swift-Tuples-元祖-类型/" class="article-date">
+  <time datetime="2015-06-18T05:33:12.000Z" itemprop="datePublished">2015-06-18</time>
 </a>
     
   </div>
@@ -80,7 +80,80 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/05/16/NSSet和NSMutableSet/">NSSet和NSMutableSet</a>
+      <a class="article-title" href="/2015/06/18/swift-Tuples-元祖-类型/">swift Tuples(元祖)类型</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>将多个不同的值集合成一个数据</li>
+<li>可以有任意多个值</li>
+<li>不同的值可以是不同的类型</li>
+</ul>
+<pre><code><span class="comment">// 声明一个元祖类型</span>
+<span class="keyword">let</span> tuplesTest:(<span class="type">Bool</span>, <span class="type">Int</span>, <span class="type">String</span>) = (<span class="built_in">false</span>, <span class="number">404</span>, <span class="string">"Not Found"</span>);
+
+<span class="comment">// 元祖类型示例</span>
+<span class="keyword">let</span> tuples1 = (<span class="built_in">false</span>, <span class="number">404</span>, <span class="string">"Not Found"</span>);
+<span class="comment">// key:value形式</span>
+<span class="keyword">let</span> tuples2 = (isSuccess: <span class="built_in">false</span>, errorCode: <span class="number">404</span>, errorMessage: <span class="string">"Not Found"</span>);
+
+<span class="comment">/* 
+ * 访问元祖中的数据
+*/</span>
+<span class="comment">// 1.通过定义常量访问</span>
+<span class="keyword">let</span> (isSuccess, errorCode, errorMessage) = tuples1;
+<span class="built_in">println</span>(isSuccess); <span class="comment">// -&gt; false</span>
+<span class="built_in">println</span>(errorCode); <span class="comment">// -&gt; 404</span>
+<span class="built_in">println</span>(errorMessage); <span class="comment">// -&gt; "Not Found"</span>
+
+<span class="comment">// 2.直接通过下标访问</span>
+<span class="built_in">println</span>(tuples1.<span class="number">0</span>); <span class="comment">// -&gt; false</span>
+<span class="built_in">println</span>(tuples1.<span class="number">1</span>); <span class="comment">// -&gt; 404</span>
+<span class="built_in">println</span>(tuples1.<span class="number">2</span>); <span class="comment">// -&gt; "Not Found"</span>
+
+<span class="comment">// 3.通过key来访问</span>
+<span class="built_in">println</span>(tuples2.isSuccess); <span class="comment">// -&gt; false</span>
+<span class="built_in">println</span>(tuples2.errorCode); <span class="comment">// -&gt; 404</span>
+<span class="built_in">println</span>(tuples2.errorMessage); <span class="comment">// -&gt; "Not Found"</span>
+
+<span class="comment">// 使用下划线 _ 忽略部分数值</span>
+<span class="keyword">let</span> (<span class="number">_</span>, <span class="number">_</span>, errorMessage2) = tuples1;
+<span class="built_in">println</span>(errorMessage2); <span class="comment">// -&gt; "Not Found"</span>
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.ieake.com/2015/06/18/swift-Tuples-元祖-类型/" data-id="cib1s06r70004mxvmeqjrh21l" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/元祖类型/">元祖类型</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-NSSet和NSMutableSet" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/05/17/NSSet和NSMutableSet/" class="article-date">
+  <time datetime="2015-05-17T11:41:56.000Z" itemprop="datePublished">2015-05-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/05/17/NSSet和NSMutableSet/">NSSet和NSMutableSet</a>
     </h1>
   
 
@@ -157,7 +230,7 @@ NSLog(@<span class="string">"set6: %@"</span>, <span class="built_in">set</span>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/05/16/NSSet和NSMutableSet/" data-id="ci9r2ic910006l3fnhx2i78pe" class="article-share-link">Share</a>
+      <a data-url="http://www.ieake.com/2015/05/17/NSSet和NSMutableSet/" data-id="cib1s06rf0009mxvmd5tjodgc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -264,7 +337,7 @@ id key = [enumerator nextObject];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/05/15/NSDictionary和NSMutableDictionary/" data-id="ci9r2ic9c0008l3fnqphbvqo7" class="article-share-link">Share</a>
+      <a data-url="http://www.ieake.com/2015/05/15/NSDictionary和NSMutableDictionary/" data-id="cib1s06rj000bmxvmebz98ta3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -389,7 +462,7 @@ id key = [enumerator nextObject];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/05/15/NSArray和NSMutableArray/" data-id="ci9r2ic7o0000l3fnaj0z2pbk" class="article-share-link">Share</a>
+      <a data-url="http://www.ieake.com/2015/05/15/NSArray和NSMutableArray/" data-id="cib1s06pt0000mxvm1txyiltr" class="article-share-link">Share</a>
       
       
     </footer>
@@ -546,7 +619,7 @@ range<span class="variable">.length</span> = <span class="number">3</span>;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/05/14/NSString/" data-id="ci9r2ic900005l3fnvlw6xx1y" class="article-share-link">Share</a>
+      <a data-url="http://www.ieake.com/2015/05/14/NSString/" data-id="cib1s06rd0008mxvm3g18rle7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -603,7 +676,7 @@ range<span class="variable">.length</span> = <span class="number">3</span>;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/05/08/NSNumber/" data-id="ci9r2ic930007l3fnvg8gvlnx" class="article-share-link">Share</a>
+      <a data-url="http://www.ieake.com/2015/05/08/NSNumber/" data-id="cib1s06rh000amxvm5lr5ohbr" class="article-share-link">Share</a>
       
       
     </footer>
@@ -648,7 +721,7 @@ range<span class="variable">.length</span> = <span class="number">3</span>;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/04/08/hello-world/" data-id="ci9r2ic8y0004l3fnkqb33n9s" class="article-share-link">Share</a>
+      <a data-url="http://www.ieake.com/2015/04/08/hello-world/" data-id="cib1s06ra0007mxvmqhvqxuc8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -689,7 +762,7 @@ range<span class="variable">.length</span> = <span class="number">3</span>;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/04/08/新的开始/" data-id="ci9r2ic8t0001l3fn3qsvhfqb" class="article-share-link">Share</a>
+      <a data-url="http://www.ieake.com/2015/04/08/新的开始/" data-id="cib1s06r20001mxvmuyeez8jw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -715,14 +788,28 @@ range<span class="variable">.length</span> = <span class="number">3</span>;
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/元祖类型/">元祖类型</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/元祖类型/" style="font-size: NaNpx;">元祖类型</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -734,7 +821,11 @@ range<span class="variable">.length</span> = <span class="number">3</span>;
       <ul>
         
           <li>
-            <a href="/2015/05/16/NSSet和NSMutableSet/">NSSet和NSMutableSet</a>
+            <a href="/2015/06/18/swift-Tuples-元祖-类型/">swift Tuples(元祖)类型</a>
+          </li>
+        
+          <li>
+            <a href="/2015/05/17/NSSet和NSMutableSet/">NSSet和NSMutableSet</a>
           </li>
         
           <li>
@@ -747,10 +838,6 @@ range<span class="variable">.length</span> = <span class="number">3</span>;
         
           <li>
             <a href="/2015/05/14/NSString/">NSString</a>
-          </li>
-        
-          <li>
-            <a href="/2015/05/08/NSNumber/">NSNumber</a>
           </li>
         
       </ul>

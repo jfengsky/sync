@@ -3,17 +3,47 @@
 <head>
   <meta charset="utf-8">
   
-  <title>新的开始 | 枫之舞</title>
+  <title>swift Tuples(元祖)类型 | 枫之舞</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="利用github新搭的blog,以后就用这个了~~">
+  <meta name="description" content="将多个不同的值集合成一个数据
+可以有任意多个值
+不同的值可以是不同的类型
+
+// 声明一个元祖类型
+let tuplesTest:(Bool, Int, String) = (false, 404, &quot;Not Found&quot;);
+
+// 元祖类型示例
+let tuples1 = (false, 404, &quot;Not Found&quot;);
+// key:value形式
+let tuples2 = (isSu">
 <meta property="og:type" content="article">
-<meta property="og:title" content="新的开始">
-<meta property="og:url" content="http://www.ieake.com/2015/04/08/新的开始/index.html">
+<meta property="og:title" content="swift Tuples(元祖)类型">
+<meta property="og:url" content="http://www.ieake.com/2015/06/18/swift-Tuples-元祖-类型/index.html">
 <meta property="og:site_name" content="枫之舞">
-<meta property="og:description" content="利用github新搭的blog,以后就用这个了~~">
+<meta property="og:description" content="将多个不同的值集合成一个数据
+可以有任意多个值
+不同的值可以是不同的类型
+
+// 声明一个元祖类型
+let tuplesTest:(Bool, Int, String) = (false, 404, &quot;Not Found&quot;);
+
+// 元祖类型示例
+let tuples1 = (false, 404, &quot;Not Found&quot;);
+// key:value形式
+let tuples2 = (isSu">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="新的开始">
-<meta name="twitter:description" content="利用github新搭的blog,以后就用这个了~~">
+<meta name="twitter:title" content="swift Tuples(元祖)类型">
+<meta name="twitter:description" content="将多个不同的值集合成一个数据
+可以有任意多个值
+不同的值可以是不同的类型
+
+// 声明一个元祖类型
+let tuplesTest:(Bool, Int, String) = (false, 404, &quot;Not Found&quot;);
+
+// 元祖类型示例
+let tuples1 = (false, 404, &quot;Not Found&quot;);
+// key:value形式
+let tuples2 = (isSu">
   
     <link rel="alternative" href="/atom.xml" title="枫之舞" type="application/atom+xml">
   
@@ -64,16 +94,12 @@
 </header>
       <div class="outer">
         <section id="main">
-        <article id="post-新的开始" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-swift-Tuples-元祖-类型" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/04/08/新的开始/" class="article-date">
-  <time datetime="2015-04-08T12:14:06.000Z" itemprop="datePublished">2015-04-08</time>
+    <a href="/2015/06/18/swift-Tuples-元祖-类型/" class="article-date">
+  <time datetime="2015-06-18T05:33:12.000Z" itemprop="datePublished">2015-06-18</time>
 </a>
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/日志/">日志</a>
-  </div>
-
   </div>
   <div class="article-inner">
     
@@ -82,7 +108,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      新的开始
+      swift Tuples(元祖)类型
     </h1>
   
 
@@ -90,29 +116,61 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>利用github新搭的blog,以后就用这个了~~</p>
+        <ul>
+<li>将多个不同的值集合成一个数据</li>
+<li>可以有任意多个值</li>
+<li>不同的值可以是不同的类型</li>
+</ul>
+<pre><code><span class="comment">// 声明一个元祖类型</span>
+<span class="keyword">let</span> tuplesTest:(<span class="type">Bool</span>, <span class="type">Int</span>, <span class="type">String</span>) = (<span class="built_in">false</span>, <span class="number">404</span>, <span class="string">"Not Found"</span>);
 
+<span class="comment">// 元祖类型示例</span>
+<span class="keyword">let</span> tuples1 = (<span class="built_in">false</span>, <span class="number">404</span>, <span class="string">"Not Found"</span>);
+<span class="comment">// key:value形式</span>
+<span class="keyword">let</span> tuples2 = (isSuccess: <span class="built_in">false</span>, errorCode: <span class="number">404</span>, errorMessage: <span class="string">"Not Found"</span>);
+
+<span class="comment">/* 
+ * 访问元祖中的数据
+*/</span>
+<span class="comment">// 1.通过定义常量访问</span>
+<span class="keyword">let</span> (isSuccess, errorCode, errorMessage) = tuples1;
+<span class="built_in">println</span>(isSuccess); <span class="comment">// -&gt; false</span>
+<span class="built_in">println</span>(errorCode); <span class="comment">// -&gt; 404</span>
+<span class="built_in">println</span>(errorMessage); <span class="comment">// -&gt; "Not Found"</span>
+
+<span class="comment">// 2.直接通过下标访问</span>
+<span class="built_in">println</span>(tuples1.<span class="number">0</span>); <span class="comment">// -&gt; false</span>
+<span class="built_in">println</span>(tuples1.<span class="number">1</span>); <span class="comment">// -&gt; 404</span>
+<span class="built_in">println</span>(tuples1.<span class="number">2</span>); <span class="comment">// -&gt; "Not Found"</span>
+
+<span class="comment">// 3.通过key来访问</span>
+<span class="built_in">println</span>(tuples2.isSuccess); <span class="comment">// -&gt; false</span>
+<span class="built_in">println</span>(tuples2.errorCode); <span class="comment">// -&gt; 404</span>
+<span class="built_in">println</span>(tuples2.errorMessage); <span class="comment">// -&gt; "Not Found"</span>
+
+<span class="comment">// 使用下划线 _ 忽略部分数值</span>
+<span class="keyword">let</span> (<span class="number">_</span>, <span class="number">_</span>, errorMessage2) = tuples1;
+<span class="built_in">println</span>(errorMessage2); <span class="comment">// -&gt; "Not Found"</span>
+</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/04/08/新的开始/" data-id="cib1s06r20001mxvmuyeez8jw" class="article-share-link">Share</a>
+      <a data-url="http://www.ieake.com/2015/06/18/swift-Tuples-元祖-类型/" data-id="cib1s06r70004mxvmeqjrh21l" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/元祖类型/">元祖类型</a></li></ul>
+
     </footer>
   </div>
   
     
 <nav id="article-nav">
   
-    <a href="/2015/04/08/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Hello hexo
-        
-      </div>
-    </a>
   
+    <a href="/2015/05/17/NSSet和NSMutableSet/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">NSSet和NSMutableSet</div>
+    </a>
   
   <div id="disqus_thread"></div>
   <script type="text/javascript">
