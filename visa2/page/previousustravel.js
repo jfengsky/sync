@@ -83,7 +83,7 @@ function PreviousUSTravel_Page(_data) {
 
                             autoNotApplyCheckbox('驾驶执照的号码未知的', _thirdItem);
 
-                            autoSelectValue('驾驶执照的州', _thirdItem);
+                            autoSelectValue('驾驶所属州[英文]', _thirdItem);
                             hasBeenInUS = true;
                           });
                         }
