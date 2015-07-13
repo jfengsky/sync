@@ -39,16 +39,6 @@ $(function() {
     }
   });
 
-  // $('#J_bind2').bind('click', function() {
-  //   chrome.tabs.create({
-  //     url: chrome.extension.getURL('https://ceac.state.gov/genniv/default.aspx'),
-  //     index: (1),
-  //     selected: false
-  //   }, function(tab) {
-
-  //   });
-  // });
-
   // orderid表单获得焦点时移除警告错误高亮
   $('#J_orderid').bind('focus', function() {
     $('#J_orderid_group').removeClass('has-warning')

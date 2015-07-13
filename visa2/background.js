@@ -5,14 +5,6 @@
  *
  */
 
-// var tempTabId = null;
-// chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-//   tempTabId = tabId;
-// });
-// chrome.tabs.onSelectionChanged.addListener(function(tabId, selectInfo) {
-//   tempTabId = tabId;
-// });
-
 // 由于公司不支持https, 所以只能用后台脚本绕过这个限制去请求数据,然后发送到前台
 chrome.extension.onMessage.addListener(function(objRequest, _, sendResponse) {
 
