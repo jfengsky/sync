@@ -1,0 +1,112 @@
+.market{
+  width: 864px;
+  height: 280px;
+  border: 1px solid #e8e8e8;
+  padding: 15px 12px;
+}
+.market:hover{
+  border: 1px solid #f60;
+}
+
+.market-left{
+  float: left;
+}
+.left-top{
+  height: 22px;
+  border-left: 2px solid #f60;
+  margin-left: -13px;
+}
+.market:hover .left-top{
+  border:none;
+}
+
+.left-top h3{
+  padding-left: 13px;
+  font-size: 13px;
+  font-weight: bold;
+  float: left;
+  line-height: 22px;
+}
+.left-top p{
+  padding-left: 6px;
+  padding-right: 14px;
+  margin-left: 9px;
+  float: left;
+  color: #bb5e14;
+  height: 18px;
+  line-height: 18px;
+  border: 1px solid #f1dfa8;
+  background-color: #f7f6d8;
+}
+
+.left-bottom{
+  margin-top: 12px;
+}
+.left-bottom li{
+  padding-top: 9px;
+  padding-bottom: 9px;
+
+}
+.left-bottom li a{
+  margin-right: 6px;
+
+}
+.left-bottom li a.red{
+  color: #f60;
+}
+.first {
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.market-right{
+  float: right;
+}
+
+
+.col1{
+  width: 135px;
+  float: left;
+  height: 279px;
+  
+}
+.col2{
+  width: 140px;
+  float: left;
+  height: 280px;
+  margin-right: 10px;
+  margin-left: 10px;
+  
+}
+
+.col-top,.col-bottom{
+  height: 135px;
+  width: 135px;
+  background: #333;
+}
+.col-top a, .col-bottom a{
+  position: relative;
+}
+
+.col-top a img, .col-bottom a img{
+  height: 100%;
+  width: 100%;
+}
+
+.col-top a span, .col-bottom a span{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: block;
+  height: 28px;
+  line-height: 28px;
+  width: 135px;
+  color: #fff;
+  background-color: #f60;
+  text-align: center;
+  opacity: 0.8;
+}
+
+.col-top-margin{
+  margin-bottom: 10px;
+}
