@@ -3,17 +3,41 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2015/4 | 枫之舞</title>
+  <title>swift UILabel | 枫之舞</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="www.ieake.com">
-<meta property="og:type" content="website">
-<meta property="og:title" content="枫之舞">
-<meta property="og:url" content="http://www.ieake.com/archives/2015/04/index.html">
+  <meta name="description" content="// 设置label位置和大小
+let textLabel = UILabel(frame:CGRectMake(0, 30, 300, 30));
+
+// 设置文本
+textLabel.text = &quot;测试label&quot;;
+
+// 设置背景颜色
+var redColor = UIColor(red:1.0,green:0,blue:0,alpha:1.0);
+textLabel.backgroun">
+<meta property="og:type" content="article">
+<meta property="og:title" content="swift UILabel">
+<meta property="og:url" content="http://www.ieake.com/2015/08/11/swift-UILabel/index.html">
 <meta property="og:site_name" content="枫之舞">
-<meta property="og:description" content="www.ieake.com">
+<meta property="og:description" content="// 设置label位置和大小
+let textLabel = UILabel(frame:CGRectMake(0, 30, 300, 30));
+
+// 设置文本
+textLabel.text = &quot;测试label&quot;;
+
+// 设置背景颜色
+var redColor = UIColor(red:1.0,green:0,blue:0,alpha:1.0);
+textLabel.backgroun">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="枫之舞">
-<meta name="twitter:description" content="www.ieake.com">
+<meta name="twitter:title" content="swift UILabel">
+<meta name="twitter:description" content="// 设置label位置和大小
+let textLabel = UILabel(frame:CGRectMake(0, 30, 300, 30));
+
+// 设置文本
+textLabel.text = &quot;测试label&quot;;
+
+// 设置背景颜色
+var redColor = UIColor(red:1.0,green:0,blue:0,alpha:1.0);
+textLabel.backgroun">
   
     <link rel="alternative" href="/atom.xml" title="枫之舞" type="application/atom+xml">
   
@@ -64,58 +88,91 @@
 </header>
       <div class="outer">
         <section id="main">
+        <article id="post-swift-UILabel" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/08/11/swift-UILabel/" class="article-date">
+  <time datetime="2015-08-11T05:22:59.000Z" itemprop="datePublished">2015-08-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
         
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2015/04/08/hello-world/" class="archive-article-date">
-  <time datetime="2015-04-08T13:21:59.000Z" itemprop="datePublished">4月 8</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/04/08/hello-world/">Hello hexo</a>
+    <h1 class="article-title" itemprop="name">
+      swift UILabel
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2015/04/08/新的开始/" class="archive-article-date">
-  <time datetime="2015-04-08T12:14:06.000Z" itemprop="datePublished">4月 8</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/04/08/新的开始/">新的开始</a>
-    </h1>
-  
+        <pre><code><span class="comment">// 设置label位置和大小</span>
+let textLabel = UILabel(<span class="string">frame:</span>CGRectMake(<span class="number">0</span>, <span class="number">30</span>, <span class="number">300</span>, <span class="number">30</span>));
 
-    </header>
+<span class="comment">// 设置文本</span>
+textLabel.text = <span class="string">"测试label"</span>;
+
+<span class="comment">// 设置背景颜色</span>
+var redColor = UIColor(<span class="string">red:</span><span class="number">1.0</span>,<span class="string">green:</span><span class="number">0</span>,<span class="string">blue:</span><span class="number">0</span>,<span class="string">alpha:</span><span class="number">1.0</span>);
+textLabel.backgroundColor = redColor;
+
+<span class="comment">// 设置文本对其方式</span>
+textLabel.textAlignment = NSTextAlignment.Center;
+
+<span class="comment">// 设置字体颜色</span>
+textLabel.textColor = UIColor.blueColor();
+
+<span class="comment">// 设置字体和大小</span>
+textLabel.font = UIFont(<span class="string">name:</span><span class="string">"Thonburi"</span>,<span class="string">size:</span><span class="number">30</span>);
+
+let Color1 = UIColor(<span class="string">red:</span><span class="number">255</span>,<span class="string">green:</span><span class="number">255</span>,<span class="string">blue:</span><span class="number">0</span>,<span class="string">alpha:</span><span class="number">1</span>);
+
+
+<span class="comment">// 把UILabel放入视图</span>
+self.view.addSubview(textLabel)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.ieake.com/2015/08/11/swift-UILabel/" data-id="cid6wjj9d000fknvmo12ii5ax" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/UILabel/">UILabel</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/06/18/swift-Optionals-可选值/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">swift Optionals(可选值)</div>
+    </a>
+  
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'ieake';
+      
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
 
         </section>
         

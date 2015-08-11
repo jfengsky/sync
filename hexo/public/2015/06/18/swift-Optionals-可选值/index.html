@@ -3,26 +3,59 @@
 <head>
   <meta charset="utf-8">
   
-  <title>NSSet和NSMutableSet | 枫之舞</title>
+  <title>swift Optionals(可选值) | 枫之舞</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="NSSet// 集合的创建
-NSSet *set1 = [NSSet setWithObjects:@&quot;1&quot;,@&quot;2&quot;, nil];
-NSSet *set2 = [[NSSet alloc] initWithObjects:@&quot;2&quot;,@&quot;3&quot;,@&quot;4&quot;,@&quot;5&quot;, nil];
-NSArray *array1 = [NSArray arrayWithObjects:@&quot;7&quot;,@&quot;8&quot;, @&quot;10&quot;,">
+  <meta name="description" content="声明后面加? 
+可选值不能进行强制类型转换,需要解包
+可选值后面加!来进行解包
+
+// 声明一个可选值
+let strA:String? = &quot;test&quot;;
+// 可选值解包
+let strB:String! = strA;
+
+var a:Int;
+// println(a); 报错, a没有初始化值
+
+var age:Int?;
+println(age); // -&amp;gt; nil
+age =">
 <meta property="og:type" content="article">
-<meta property="og:title" content="NSSet和NSMutableSet">
-<meta property="og:url" content="http://www.ieake.com/2015/05/17/NSSet和NSMutableSet/index.html">
+<meta property="og:title" content="swift Optionals(可选值)">
+<meta property="og:url" content="http://www.ieake.com/2015/06/18/swift-Optionals-可选值/index.html">
 <meta property="og:site_name" content="枫之舞">
-<meta property="og:description" content="NSSet// 集合的创建
-NSSet *set1 = [NSSet setWithObjects:@&quot;1&quot;,@&quot;2&quot;, nil];
-NSSet *set2 = [[NSSet alloc] initWithObjects:@&quot;2&quot;,@&quot;3&quot;,@&quot;4&quot;,@&quot;5&quot;, nil];
-NSArray *array1 = [NSArray arrayWithObjects:@&quot;7&quot;,@&quot;8&quot;, @&quot;10&quot;,">
+<meta property="og:description" content="声明后面加? 
+可选值不能进行强制类型转换,需要解包
+可选值后面加!来进行解包
+
+// 声明一个可选值
+let strA:String? = &quot;test&quot;;
+// 可选值解包
+let strB:String! = strA;
+
+var a:Int;
+// println(a); 报错, a没有初始化值
+
+var age:Int?;
+println(age); // -&amp;gt; nil
+age =">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="NSSet和NSMutableSet">
-<meta name="twitter:description" content="NSSet// 集合的创建
-NSSet *set1 = [NSSet setWithObjects:@&quot;1&quot;,@&quot;2&quot;, nil];
-NSSet *set2 = [[NSSet alloc] initWithObjects:@&quot;2&quot;,@&quot;3&quot;,@&quot;4&quot;,@&quot;5&quot;, nil];
-NSArray *array1 = [NSArray arrayWithObjects:@&quot;7&quot;,@&quot;8&quot;, @&quot;10&quot;,">
+<meta name="twitter:title" content="swift Optionals(可选值)">
+<meta name="twitter:description" content="声明后面加? 
+可选值不能进行强制类型转换,需要解包
+可选值后面加!来进行解包
+
+// 声明一个可选值
+let strA:String? = &quot;test&quot;;
+// 可选值解包
+let strB:String! = strA;
+
+var a:Int;
+// println(a); 报错, a没有初始化值
+
+var age:Int?;
+println(age); // -&amp;gt; nil
+age =">
   
     <link rel="alternative" href="/atom.xml" title="枫之舞" type="application/atom+xml">
   
@@ -73,10 +106,10 @@ NSArray *array1 = [NSArray arrayWithObjects:@&quot;7&quot;,@&quot;8&quot;, @&quo
 </header>
       <div class="outer">
         <section id="main">
-        <article id="post-NSSet和NSMutableSet" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-swift-Optionals-可选值" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/05/17/NSSet和NSMutableSet/" class="article-date">
-  <time datetime="2015-05-17T11:41:56.000Z" itemprop="datePublished">2015-05-17</time>
+    <a href="/2015/06/18/swift-Optionals-可选值/" class="article-date">
+  <time datetime="2015-06-18T06:06:26.000Z" itemprop="datePublished">2015-06-18</time>
 </a>
     
   </div>
@@ -87,7 +120,7 @@ NSArray *array1 = [NSArray arrayWithObjects:@&quot;7&quot;,@&quot;8&quot;, @&quo
         
   
     <h1 class="article-title" itemprop="name">
-      NSSet和NSMutableSet
+      swift Optionals(可选值)
     </h1>
   
 
@@ -95,97 +128,62 @@ NSArray *array1 = [NSArray arrayWithObjects:@&quot;7&quot;,@&quot;8&quot;, @&quo
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="NSSet">NSSet</h3><pre><code><span class="comment">// 集合的创建</span>
-<span class="built_in">NSSet</span> *set1 = [<span class="built_in">NSSet</span> setWithObjects:<span class="string">@"1"</span>,<span class="string">@"2"</span>, <span class="literal">nil</span>];
-<span class="built_in">NSSet</span> *set2 = [[<span class="built_in">NSSet</span> alloc] initWithObjects:<span class="string">@"2"</span>,<span class="string">@"3"</span>,<span class="string">@"4"</span>,<span class="string">@"5"</span>, <span class="literal">nil</span>];
-<span class="built_in">NSArray</span> *array1 = [<span class="built_in">NSArray</span> arrayWithObjects:<span class="string">@"7"</span>,<span class="string">@"8"</span>, <span class="string">@"10"</span>,<span class="string">@"11"</span>, <span class="literal">nil</span>];
-<span class="built_in">NSSet</span> *set3 = [<span class="built_in">NSSet</span> setWithArray:array1];
-<span class="built_in">NSSet</span> *set4 = [<span class="built_in">NSSet</span> setWithSet:set2];
-<span class="built_in">NSLog</span>(<span class="string">@"set1: %@"</span>, set1);
-<span class="built_in">NSLog</span>(<span class="string">@"set2: %@"</span>, set2);
-<span class="built_in">NSLog</span>(<span class="string">@"set3: %@"</span>, set3);
-<span class="built_in">NSLog</span>(<span class="string">@"set4: %@"</span>, set4);
+        <ul>
+<li>声明后面加? </li>
+<li>可选值不能进行强制类型转换,需要解包</li>
+<li>可选值后面加!来进行解包</li>
+</ul>
+<pre><code><span class="comment">// 声明一个可选值</span>
+<span class="keyword">let</span> strA:<span class="type">String</span>? = <span class="string">"test"</span>;
+<span class="comment">// 可选值解包</span>
+<span class="keyword">let</span> strB:<span class="type">String</span>! = strA;
 
-<span class="comment">// 集合中元素的个数</span>
-<span class="keyword">int</span> count = [set2 count];
-<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, count);
+<span class="keyword">var</span> a:<span class="type">Int</span>;
+<span class="comment">// println(a); 报错, a没有初始化值</span>
 
-<span class="comment">// 将集合返回一个数组</span>
-<span class="built_in">NSArray</span> *objects = [set1 allObjects];
-<span class="built_in">NSLog</span>(<span class="string">@"objects : %@"</span>, objects);
+<span class="keyword">var</span> age:<span class="type">Int</span>?;
+<span class="built_in">println</span>(age); <span class="comment">// -&gt; nil</span>
+age = <span class="number">12</span>;
+<span class="built_in">println</span>(age); <span class="comment">// -&gt; Optional(12) 表示可选值12</span>
 
-<span class="comment">// 获取集合中任意一个对象</span>
-<span class="keyword">id</span> object = [set2 anyObject];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, object);
+<span class="keyword">if</span> age != <span class="built_in">nil</span> {
+    <span class="built_in">println</span>(<span class="string">"you age is <span class="subst">\(age)</span>"</span>); <span class="comment">// -&gt; you age is Optional(12)</span>
 
-<span class="comment">// 集合是否包含某个元素</span>
-<span class="built_in">BOOL</span> isContain = [set2 containsObject:<span class="string">@"3"</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, isContain);
+    <span class="comment">// 把可选值转化为可定有值(可选值的解包)</span>
+    <span class="built_in">println</span>(<span class="string">"you age is <span class="subst">\(age!)</span>"</span>); <span class="comment">// -&gt; you age is 12</span>
+}
 
-<span class="comment">// 集合间是否存在交集</span>
-<span class="built_in">BOOL</span> isIntersect = [set1 intersectsSet:set2];
-<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, isIntersect);
 
-<span class="comment">// 集合是否另一个集合匹配</span>
-<span class="built_in">BOOL</span> isEqual = [set1 isEqualToSet:set2];
-<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, isEqual);
-
-<span class="comment">// 集合是否是另一个集合的子集</span>
-<span class="built_in">BOOL</span> isSub = [set1 isSubsetOfSet:set2];
-<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, isSub);
-
-<span class="comment">// 追加新的集合</span>
-<span class="built_in">NSSet</span> *set5 = [<span class="built_in">NSSet</span> setWithObjects:<span class="string">@"one"</span>, <span class="literal">nil</span>];
-<span class="built_in">NSSet</span> *appSet1 = [set5 setByAddingObject:<span class="string">@"two"</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, appSet1);
-
-<span class="built_in">NSSet</span> *appSet2 = [set5 setByAddingObjectsFromSet: set1];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, appSet2);
-
-<span class="built_in">NSSet</span> *appSet3 = [set5 setByAddingObjectsFromArray:array1];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, appSet3);
-</code></pre><h3 id="NSMutableSet">NSMutableSet</h3><pre><code>NSMutableSet *<span class="built_in">set</span>6 = [NSMutableSet <span class="built_in">set</span>WithObjects:@<span class="string">"1"</span>, @<span class="string">"2"</span>, @<span class="string">"a"</span> , nil];
-NSMutableSet *<span class="built_in">set</span>7 = [NSMutableSet <span class="built_in">set</span>WithObjects:@<span class="string">"1"</span>, @<span class="string">"3"</span>, @<span class="string">"a"</span> , nil];
-
-// 减去相同的元素
- [<span class="built_in">set</span>6 minusSet:<span class="built_in">set</span>7];
-
-// 取得两个集合的交集
- [<span class="built_in">set</span>6 intersectSet:<span class="built_in">set</span>7];
-
-// 两个集合的并集
- [<span class="built_in">set</span>6 unionSet:<span class="built_in">set</span>7];
-
-// 删除指定的对象
-[<span class="built_in">set</span>6 removeObject:@<span class="string">"2"</span>];
-
-NSLog(@<span class="string">"set6: %@"</span>, <span class="built_in">set</span>6);
+<span class="comment">// String(age); 报错,可选值不能强制进行类型转换</span>
+<span class="type">String</span>(age!); <span class="comment">// -&gt;12</span>
 </code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/05/17/NSSet和NSMutableSet/" data-id="cid6whf4g000cknvmym50rz50" class="article-share-link">Share</a>
+      <a data-url="http://www.ieake.com/2015/06/18/swift-Optionals-可选值/" data-id="cid6whf4a0007knvmw149h8sk" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/可选值/">可选值</a></li></ul>
+
     </footer>
   </div>
   
     
 <nav id="article-nav">
   
-    <a href="/2015/06/18/swift-Tuples-元祖-类型/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2015/08/11/swift-UILabel/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          swift Tuples(元祖)类型
+          swift UILabel
         
       </div>
     </a>
   
   
-    <a href="/2015/05/15/NSDictionary和NSMutableDictionary/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2015/06/18/swift-Tuples-元祖-类型/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">NSDictionary和NSMutableDictionary</div>
+      <div class="article-nav-title">swift Tuples(元祖)类型</div>
     </a>
   
   <div id="disqus_thread"></div>
