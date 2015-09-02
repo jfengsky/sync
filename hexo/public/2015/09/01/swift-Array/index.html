@@ -3,26 +3,50 @@
 <head>
   <meta charset="utf-8">
   
-  <title>NSSet和NSMutableSet | 枫之舞</title>
+  <title>swift Array | 枫之舞</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="NSSet// 集合的创建
-NSSet *set1 = [NSSet setWithObjects:@&quot;1&quot;,@&quot;2&quot;, nil];
-NSSet *set2 = [[NSSet alloc] initWithObjects:@&quot;2&quot;,@&quot;3&quot;,@&quot;4&quot;,@&quot;5&quot;, nil];
-NSArray *array1 = [NSArray arrayWithObjects:@&quot;7&quot;,@&quot;8&quot;, @&quot;10&quot;,">
+  <meta name="description" content="// 定义一个数组
+var array1 = [2, 3, 4, 5]
+
+var array2: Array = [2, 3, 4, 5]
+
+var array3: Array&amp;lt;Int&amp;gt; = [2, 3, 4, 5]
+
+// 推荐这种写法
+var array4: [Int] = [2, 3, 4, 5]
+
+// 数组元素可以有不同的类型
+var array5: Array&amp;lt;Any">
 <meta property="og:type" content="article">
-<meta property="og:title" content="NSSet和NSMutableSet">
-<meta property="og:url" content="http://www.ieake.com/2015/05/17/NSSet和NSMutableSet/index.html">
+<meta property="og:title" content="swift Array">
+<meta property="og:url" content="http://www.ieake.com/2015/09/01/swift-Array/index.html">
 <meta property="og:site_name" content="枫之舞">
-<meta property="og:description" content="NSSet// 集合的创建
-NSSet *set1 = [NSSet setWithObjects:@&quot;1&quot;,@&quot;2&quot;, nil];
-NSSet *set2 = [[NSSet alloc] initWithObjects:@&quot;2&quot;,@&quot;3&quot;,@&quot;4&quot;,@&quot;5&quot;, nil];
-NSArray *array1 = [NSArray arrayWithObjects:@&quot;7&quot;,@&quot;8&quot;, @&quot;10&quot;,">
+<meta property="og:description" content="// 定义一个数组
+var array1 = [2, 3, 4, 5]
+
+var array2: Array = [2, 3, 4, 5]
+
+var array3: Array&amp;lt;Int&amp;gt; = [2, 3, 4, 5]
+
+// 推荐这种写法
+var array4: [Int] = [2, 3, 4, 5]
+
+// 数组元素可以有不同的类型
+var array5: Array&amp;lt;Any">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="NSSet和NSMutableSet">
-<meta name="twitter:description" content="NSSet// 集合的创建
-NSSet *set1 = [NSSet setWithObjects:@&quot;1&quot;,@&quot;2&quot;, nil];
-NSSet *set2 = [[NSSet alloc] initWithObjects:@&quot;2&quot;,@&quot;3&quot;,@&quot;4&quot;,@&quot;5&quot;, nil];
-NSArray *array1 = [NSArray arrayWithObjects:@&quot;7&quot;,@&quot;8&quot;, @&quot;10&quot;,">
+<meta name="twitter:title" content="swift Array">
+<meta name="twitter:description" content="// 定义一个数组
+var array1 = [2, 3, 4, 5]
+
+var array2: Array = [2, 3, 4, 5]
+
+var array3: Array&amp;lt;Int&amp;gt; = [2, 3, 4, 5]
+
+// 推荐这种写法
+var array4: [Int] = [2, 3, 4, 5]
+
+// 数组元素可以有不同的类型
+var array5: Array&amp;lt;Any">
   
     <link rel="alternative" href="/atom.xml" title="枫之舞" type="application/atom+xml">
   
@@ -73,10 +97,10 @@ NSArray *array1 = [NSArray arrayWithObjects:@&quot;7&quot;,@&quot;8&quot;, @&quo
 </header>
       <div class="outer">
         <section id="main">
-        <article id="post-NSSet和NSMutableSet" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-swift-Array" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/05/17/NSSet和NSMutableSet/" class="article-date">
-  <time datetime="2015-05-17T11:41:56.000Z" itemprop="datePublished">2015-05-17</time>
+    <a href="/2015/09/01/swift-Array/" class="article-date">
+  <time datetime="2015-09-01T08:48:11.000Z" itemprop="datePublished">2015-09-01</time>
 </a>
     
   </div>
@@ -87,7 +111,7 @@ NSArray *array1 = [NSArray arrayWithObjects:@&quot;7&quot;,@&quot;8&quot;, @&quo
         
   
     <h1 class="article-title" itemprop="name">
-      NSSet和NSMutableSet
+      swift Array
     </h1>
   
 
@@ -95,97 +119,83 @@ NSArray *array1 = [NSArray arrayWithObjects:@&quot;7&quot;,@&quot;8&quot;, @&quo
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="NSSet">NSSet</h3><pre><code><span class="comment">// 集合的创建</span>
-<span class="built_in">NSSet</span> *set1 = [<span class="built_in">NSSet</span> setWithObjects:<span class="string">@"1"</span>,<span class="string">@"2"</span>, <span class="literal">nil</span>];
-<span class="built_in">NSSet</span> *set2 = [[<span class="built_in">NSSet</span> alloc] initWithObjects:<span class="string">@"2"</span>,<span class="string">@"3"</span>,<span class="string">@"4"</span>,<span class="string">@"5"</span>, <span class="literal">nil</span>];
-<span class="built_in">NSArray</span> *array1 = [<span class="built_in">NSArray</span> arrayWithObjects:<span class="string">@"7"</span>,<span class="string">@"8"</span>, <span class="string">@"10"</span>,<span class="string">@"11"</span>, <span class="literal">nil</span>];
-<span class="built_in">NSSet</span> *set3 = [<span class="built_in">NSSet</span> setWithArray:array1];
-<span class="built_in">NSSet</span> *set4 = [<span class="built_in">NSSet</span> setWithSet:set2];
-<span class="built_in">NSLog</span>(<span class="string">@"set1: %@"</span>, set1);
-<span class="built_in">NSLog</span>(<span class="string">@"set2: %@"</span>, set2);
-<span class="built_in">NSLog</span>(<span class="string">@"set3: %@"</span>, set3);
-<span class="built_in">NSLog</span>(<span class="string">@"set4: %@"</span>, set4);
+        <pre><code><span class="comment">// 定义一个数组</span>
+<span class="variable"><span class="keyword">var</span> array1</span> = [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]
 
-<span class="comment">// 集合中元素的个数</span>
-<span class="keyword">int</span> count = [set2 count];
-<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, count);
+<span class="variable"><span class="keyword">var</span> array2</span>: Array = [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]
 
-<span class="comment">// 将集合返回一个数组</span>
-<span class="built_in">NSArray</span> *objects = [set1 allObjects];
-<span class="built_in">NSLog</span>(<span class="string">@"objects : %@"</span>, objects);
+<span class="variable"><span class="keyword">var</span> array3</span>: Array<span class="type">&lt;Int&gt;</span> = [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]
 
-<span class="comment">// 获取集合中任意一个对象</span>
-<span class="keyword">id</span> object = [set2 anyObject];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, object);
+<span class="comment">// 推荐这种写法</span>
+<span class="variable"><span class="keyword">var</span> array4</span>: [<span class="typename">Int</span>] = [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]
 
-<span class="comment">// 集合是否包含某个元素</span>
-<span class="built_in">BOOL</span> isContain = [set2 containsObject:<span class="string">@"3"</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, isContain);
+<span class="comment">// 数组元素可以有不同的类型</span>
+<span class="variable"><span class="keyword">var</span> array5</span>: Array<span class="type">&lt;Any&gt;</span> = [<span class="number">1</span>, <span class="string">"string"</span>, <span class="literal">false</span>, <span class="number">2.3</span>]
+<span class="variable"><span class="keyword">var</span> array6</span> = [<span class="number">1</span>, <span class="string">"string"</span>, <span class="literal">false</span>, <span class="number">2.3</span>]
 
-<span class="comment">// 集合间是否存在交集</span>
-<span class="built_in">BOOL</span> isIntersect = [set1 intersectsSet:set2];
-<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, isIntersect);
+<span class="comment">// 判断数组是否为空</span>
+array1.isEmpty <span class="comment">//-&gt; false</span>
 
-<span class="comment">// 集合是否另一个集合匹配</span>
-<span class="built_in">BOOL</span> isEqual = [set1 isEqualToSet:set2];
-<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, isEqual);
+<span class="comment">// 数组元素的个数</span>
+array1.count <span class="comment">// -&gt; 4</span>
 
-<span class="comment">// 集合是否是另一个集合的子集</span>
-<span class="built_in">BOOL</span> isSub = [set1 isSubsetOfSet:set2];
-<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, isSub);
+array1[<span class="number">3</span>]
 
-<span class="comment">// 追加新的集合</span>
-<span class="built_in">NSSet</span> *set5 = [<span class="built_in">NSSet</span> setWithObjects:<span class="string">@"one"</span>, <span class="literal">nil</span>];
-<span class="built_in">NSSet</span> *appSet1 = [set5 setByAddingObject:<span class="string">@"two"</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, appSet1);
+<span class="comment">// 向数组末尾加入元素</span>
+array5.append(<span class="string">"d"</span>)
+array5 += [<span class="number">6</span>]
 
-<span class="built_in">NSSet</span> *appSet2 = [set5 setByAddingObjectsFromSet: set1];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, appSet2);
+<span class="comment">// 向数组任意位置插入元素</span>
+array1.insert(<span class="number">1</span>, atIndex: <span class="number">0</span>)
 
-<span class="built_in">NSSet</span> *appSet3 = [set5 setByAddingObjectsFromArray:array1];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, appSet3);
-</code></pre><h3 id="NSMutableSet">NSMutableSet</h3><pre><code>NSMutableSet *<span class="built_in">set</span>6 = [NSMutableSet <span class="built_in">set</span>WithObjects:@<span class="string">"1"</span>, @<span class="string">"2"</span>, @<span class="string">"a"</span> , nil];
-NSMutableSet *<span class="built_in">set</span>7 = [NSMutableSet <span class="built_in">set</span>WithObjects:@<span class="string">"1"</span>, @<span class="string">"3"</span>, @<span class="string">"a"</span> , nil];
+<span class="comment">// 修改数组的元素的值</span>
+array1[<span class="number">2</span>] = <span class="number">9</span>
 
-// 减去相同的元素
- [<span class="built_in">set</span>6 minusSet:<span class="built_in">set</span>7];
+<span class="comment">// 删除数组某个元素</span>
+array1.removeLast()
+array1.removeAtIndex(<span class="number">0</span>)
+<span class="comment">// array1.removeAll(是否保持容量)</span>
 
-// 取得两个集合的交集
- [<span class="built_in">set</span>6 intersectSet:<span class="built_in">set</span>7];
+<span class="comment">// Range</span>
+<span class="variable"><span class="keyword">var</span> range</span>: Range<span class="type">&lt;Int&gt;</span> = <span class="number">0.</span>.<span class="type">&lt;3                     // -&gt;</span> <span class="number">1.</span>.<span class="type">&lt;3
+var range2: Range&lt;Int&gt;</span> = Range(start: <span class="number">0</span>, end: <span class="number">3</span>)  <span class="comment">// -&gt; 1..&lt;3</span>
+<span class="variable"><span class="keyword">var</span> range3</span> = <span class="number">0.</span>..<span class="number">2</span>                                <span class="comment">// -&gt; 1..&lt;3</span>
 
-// 两个集合的并集
- [<span class="built_in">set</span>6 unionSet:<span class="built_in">set</span>7];
+<span class="comment">// 数组的批量操作</span>
+array4[<span class="number">0.</span>..<span class="number">2</span>] <span class="comment">//批量访问</span>
+array4[<span class="number">0.</span>..<span class="number">1</span>] = [<span class="number">9</span>,<span class="number">9</span>,<span class="number">9</span>,<span class="number">9</span>] <span class="comment">// 可以修改任意个数</span>
+<span class="comment">// array4.replaceRange(Range(start: 0, end: 2), with: [9,9,9,9]) // 这个和上面是等价的</span>
+<span class="comment">// array4.replaceRange(Range(0..&lt;2, with: [9,9,9,9])</span>
 
-// 删除指定的对象
-[<span class="built_in">set</span>6 removeObject:@<span class="string">"2"</span>];
+<span class="comment">//数组的遍历</span>
+<span class="keyword">for</span> elem <span class="keyword">in</span> array4 {
+  println(elem)
+}
 
-NSLog(@<span class="string">"set6: %@"</span>, <span class="built_in">set</span>6);
+<span class="comment">// 枚举方法遍历</span>
+<span class="keyword">for</span> (index, value) <span class="keyword">in</span> enumerate(array4) {
+  println(index)
+  println(value)
+}
 </code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/05/17/NSSet和NSMutableSet/" data-id="cie14dz4d000k41vmymle830w" class="article-share-link">Share</a>
+      <a data-url="http://www.ieake.com/2015/09/01/swift-Array/" data-id="cie14dz46000f41vm48mivbb2" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/swift-Array/">swift Array</a></li></ul>
+
     </footer>
   </div>
   
     
 <nav id="article-nav">
   
-    <a href="/2015/06/18/swift-Tuples-元祖-类型/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          swift Tuples(元祖)类型
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/05/15/NSDictionary和NSMutableDictionary/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2015/09/01/可选值-可选类型/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">NSDictionary和NSMutableDictionary</div>
+      <div class="article-nav-title">可选值,可选类型</div>
     </a>
   
   <div id="disqus_thread"></div>
