@@ -3,17 +3,71 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2015/6 | 枫之舞</title>
+  <title>swift Dictionary 字典 | 枫之舞</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="www.ieake.com">
-<meta property="og:type" content="website">
-<meta property="og:title" content="枫之舞">
-<meta property="og:url" content="http://www.ieake.com/archives/2015/06/index.html">
+  <meta name="description" content="/*
+ *定义一个字典
+ */
+
+// 完整严格定义一个字典
+var dict: Dictionary&amp;lt;String,String&amp;gt; = [&quot;apple&quot;: &quot;苹果&quot;, &quot;bag&quot;:&quot;包&quot;]
+
+// 简单定义一个字典
+var dict2 = [:]
+
+// 字典元素个数
+dict.count
+
+dict[&quot;apple&quot;]
+
+// 更新值
+dict[&quot;bag&quot;] = &quot;包包&quot;
+
+// 更">
+<meta property="og:type" content="article">
+<meta property="og:title" content="swift Dictionary 字典">
+<meta property="og:url" content="http://www.ieake.com/2015/09/02/swift-Dictionary-字典/index.html">
 <meta property="og:site_name" content="枫之舞">
-<meta property="og:description" content="www.ieake.com">
+<meta property="og:description" content="/*
+ *定义一个字典
+ */
+
+// 完整严格定义一个字典
+var dict: Dictionary&amp;lt;String,String&amp;gt; = [&quot;apple&quot;: &quot;苹果&quot;, &quot;bag&quot;:&quot;包&quot;]
+
+// 简单定义一个字典
+var dict2 = [:]
+
+// 字典元素个数
+dict.count
+
+dict[&quot;apple&quot;]
+
+// 更新值
+dict[&quot;bag&quot;] = &quot;包包&quot;
+
+// 更">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="枫之舞">
-<meta name="twitter:description" content="www.ieake.com">
+<meta name="twitter:title" content="swift Dictionary 字典">
+<meta name="twitter:description" content="/*
+ *定义一个字典
+ */
+
+// 完整严格定义一个字典
+var dict: Dictionary&amp;lt;String,String&amp;gt; = [&quot;apple&quot;: &quot;苹果&quot;, &quot;bag&quot;:&quot;包&quot;]
+
+// 简单定义一个字典
+var dict2 = [:]
+
+// 字典元素个数
+dict.count
+
+dict[&quot;apple&quot;]
+
+// 更新值
+dict[&quot;bag&quot;] = &quot;包包&quot;
+
+// 更">
   
     <link rel="alternative" href="/atom.xml" title="枫之舞" type="application/atom+xml">
   
@@ -64,58 +118,124 @@
 </header>
       <div class="outer">
         <section id="main">
+        <article id="post-swift-Dictionary-字典" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/02/swift-Dictionary-字典/" class="article-date">
+  <time datetime="2015-09-02T02:38:51.000Z" itemprop="datePublished">2015-09-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
         
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2015/06/18/swift-Optionals-可选值/" class="archive-article-date">
-  <time datetime="2015-06-18T06:06:26.000Z" itemprop="datePublished">6月 18</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/06/18/swift-Optionals-可选值/">swift Optionals(可选值)</a>
+    <h1 class="article-title" itemprop="name">
+      swift Dictionary 字典
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2015/06/18/swift-Tuples-元祖-类型/" class="archive-article-date">
-  <time datetime="2015-06-18T05:33:12.000Z" itemprop="datePublished">6月 18</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/06/18/swift-Tuples-元祖-类型/">swift Tuples(元祖)类型</a>
-    </h1>
-  
+        <pre><code><span class="comment">/*
+ *定义一个字典
+ */</span>
 
-    </header>
+<span class="comment">// 完整严格定义一个字典</span>
+var dict: Dictionary&lt;<span class="keyword">String</span>,<span class="keyword">String</span>&gt; = [<span class="string">"apple"</span>: <span class="string">"苹果"</span>, <span class="string">"bag"</span>:<span class="string">"包"</span>]
+
+<span class="comment">// 简单定义一个字典</span>
+var dict2 = [:]
+
+<span class="comment">// 字典元素个数</span>
+dict.count
+
+dict[<span class="string">"apple"</span>]
+
+<span class="comment">// 更新值</span>
+dict[<span class="string">"bag"</span>] = <span class="string">"包包"</span>
+
+<span class="comment">// 更新键 返回nil</span>
+dict.updateValue(<span class="string">"大苹果"</span>, forKey: <span class="string">"apple"</span>)
+
+<span class="comment">// 当键不存在时会添加一个,返回nil</span>
+dict.updateValue(<span class="string">"电脑"</span>, forKey: <span class="string">"computer"</span>)
+
+<span class="comment">// 删除一个键,返回被删除的值</span>
+dict.removeValueForKey(<span class="string">"computer"</span>)
+
+<span class="comment">// 删除所有的值</span>
+<span class="comment">//dict.removeAll()</span>
+
+<span class="comment">/*
+ * 遍历字典
+ */</span>
+
+<span class="keyword">for</span> (<span class="variable">key</span>,value) in dict {
+  <span class="built_in">println</span>(<span class="variable">key</span>)
+  <span class="built_in">println</span>(value)
+}
+
+<span class="comment">// 只遍历key</span>
+<span class="keyword">for</span> <span class="variable">key</span> in dict.keys {
+  <span class="built_in">println</span>(<span class="variable">key</span>)
+}
+
+<span class="comment">// 只遍历value</span>
+<span class="keyword">for</span> value in dict.values {
+  <span class="built_in">println</span>(value)
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.ieake.com/2015/09/02/swift-Dictionary-字典/" data-id="ciecfluyp000ohjvmhmxplri8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/swift-字典/">swift,字典</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/09/02/break-continue/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          break continue
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/09/01/swift-Array/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">swift Array</div>
+    </a>
+  
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'ieake';
+      
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
 
         </section>
         

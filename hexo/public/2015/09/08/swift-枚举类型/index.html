@@ -3,50 +3,68 @@
 <head>
   <meta charset="utf-8">
   
-  <title>swift Array | 枫之舞</title>
+  <title>swift 枚举类型 | 枫之舞</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="// 定义一个数组
-var array1 = [2, 3, 4, 5]
+  <meta name="description" content="/**
+ * swift 枚举类型
+ */
 
-var array2: Array = [2, 3, 4, 5]
+// 声明枚举 下面两种方法等价
+enum Method {
+//  case Add
+//  case Sub
+//  case Mul
+//  case Div
+  case Add, Sub, Mul, Div
+}
 
-var array3: Array&amp;lt;Int&amp;gt; = [2, 3, 4, 5]
+// 使用枚举的两种写法
+var m0: Method = .Add
+var m1 = Method.Sub
 
-// 推荐这种写法
-var array4: [Int] = [2, 3, 4, 5]
-
-// 数组元素可以有不同的类型
-var array5: Array&amp;lt;Any">
+// switch">
 <meta property="og:type" content="article">
-<meta property="og:title" content="swift Array">
-<meta property="og:url" content="http://www.ieake.com/2015/09/01/swift-Array/index.html">
+<meta property="og:title" content="swift 枚举类型">
+<meta property="og:url" content="http://www.ieake.com/2015/09/08/swift-枚举类型/index.html">
 <meta property="og:site_name" content="枫之舞">
-<meta property="og:description" content="// 定义一个数组
-var array1 = [2, 3, 4, 5]
+<meta property="og:description" content="/**
+ * swift 枚举类型
+ */
 
-var array2: Array = [2, 3, 4, 5]
+// 声明枚举 下面两种方法等价
+enum Method {
+//  case Add
+//  case Sub
+//  case Mul
+//  case Div
+  case Add, Sub, Mul, Div
+}
 
-var array3: Array&amp;lt;Int&amp;gt; = [2, 3, 4, 5]
+// 使用枚举的两种写法
+var m0: Method = .Add
+var m1 = Method.Sub
 
-// 推荐这种写法
-var array4: [Int] = [2, 3, 4, 5]
-
-// 数组元素可以有不同的类型
-var array5: Array&amp;lt;Any">
+// switch">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="swift Array">
-<meta name="twitter:description" content="// 定义一个数组
-var array1 = [2, 3, 4, 5]
+<meta name="twitter:title" content="swift 枚举类型">
+<meta name="twitter:description" content="/**
+ * swift 枚举类型
+ */
 
-var array2: Array = [2, 3, 4, 5]
+// 声明枚举 下面两种方法等价
+enum Method {
+//  case Add
+//  case Sub
+//  case Mul
+//  case Div
+  case Add, Sub, Mul, Div
+}
 
-var array3: Array&amp;lt;Int&amp;gt; = [2, 3, 4, 5]
+// 使用枚举的两种写法
+var m0: Method = .Add
+var m1 = Method.Sub
 
-// 推荐这种写法
-var array4: [Int] = [2, 3, 4, 5]
-
-// 数组元素可以有不同的类型
-var array5: Array&amp;lt;Any">
+// switch">
   
     <link rel="alternative" href="/atom.xml" title="枫之舞" type="application/atom+xml">
   
@@ -97,10 +115,10 @@ var array5: Array&amp;lt;Any">
 </header>
       <div class="outer">
         <section id="main">
-        <article id="post-swift-Array" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-swift-枚举类型" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/09/01/swift-Array/" class="article-date">
-  <time datetime="2015-09-01T08:48:11.000Z" itemprop="datePublished">2015-09-01</time>
+    <a href="/2015/09/08/swift-枚举类型/" class="article-date">
+  <time datetime="2015-09-08T06:17:35.000Z" itemprop="datePublished">2015-09-08</time>
 </a>
     
   </div>
@@ -111,7 +129,7 @@ var array5: Array&amp;lt;Any">
         
   
     <h1 class="article-title" itemprop="name">
-      swift Array
+      swift 枚举类型
     </h1>
   
 
@@ -119,72 +137,92 @@ var array5: Array&amp;lt;Any">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <pre><code><span class="comment">// 定义一个数组</span>
-<span class="variable"><span class="keyword">var</span> array1</span> = [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]
+        <pre><code><span class="comment">/**
+ * swift 枚举类型
+ */</span>
 
-<span class="variable"><span class="keyword">var</span> array2</span>: Array = [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]
-
-<span class="variable"><span class="keyword">var</span> array3</span>: Array<span class="type">&lt;Int&gt;</span> = [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]
-
-<span class="comment">// 推荐这种写法</span>
-<span class="variable"><span class="keyword">var</span> array4</span>: [<span class="typename">Int</span>] = [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]
-
-<span class="comment">// 数组元素可以有不同的类型</span>
-<span class="variable"><span class="keyword">var</span> array5</span>: Array<span class="type">&lt;Any&gt;</span> = [<span class="number">1</span>, <span class="string">"string"</span>, <span class="literal">false</span>, <span class="number">2.3</span>]
-<span class="variable"><span class="keyword">var</span> array6</span> = [<span class="number">1</span>, <span class="string">"string"</span>, <span class="literal">false</span>, <span class="number">2.3</span>]
-
-<span class="comment">// 判断数组是否为空</span>
-array1.isEmpty <span class="comment">//-&gt; false</span>
-
-<span class="comment">// 数组元素的个数</span>
-array1.count <span class="comment">// -&gt; 4</span>
-
-array1[<span class="number">3</span>]
-
-<span class="comment">// 向数组末尾加入元素</span>
-array5.append(<span class="string">"d"</span>)
-array5 += [<span class="number">6</span>]
-
-<span class="comment">// 向数组任意位置插入元素</span>
-array1.insert(<span class="number">1</span>, atIndex: <span class="number">0</span>)
-
-<span class="comment">// 修改数组的元素的值</span>
-array1[<span class="number">2</span>] = <span class="number">9</span>
-
-<span class="comment">// 删除数组某个元素</span>
-array1.removeLast()
-array1.removeAtIndex(<span class="number">0</span>)
-<span class="comment">// array1.removeAll(是否保持容量)</span>
-
-<span class="comment">// Range</span>
-<span class="variable"><span class="keyword">var</span> range</span>: Range<span class="type">&lt;Int&gt;</span> = <span class="number">0.</span>.<span class="type">&lt;3                     // -&gt;</span> <span class="number">1.</span>.<span class="type">&lt;3
-var range2: Range&lt;Int&gt;</span> = Range(start: <span class="number">0</span>, end: <span class="number">3</span>)  <span class="comment">// -&gt; 1..&lt;3</span>
-<span class="variable"><span class="keyword">var</span> range3</span> = <span class="number">0.</span>..<span class="number">2</span>                                <span class="comment">// -&gt; 1..&lt;3</span>
-
-<span class="comment">// 数组的批量操作</span>
-array4[<span class="number">0.</span>..<span class="number">2</span>] <span class="comment">//批量访问</span>
-array4[<span class="number">0.</span>..<span class="number">1</span>] = [<span class="number">9</span>,<span class="number">9</span>,<span class="number">9</span>,<span class="number">9</span>] <span class="comment">// 可以修改任意个数</span>
-<span class="comment">// array4.replaceRange(Range(start: 0, end: 2), with: [9,9,9,9]) // 这个和上面是等价的</span>
-<span class="comment">// array4.replaceRange(Range(0..&lt;2, with: [9,9,9,9])</span>
-
-<span class="comment">//数组的遍历</span>
-<span class="keyword">for</span> elem <span class="keyword">in</span> array4 {
-  println(elem)
+<span class="comment">// 声明枚举 下面两种方法等价</span>
+<span class="class"><span class="keyword">enum</span> <span class="title">Method</span> </span>{
+<span class="comment">//  case Add</span>
+<span class="comment">//  case Sub</span>
+<span class="comment">//  case Mul</span>
+<span class="comment">//  case Div</span>
+  <span class="keyword">case</span> <span class="type">Add</span>, <span class="type">Sub</span>, <span class="type">Mul</span>, <span class="type">Div</span>
 }
 
-<span class="comment">// 枚举方法遍历</span>
-<span class="keyword">for</span> (index, value) <span class="keyword">in</span> enumerate(array4) {
-  println(index)
-  println(value)
+<span class="comment">// 使用枚举的两种写法</span>
+<span class="keyword">var</span> m0: <span class="type">Method</span> = .<span class="type">Add</span>
+<span class="keyword">var</span> m1 = <span class="type">Method</span>.<span class="type">Sub</span>
+
+<span class="comment">// switch匹配枚举</span>
+<span class="func"><span class="keyword">func</span> <span class="title">chooseMethod</span><span class="params">(op: Method)</span></span> -&gt; (<span class="type">Double</span>, <span class="type">Double</span>) -&gt; <span class="type">Double</span> {
+  <span class="keyword">switch</span> op {
+    <span class="keyword">case</span> .<span class="type">Add</span>:
+      <span class="func"><span class="keyword">func</span> <span class="title">add</span><span class="params">(a:Double, b:Double)</span></span> -&gt; <span class="type">Double</span> {
+        <span class="keyword">return</span> a + b
+      }
+      <span class="keyword">return</span> add
+    <span class="keyword">case</span> .<span class="type">Sub</span>:
+      <span class="keyword">return</span> {
+        (a:<span class="type">Double</span>, b:<span class="type">Double</span>) -&gt; <span class="type">Double</span> <span class="keyword">in</span>
+        <span class="keyword">return</span> a - b
+      }
+    <span class="keyword">case</span> .<span class="type">Mul</span>:
+      <span class="keyword">return</span> {
+        <span class="keyword">return</span> $<span class="number">0</span> * $<span class="number">1</span>
+      }
+    <span class="keyword">case</span> .<span class="type">Div</span>:
+      <span class="keyword">return</span> {
+        $<span class="number">0</span> / $<span class="number">1</span>
+      }
+<span class="comment">//  default:</span>
+<span class="comment">//    return { $0 / $1}</span>
+  }
 }
+
+<span class="keyword">let</span> val = chooseMethod(.<span class="type">Mul</span>)(<span class="number">30</span>, <span class="number">5</span>)
+
+<span class="comment">// 枚举的原始值</span>
+<span class="comment">// 可以为任意类型,整型可以不指定值,默认从0开始向后+1,其它类型声明时必须全部都指定值</span>
+<span class="class"><span class="keyword">enum</span> <span class="title">MethodInt</span>: <span class="title">Int</span> </span>{
+
+  <span class="comment">// 这里Add是0, Sub是1, Mul是2, Div是3</span>
+  <span class="comment">// case Add, Sub, Mul, Div</span>
+  <span class="keyword">case</span> <span class="type">Add</span> = <span class="number">5</span>, <span class="type">Sub</span> = <span class="number">9</span>, <span class="type">Mul</span>, <span class="type">Div</span>
+}
+
+<span class="class"><span class="keyword">enum</span> <span class="title">MethodStr</span>: <span class="title">String</span> </span>{
+  <span class="keyword">case</span> <span class="type">Add</span> = <span class="string">"add"</span>, <span class="type">Sub</span> = <span class="string">"sub"</span>, <span class="type">Mul</span> = <span class="string">"mul"</span>, <span class="type">Div</span> = <span class="string">"div"</span>
+}
+
+<span class="comment">// 获取枚举的原始值</span>
+<span class="type">MethodInt</span>.<span class="type">Sub</span>.rawValue
+<span class="type">Method</span>.<span class="type">Mul</span>.hashValue
+<span class="type">MethodStr</span>.<span class="type">Add</span>.rawValue
+
+
+<span class="comment">// 枚举关联值</span>
+<span class="comment">// 用元祖方式每个枚举可以设置多个关联值</span>
+<span class="class"><span class="keyword">enum</span> <span class="title">LineSegment</span> </span>{
+  <span class="keyword">case</span> <span class="type">StartAndEnd</span>(start: <span class="type">Double</span>, end:<span class="type">Double</span>)
+  <span class="keyword">case</span> <span class="type">StartAndPattern</span>(start: <span class="type">Double</span>, pattern: <span class="type">Double</span>)
+}
+<span class="keyword">var</span> lsd = <span class="type">LineSegment</span>.<span class="type">StartAndEnd</span>(start: <span class="number">10</span>, end: <span class="number">20</span>)
+<span class="keyword">switch</span> lsd {
+<span class="keyword">case</span> .<span class="type">StartAndEnd</span>(<span class="keyword">let</span> s, <span class="keyword">let</span> e):
+  <span class="built_in">println</span>(<span class="string">"<span class="subst">\(s)</span> -&gt; <span class="subst">\(e)</span>"</span>)
+<span class="keyword">case</span> .<span class="type">StartAndPattern</span>(<span class="keyword">let</span> s, <span class="keyword">let</span> len):
+  <span class="built_in">println</span>(<span class="string">"<span class="subst">\(s)</span> -&gt; <span class="subst">\(len)</span>"</span>)
+}
+<span class="comment">// -&gt; "10.0 -&gt; 20.0"</span>
 </code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/09/01/swift-Array/" data-id="ciecfluys000rhjvm7og0397f" class="article-share-link">Share</a>
+      <a data-url="http://www.ieake.com/2015/09/08/swift-枚举类型/" data-id="ciecfluyb000dhjvmhu3p31ux" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/swift-Array/">swift Array</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/枚举-enum/">枚举, enum</a></li></ul>
 
     </footer>
   </div>
@@ -192,19 +230,19 @@ array4[<span class="number">0.</span>..<span class="number">1</span>] = [<span c
     
 <nav id="article-nav">
   
-    <a href="/2015/09/02/swift-Dictionary-字典/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2015/09/08/swift-结构体/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          swift Dictionary 字典
+          swift 结构体
         
       </div>
     </a>
   
   
-    <a href="/2015/09/01/可选值-可选类型/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2015/09/02/break-continue/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">可选值,可选类型</div>
+      <div class="article-nav-title">break continue</div>
     </a>
   
   <div id="disqus_thread"></div>
