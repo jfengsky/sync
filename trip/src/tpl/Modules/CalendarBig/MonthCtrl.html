@@ -1,8 +1,0 @@
-<p>
-	{{#is MonthCount 2}}
-	<span class="border {{#is FirstMonthLineCount 2}}two{{else}}three{{/is}}_line">{{#is FirstMonthLineCount '>' 2}}{{YearInMaxMonth}}年<br>{{/is}}{{MonthFirst}}月</span>
-	<span class="{{#is FirstMonthLineCount 2}}three{{else}}two{{/is}}_line">{{#is FirstMonthLineCount '<=' 2}}{{YearInMaxMonth}}年<br>{{/is}}{{MonthSecond}}月</span>
-	{{else}}
-	<span>{{Year}}年<br>{{Month}}月</span>
-	{{/is}}
-</p>
