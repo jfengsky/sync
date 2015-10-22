@@ -439,7 +439,7 @@ function writeVal(_orderId, _visaInfoId) {
     sendParam = {},
     appId = $('#ctl00_lblAppID').text() || '';
   sendParam.visaorderid = _orderId;
-  sendParam.visaInfoId = _visaInfoId;
+  sendParam.visastufftypeid = _visaInfoId;
   sendParam.countryid = 1;
   sendParam.pageurl = location.href;
   sendParam.appId = appId;

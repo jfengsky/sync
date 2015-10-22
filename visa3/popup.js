@@ -24,11 +24,11 @@ $(function() {
       type: 'get',
       url: 'http://localhost:3001/VisaAutoCompleteVisaInfoList',
       data: {
-        orderId: localstorageOrderId
+        visaorderid: localstorageOrderId
       },
       dataType: 'json',
       success: function(_data) {
-        _opt.callback(_data)
+        _opt.callback(_data.VisaStuffInfoList)
       }
     });
   }
@@ -45,16 +45,16 @@ $(function() {
 
     //默认选中第一个材料
 
-    $.map(_data.data, function(_item) {
-      if(checkIndex === 'first' || _item.id === _visaInfoId){
+    $.map(_data, function(_item) {
+      if(checkIndex === 'first' || _item.VisaStuffTypeId === _visaInfoId){
         tpl += '<div class="radio"><label>' +
-        '<input type="radio" name="visaInfo" value="' + _item.id + '" checked="true"> ' + _item.name +
+        '<input type="radio" name="visaInfo" value="' + _item.VisaStuffTypeId + '" checked="true"> ' + _item.VisaStuffName +
         '</label></div>'
-        localStorage.setItem('visaInfoId', _item.id);
+        localStorage.setItem('visaInfoId', _item.VisaStuffTypeId);
         checkIndex = null;
       } else {
         tpl += '<div class="radio"><label>' +
-        '<input type="radio" name="visaInfo" value="' + _item.id + '"> ' + _item.name +
+        '<input type="radio" name="visaInfo" value="' + _item.VisaStuffTypeId + '"> ' + _item.VisaStuffName +
         '</label></div>'
       }
     })
@@ -77,9 +77,6 @@ $(function() {
 
     $('#J_setInfo').show();
 
-    // 自动填写功能可以使用
-    $('#J_autoWrite').prop('disabled', false);
-
     // 子订单号存入缓存
     localStorage.setItem('visaOrderId', $('#J_orderid').val());
 
@@ -96,11 +93,12 @@ $(function() {
       if (localStorage.getItem('visaOrderId') === $('#J_orderid').val()) {
         localstorageVisaInfo = localStorage.getItem('visaInfo');
       } else {
+        localstorageOrderId = $('#J_orderid').val()
         getVisaInfo({
           callback: rendInfo
         })
+        return false
       }
-
       if (localstorageVisaInfo) {
 
         // 如果有材料信息,则渲染到插件里
@@ -109,6 +107,9 @@ $(function() {
       } else {
 
         // 如果没有材料信息,就去接口请求
+        
+        localstorageOrderId = $('#J_orderid').val()
+
         getVisaInfo({
           callback: rendInfo
         })
@@ -119,7 +120,12 @@ $(function() {
 
   checkVisaId();
   $('#J_getVisaInfo').bind('click', checkVisaId);
-  $('#J_orderid').bind('blur', checkVisaId);
+  // $(document).delegate('#J_orderid', 'blur', checkVisaId)
+  // $('#J_orderid').bind('blur', function(){
+  //   if($(this).val()){
+  //     $(this).prop('disabled', false)
+  //   }
+  // });
 
   // 材料id写入缓存
   $('#J_visaInfoList').delegate('input[type="radio"]', 'click', function(){
@@ -165,8 +171,7 @@ $(function() {
     $('#J_visaInfoList').html('');
     $('#J_setInfo').hide();
 
-    $('#J_autoWrite').prop('disabled', true);
-    $('#J_getVisaInfo').prop('disabled', true);
+    // $('#J_getVisaInfo').prop('disabled', true);
 
     localStorage.removeItem('visaOrderId');
     localStorage.removeItem('orderId');
