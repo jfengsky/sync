@@ -1,0 +1,2019 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"back",
+				"background"
+			],
+			[
+				"res",
+				"reset.css"
+			],
+			[
+				"no",
+				"nobord	(style.css)"
+			],
+			[
+				"repeat",
+				"repeat-x"
+			],
+			[
+				"isProxy",
+				"IsProxyModeProduct"
+			],
+			[
+				"total",
+				"totalPage"
+			],
+			[
+				"Reg",
+				"RegExp"
+			],
+			[
+				"goo",
+				"googlemap"
+			],
+			[
+				"min",
+				"minMap"
+			],
+			[
+				"on",
+				"onRemove"
+			],
+			[
+				"_re",
+				"_register"
+			],
+			[
+				"last",
+				"lastQuery"
+			],
+			[
+				"grou",
+				"group_detail"
+			],
+			[
+				"public",
+				"public_vacation130620"
+			],
+			[
+				"pub",
+				"publicNavTours"
+			],
+			[
+				"url",
+				"urlArr"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"fade",
+				"fadeSpeed"
+			],
+			[
+				"fad",
+				"fadeIn"
+			],
+			[
+				"in",
+				"inArray"
+			],
+			[
+				"pack",
+				"packIds"
+			],
+			[
+				"_item",
+				"_itemArr"
+			],
+			[
+				"_scroll",
+				"_scrollId"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix",
+				"name": "File mapping ",
+				"scratch": true
+			}
+		},
+		{
+			"file": "page1.html",
+			"settings":
+			{
+				"buffer_size": 229,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "page1.css",
+			"settings":
+			{
+				"buffer_size": 1528,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "f.html",
+			"settings":
+			{
+				"buffer_size": 5113,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix",
+				"name": "Javascript Console ",
+				"scratch": true
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix",
+				"name": "Javascript Callstack ",
+				"scratch": true
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix",
+				"name": "Javascript Scope ",
+				"scratch": true
+			}
+		},
+		{
+			"file": "f.css",
+			"settings":
+			{
+				"buffer_size": 1775,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "float.html",
+			"settings":
+			{
+				"buffer_size": 634,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "float.css",
+			"settings":
+			{
+				"buffer_size": 272,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "gulpfile.js",
+			"settings":
+			{
+				"buffer_size": 259,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 96.0,
+		"last_filter": "install",
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"set json",
+				"Set Syntax: JSON"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"set js",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"ajax",
+				"Snippet: jQuery AJAX call"
+			],
+			[
+				"git diff",
+				"Git: Diff Current File"
+			],
+			[
+				"",
+				"About"
+			],
+			[
+				"set html",
+				"Set Syntax: HTML"
+			],
+			[
+				"set josn",
+				"Set Syntax: JSON"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"instll",
+				"Package Control: Install Package"
+			],
+			[
+				"jq",
+				"Snippet: jQuery change handler"
+			],
+			[
+				"set jquery",
+				"Snippet: jQuery AJAX call"
+			],
+			[
+				"set java",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 538.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/jiangfeng/www/github/sync/study"
+	],
+	"file_history":
+	[
+		"/Users/jiangfeng/www/github/sync/study/f.css",
+		"/Users/jiangfeng/www/github/sync/study/node_modules/f.css",
+		"/Users/jiangfeng/www/github/sync/study/tmall/images/sanjiao.png",
+		"/Users/jiangfeng/www/github/sync/study/mytmall.css",
+		"/Users/jiangfeng/www/github/sync/study/mytmall.html",
+		"/Users/jiangfeng/www/github/sync/study/tmall/cover.css",
+		"/Users/jiangfeng/www/github/sync/study/tmall/tmall.html",
+		"/Users/jiangfeng/www/github/sync/study/tmall/images/home.png",
+		"/Users/jiangfeng/www/github/sync/study/tmall/global.css",
+		"/Users/jiangfeng/www/github/sync/study/gulpfile.js",
+		"/Users/jiangfeng/www/github/sync/study/reset.css",
+		"/Users/jiangfeng/www/github/sync/study/flaot.html",
+		"/Users/jiangfeng/www/github/sync/study/flaot.css",
+		"/Users/jiangfeng/www/github/sync/study/test10.css",
+		"/Users/jiangfeng/www/github/sync/study/test10.html",
+		"/Users/jiangfeng/www/github/sync/study/test4.html",
+		"/Users/jiangfeng/www/github/sync/study/test4.css",
+		"/Users/jiangfeng/www/github/sync/study/box.html",
+		"/Users/jiangfeng/www/github/sync/study/box.css",
+		"/Users/jiangfeng/www/github/sync/study/test5.html",
+		"/Users/jiangfeng/www/github/sync/study/test5.css",
+		"/Users/jiangfeng/www/github/sync/study/test3.css",
+		"/Users/jiangfeng/www/github/sync/study/test3.html",
+		"/Users/jiangfeng/www/github/sync/study/layout.css",
+		"/Users/jiangfeng/www/github/sync/study/buju.html",
+		"/Users/jiangfeng/www/github/sync/study/layout.html",
+		"/Users/jiangfeng/www/github/sync/study/aaa.html",
+		"/Users/jiangfeng/www/github/sync/study/buju.css",
+		"/Users/jiangfeng/www/github/sync/study/style.css",
+		"/Users/jiangfeng/www/github/sync/study/page.html",
+		"/Users/jiangfeng/www/github/sync/study/page2.html",
+		"/Users/jiangfeng/www/github/sync/study/style2.css",
+		"/Users/jiangfeng/www/github/sync/study/image/reset.css",
+		"/Users/jiangfeng/www/github/sync/study/111.html",
+		"/Users/jiangfeng/www/github/sync/study/html.html",
+		"/Users/jiangfeng/www/github/sync/study/test.html",
+		"/Users/jiangfeng/www/github/sync/study/test.css",
+		"/Users/jiangfeng/www/github/js/es6/es6/test.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app-es6/es6-test/es6-test.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/detail/mod_detail_calendar.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/Modules/CalendarBig/Dayon.html",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/Modules/CalendarBig/Dayon.html.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/Modules/CalendarBig/Day.html",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/Modules/CalendarBig/Dayoff.html",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/Modules/CalendarBig/Dayontrip.html",
+		"/Users/jiangfeng/www/nproxy/detail/calend.json",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/Modules/CalendarBig/Dayoncruise.html.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/Modules/CalendarBig/Daycruise.html",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/detail/v_detail.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/Modules/CalendarBig/Dayofftrip.html.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/Modules/CalendarBig/Dayoffline.html",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/Modules/CalendarBig/Dayontrip.html.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/Modules/CalendarBig/Dayoff.html.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/Modules/CalendarBig/Dayoffline.html.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/detail/mod_detail_dataManager.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/Modules/CalendarBig/Dayonline.html.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/Modules/CalendarBig/Dayonline.html",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/Modules/CalendarBig/Dayofftrip.html",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/Modules/CalendarBig/MonthCtrl.html",
+		"/Users/jiangfeng/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/Modules/CalendarBig.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/Modules/CalendarBig/CalendarBig.html.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/Modules/CalendarBig/CalendarBig.html",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/Modules/CalendarBig/MonthCtrl.html.js",
+		"/Users/jiangfeng/www/nproxy/dev.js",
+		"/Users/jiangfeng/www/nproxy/detail/p2596490s2.html",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/Modules/ProductPreviewManager.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/compare/compareDetail.html.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/compare/compareDetail.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/detail/mod_detail_startcity_morelines.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/Modules/compare.html.js",
+		"/Users/jiangfeng/www/nproxy/detail/compare.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/detail/mod_detail_carousel.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/detail/v_dp.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/detail/mod_detail_scrollday.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/dest/ResVacationOnline/js/vacation/app/visa_detail/visa_detail.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/dest/ResVacationOnline/js/vacation/app/detail/v_detail.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/detail/v_hotel.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/order/pgk_book_fill_next.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/data/addr_data.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/dest/ResVacationOnline/js/vacation/app/promotions/youyou.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/detail/v_offcheck.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/detail/mod_detail_big_order.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/promotions/youyou.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/search/searchCharts.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/search/chart/chartDraw.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/detail/mod_detail_moretrip.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/detail/detail_tripcompare.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/detail/mod_detail_morelines.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/visa_detail/visa_detail_resource_toolBar.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/detail/mod_detail_needknow.js",
+		"/Users/jiangfeng/www/github/sync/hexo/source/_posts/NSString.md",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/detail/v_map.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/seo/seo_page.js",
+		"/Users/jiangfeng/www/github/sync/hexo/_config.yml",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/detail/order_needknow.html",
+		"/Users/jiangfeng/Library/Application Support/Sublime Text 3/Packages/User/highlight_whitespaces.sublime-settings",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/detail/detail_weiboshare.js",
+		"/Users/jiangfeng/Library/Application Support/Sublime Text 3/Packages/HighlightWhitespaces/highlight_whitespaces.sublime-settings",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/detail/order_needknow.html.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/detail/sync_detail_sightdialog.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/detail/order_money_contain.html",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/detail/mod_detail_singletonManager.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/dest/ResVacationOnline/js/vacation/app/detail/sync_detail_sightdialog.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/Modules/mod_pic_dialog.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/detail/print.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/Modules/compare.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/detail/mod_detail_favories.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/myctrip/order_updatainfo.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/myctrip/order_detail.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/circleline/circleline.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/order/mod_topinfo.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/detail/v_flight.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/tpl/detail/flight_seat.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/detail/mod_detail_hotel_dialog.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/dest/ResVacationOnline/js/vacation/lib/vacation_global.min.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/dest/ResVacationOnline/js/vacation/lib/vacation_global.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/seo/seo_sidebar.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/seo/page.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/seo/seo_comment_detail.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/order/mod_book_limit.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/search/searchV3.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/Modules/swfupload/mod_swfupload.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/Modules/swfupload/mod_h5upload.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/visa_detail/visa_detail.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/visa_detail/visa_detail_comment.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/visa_detail/visa_detail_consult.js",
+		"/Users/jiangfeng/www/git/Tour/Front/Front.PC.Online/src/ResVacationOnline/js/vacation/app/visa_detail/visa_detail_scrollspy.js"
+	],
+	"find":
+	{
+		"height": 46.0
+	},
+	"find_in_files":
+	{
+		"height": 102.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"left",
+			"rightcover",
+			"mytaobao",
+			"tplDay",
+			"IsProxyModeProduct",
+			"99999",
+			"\\\"",
+			"\\n\\",
+			"\\\"",
+			"\\n\\",
+			"未成团",
+			"disposeTootip",
+			"group_info_alert",
+			"alert",
+			"alert_info",
+			"compare",
+			"\\\"",
+			"\\n\\",
+			"\\\"",
+			"\\n\\",
+			"\\\"",
+			"\\n\\",
+			"isGroupMoreCompare",
+			"\\\"",
+			"\\n\\",
+			"\\\"",
+			"\\n\\",
+			"\\\"",
+			"\\n\\",
+			"IsAnnouncedGroup",
+			"充足",
+			"isGroupMoreCompare",
+			"tplDay",
+			"RemainingAmount",
+			"RemainingInventory",
+			"IsAnnouncedGroup",
+			"Over",
+			"IsAnnouncedGroup",
+			"ClassNames",
+			"HighLight",
+			"IsAnnouncedGroup",
+			"tplDay",
+			"DateHtml",
+			"day.html",
+			"_showDateHTML",
+			"多线路",
+			"ClientSource",
+			"clientSource",
+			"_showDateHTML",
+			"tplFrame",
+			"_showDateHTML",
+			"tplFrame",
+			"class=\\\"td2\\\"",
+			"产品概要",
+			"FlightInfos.length",
+			"ProviderName",
+			"detail_product_note",
+			"\\n\\",
+			"calendar",
+			"节日",
+			"attraction_photo_s",
+			"attraction_photo_small",
+			"onPrevMonthClick",
+			"nodePrevMonth",
+			"CalendarPrev",
+			"nodeMonthCtrl",
+			"tplMonthCtrl",
+			"_showMonthHTML",
+			"tplFrame",
+			"tplMonthCtrl",
+			"MonthHtml",
+			"YearInMaxMonth",
+			"DISABLE_PREV_MONTH",
+			"pkg_circle_top_disable",
+			"nodeLoading",
+			"CalendarLoading",
+			"CalendarBig ",
+			"group_info_alert",
+			"js_calendar",
+			"autoInterval",
+			"smallImgIndex",
+			"console",
+			"\n        ",
+			"console",
+			"_nextAnim",
+			"_toNext",
+			"currPage",
+			"_page",
+			"_toNext",
+			"ImgIndex",
+			"imgIndex",
+			"smallImgIndex",
+			"_changePage",
+			"这里是标题1",
+			"smallPhotoArray",
+			"ProductPreviewManager",
+			"js_photoviewer",
+			"selectCity",
+			"省市",
+			"deliveryBox",
+			"province",
+			"J_abcmask",
+			"compareloading",
+			"handbar",
+			"spcialIds",
+			"list",
+			"infos",
+			"tempData",
+			"hand",
+			"handbar",
+			"hand",
+			"handbar",
+			"_maskEvent",
+			"J_abcloadimg",
+			"J_abcmask",
+			"J_morecontent",
+			"_tpl",
+			"_getData",
+			"J_tripcompare",
+			"trIndex",
+			"class=\"cur\"",
+			"CalendarAndPromotion",
+			"J_abcInfo",
+			"J_abcinfo",
+			"tplSpecialLabel",
+			"_scrollResize",
+			"scroll",
+			"CommentImage"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"\\\""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content"
+							],
+							"default_dir": "/Users/jiangfeng/www/github/sync/study",
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "page1.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 229,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								213,
+								213
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"is_xml": false,
+							"open_with_edit": true,
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "page1.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1528,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								910,
+								910
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"open_with_edit": true,
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1019.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "f.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5113,
+						"regions":
+						{
+							"TagLint":
+							{
+								"flags": 2356,
+								"icon": "dot",
+								"regions":
+								[
+									[
+										5087,
+										5090
+									]
+								],
+								"scope": "variable.parameter"
+							}
+						},
+						"selection":
+						[
+							[
+								219,
+								219
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content"
+							],
+							"is_xml": false,
+							"open_with_edit": true,
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"default_dir": "/Users/jiangfeng/www/github/sync/study",
+							"syntax": "Packages/Web Inspector/swi_log.tmLanguage",
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"default_dir": "/Users/jiangfeng/www/github/sync/study",
+							"syntax": "Packages/Web Inspector/swi_stack.tmLanguage",
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"default_dir": "/Users/jiangfeng/www/github/sync/study",
+							"syntax": "Packages/Web Inspector/swi_log.tmLanguage",
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "f.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1775,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1622,
+								1622
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1827.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "float.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 634,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								130,
+								130
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"is_xml": false,
+							"open_with_edit": true,
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "float.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 272,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								103,
+								103
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content"
+							],
+							"open_with_edit": true,
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "gulpfile.js",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 259,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								187,
+								187
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content"
+							],
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 41.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.git":
+	{
+		"height": 120.0
+	},
+	"output.markdown":
+	{
+		"height": 120.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 120.0
+	},
+	"pinned_build_system": "",
+	"project": "study.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"calendar",
+				"app/Modules/CalendarBig.js"
+			],
+			[
+				"modetailc",
+				"app/detail/mod_detail_calendar.js"
+			],
+			[
+				"dayon.html.js",
+				"app/tpl/Modules/CalendarBig/Dayon.html.js"
+			],
+			[
+				"dayon.html",
+				"app/tpl/Modules/CalendarBig/Dayon.html"
+			],
+			[
+				"dayon",
+				"app/tpl/Modules/CalendarBig/Dayon.html"
+			],
+			[
+				"moddetailcalen",
+				"app/detail/mod_detail_calendar.js"
+			],
+			[
+				"day",
+				"app/tpl/Modules/CalendarBig/Day.html"
+			],
+			[
+				"moddetailcal",
+				"app/detail/mod_detail_calendar.js"
+			],
+			[
+				"dayc",
+				"app/tpl/Modules/CalendarBig/Daycruise.html"
+			],
+			[
+				"v_detail",
+				"app/detail/v_detail.js"
+			],
+			[
+				"moddetaildata",
+				"app/detail/mod_detail_dataManager.js"
+			],
+			[
+				"dayoff.html.js",
+				"app/tpl/Modules/CalendarBig/Dayoff.html.js"
+			],
+			[
+				"dayoff",
+				"app/tpl/Modules/CalendarBig/Dayoff.html"
+			],
+			[
+				"day.html",
+				"app/tpl/Modules/CalendarBig/Day.html"
+			],
+			[
+				"month",
+				"app/tpl/Modules/CalendarBig/MonthCtrl.html.js"
+			],
+			[
+				"cal",
+				"app/tpl/Modules/CalendarBig/CalendarBig.html.js"
+			],
+			[
+				"v_de",
+				"app/detail/v_detail.js"
+			],
+			[
+				"calendarbig",
+				"app/tpl/Modules/CalendarBig/CalendarBig.html"
+			],
+			[
+				"monthctrl",
+				"app/tpl/Modules/CalendarBig/MonthCtrl.html"
+			],
+			[
+				"big",
+				"app/Modules/CalendarBig.js"
+			],
+			[
+				"product",
+				"app/Modules/ProductPreviewManager.js"
+			],
+			[
+				"v_detal",
+				"app/detail/v_detail.js"
+			],
+			[
+				"comparedetail.html.js",
+				"app/tpl/compare/compareDetail.html.js"
+			],
+			[
+				"compare.html.js",
+				"app/tpl/Modules/compare.html.js"
+			],
+			[
+				"comparedetail",
+				"app/compare/compareDetail.js"
+			],
+			[
+				"compare.js",
+				"nproxy/detail/compare.js"
+			],
+			[
+				"moddetailst",
+				"app/detail/mod_detail_startcity_morelines.js"
+			],
+			[
+				"monthc",
+				"app/tpl/Modules/CalendarBig/MonthCtrl.html"
+			],
+			[
+				"v",
+				"app/detail/v_detail.js"
+			],
+			[
+				"v_dp",
+				"app/detail/v_dp.js"
+			],
+			[
+				"monthctrl.html",
+				"app/tpl/Modules/CalendarBig/MonthCtrl.html.js"
+			],
+			[
+				"monthhtm",
+				"app/tpl/Modules/CalendarBig/MonthCtrl.html"
+			],
+			[
+				"moddetailcalendar",
+				"app/detail/mod_detail_calendar.js"
+			],
+			[
+				"moddetail",
+				"app/detail/mod_detail_carousel.js"
+			],
+			[
+				"calendarbig.html",
+				"app/tpl/Modules/CalendarBig/CalendarBig.html"
+			],
+			[
+				"dev.js",
+				"nproxy/dev.js"
+			],
+			[
+				"productpreviewmanager",
+				"app/Modules/ProductPreviewManager.js"
+			],
+			[
+				"vdp",
+				"app/detail/v_dp.js"
+			],
+			[
+				"v_hotel",
+				"detail/v_hotel.js"
+			],
+			[
+				"addr_data",
+				"data/addr_data.js"
+			],
+			[
+				"pgk_book_fillnext",
+				"order/pgk_book_fill_next.js"
+			],
+			[
+				"v_off",
+				"detail/v_offcheck.js"
+			],
+			[
+				"moddetailbig",
+				"detail/mod_detail_big_order.js"
+			],
+			[
+				"youyou",
+				"promotions/youyou.js"
+			],
+			[
+				"youyou.js",
+				"promotions/youyou.js"
+			],
+			[
+				"char",
+				"search/chart/chartDraw.js"
+			],
+			[
+				"searchc",
+				"search/searchCharts.js"
+			],
+			[
+				"moddetailmoretrip",
+				"detail/mod_detail_moretrip.js"
+			],
+			[
+				"moddetailmore",
+				"detail/mod_detail_moretrip.js"
+			],
+			[
+				"detail_tripcompare",
+				"detail/detail_tripcompare.js"
+			],
+			[
+				"moretrip",
+				"detail/mod_detail_moretrip.js"
+			],
+			[
+				"visadetailresorec",
+				"visa_detail/visa_detail_resource_toolBar.js"
+			],
+			[
+				"visa_detail_resource_toolbar",
+				"visa_detail/visa_detail_resource_toolBar.js"
+			],
+			[
+				"v_map",
+				"detail/v_map.js"
+			],
+			[
+				"seo_page",
+				"seo/seo_page.js"
+			],
+			[
+				"mod_detail_needknow",
+				"detail/mod_detail_needknow.js"
+			],
+			[
+				"pgkbookfill",
+				"order/pgk_book_fill_next.js"
+			],
+			[
+				"moddetailneedknow",
+				"detail/mod_detail_needknow.js"
+			],
+			[
+				"orderneedknow",
+				"tpl/detail/order_needknow.html"
+			],
+			[
+				"share",
+				"detail/detail_weiboshare.js"
+			],
+			[
+				"v_dp.js",
+				"detail/v_dp.js"
+			],
+			[
+				"orderneedk",
+				"tpl/detail/order_needknow.html"
+			],
+			[
+				"moddetailneed",
+				"detail/mod_detail_needknow.js"
+			],
+			[
+				"order_needknow.html",
+				"tpl/detail/order_needknow.html.js"
+			],
+			[
+				"moddetailbigorder",
+				"detail/mod_detail_big_order.js"
+			],
+			[
+				"sync_",
+				"detail/sync_detail_sightdialog.js"
+			],
+			[
+				"mod_detail_singletonmanager",
+				"detail/mod_detail_singletonManager.js"
+			],
+			[
+				"ordermoneycontain",
+				"tpl/detail/order_money_contain.html"
+			],
+			[
+				"moddetailneedk",
+				"detail/mod_detail_needknow.js"
+			],
+			[
+				"order_money_contain.html",
+				"tpl/detail/order_money_contain.html"
+			],
+			[
+				"sync",
+				"detail/sync_detail_sightdialog.js"
+			],
+			[
+				"print.js",
+				"detail/print.js"
+			],
+			[
+				"mod_pic_dialog",
+				"Modules/mod_pic_dialog.js"
+			],
+			[
+				"sync_detail_sightdialog",
+				"detail/sync_detail_sightdialog.js"
+			],
+			[
+				"pring",
+				"Modules/ProductPreviewManager.js"
+			],
+			[
+				"modpicdialog",
+				"Modules/mod_pic_dialog.js"
+			],
+			[
+				"moddetailbigor",
+				"detail/mod_detail_big_order.js"
+			],
+			[
+				"v_offcheck",
+				"detail/v_offcheck.js"
+			],
+			[
+				"moddetailstartcitymore",
+				"detail/mod_detail_startcity_morelines.js"
+			],
+			[
+				"moddetailfavori",
+				"detail/mod_detail_favories.js"
+			],
+			[
+				"comparedetail.js",
+				"compare/compareDetail.js"
+			],
+			[
+				"mod_detail_startcity_morelines",
+				"detail/mod_detail_startcity_morelines.js"
+			],
+			[
+				"od_detail_big_orde",
+				"detail/mod_detail_big_order.js"
+			],
+			[
+				"top",
+				"order/mod_topinfo.js"
+			],
+			[
+				"flightseat",
+				"tpl/detail/flight_seat.js"
+			],
+			[
+				"v_flight",
+				"detail/v_flight.js"
+			],
+			[
+				"order_de",
+				"myctrip/order_detail.js"
+			],
+			[
+				"mod_detail_hotel_dialog",
+				"detail/mod_detail_hotel_dialog.js"
+			],
+			[
+				"print",
+				"detail/print.js"
+			],
+			[
+				"v_fight",
+				"detail/v_flight.js"
+			],
+			[
+				"detailfav",
+				"detail/mod_detail_favories.js"
+			],
+			[
+				"v_detail.js",
+				"detail/v_detail.js"
+			],
+			[
+				"order_needknow.html.js",
+				"tpl/detail/order_needknow.html.js"
+			],
+			[
+				"searchv3",
+				"search/searchV3.js"
+			],
+			[
+				"modulescompare.js",
+				"Modules/compare.js"
+			],
+			[
+				"startcitymoreline",
+				"detail/mod_detail_startcity_morelines.js"
+			],
+			[
+				"visa_detail",
+				"visa_detail/visa_detail.js"
+			],
+			[
+				"v_detai",
+				"detail/v_detail.js"
+			],
+			[
+				"comparede",
+				"compare/compareDetail.js"
+			],
+			[
+				"moddetailstartcity",
+				"detail/mod_detail_startcity_morelines.js"
+			],
+			[
+				"detailcomment",
+				"visa_detail/visa_detail_comment.js"
+			],
+			[
+				"visa_detail_consult",
+				"visa_detail/visa_detail_consult.js"
+			],
+			[
+				"detailfavories",
+				"detail/mod_detail_favories.js"
+			],
+			[
+				"startcity_morelines",
+				"detail/mod_detail_startcity_morelines.js"
+			],
+			[
+				"moddetailfav",
+				"detail/mod_detail_favories.js"
+			],
+			[
+				"compare",
+				"Modules/compare.js"
+			],
+			[
+				"v_option",
+				"options/v_options.js"
+			],
+			[
+				"limit",
+				"order/mod_book_limit.js"
+			],
+			[
+				"travell",
+				"order/Travellers.js"
+			],
+			[
+				"modbooklimit",
+				"order/mod_book_limit.js"
+			],
+			[
+				"travellers.js",
+				"order/Travellers.js"
+			],
+			[
+				"pgk_book_fill_next",
+				"order/pgk_book_fill_next.js"
+			],
+			[
+				"big_",
+				"tpl/detail/big_order.html"
+			],
+			[
+				"big_order.html.js",
+				"tpl/detail/big_order.html.js"
+			],
+			[
+				"v_detial",
+				"detail/v_detail.js"
+			],
+			[
+				"moddetailnee",
+				"detail/mod_detail_needknow.js"
+			],
+			[
+				"pgk",
+				"order/pgk_book_fill_next.js"
+			],
+			[
+				"orderlimi",
+				"order/mod_book_limit.js"
+			],
+			[
+				"review",
+				"review/review.js"
+			],
+			[
+				"order_detail",
+				"myctrip/order_detail.js"
+			],
+			[
+				"big_order.html",
+				"tpl/detail/big_order.html"
+			],
+			[
+				"hotel_room_list.html",
+				"tpl/detail/hotel_room_list.html"
+			],
+			[
+				"bigorder",
+				"tpl/detail/big_order.html"
+			],
+			[
+				"v_optio",
+				"options/v_options.js"
+			],
+			[
+				"mod_detail_big_",
+				"detail/mod_detail_big_order.js"
+			],
+			[
+				"v_options",
+				"options/v_options.js"
+			],
+			[
+				"v_optino",
+				"options/v_options.js"
+			],
+			[
+				"pgk_book_fill",
+				"order/pgk_book_fill.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 183.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

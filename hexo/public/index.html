@@ -66,6 +66,714 @@
         <section id="main">
         
   
+    <article id="post-swift-类" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/09/swift-类/" class="article-date">
+  <time datetime="2015-09-09T06:33:40.000Z" itemprop="datePublished">2015-09-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/09/swift-类/">swift 类</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code><span class="comment">/**
+ 类
+ */</span>
+
+<span class="comment">// 定义一个类,与结构体非常相似,只是类没有逐一成员构造器</span>
+<span class="class"><span class="keyword">struct</span> <span class="title">Rect</span> </span>{
+  <span class="keyword">var</span> width: <span class="type">Double</span> = <span class="number">0.0</span>
+  <span class="keyword">var</span> height: <span class="type">Double</span> = <span class="number">0.0</span>
+
+  <span class="comment">// 类的方法</span>
+  <span class="func"><span class="keyword">func</span> <span class="title">getWidth</span><span class="params">()</span></span> -&gt; <span class="type">Double</span>{
+    <span class="keyword">return</span> width
+  }
+
+  <span class="func"><span class="keyword">func</span> <span class="title">show</span><span class="params">()</span></span>{
+    <span class="built_in">println</span>(<span class="string">"width=<span class="subst">\(width)</span>, height=<span class="subst">\(height)</span>"</span>)
+  }
+}
+
+<span class="comment">// 实例化一个类</span>
+<span class="keyword">var</span> rect: <span class="type">Rect</span> = <span class="type">Rect</span>()
+
+<span class="comment">// 访问实例类的变量</span>
+rect.width
+
+<span class="keyword">var</span> rect1: <span class="type">Rect</span> = <span class="type">Rect</span>()
+rect1.width = <span class="number">100</span>
+rect1.height = <span class="number">200</span>
+
+<span class="keyword">var</span> rect2: <span class="type">Rect</span> = <span class="type">Rect</span>()
+rect2.height
+
+<span class="comment">// 调用类的方法</span>
+rect2.getWidth()
+rect2.show()
+
+<span class="comment">// 类整体赋值</span>
+<span class="comment">// rect3与rect2指向同一块内存引用,当其中一个改变一个后,另外一个会改变</span>
+<span class="keyword">var</span> rect3 = rect2
+
+rect2.width = <span class="number">400</span>
+
+<span class="comment">// === !== 恒等运算符,只能用于类的实例判断,判断两个类的实例是否相等</span>
+<span class="keyword">if</span> rect3 === rect2 {
+  <span class="built_in">println</span>(<span class="string">"equal"</span>)
+} <span class="keyword">else</span> {
+  <span class="built_in">println</span>(<span class="string">"not equal"</span>)
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.ieake.com/2015/09/09/swift-类/" data-id="ciecfluy8000ahjvm74o4w10b" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/类/">类</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-swift-结构体" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/08/swift-结构体/" class="article-date">
+  <time datetime="2015-09-08T06:59:52.000Z" itemprop="datePublished">2015-09-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/08/swift-结构体/">swift 结构体</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code><span class="comment">/**
+ 结构体
+ */</span>
+
+<span class="comment">// 定义一个结构体</span>
+<span class="class"><span class="keyword">struct</span> <span class="title">Rect</span> </span>{
+  <span class="keyword">var</span> width: <span class="type">Double</span> = <span class="number">0.0</span>
+  <span class="keyword">var</span> height: <span class="type">Double</span> = <span class="number">0.0</span>
+
+  <span class="comment">// 结构体的方法</span>
+  <span class="func"><span class="keyword">func</span> <span class="title">getWidth</span><span class="params">()</span></span> -&gt; <span class="type">Double</span>{
+    <span class="keyword">return</span> width
+  }
+
+  <span class="func"><span class="keyword">func</span> <span class="title">show</span><span class="params">()</span></span>{
+    <span class="built_in">println</span>(<span class="string">"width=<span class="subst">\(width)</span>, height=<span class="subst">\(height)</span>"</span>)
+  }
+}
+
+<span class="comment">// 实例化一个结构体</span>
+<span class="keyword">var</span> rect: <span class="type">Rect</span> = <span class="type">Rect</span>()
+
+<span class="comment">// 访问实例结构体的变量</span>
+rect.width
+
+<span class="keyword">var</span> rect1: <span class="type">Rect</span> = <span class="type">Rect</span>()
+rect1.width = <span class="number">100</span>
+rect1.height = <span class="number">200</span>
+
+<span class="comment">// 结构体逐一成员构造器</span>
+<span class="keyword">var</span> rect2: <span class="type">Rect</span> = <span class="type">Rect</span>(width: <span class="number">300</span>, height: <span class="number">23</span>)
+rect2.height
+
+<span class="comment">// 调用结构体的方法</span>
+rect2.getWidth()
+rect2.show()
+
+<span class="comment">// 结构体整体赋值</span>
+<span class="comment">// rect3与rect2指向同一块内存,但rect3与rect2是两个不同的实例,只是内容一致</span>
+<span class="keyword">var</span> rect3 = rect2
+
+rect2.width = <span class="number">400</span>
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.ieake.com/2015/09/08/swift-结构体/" data-id="ciecfluy50007hjvmtw4q8qge" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/结构体/">结构体</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-swift-枚举类型" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/08/swift-枚举类型/" class="article-date">
+  <time datetime="2015-09-08T06:17:35.000Z" itemprop="datePublished">2015-09-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/08/swift-枚举类型/">swift 枚举类型</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code><span class="comment">/**
+ * swift 枚举类型
+ */</span>
+
+<span class="comment">// 声明枚举 下面两种方法等价</span>
+<span class="class"><span class="keyword">enum</span> <span class="title">Method</span> </span>{
+<span class="comment">//  case Add</span>
+<span class="comment">//  case Sub</span>
+<span class="comment">//  case Mul</span>
+<span class="comment">//  case Div</span>
+  <span class="keyword">case</span> <span class="type">Add</span>, <span class="type">Sub</span>, <span class="type">Mul</span>, <span class="type">Div</span>
+}
+
+<span class="comment">// 使用枚举的两种写法</span>
+<span class="keyword">var</span> m0: <span class="type">Method</span> = .<span class="type">Add</span>
+<span class="keyword">var</span> m1 = <span class="type">Method</span>.<span class="type">Sub</span>
+
+<span class="comment">// switch匹配枚举</span>
+<span class="func"><span class="keyword">func</span> <span class="title">chooseMethod</span><span class="params">(op: Method)</span></span> -&gt; (<span class="type">Double</span>, <span class="type">Double</span>) -&gt; <span class="type">Double</span> {
+  <span class="keyword">switch</span> op {
+    <span class="keyword">case</span> .<span class="type">Add</span>:
+      <span class="func"><span class="keyword">func</span> <span class="title">add</span><span class="params">(a:Double, b:Double)</span></span> -&gt; <span class="type">Double</span> {
+        <span class="keyword">return</span> a + b
+      }
+      <span class="keyword">return</span> add
+    <span class="keyword">case</span> .<span class="type">Sub</span>:
+      <span class="keyword">return</span> {
+        (a:<span class="type">Double</span>, b:<span class="type">Double</span>) -&gt; <span class="type">Double</span> <span class="keyword">in</span>
+        <span class="keyword">return</span> a - b
+      }
+    <span class="keyword">case</span> .<span class="type">Mul</span>:
+      <span class="keyword">return</span> {
+        <span class="keyword">return</span> $<span class="number">0</span> * $<span class="number">1</span>
+      }
+    <span class="keyword">case</span> .<span class="type">Div</span>:
+      <span class="keyword">return</span> {
+        $<span class="number">0</span> / $<span class="number">1</span>
+      }
+<span class="comment">//  default:</span>
+<span class="comment">//    return { $0 / $1}</span>
+  }
+}
+
+<span class="keyword">let</span> val = chooseMethod(.<span class="type">Mul</span>)(<span class="number">30</span>, <span class="number">5</span>)
+
+<span class="comment">// 枚举的原始值</span>
+<span class="comment">// 可以为任意类型,整型可以不指定值,默认从0开始向后+1,其它类型声明时必须全部都指定值</span>
+<span class="class"><span class="keyword">enum</span> <span class="title">MethodInt</span>: <span class="title">Int</span> </span>{
+
+  <span class="comment">// 这里Add是0, Sub是1, Mul是2, Div是3</span>
+  <span class="comment">// case Add, Sub, Mul, Div</span>
+  <span class="keyword">case</span> <span class="type">Add</span> = <span class="number">5</span>, <span class="type">Sub</span> = <span class="number">9</span>, <span class="type">Mul</span>, <span class="type">Div</span>
+}
+
+<span class="class"><span class="keyword">enum</span> <span class="title">MethodStr</span>: <span class="title">String</span> </span>{
+  <span class="keyword">case</span> <span class="type">Add</span> = <span class="string">"add"</span>, <span class="type">Sub</span> = <span class="string">"sub"</span>, <span class="type">Mul</span> = <span class="string">"mul"</span>, <span class="type">Div</span> = <span class="string">"div"</span>
+}
+
+<span class="comment">// 获取枚举的原始值</span>
+<span class="type">MethodInt</span>.<span class="type">Sub</span>.rawValue
+<span class="type">Method</span>.<span class="type">Mul</span>.hashValue
+<span class="type">MethodStr</span>.<span class="type">Add</span>.rawValue
+
+
+<span class="comment">// 枚举关联值</span>
+<span class="comment">// 用元祖方式每个枚举可以设置多个关联值</span>
+<span class="class"><span class="keyword">enum</span> <span class="title">LineSegment</span> </span>{
+  <span class="keyword">case</span> <span class="type">StartAndEnd</span>(start: <span class="type">Double</span>, end:<span class="type">Double</span>)
+  <span class="keyword">case</span> <span class="type">StartAndPattern</span>(start: <span class="type">Double</span>, pattern: <span class="type">Double</span>)
+}
+<span class="keyword">var</span> lsd = <span class="type">LineSegment</span>.<span class="type">StartAndEnd</span>(start: <span class="number">10</span>, end: <span class="number">20</span>)
+<span class="keyword">switch</span> lsd {
+<span class="keyword">case</span> .<span class="type">StartAndEnd</span>(<span class="keyword">let</span> s, <span class="keyword">let</span> e):
+  <span class="built_in">println</span>(<span class="string">"<span class="subst">\(s)</span> -&gt; <span class="subst">\(e)</span>"</span>)
+<span class="keyword">case</span> .<span class="type">StartAndPattern</span>(<span class="keyword">let</span> s, <span class="keyword">let</span> len):
+  <span class="built_in">println</span>(<span class="string">"<span class="subst">\(s)</span> -&gt; <span class="subst">\(len)</span>"</span>)
+}
+<span class="comment">// -&gt; "10.0 -&gt; 20.0"</span>
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.ieake.com/2015/09/08/swift-枚举类型/" data-id="ciecfluyb000dhjvmhu3p31ux" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/枚举-enum/">枚举, enum</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-break-continue" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/02/break-continue/" class="article-date">
+  <time datetime="2015-09-02T02:45:09.000Z" itemprop="datePublished">2015-09-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/02/break-continue/">break continue</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>break 跳出剩余循环</li>
+</ul>
+<pre><code>var<span class="instruction"> array </span>= <span class="keyword">[</span>3, 4, 5, 6, 7, 8, 9]
+for<span class="function"> (</span>index, value<span class="function">)</span> in<span class="function"> enumerate(</span>array<span class="function">)</span> {
+ <span class="instruction"> if </span>value % 5 == 0 {
+   <span class="function"> println(</span>index<span class="function">)</span>
+    break
+  }
+}
+</code></pre><ul>
+<li>continue 跳出本次循环</li>
+</ul>
+<pre><code>var<span class="instruction"> array </span>= <span class="keyword">[</span>3, 4, 5, 6, 7, 8, 9]
+for<span class="function"> (</span>index, value<span class="function">)</span> in<span class="function"> enumerate(</span>array<span class="function">)</span> {
+ <span class="instruction"> if </span>value % 2 != 0 {
+   <span class="function"> println(</span>index<span class="function">)</span>
+    continue
+  }
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.ieake.com/2015/09/02/break-continue/" data-id="ciecfluyz000vhjvmgfcs48oc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/swift-break-continue/">swift, break, continue</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-swift-Dictionary-字典" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/02/swift-Dictionary-字典/" class="article-date">
+  <time datetime="2015-09-02T02:38:51.000Z" itemprop="datePublished">2015-09-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/02/swift-Dictionary-字典/">swift Dictionary 字典</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code><span class="comment">/*
+ *定义一个字典
+ */</span>
+
+<span class="comment">// 完整严格定义一个字典</span>
+var dict: Dictionary&lt;<span class="keyword">String</span>,<span class="keyword">String</span>&gt; = [<span class="string">"apple"</span>: <span class="string">"苹果"</span>, <span class="string">"bag"</span>:<span class="string">"包"</span>]
+
+<span class="comment">// 简单定义一个字典</span>
+var dict2 = [:]
+
+<span class="comment">// 字典元素个数</span>
+dict.count
+
+dict[<span class="string">"apple"</span>]
+
+<span class="comment">// 更新值</span>
+dict[<span class="string">"bag"</span>] = <span class="string">"包包"</span>
+
+<span class="comment">// 更新键 返回nil</span>
+dict.updateValue(<span class="string">"大苹果"</span>, forKey: <span class="string">"apple"</span>)
+
+<span class="comment">// 当键不存在时会添加一个,返回nil</span>
+dict.updateValue(<span class="string">"电脑"</span>, forKey: <span class="string">"computer"</span>)
+
+<span class="comment">// 删除一个键,返回被删除的值</span>
+dict.removeValueForKey(<span class="string">"computer"</span>)
+
+<span class="comment">// 删除所有的值</span>
+<span class="comment">//dict.removeAll()</span>
+
+<span class="comment">/*
+ * 遍历字典
+ */</span>
+
+<span class="keyword">for</span> (<span class="variable">key</span>,value) in dict {
+  <span class="built_in">println</span>(<span class="variable">key</span>)
+  <span class="built_in">println</span>(value)
+}
+
+<span class="comment">// 只遍历key</span>
+<span class="keyword">for</span> <span class="variable">key</span> in dict.keys {
+  <span class="built_in">println</span>(<span class="variable">key</span>)
+}
+
+<span class="comment">// 只遍历value</span>
+<span class="keyword">for</span> value in dict.values {
+  <span class="built_in">println</span>(value)
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.ieake.com/2015/09/02/swift-Dictionary-字典/" data-id="ciecfluyp000ohjvmhmxplri8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/swift-字典/">swift,字典</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-swift-Array" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/01/swift-Array/" class="article-date">
+  <time datetime="2015-09-01T08:48:11.000Z" itemprop="datePublished">2015-09-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/01/swift-Array/">swift Array</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code><span class="comment">// 定义一个数组</span>
+<span class="variable"><span class="keyword">var</span> array1</span> = [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]
+
+<span class="variable"><span class="keyword">var</span> array2</span>: Array = [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]
+
+<span class="variable"><span class="keyword">var</span> array3</span>: Array<span class="type">&lt;Int&gt;</span> = [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]
+
+<span class="comment">// 推荐这种写法</span>
+<span class="variable"><span class="keyword">var</span> array4</span>: [<span class="typename">Int</span>] = [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]
+
+<span class="comment">// 数组元素可以有不同的类型</span>
+<span class="variable"><span class="keyword">var</span> array5</span>: Array<span class="type">&lt;Any&gt;</span> = [<span class="number">1</span>, <span class="string">"string"</span>, <span class="literal">false</span>, <span class="number">2.3</span>]
+<span class="variable"><span class="keyword">var</span> array6</span> = [<span class="number">1</span>, <span class="string">"string"</span>, <span class="literal">false</span>, <span class="number">2.3</span>]
+
+<span class="comment">// 判断数组是否为空</span>
+array1.isEmpty <span class="comment">//-&gt; false</span>
+
+<span class="comment">// 数组元素的个数</span>
+array1.count <span class="comment">// -&gt; 4</span>
+
+array1[<span class="number">3</span>]
+
+<span class="comment">// 向数组末尾加入元素</span>
+array5.append(<span class="string">"d"</span>)
+array5 += [<span class="number">6</span>]
+
+<span class="comment">// 向数组任意位置插入元素</span>
+array1.insert(<span class="number">1</span>, atIndex: <span class="number">0</span>)
+
+<span class="comment">// 修改数组的元素的值</span>
+array1[<span class="number">2</span>] = <span class="number">9</span>
+
+<span class="comment">// 删除数组某个元素</span>
+array1.removeLast()
+array1.removeAtIndex(<span class="number">0</span>)
+<span class="comment">// array1.removeAll(是否保持容量)</span>
+
+<span class="comment">// Range</span>
+<span class="variable"><span class="keyword">var</span> range</span>: Range<span class="type">&lt;Int&gt;</span> = <span class="number">0.</span>.<span class="type">&lt;3                     // -&gt;</span> <span class="number">1.</span>.<span class="type">&lt;3
+var range2: Range&lt;Int&gt;</span> = Range(start: <span class="number">0</span>, end: <span class="number">3</span>)  <span class="comment">// -&gt; 1..&lt;3</span>
+<span class="variable"><span class="keyword">var</span> range3</span> = <span class="number">0.</span>..<span class="number">2</span>                                <span class="comment">// -&gt; 1..&lt;3</span>
+
+<span class="comment">// 数组的批量操作</span>
+array4[<span class="number">0.</span>..<span class="number">2</span>] <span class="comment">//批量访问</span>
+array4[<span class="number">0.</span>..<span class="number">1</span>] = [<span class="number">9</span>,<span class="number">9</span>,<span class="number">9</span>,<span class="number">9</span>] <span class="comment">// 可以修改任意个数</span>
+<span class="comment">// array4.replaceRange(Range(start: 0, end: 2), with: [9,9,9,9]) // 这个和上面是等价的</span>
+<span class="comment">// array4.replaceRange(Range(0..&lt;2, with: [9,9,9,9])</span>
+
+<span class="comment">//数组的遍历</span>
+<span class="keyword">for</span> elem <span class="keyword">in</span> array4 {
+  println(elem)
+}
+
+<span class="comment">// 枚举方法遍历</span>
+<span class="keyword">for</span> (index, value) <span class="keyword">in</span> enumerate(array4) {
+  println(index)
+  println(value)
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.ieake.com/2015/09/01/swift-Array/" data-id="ciecfluys000rhjvm7og0397f" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/swift-Array/">swift Array</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-可选值-可选类型" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/01/可选值-可选类型/" class="article-date">
+  <time datetime="2015-09-01T05:25:27.000Z" itemprop="datePublished">2015-09-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/01/可选值-可选类型/">可选值,可选类型</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code><span class="variable"><span class="keyword">var</span> optValue1</span>: <span class="typename">Int</span>?       <span class="comment">// 没有值 optValue1为nil</span>
+<span class="variable"><span class="keyword">var</span> optValue2</span>: <span class="typename">Int</span>? = <span class="number">9</span>   <span class="comment">// 有值</span>
+
+<span class="comment">// 对一个可选值的强制解析(注意末尾的感叹号), 如果optValue1没有值,会导致一个运行错误</span>
+<span class="comment">//var sValue: Int = optValue1!</span>
+<span class="comment">//println(sValue)</span>
+
+<span class="comment">// 可选绑定</span>
+<span class="keyword">if</span> <span class="variable"><span class="keyword">var</span> sValue</span> = optValue1 {
+  println(sValue)
+}
+
+<span class="comment">// 隐式解析可选类型,两张状态:有值,没有值(nil)</span>
+<span class="variable"><span class="keyword">var</span> impOptValue</span>: <span class="typename">Int</span>! = <span class="number">8</span>
+<span class="keyword">if</span> impOptValue == <span class="number">8</span> {
+  println(impOptValue)
+}
+
+<span class="comment">// 不需要强制解析(末尾可不加感叹号)</span>
+<span class="variable"><span class="keyword">var</span> iValue</span>: <span class="typename">Int</span> = impOptValue
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.ieake.com/2015/09/01/可选值-可选类型/" data-id="ciecfluy20004hjvmk49wwylg" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/可选值/">可选值</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-swift-UILabel" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/08/11/swift-UILabel/" class="article-date">
+  <time datetime="2015-08-11T05:22:59.000Z" itemprop="datePublished">2015-08-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/11/swift-UILabel/">swift UILabel</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code><span class="comment">// 设置label位置和大小</span>
+let textLabel = UILabel(<span class="string">frame:</span>CGRectMake(<span class="number">0</span>, <span class="number">30</span>, <span class="number">300</span>, <span class="number">30</span>));
+
+<span class="comment">// 设置文本</span>
+textLabel.text = <span class="string">"测试label"</span>;
+
+<span class="comment">// 设置背景颜色</span>
+var redColor = UIColor(<span class="string">red:</span><span class="number">1.0</span>,<span class="string">green:</span><span class="number">0</span>,<span class="string">blue:</span><span class="number">0</span>,<span class="string">alpha:</span><span class="number">1.0</span>);
+textLabel.backgroundColor = redColor;
+
+<span class="comment">// 设置文本对其方式</span>
+textLabel.textAlignment = NSTextAlignment.Center;
+
+<span class="comment">// 设置字体颜色</span>
+textLabel.textColor = UIColor.blueColor();
+
+<span class="comment">// 设置字体和大小</span>
+textLabel.font = UIFont(<span class="string">name:</span><span class="string">"Thonburi"</span>,<span class="string">size:</span><span class="number">30</span>);
+
+let Color1 = UIColor(<span class="string">red:</span><span class="number">255</span>,<span class="string">green:</span><span class="number">255</span>,<span class="string">blue:</span><span class="number">0</span>,<span class="string">alpha:</span><span class="number">1</span>);
+
+
+<span class="comment">// 把UILabel放入视图</span>
+self.view.addSubview(textLabel)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.ieake.com/2015/08/11/swift-UILabel/" data-id="ciecfluyf000ghjvmgvvricfb" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/UILabel/">UILabel</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-swift-Optionals-可选值" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/06/18/swift-Optionals-可选值/" class="article-date">
+  <time datetime="2015-06-18T06:06:26.000Z" itemprop="datePublished">2015-06-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/06/18/swift-Optionals-可选值/">swift Optionals(可选值)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>声明后面加? </li>
+<li>可选值不能进行强制类型转换,需要解包</li>
+<li>可选值后面加!来进行解包</li>
+</ul>
+<pre><code><span class="comment">// 声明一个可选值</span>
+<span class="keyword">let</span> strA:<span class="type">String</span>? = <span class="string">"test"</span>;
+<span class="comment">// 可选值解包</span>
+<span class="keyword">let</span> strB:<span class="type">String</span>! = strA;
+
+<span class="keyword">var</span> a:<span class="type">Int</span>;
+<span class="comment">// println(a); 报错, a没有初始化值</span>
+
+<span class="keyword">var</span> age:<span class="type">Int</span>?;
+<span class="built_in">println</span>(age); <span class="comment">// -&gt; nil</span>
+age = <span class="number">12</span>;
+<span class="built_in">println</span>(age); <span class="comment">// -&gt; Optional(12) 表示可选值12</span>
+
+<span class="keyword">if</span> age != <span class="built_in">nil</span> {
+    <span class="built_in">println</span>(<span class="string">"you age is <span class="subst">\(age)</span>"</span>); <span class="comment">// -&gt; you age is Optional(12)</span>
+
+    <span class="comment">// 把可选值转化为可定有值(可选值的解包)</span>
+    <span class="built_in">println</span>(<span class="string">"you age is <span class="subst">\(age!)</span>"</span>); <span class="comment">// -&gt; you age is 12</span>
+}
+
+
+<span class="comment">// String(age); 报错,可选值不能强制进行类型转换</span>
+<span class="type">String</span>(age!); <span class="comment">// -&gt;12</span>
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.ieake.com/2015/06/18/swift-Optionals-可选值/" data-id="ciecfluym000mhjvmtr87z3ms" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/可选值/">可选值</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-swift-Tuples-元祖-类型" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/06/18/swift-Tuples-元祖-类型/" class="article-date">
@@ -127,7 +835,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/06/18/swift-Tuples-元祖-类型/" data-id="cib1s06r70004mxvmeqjrh21l" class="article-share-link">Share</a>
+      <a data-url="http://www.ieake.com/2015/06/18/swift-Tuples-元祖-类型/" data-id="ciecfluyj000jhjvmg8gn7ny9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/元祖类型/">元祖类型</a></li></ul>
@@ -139,639 +847,10 @@
 
 
   
-    <article id="post-NSSet和NSMutableSet" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/05/17/NSSet和NSMutableSet/" class="article-date">
-  <time datetime="2015-05-17T11:41:56.000Z" itemprop="datePublished">2015-05-17</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/05/17/NSSet和NSMutableSet/">NSSet和NSMutableSet</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="NSSet">NSSet</h3><pre><code><span class="comment">// 集合的创建</span>
-<span class="built_in">NSSet</span> *set1 = [<span class="built_in">NSSet</span> setWithObjects:<span class="string">@"1"</span>,<span class="string">@"2"</span>, <span class="literal">nil</span>];
-<span class="built_in">NSSet</span> *set2 = [[<span class="built_in">NSSet</span> alloc] initWithObjects:<span class="string">@"2"</span>,<span class="string">@"3"</span>,<span class="string">@"4"</span>,<span class="string">@"5"</span>, <span class="literal">nil</span>];
-<span class="built_in">NSArray</span> *array1 = [<span class="built_in">NSArray</span> arrayWithObjects:<span class="string">@"7"</span>,<span class="string">@"8"</span>, <span class="string">@"10"</span>,<span class="string">@"11"</span>, <span class="literal">nil</span>];
-<span class="built_in">NSSet</span> *set3 = [<span class="built_in">NSSet</span> setWithArray:array1];
-<span class="built_in">NSSet</span> *set4 = [<span class="built_in">NSSet</span> setWithSet:set2];
-<span class="built_in">NSLog</span>(<span class="string">@"set1: %@"</span>, set1);
-<span class="built_in">NSLog</span>(<span class="string">@"set2: %@"</span>, set2);
-<span class="built_in">NSLog</span>(<span class="string">@"set3: %@"</span>, set3);
-<span class="built_in">NSLog</span>(<span class="string">@"set4: %@"</span>, set4);
-
-<span class="comment">// 集合中元素的个数</span>
-<span class="keyword">int</span> count = [set2 count];
-<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, count);
-
-<span class="comment">// 将集合返回一个数组</span>
-<span class="built_in">NSArray</span> *objects = [set1 allObjects];
-<span class="built_in">NSLog</span>(<span class="string">@"objects : %@"</span>, objects);
-
-<span class="comment">// 获取集合中任意一个对象</span>
-<span class="keyword">id</span> object = [set2 anyObject];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, object);
-
-<span class="comment">// 集合是否包含某个元素</span>
-<span class="built_in">BOOL</span> isContain = [set2 containsObject:<span class="string">@"3"</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, isContain);
-
-<span class="comment">// 集合间是否存在交集</span>
-<span class="built_in">BOOL</span> isIntersect = [set1 intersectsSet:set2];
-<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, isIntersect);
-
-<span class="comment">// 集合是否另一个集合匹配</span>
-<span class="built_in">BOOL</span> isEqual = [set1 isEqualToSet:set2];
-<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, isEqual);
-
-<span class="comment">// 集合是否是另一个集合的子集</span>
-<span class="built_in">BOOL</span> isSub = [set1 isSubsetOfSet:set2];
-<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, isSub);
-
-<span class="comment">// 追加新的集合</span>
-<span class="built_in">NSSet</span> *set5 = [<span class="built_in">NSSet</span> setWithObjects:<span class="string">@"one"</span>, <span class="literal">nil</span>];
-<span class="built_in">NSSet</span> *appSet1 = [set5 setByAddingObject:<span class="string">@"two"</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, appSet1);
-
-<span class="built_in">NSSet</span> *appSet2 = [set5 setByAddingObjectsFromSet: set1];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, appSet2);
-
-<span class="built_in">NSSet</span> *appSet3 = [set5 setByAddingObjectsFromArray:array1];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, appSet3);
-</code></pre><h3 id="NSMutableSet">NSMutableSet</h3><pre><code>NSMutableSet *<span class="built_in">set</span>6 = [NSMutableSet <span class="built_in">set</span>WithObjects:@<span class="string">"1"</span>, @<span class="string">"2"</span>, @<span class="string">"a"</span> , nil];
-NSMutableSet *<span class="built_in">set</span>7 = [NSMutableSet <span class="built_in">set</span>WithObjects:@<span class="string">"1"</span>, @<span class="string">"3"</span>, @<span class="string">"a"</span> , nil];
-
-// 减去相同的元素
- [<span class="built_in">set</span>6 minusSet:<span class="built_in">set</span>7];
-
-// 取得两个集合的交集
- [<span class="built_in">set</span>6 intersectSet:<span class="built_in">set</span>7];
-
-// 两个集合的并集
- [<span class="built_in">set</span>6 unionSet:<span class="built_in">set</span>7];
-
-// 删除指定的对象
-[<span class="built_in">set</span>6 removeObject:@<span class="string">"2"</span>];
-
-NSLog(@<span class="string">"set6: %@"</span>, <span class="built_in">set</span>6);
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/05/17/NSSet和NSMutableSet/" data-id="cib1s06rf0009mxvmd5tjodgc" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-NSDictionary和NSMutableDictionary" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/05/15/NSDictionary和NSMutableDictionary/" class="article-date">
-  <time datetime="2015-05-15T12:56:35.000Z" itemprop="datePublished">2015-05-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/05/15/NSDictionary和NSMutableDictionary/">NSDictionary和NSMutableDictionary</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="NSDictionary的一些方法总结">NSDictionary的一些方法总结</h3><pre><code><span class="built_in">NSDictionary</span> *dic1 = [<span class="built_in">NSDictionary</span> dictionaryWithObject:<span class="string">@"value"</span> forKey:<span class="string">@"k1"</span>];
-<span class="built_in">NSDictionary</span> *dic2 = [<span class="built_in">NSDictionary</span> dictionaryWithObjectsAndKeys:<span class="string">@"v1"</span>,<span class="string">@"k1"</span>,<span class="string">@"v2"</span>,<span class="string">@"k2"</span>,<span class="string">@"v3"</span>,<span class="string">@"k3"</span>, <span class="literal">nil</span>];
-<span class="built_in">NSDictionary</span> *dic3 = [<span class="built_in">NSDictionary</span> dictionaryWithDictionary:dic1];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, dic1);
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, dic2);
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, dic3);
-
-<span class="comment">// 获取字典的数量</span>
-<span class="keyword">int</span> count = [dic2 count];
-<span class="built_in">NSLog</span>(<span class="string">@"count : %d"</span>, count);
-
-<span class="comment">// 获取字典的value</span>
-<span class="built_in">NSString</span> *string1 = [dic2 objectForKey:<span class="string">@"k3"</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"value: %@"</span>, string1);
-
-<span class="comment">// 获取字典的所有key</span>
-<span class="built_in">NSArray</span> *keyArray = [dic2 allKeys];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, keyArray);
-
-<span class="comment">// 获取字典的所有value</span>
-<span class="built_in">NSArray</span> *valueArray = [dic2 allValues];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, valueArray);
-</code></pre><h3 id="NSMutableDictionary的一些方法总结">NSMutableDictionary的一些方法总结</h3><ul>
-<li>NSMutableDictionary继承自NSDictionary</li>
-</ul>
-<pre><code><span class="built_in">NSMutableDictionary</span> *mutableDic1 = [[<span class="built_in">NSMutableDictionary</span> alloc] initWithObjectsAndKeys:<span class="string">@"v1"</span>,<span class="string">@"k1"</span>,<span class="string">@"v2"</span>,<span class="string">@"k2"</span>,<span class="string">@"v3"</span>,<span class="string">@"k3"</span>,<span class="string">@"v4"</span>,<span class="string">@"k4"</span>, <span class="literal">nil</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"mutableDict1: %@"</span>, mutableDic1);
-
-<span class="comment">// 可变字典加入元素</span>
-<span class="built_in">NSDictionary</span> *dic4 = [<span class="built_in">NSDictionary</span> dictionaryWithObject:<span class="string">@"v5"</span> forKey:<span class="string">@"k5"</span>];
-[mutableDic1 addEntriesFromDictionary:dic4];
-<span class="built_in">NSLog</span>(<span class="string">@"mutableDict1: %@"</span>, mutableDic1);
-
-<span class="comment">// 可变字典中直接添加新的</span>
-[mutableDic1 setValue:<span class="string">@"object"</span> forKey:<span class="string">@"key"</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"mutableDict1: %@"</span>, mutableDic1);
-
-<span class="comment">// 创建一个空的可变字典</span>
-<span class="built_in">NSMutableDictionary</span> *mutableDic2 = [<span class="built_in">NSMutableDictionary</span> dictionary];
-[mutableDic2 setDictionary:mutableDic1];
-<span class="built_in">NSLog</span>(<span class="string">@"mutableDict2: %@"</span>, mutableDic2);
-
-<span class="comment">// 根据指定的key</span>
-[mutableDic2 removeObjectForKey:<span class="string">@"k4"</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"mutableDict2: %@"</span>, mutableDic2);
-
-<span class="comment">// 删除一组key</span>
-<span class="built_in">NSArray</span> *keys = [<span class="built_in">NSArray</span> arrayWithObjects:<span class="string">@"k1"</span>,<span class="string">@"k2"</span>, <span class="literal">nil</span>];
-[mutableDic2 removeObjectsForKeys:keys];
-<span class="built_in">NSLog</span>(<span class="string">@"mutableDict2: %@"</span>, mutableDic2);
-
-<span class="comment">// 删除所有的内容</span>
-[mutableDic2 removeAllObjects];
-</code></pre><h3 id="遍历字典">遍历字典</h3><pre><code><span class="keyword">for</span> (int index = <span class="number">0</span>; index &lt; [mutableDic1 count]; index++) {
-  <span class="type">NSString</span> *<span class="class"><span class="keyword">object</span> =</span> [mutableDic1 objectForKey:[[mutableDic1 allKeys] objectAtIndex:index]];
-  <span class="type">NSLog</span>(@<span class="string">"object: %@"</span>, <span class="class"><span class="keyword">object</span>);</span>
-}
-
-<span class="comment">// 快速枚举</span>
-<span class="keyword">for</span> (id key in mutableDic1) {
-  <span class="type">NSString</span> *<span class="class"><span class="keyword">object</span> =</span> [mutableDic1 objectForKey:key];
-  <span class="type">NSLog</span>(@<span class="string">"object: %@"</span>, <span class="class"><span class="keyword">object</span>);</span>
-}
-
-<span class="comment">// 使用枚举类型</span>
-<span class="type">NSEnumerator</span> *enumerator = [mutableDic1 keyEnumerator];
-id key = [enumerator nextObject];
-<span class="keyword">while</span> (key = [enumerator nextObject]) {
-  id <span class="class"><span class="keyword">object</span> =</span> [mutableDic1 objectForKey:key];
-  <span class="type">NSLog</span>(@<span class="string">"%@"</span>, <span class="class"><span class="keyword">object</span>);</span>   
-}
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/05/15/NSDictionary和NSMutableDictionary/" data-id="cib1s06rj000bmxvmebz98ta3" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-NSArray和NSMutableArray" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/05/15/NSArray和NSMutableArray/" class="article-date">
-  <time datetime="2015-05-15T00:22:44.000Z" itemprop="datePublished">2015-05-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/05/15/NSArray和NSMutableArray/">NSArray和NSMutableArray</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="NSArray的一些方法总结">NSArray的一些方法总结</h3><pre><code><span class="comment">// 数组的创建</span>
-<span class="built_in">NSArray</span> *array1 = [<span class="built_in">NSArray</span> arrayWithObject:<span class="string">@"one"</span>];
-<span class="built_in">NSArray</span> *array2 = [<span class="built_in">NSArray</span> arrayWithObjects:<span class="string">@"one"</span>, <span class="string">@"two"</span>, <span class="string">@"three"</span>, <span class="string">@"four"</span>, <span class="string">@"five"</span>,<span class="literal">nil</span>];
-<span class="built_in">NSArray</span> *array3 = [<span class="built_in">NSArray</span> arrayWithArray:array2];
-<span class="built_in">NSLog</span>(<span class="string">@"array1 : %@"</span>, array1);
-<span class="built_in">NSLog</span>(<span class="string">@"array2 : %@"</span>, array2);
-<span class="built_in">NSLog</span>(<span class="string">@"array3 : %@"</span>, array3);
-<span class="built_in">NSArray</span> *array4 = [[<span class="built_in">NSArray</span> alloc] initWithArray:array1];
-
-<span class="comment">// 获取数组中元素的个数</span>
-<span class="keyword">int</span> count = [array2 count];
-<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, count);   <span class="comment">// =&gt; 5</span>
-
-<span class="built_in">NSString</span> *string1 = [array2 objectAtIndex:<span class="number">1</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, string1);  <span class="comment">// =&gt; two</span>
-
-<span class="comment">// 追加对象,返回一个新的数组</span>
-<span class="built_in">NSArray</span> *array5 = [array2 arrayByAddingObject:<span class="string">@"six"</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"array5 : %@"</span>, array5);
-
-<span class="comment">// 用指定的字符串把数组中的元素连接起来</span>
-<span class="built_in">NSString</span> *string2 = [array5 componentsJoinedByString:<span class="string">@"|"</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, string2);
-
-<span class="comment">// 判断数组中是否存在一个指定的对象</span>
-<span class="built_in">BOOL</span> isContain = [array5 containsObject:<span class="string">@"three"</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, isContain);
-
-<span class="comment">// 根据指定的对象返回索引下标</span>
-<span class="built_in">NSInteger</span> index = [array5 indexOfObject:<span class="string">@"three"</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, index);
-
-<span class="comment">// 返回数组中的最后一个元素</span>
-<span class="built_in">NSString</span> *lastObject = [array5 lastObject];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, lastObject);
-</code></pre><h3 id="NSMutableArray的一些方法总结">NSMutableArray的一些方法总结</h3><ul>
-<li>NSMutableArray继承自NSArray</li>
-</ul>
-<pre><code><span class="comment">// 可变数组</span>
-<span class="built_in">NSMutableArray</span> *mArray1 = [<span class="built_in">NSMutableArray</span> array];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mArray1);
-
-<span class="comment">// 创建一个有5个元素的可变数组</span>
-<span class="built_in">NSMutableArray</span> *mArray2 = [<span class="built_in">NSMutableArray</span> arrayWithCapacity:<span class="number">5</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mArray2);
-
-<span class="built_in">NSMutableArray</span> *mArray3 = [<span class="built_in">NSMutableArray</span> arrayWithObjects:<span class="string">@"one"</span>, <span class="string">@"two"</span>, <span class="literal">nil</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mArray3);
-
-<span class="comment">//添加元素</span>
-[mArray3 addObject:<span class="string">@"three"</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mArray3);
-
-<span class="comment">// 插入元素</span>
-[mArray3 insertObject:<span class="string">@"four"</span> atIndex:<span class="number">3</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mArray3);
-
-<span class="comment">// 移除最后一个元素</span>
-[mArray3 removeLastObject];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mArray3);
-
-<span class="comment">// 移除指定元素</span>
-[mArray3 removeObject:<span class="string">@"two"</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mArray3);
-
-<span class="comment">// 根据索引下标删除</span>
-[mArray3 removeObjectAtIndex:<span class="number">1</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mArray3);
-
-[mArray3 addObject:<span class="string">@"six"</span>];
-[mArray3 addObject:<span class="string">@"seven"</span>];
-[mArray3 addObject:<span class="string">@"eight"</span>];
-
-<span class="comment">// 根据数组删除</span>
-<span class="built_in">NSArray</span> *deleteArray = [<span class="built_in">NSArray</span> arrayWithObjects:<span class="string">@"seven"</span>,<span class="string">@"eight"</span>,<span class="literal">nil</span>];
-[mArray3 removeObjectsInArray:deleteArray];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mArray3);
-
-<span class="comment">// 替换指定下标的元素</span>
-[mArray3 replaceObjectAtIndex:<span class="number">1</span> withObject:<span class="string">@"replace"</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mArray3);
-</code></pre><h3 id="遍历数组">遍历数组</h3><pre><code><span class="keyword">for</span> (<span class="built_in">NSString</span> *tempString <span class="keyword">in</span> array5) {
-  <span class="built_in">NSLog</span>(<span class="string">@"found: %@"</span>, tempString);
-}
-
-<span class="comment">// 当不确定数组的元素的类型时,可以选择用id</span>
-<span class="keyword">for</span> (<span class="keyword">id</span> tempString <span class="keyword">in</span> array5) {
-  <span class="built_in">NSLog</span>(<span class="string">@"id found: %@"</span>, tempString);
-}
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/05/15/NSArray和NSMutableArray/" data-id="cib1s06pt0000mxvm1txyiltr" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-NSString" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/05/14/NSString/" class="article-date">
-  <time datetime="2015-05-14T12:55:32.000Z" itemprop="datePublished">2015-05-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/05/14/NSString/">NSString</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="NSString对象的一些方法总结">NSString对象的一些方法总结</h3><ul>
-<li>NSString对象一旦被创建就不可以修改.如果需要一个可以更改的字符串对象,需要创建NSMutableString实例</li>
-</ul>
-<pre><code><span class="comment">/*
- *  创建字符串
- */</span>
-<span class="comment">// 创建一个字符串常量</span>
-<span class="built_in">NSString</span> *string1 = <span class="string">@"这是一个字符串常量"</span>;
-
-<span class="comment">// 创建一个空的字符串</span>
-<span class="built_in">NSString</span> *string2 = [[<span class="built_in">NSString</span> alloc] init];  <span class="comment">// 实例方法创建</span>
-<span class="built_in">NSString</span> *string3 = [<span class="built_in">NSString</span> string];        <span class="comment">// 类方法创建</span>
-
-<span class="comment">// 快速创建一个字符串</span>
-<span class="built_in">NSString</span> *string4 = [[<span class="built_in">NSString</span> alloc] initWithString: <span class="string">@"abc"</span>];   <span class="comment">// 实例方法创建</span>
-<span class="built_in">NSString</span> *string5 = [<span class="built_in">NSString</span> stringWithString:<span class="string">@"xyz"</span>];          <span class="comment">// 类方法创建</span>
-
-<span class="comment">// 创建一个格式化的字符串</span>
-<span class="built_in">NSString</span> *string6 = [[<span class="built_in">NSString</span> alloc] initWithFormat:<span class="string">@"整数:%d"</span>, <span class="number">10</span>];  <span class="comment">// 实例方法创建</span>
-<span class="built_in">NSString</span> *string7 = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"浮点数:%f"</span>, <span class="number">10.8</span>];      <span class="comment">// 类方法创建</span>
-
-<span class="comment">/*
- *  比较字符串是否相等
- */</span>
-<span class="keyword">if</span> ([string4 isEqualToString:string5]) {
-    <span class="built_in">NSLog</span>(<span class="string">@"same"</span>);
-} <span class="keyword">else</span> {
-    <span class="built_in">NSLog</span>(<span class="string">@"different"</span>);
-}
-
-<span class="comment">/*
- *  测试字符串是否为同一对象
- */</span>
-<span class="keyword">if</span> (string4 == string5) {
-    <span class="built_in">NSLog</span>(<span class="string">@"same pointer"</span>);
-} <span class="keyword">else</span> {
-    <span class="built_in">NSLog</span>(<span class="string">@"different pointer"</span>);
-}
-
-<span class="comment">/*
- *  比较字符串的大小
- *  caseInsensitiveCompare 升序
- *  localizedCompare
- */</span>
-<span class="built_in">NSComparisonResult</span> result = [string4 caseInsensitiveCompare:string5];
-
-<span class="comment">/**
- *  求字符串的长度
- */</span>
-<span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, [string4 length]);
-
-<span class="comment">/**
- *  字符串的转换
- */</span>
-[string4 uppercaseString];   <span class="comment">// 字母都大写</span>
-[string4 lowercaseString];   <span class="comment">// 字母都小写</span>
-[string4 capitalizedString]; <span class="comment">// 首字幕大写</span>
-
-<span class="comment">/**
- *  字符串转化为基本数据类型
- */</span>
-<span class="keyword">float</span> floatNumber = [string7 floatValue];  <span class="comment">// 转化为浮点数</span>
-
-<span class="comment">/**
- * 把字符串转化为数组
- */</span>
-<span class="built_in">NSString</span> *string8 = <span class="string">@"abc def xyz"</span>;
-<span class="built_in">NSArray</span> *array1 = [string8 componentsSeparatedByString:<span class="string">@" "</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, array1);
-
-<span class="comment">/**
- * 字符串的截取
- */</span>
-<span class="built_in">NSString</span> *string9 = <span class="string">@"abcde"</span>;
-<span class="built_in">NSString</span> *subString1 = [string9 substringToIndex:<span class="number">3</span>];   <span class="comment">// 截取到哪个位置 =&gt; abc</span>
-<span class="built_in">NSString</span> *subString2 = [string9 substringFromIndex:<span class="number">3</span>]; <span class="comment">// 从哪个位置开始截取 =&gt; de</span>
-<span class="built_in">NSRange</span> range;
-range<span class="variable">.location</span> = <span class="number">1</span>;
-range<span class="variable">.length</span> = <span class="number">3</span>;
-<span class="built_in">NSString</span> *subString3 = [string9 substringWithRange:range];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, subString3);
-
-<span class="comment">/**
- * 字符串的拼接
- */</span>
-<span class="built_in">NSString</span> *string16 = <span class="string">@"abc"</span>;
-<span class="built_in">NSString</span> *string17 = <span class="string">@"xyz"</span>;
-
-<span class="built_in">NSString</span> *addString1 = [[<span class="built_in">NSString</span> alloc] initWithFormat:<span class="string">@"%@%@"</span>, string16, string17];
-<span class="built_in">NSString</span> *addString2 = [string16 stringByAppendingFormat:<span class="string">@"%@"</span>, string17];
-<span class="built_in">NSString</span> *addString3 = [string16 stringByAppendingString:string17];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, addString1);
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, addString2);
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, addString3);
-
-<span class="comment">/**
- * 查找字符串
- */</span>
-<span class="built_in">NSString</span> *link = <span class="string">@"abcdefgtargetxyz"</span>;
-<span class="built_in">NSRange</span> range1 = [link rangeOfString:<span class="string">@"target"</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, <span class="built_in">NSStringFromRange</span>(range1));
-<span class="keyword">if</span>(range1<span class="variable">.location</span> != <span class="built_in">NSNotFound</span>) {
-    <span class="built_in">NSLog</span>(<span class="string">@"founded"</span>);
-}
-
-<span class="comment">/**
- * 可变字符串
- */</span>
-
-<span class="comment">// 插入</span>
-<span class="built_in">NSMutableString</span> *mutableString1 = [[<span class="built_in">NSMutableString</span> alloc] initWithFormat:<span class="string">@"abc"</span>];
-[mutableString1 insertString:<span class="string">@"..xyz.."</span> atIndex:<span class="number">1</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mutableString1);
-
-<span class="comment">// 替换</span>
-[mutableString1 replaceCharactersInRange:<span class="built_in">NSMakeRange</span>(<span class="number">1</span>, <span class="number">2</span>) withString:<span class="string">@"efg"</span>];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mutableString1);
-
-<span class="comment">// 删除</span>
-[mutableString1 deleteCharactersInRange:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, <span class="number">3</span>)];
-<span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, mutableString1);
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/05/14/NSString/" data-id="cib1s06rd0008mxvm3g18rle7" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-NSNumber" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/05/08/NSNumber/" class="article-date">
-  <time datetime="2015-05-08T13:08:55.000Z" itemprop="datePublished">2015-05-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/05/08/NSNumber/">NSNumber</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="NSNumber对象的一些方法总结">NSNumber对象的一些方法总结</h3><pre><code><span class="comment">// 创建一个基本的NSNumber对象</span>
-<span class="built_in">NSNumber</span> *numberInt = [<span class="built_in">NSNumber</span> numberWithInt: <span class="number">10</span>];   <span class="comment">// 创建和初始化类方法</span>
-<span class="built_in">NSNumber</span> *numberFloat = [[<span class="built_in">NSNumber</span> alloc] initWithFloat: <span class="number">10.8</span>]; <span class="comment">// 初始化实例方法</span>
-
-<span class="comment">// 还原成基本数据类型</span>
-<span class="keyword">int</span> basicInt = [numberInt intValue];
-<span class="keyword">float</span> baseFloat = [numberFloat floatValue];
-
-<span class="comment">// 比较两个对象是否相等</span>
-<span class="keyword">if</span> ([numberInt isEqualToNumber: numberFloat] == <span class="literal">YES</span>) {
-  <span class="built_in">NSLog</span>(<span class="string">@"相等"</span>);
-} <span class="keyword">else</span> {
-  <span class="built_in">NSLog</span>(<span class="string">@"不等"</span>);
-}
-
-<span class="comment">// 比较两个对象的大小</span>
-<span class="keyword">if</span> ( [numberInt compare:numberFloat] == <span class="built_in">NSOrderedAscending</span>) {  
-  <span class="built_in">NSLog</span>(<span class="string">@"左边的数字小"</span>);  
-} <span class="keyword">else</span> {  
-  <span class="built_in">NSLog</span>(<span class="string">@"左边的数字大"</span>);  
-}
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/05/08/NSNumber/" data-id="cib1s06rh000amxvm5lr5ohbr" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/04/08/hello-world/" class="article-date">
-  <time datetime="2015-04-08T13:21:59.000Z" itemprop="datePublished">2015-04-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/04/08/hello-world/">Hello hexo</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/04/08/hello-world/" data-id="cib1s06ra0007mxvmqhvqxuc8" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-新的开始" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/04/08/新的开始/" class="article-date">
-  <time datetime="2015-04-08T12:14:06.000Z" itemprop="datePublished">2015-04-08</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/日志/">日志</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/04/08/新的开始/">新的开始</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>利用github新搭的blog,以后就用这个了~~</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.ieake.com/2015/04/08/新的开始/" data-id="cib1s06r20001mxvmuyeez8jw" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
         </section>
@@ -791,7 +870,7 @@ range<span class="variable">.length</span> = <span class="number">3</span>;
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/元祖类型/">元祖类型</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/UILabel/">UILabel</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swift-Array/">swift Array</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swift-break-continue/">swift, break, continue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swift-字典/">swift,字典</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/元祖类型/">元祖类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/可选值/">可选值</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/枚举-enum/">枚举, enum</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/类/">类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/结构体/">结构体</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -800,7 +879,7 @@ range<span class="variable">.length</span> = <span class="number">3</span>;
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/元祖类型/" style="font-size: NaNpx;">元祖类型</a>
+      <a href="/tags/UILabel/" style="font-size: 10px;">UILabel</a><a href="/tags/swift-Array/" style="font-size: 10px;">swift Array</a><a href="/tags/swift-break-continue/" style="font-size: 10px;">swift, break, continue</a><a href="/tags/swift-字典/" style="font-size: 10px;">swift,字典</a><a href="/tags/元祖类型/" style="font-size: 10px;">元祖类型</a><a href="/tags/可选值/" style="font-size: 20px;">可选值</a><a href="/tags/枚举-enum/" style="font-size: 10px;">枚举, enum</a><a href="/tags/类/" style="font-size: 10px;">类</a><a href="/tags/结构体/" style="font-size: 10px;">结构体</a>
     </div>
   </div>
 
@@ -809,7 +888,7 @@ range<span class="variable">.length</span> = <span class="number">3</span>;
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -821,23 +900,23 @@ range<span class="variable">.length</span> = <span class="number">3</span>;
       <ul>
         
           <li>
-            <a href="/2015/06/18/swift-Tuples-元祖-类型/">swift Tuples(元祖)类型</a>
+            <a href="/2015/09/09/swift-类/">swift 类</a>
           </li>
         
           <li>
-            <a href="/2015/05/17/NSSet和NSMutableSet/">NSSet和NSMutableSet</a>
+            <a href="/2015/09/08/swift-结构体/">swift 结构体</a>
           </li>
         
           <li>
-            <a href="/2015/05/15/NSDictionary和NSMutableDictionary/">NSDictionary和NSMutableDictionary</a>
+            <a href="/2015/09/08/swift-枚举类型/">swift 枚举类型</a>
           </li>
         
           <li>
-            <a href="/2015/05/15/NSArray和NSMutableArray/">NSArray和NSMutableArray</a>
+            <a href="/2015/09/02/break-continue/">break continue</a>
           </li>
         
           <li>
-            <a href="/2015/05/14/NSString/">NSString</a>
+            <a href="/2015/09/02/swift-Dictionary-字典/">swift Dictionary 字典</a>
           </li>
         
       </ul>
