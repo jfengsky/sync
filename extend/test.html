@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://lib.sinaapp.com/js/jquery/1.10.2/jquery-1.10.2.js"></script>
+</head>
+<body>
+<script>
+    var data1 = [{
+        id:111,
+        num:1
+    }]
+    var data2 = [{
+        id:222,
+        num:2
+    }]
+    var data3 = $.extend({},data1,data2)
+    console.log(data3)
+</script>
+</body>
+</html>
