@@ -1,0 +1,182 @@
+<div class="search_warp clearfix">
+	<div class="search_left">
+		<ul>
+			<li style="margin:5px 5px">
+				<label for="keyaccount">Key编号：</label>
+				<input type="text" id="keyaccount" class="input_170" placeholder="输入Key编号" />
+			</li>
+			<li style="margin:5px 5px">
+				<label for="realName">真实姓名：</label>
+				<input type="text" id="realName" class="input_170" placeholder="输入姓名" />
+			</li>
+			<li style="margin:5px 5px">
+				<label for="idcard">身份证：</label>
+				<input type="text" id="idcard" class="input_170" placeholder="输入身份证" />
+			</li>
+			<li style="margin:5px 5px">
+				<label for="phone">联系电话：</label>
+				<input type="text" id="phone" class="input_170" placeholder="输入联系电话" />
+			</li>
+		</ul>
+	</div>
+	<div class="search_right"><button id="btn_search"><i class="icon iconfont">&#xe6ac;</i>搜索</button></div>
+</div>
+
+<div class="list_warp t1">
+	<table width="100%">
+		<thead>
+			<tr>
+				<th width="10%">Key编号</th>
+				<th width="20%">销售方式(销售版或是租用版)</th>
+				<th width="10%">真实姓名</th>
+				<th width="10%">身份证</th>
+				<th width="10%">联系电话</th>
+			  <th width="10%">级别</th>
+				<th width="10%">状态</th>
+				<th width="15%">操作</th>
+			</tr>
+		</thead>
+		<tbody id="tbody">
+			<tr><td colspan="8" class="onloding">加载中...</td></tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="8">
+					<!--pages start-->
+					<div class="pages_warp">
+						<span id="first_page">首页</span>
+						<span id="prev_page" class="pages_prev">&lt;</span>
+						<ul id="pageArea"><li count="0" class="curr">1</li></ul>
+						<span id="next_page">&gt;</span>
+						<span id="last_page">尾页</span>
+						<span>
+							共<em id="all_count">1</em>页，到第<input type="text" class="input_50" id="go_page">页 <button id="go_submit">确定</button>
+						</span>
+					</div>
+					<!--pages end-->
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+</div>
+
+<!-- <div class="mydiv none" id="mod_info">
+	<div class="show_div">
+	  <div class="pop_title"><h2>重置密码成功</h2><span id="btn_close1"></span></div>
+	  <div class="show_con set_success_tips">
+		 <span id="loginname"></span>的密码重置成功！密码重置为 <span id="newPassword"></span>
+	  </div>
+	</div>
+</div>
+
+<div class="mydiv none" id="getUserInfo">
+	<div class="show_div">
+	  <div class="pop_title"><h2>用户信息</h2><span id="btn_close"></span></div>
+	  <div class="show_con">
+		 <ul>
+		   <li><label for="u_dealerName">帐号：</label><i id="u_dealerName"></i></li>
+		   <li><label for="u_realName">姓名：</label><i id="u_realName"></i></li>
+		   <li><label for="u_phone">手机号码：</label><i id="u_phone"></i></li>
+		   <li><label for="u_idCard">身份证：</label><i id="u_idCard"></i></li>
+		   <li class="is_roleLevel"><label for="u_roleLevel" style="vertical-align:top;">层级关系：</label><i id="u_roleLevel"></i></li>
+		 </ul>
+	  </div>
+	</div>
+</div> -->
+<div class="mydiv none" id="mod_info">
+	<div class="show_div">
+	  <!-- <div class="pop_title"><h2>添加</h2><span id="btn_close"></span></div> -->
+	  <div class="show_con">
+		 <ul>
+		   <li><label for="rolelevel1"><em>*</em>旧密码：</label><input type="text" id="rolelevel1" class="input_200" readonly="readonly"><span></span></li>
+		   <li><label for="loginname"><em>*</em>新密码：</label><input type="text" id="loginname" class="input_200" placeholder="输入登录帐号"><span></span></li>
+		   <li><label for="loginpwd"><em>*</em>确认密码：</label><input type="password" id="loginpwd" class="input_200" placeholder="输入登录密码"><span></span></li>
+		  
+		 </ul>
+		 <div class="add_btn add_dealers"><button id="submit_add"><i class="icon iconfont">&#xf0319;</i>提交</button><button class="reset" id="submit_reset"><i class="icon iconfont">&#xe6a4;</i>重置</button></div>
+	  </div>
+	</div
+</div>
+<div class="bg none"></div>
+<script id="mod_key_pwd" type="text/html">
+{{if result == 'OK'}}
+{{each data as value i}}
+<tr {{if i%2 !== 0}} class="tr_bg" {{/if}}>
+	<td><em class="getUserInfo" dealerId="{{value.ID}}">{{value.keyaccount}}</em></td>
+	<td><em class="getUserInfo" dealerId="{{value.ID}}">{{value.flag||'-'}}</em></td>
+	<td>{{value.realname||'-'}}</td>
+	<td>{{value.idcard||'-'}}</td>
+	<td>{{value.phone||'-'}}</td>
+	<td>{{value.ROLELEVELNAME||'-'}}</td>
+	<td><span class="state_{{value.STATUS_NUM}}">{{value.STATUS||'-'}}</span></td>
+	<td class="edit_warp"><span class="reset" loginId="{{value.LOGINNAME}}({{value.REALNAME||'-'}})" isId="{{value.ID}}">确认重置</span></td>
+</tr>
+{{/each}}
+{{else}}
+<tr>
+	<td colspan="8" class="onerror">{{result}}</td>
+</tr>
+{{/if}}
+</script>
+
+<script type="text/javascript">
+	isparams();
+	function isparams(){
+		var params = '?params={"param":[{"loginName":"'+$('#loginName').val()+'"},{"realName":"'+$('#realName').val()+'"}]}&currentPage='+$.c.currentPage+'&pageSize='+$.c.pageSize;
+		$.t.getJosn('../jsp/dealerManager/getDealerInfoForResetPassword.jsp'+params);
+	}
+
+	function successFun(msg){
+		if(typeof(msg) == 'string'){ return false; };
+		var html = template('mod_key_pwd', msg);
+		try{
+			document.getElementById('tbody').innerHTML = html;
+		}catch(e){
+			$('#tbody').html(html);
+		}
+
+		$('.getUserInfo').click(function(){
+			$.t.getUserInfo($(this).attr('dealerId'));
+		});
+
+		$('.reset').click(function(){
+			var loginId = $(this).attr('loginId');
+			var isId = $(this).attr('isId');
+			var params = '{"param":[{"dealerId":"'+isId+'"}]}';
+			$.ajax({
+				url:'../jsp/dealerManager/resetPassword.jsp',
+				type:'post',
+				data:{params:params,random:Math.random()},
+				dataType:'json',
+				timeout:30000,
+				success:function(msg){
+					if(msg.result == 'OK'){
+						$('#mod_info,.bg').show();
+						$('#loginname').text(loginId);
+						$('#newPassword').text(msg.data.PWDRADOM);
+						isparams();
+					}else{
+						alert(msg.result);
+					};
+				},
+				error:function(r,e){
+					alert('请求超时或发生异常');
+				}
+			});
+		});
+
+	};
+
+	function errorFun(msg){
+		if(typeof(msg) == 'string'){ return false; };
+		var html = template('userinfo_list', msg);
+		try{
+			document.getElementById('tbody').innerHTML = html;
+		}catch(e){
+			$('#tbody').html(html);
+		}
+	};
+
+	$.t.event();
+
+</script>
