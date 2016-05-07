@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .club{
+            width: 100px;
+            height: 100px;
+            background-color: #f00;
+            position:absolute;
+            left:0;
+            top:0
+        }
+    </style>
+</head>
+<body>
+
+<div id="J_drag" class="club" draggable="true"></div>
+<script>
+    var dragClub = document.getElementById('J_drag');
+    dragClub.ondragstart = function(ev){
+//        console.log(ev)
+    }
+    dragClub.ondragend = function(ev){
+        console.log(ev)
+        dragClub.style.top = ev.pageY - ev.offsetY + 'px'
+        dragClub.style.left = Math.abs(ev.pageX - ev.offsetX) + 'px'
+    }
+</script>
+</body>
+</html>
