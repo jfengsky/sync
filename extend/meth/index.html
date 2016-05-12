@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>俱乐部电子对账系统</title>
+    <link href="../../../css/o2o/unionuser/base.css" rel="stylesheet" type="text/css" />
+    <link href="../../../css/o2o/unionuser/union.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon" />
+</head>
+<body>
+<!---头部开始-->
+<div class="union">
+    <div class="header">
+        <div class="header_left"><a href="javascript:;"><i>俱乐部电子对账系统</i></a></div>
+        <div class="header_right1"></div>
+        <div class="union_land" id="union_land"></div>
+    </div>
+</div>
+<!---头部结束-->
+<!---banner开始-->
+<div class="pic_warp">
+    <!---图片开始-->
+    <div class="w_ctr">
+        <div class="JQ-slide">
+            <ul class="JQ-slide-content">
+                <li><a><img src="../../../images/o2o/unionuser/banner.gif" width="1425" height="392"></a></li>
+            </ul>
+        </div>
+    </div>
+    <!---图片结束-->
+    <!---登陆开始-->
+    <div class="login_warp1"></div>
+    <div id="login_div" class="login_con clearfix">
+        <form name="from_login" id="from_login" method="post">
+            <p id="tgy_tip"><b>俱乐部管理平台登录</b></p>
+            <p id="loginTip" class="red" style="display:none"></p>
+            <div class="form_tiem clearfix">
+                <dl>
+                    <dt class="a1">用户名：</dt>
+                    <dd><input id="login_name" name="login_name" type="text"></dd>
+                </dl>
+                <dl>
+                    <dt class="a2">密码：</dt>
+                    <dd><input id="password" name="password" type="password"></dd>
+                </dl>
+                <dl>
+                    <dt class="a3">验证码：</dt>
+                    <dd>
+                        <div class="verify">
+                            <input id="veriCode" name="veriCode" type="text">
+                            <img id="img_veriCode" src="/caipiao_simple/home/jsp/o2o/boss/getbossLoginVericode.jsp"  alt="" >
+                            <a id="ver_a" href="###">换一换</a>
+                        </div>
+                    </dd>
+                </dl>
+                    <p class="btn_checked">
+                        <label for="role1"><input type="radio" name="role" id="role1" checked="checked" value="2"> 经理</label>
+                        <label for="role2"><input type="radio" name="role" id="role2" value="3"> 财务</label>
+                        <label for="role3"><input type="radio" name="role" id="role3" value="4"> 业务员</label>
+                    </p> 
+                    <button type="submit" name="submit" id="submit" class="submit mt10">登 录</button>
+                    <p id="tip">&nbsp;</p>
+            </div>
+        </form>
+    </div>
+    <!-- <div id="loginInfo_div" class="login_con none">
+        <div class="img_box clearfix">
+            <dl>
+                <dt><img src="../../../images/union/icon-pic.jpg" ></dt>
+                <dd>
+                    <h2><span id="user_name"></span></h2>
+                    <p><a id="editInfoId">修改信息</a> <a href="javascript:;" onclick="loginOut();"> [退出]</a></p>
+                </dd>
+            </dl>
+        </div>
+        <p class="pingtan" id="pingtan">状态：<span id="check_status"></span></p>
+        <div class="size_url clearfix">
+            <span class="a1"><a href="adver.html" target="_blank">推广链接</a></span>
+            <span class="a2"><a id="finanId" href="finan.html" target="_blank">财务报表</a></span>
+            <span class="a3"><a id="detailId" href="detail.html" target="_blank">我的用户</a></span>
+            <span class="a4"><a id="withdrawId" href="withdraw.html" target="_blank">佣金提现</a></span>
+        </div>
+    </div> -->
+
+    <!---登陆结束-->
+</div>
+<!---banner结束-->
+<!---主内容开始-->
+<div class="union_warp" style="height:270px;">
+    <div class="union_con none clearfix">
+        <div class="coopr_list clearfix"></div>
+        <div class="coopr_list_con clearfix">
+            <ul>
+                <li class="a1">
+
+                    <p>只要您通过自己的网站和博客提交联盟申请并通过审核,便可进行推广</p>
+                </li>
+                <li class="a2">
+
+                    <p>直接获取广告链接地址，可放置在网站合适的位置上展示</p>
+                </li>
+                <li class="a3">
+
+                    <p>通过您的广告链接引导到598caipiao<br>.com联盟的有效订单都可以按规则结算佣金</p>
+                </li>
+                <li class="a4">
+
+                    <p>每月15-25日结算，满100元起结,不<br>满100元，分成佣金累计至下月</p>
+                </li>
+            </ul>
+        </div>
+     
+    </div>
+</div>
+<!---主内容结束-->
+<!---版权信息开始-->
+
+<div class="footer1">
+
+    <div class="foot_info">
+        <span>Copyright 2015-2018 All Rights Reserved</span>|
+        <span>ICP备案号：<a target="_blank" href="http://www.miitbeian.gov.cn/state/outPortal/loginPortal.action">沪ICP备12046564号</a></span>|
+        <span><a target="_blank" href="http://www.zx110.org/">沪公网安备31011209000088</a></span>
+    </div>
+    <div class="foot_warn"><em>郑重提示：</em>彩票有风险，投资需谨慎，不向未满18周岁的青少年出售彩票</div>
+</div>
+<!---版权信息结束-->
+<script type="text/javascript" src="../../../js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="../../../js/o2o/boss/common.js"></script>
+<script type="text/javascript">
+(function(){
+
+	var tip = $('#tip');
+	var login_name = $('#login_name');
+	var password = $('#password');
+	var veriCode = $('#veriCode');
+	var logintype = $('#logintype');
+	var submit = $('#submit');
+
+    /* banner图片左右滚动 */
+   
+	
+	$('#ver_a').click(function(){
+		refreshVeriCode();
+	});
+	
+	//刷新验证码
+	function refreshVeriCode(){
+		document.getElementById("img_veriCode").src="/caipiao_simple/home/jsp/o2o/boss/getbossLoginVericode.jsp?random=" + Math.random();
+	}
+	
+	Verifylogin(); 
+	function Verifylogin(){
+		$.ajax({
+			url:"/caipiao_simple/home/jsp/o2o/boss/bossInSession.jsp",
+			type:"post",
+			data:{ "random":Math.random()},
+			dataType:"html",
+			success: function(msg){
+				msg = msg.replace( /\r\n/gi,"").replace( /\n/gi,"");
+				msg = jQuery.parseJSON(msg);
+				if(msg['result']['SALE_POINT_NO']==null||msg['result']['SALE_POINT_NO']==""){//保存的用户信息已经过期
+					login_name.val('');
+					password.val('');
+					veriCode.val('');
+				}else{
+					window.location.href="inside.html";
+				}
+			},
+			error:function(data){
+				tip.text("服务器没有返回数据，可能服务器忙，请重试");
+			}
+		});
+	}
+	
+
+	$('#from_login').submit(function(){
+		
+		if(login_name.val() == ''){ tip.text('用户名不能为空！'); login_name.focus(); return false; }
+		if(password.val() == ''){ tip.text('密码不能为空！'); password.focus(); return false; }
+		if(veriCode.val() == ''){ tip.text('验证码不能为空！'); veriCode.focus(); return false; }
+		if(logintype.val() == ''){ tip.text('登录方式不能为空！'); logintype.focus(); return false; }
+		
+		$.ajax({
+			url:"/caipiao_simple/home/jsp/o2o/boss/bossInSession.jsp",
+			type:"post",
+			data:{ "random":Math.random()},
+			dataType:"html",
+			success: function(msg){
+				msg = msg.replace( /\r\n/gi,"").replace( /\n/gi,"");
+				msg = jQuery.parseJSON(msg);
+				var role = msg['result']['ROLE'];
+				if(role==''){//保存的用户信息已经过期
+					tip.text('正在登录,请稍候...');
+					submit.prop('disabled',true);
+					var params = '{param:[{"login_name":"'+login_name.val()+'"},{"password":"'+password.val()+'"},{"veriCode":"'+veriCode.val()+'"},{"role":"'+$('.btn_checked input:checked').val()+'"}]}';
+					$.ajax({
+						url:'/caipiao_simple/home/jsp/o2o/boss/bossLoginCheck_do.jsp?params='+params+'&random='+Math.random(),
+						type:'post',
+						dataType:'html',
+						cache: false,
+						timeout:30000,
+						success:function(msg){
+							msg = msg.replace( /\r\n/gi,"").replace( /\n/gi,"");
+							msg = jQuery.parseJSON(msg);
+							if(msg.result == 'OK'){
+								window.location.href="inside.html";
+							}else{
+								tip.text(msg.result);
+								password.val('');
+								password.focus();
+								veriCode.val('');
+								submit.prop('disabled',false);
+								refreshVeriCode();
+							}
+							
+						},
+						error:function(msg){
+							tip.text('请求超时或发生异常');
+							password.val('');
+							password.focus();
+							veriCode.val('');
+							submit.prop('disabled',false);
+							refreshVeriCode();
+						}
+					});
+				}else{
+					alert("为了操作安全，请勿在同一浏览器中登录多个帐号");
+				}
+			},
+			error:function(data){
+				tip.text("服务器没有返回数据，可能服务器忙，请重试");
+			}
+		});
+
+		return false;
+	});
+	
+
+})(window.jQuery);
+</script>
+
+</body>
+</html>

@@ -54,6 +54,8 @@
 
 	var _mod12 = _interopRequireDefault(_mod1);
 
+	console.log((0, _mod12['default'])(2, 3));
+
 /***/ },
 /* 1 */
 /***/ function(module, exports) {
