@@ -3,7 +3,8 @@ var router = require('koa-router')();
 var serve = require('koa-static');
 var app = koa();
 
-
+// 设置静态目录
+app.use(serve(__dirname + '/static/'));
 
 // router
 //     .get('/', function *(next){
