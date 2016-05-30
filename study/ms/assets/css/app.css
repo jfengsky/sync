@@ -1,1 +1,52 @@
-/* Write your styles */
+.memspring h2{
+    color: #005993;
+    margin: 0 auto;
+}
+.memspring h2.title{
+    color: #00aeef;
+    text-align: right
+}
+.memspring h4 {
+    color: #00aeef;
+    margin-top: 1em;
+}
+
+.memspring .content, .memspring .special {
+    margin-bottom: 2em;
+}
+
+.memspring .content p {
+    text-indent: 2em;
+}
+
+.memspring .special h5 {
+    color: #7f7f7f;
+    margin-bottom: 1em;
+}
+
+.memspring .special p {
+    margin: .5em auto;
+}
+
+.memspring .special p em {
+    font-style: normal;
+    color: #00aeef;
+    font-weight: bold;
+}
+
+.memspring .compare {
+    width: 100%
+}
+
+.memspring .compare th {
+    background-color: #548dd4;
+    color: #fff;
+    text-align: center;
+    border: 1px solid #000;
+}
+
+.memspring .compare td {
+    border: 1px solid #000;
+    padding: .2em;
+    text-align: center;
+}
