@@ -1,6 +1,6 @@
 var webpack = require('webpack')
-var env = process.env.NODE_ENV;
-console.log(process.env);
+//var env = process.env.NODE_ENV;
+//console.log(process.env);
 module.exports = {
   entry: {
     app: './entry.js',
@@ -12,6 +12,10 @@ module.exports = {
   },
   module: {
     loaders: [
+      {
+        test: /\.css$/,
+        loader: "style!css"
+      },
       {
         test: /\.js?$/,
         exclude: /(node_modules|bower_components)/,
