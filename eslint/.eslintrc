@@ -1,0 +1,9 @@
+{
+    "rules": {
+        "semi": ["error", "always"],
+        "quotes": ["error", "double"],
+        "no-console": 2,
+        "no-debugger": 2,
+        "no-extra-semi": 2
+    }
+}
